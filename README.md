@@ -58,10 +58,10 @@ python main.py
 ```
 **Advanced Configuration**
 ```bash
---iters #: Number of EGO iterations
---levels #: Total number of fidelity levels L.
---costs #: The cost of each level (space-separated, from lowest to highest).
---points #: The initial DoE size for each level (space-separated, from lowest to highest).
+--iters  # Number of EGO iterations
+--levels # Total number of fidelity levels L.
+--costs  # The cost of each level (space-separated, from lowest to highest).
+--points # The initial DoE size for each level (space-separated, from lowest to highest).
 ```
 
 **Example of usage**
