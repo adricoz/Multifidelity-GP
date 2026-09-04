@@ -51,3 +51,26 @@ The project is executed from the terminal via `main.py`. The default parameters 
 **Install the required dependencies:**
 ```bash
 pip install numpy scipy matplotlib
+```
+**Running the EGO Algorithm**
+```bash
+python main.py
+```
+**Advanced Configuration**
+```bash
+--iters #: Number of EGO iterations
+--levels #: Total number of fidelity levels L.
+--costs #: The cost of each level (space-separated, from lowest to highest).
+--points #: The initial DoE size for each level (space-separated, from lowest to highest).
+```
+
+**Example of usage**
+```bash
+python main.py --iters 50 --levels 5 --costs 1 5 20 50 100 --points 80 40 20 12 7
+```
+**Help Menu**
+To see all available arguments and their descriptions:
+```bash
+python main.py -h
+```
+
