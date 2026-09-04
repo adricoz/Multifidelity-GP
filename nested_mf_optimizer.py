@@ -243,8 +243,10 @@ def merit_nested(x, l_candidate, L, costs, f_best_L, sigma2_e_L, rhos, noise_lp,
         Merit value for the candidate point.    
     """
     
-    aei_L = aei_multi_fidelity(f_hat_L, sigma2_hat_L, f_best_L, sigma2_e_L)
-    
+    #aei_L = aei_multi_fidelity(f_hat_L, sigma2_hat_L, f_best_L, sigma2_e_L)
+    # quick test for hartmann wuith the expected improvement
+    aei_L = expected_improvement(f_hat_L, sigma2_hat_L, f_best_L)
+
     if aei_L <= 0:
         return 0.0 
     
@@ -324,10 +326,10 @@ def run_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true_fun
             for attempt in range(3):
                 if l == 1:
                     init_guess = np.concatenate((np.random.uniform(0.2, 1.5, d), [1.0, 1.0], [1e-4]))
-                    param_bounds = [(0.01, 5.0)] * d + [(1e-3, 50.0)] * 2 + [(1e-6, 1e-2)] 
+                    param_bounds = [(0.01, 5.0)] * d + [(1e-3, 50.0)] * 2 + [(1e-8, 1e-5)] 
                 else:
                     init_guess = np.concatenate(([np.random.uniform(0.5, 1.5)], np.random.uniform(0.2, 1.5, d), [1.0, 1.0], [1e-4]))
-                    param_bounds = [(-5.0, 5.0)] + [(0.01, 5.0)] * d + [(1e-3, 50.0)] * 2 + [(1e-6, 1e-2)]
+                    param_bounds = [(-5.0, 5.0)] + [(0.01, 5.0)] * d + [(1e-3, 50.0)] * 2 + [(1e-8, 1e-5)]
                 
                 # here we minimize the log likelyhood
                 res = minimize(objective_nll, init_guess, bounds=param_bounds, method="L-BFGS-B")
@@ -391,8 +393,8 @@ def run_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true_fun
                 next_x = res_merit.x
                 next_l = l_candidate
 
-        # Failsafe in case of extremely flat merit landscape
-        if next_x is None or next_l is None or best_merit_overall <= 1e-10:
+        # Failsafe in case of extremely flat merit landscape.        be aware that 0.0 is a special case 
+        if next_x is None or next_l is None or best_merit_overall <= 0.0:
             print("   Warning: Global merit is null/too low. Random selection triggered (exploration).")
             next_x = np.array([np.random.uniform(b[0], b[1]) for b in bounds])
             next_l = L 
