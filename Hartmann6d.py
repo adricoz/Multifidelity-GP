@@ -56,7 +56,7 @@ def f_l(x, deg=6, k=1, delta=0.1):
 
     return u_prev
 
-def evaluate_fidelity(x, level):
+def evaluate_fidelity(x, level, L):
     """
     Evaluates the Hartmann function at the desired fidelity level. 
     Auto adapts to the max fidelity level L
