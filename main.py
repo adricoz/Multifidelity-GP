@@ -2,10 +2,33 @@ import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 
+# for printing in a logfile 
+import argparse
+import sys
+
 # Local imports
 from Hartmann6d import f_l
 from nested_mf_sampling import generate_nested_lhs
 from nested_mf_optimizer import run_nested_mf_ego
+
+# ==========================================
+# LOGGING CLASS
+# ==========================================
+class LogTee:
+    """Duplicates the flux sys.stdout to write in the console and the logging file."""
+
+    def __init__(self, filename):
+        self.terminal = sys.stdout
+        self.log = open(filename, "a", encoding="utf-8")
+
+    def write(self, message):
+        self.terminal.write(message)  # console output
+        self.log.write(message)  # write to log file
+
+    def flush(self):
+        self.terminal.flush()
+        self.log.flush()
+
 
 # ==========================================
 # TARGET FUNCTION ADAPTATION
@@ -74,6 +97,7 @@ def plot_ego_results(X_train, Y_train, L, n_initial_hf):
 # EXECUTION BLOCK (WITH PARSER)
 # ==========================================
 if __name__ == "__main__":
+
     # --- 1. ARGUMENT PARSING ---
     parser = argparse.ArgumentParser(description="Run Nested Multi-Fidelity EGO on Hartmann 6D.")
     
@@ -88,9 +112,15 @@ if __name__ == "__main__":
     
     parser.add_argument('--points', type=int, nargs='+', default=[60, 20, 8], 
                         help='Number of initial DoE points per level. Example: --points 60 20 8')
+    
+    parser.add_argument('--logname', type=str, default="execution.log", 
+                        help='Name of the log file (default: execution.log).')
 
     args = parser.parse_args()
     
+    # Redirect stdout to log file
+    sys.stdout = LogTee(args.logname)
+
     # --- 2. SECURITY CHECKS ---
     if len(args.costs) != args.levels:
         parser.error(f"Number of costs provided ({len(args.costs)}) must match the number of levels ({args.levels}).")
