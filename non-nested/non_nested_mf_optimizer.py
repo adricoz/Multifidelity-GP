@@ -5,7 +5,7 @@ from scipy.optimize import minimize, differential_evolution
 # Local imports
 from Hartmann6d import f_l
 from non_nested_mf_sampling import Delta_Y_l, extract_subpart_vector, is_already_evaluated
-from non_nested_mf_covariance import base_covariance_matrix, Cov_fct
+from non_nested_mf_covariance import base_covariance_matrix, Cov_fct, k_l_vector
 
 def log_likelihood_mf(rho_l_minus1, Theta_l, sigma_epsilon_l, X_l, Y_l, Y_l_minus_1, fidelity_level):
     """
@@ -34,7 +34,7 @@ def log_likelihood_mf(rho_l_minus1, Theta_l, sigma_epsilon_l, X_l, Y_l, Y_l_minu
         log_lik = -0.5 * np.dot(Delta_Y_l_val, alpha) - 0.5 * log_det - 0.5 * n * np.log(2 * np.pi)
         return log_lik
     except np.linalg.LinAlgError:
-        # prnslity if the matric is conditionned
+        # penality if the matric is conditionned
         return -1e10
 
 # -----------------------------------------------------------------------------------------
@@ -75,9 +75,9 @@ def predict_base_gp(x_new, X_train, Y_train, Theta_l, sigma_epsilon_l):
 
     k_vec = np.zeros(len(X_train))
     for i in range(len(X_train)):
-        k_vec[i] = Cov_fct(x_new, X_train[i], lengthscales, t1, t2)
+        k_vec[i] = Cov_fct(x_new, X_train[i], Theta_l)
 
-    kappa = Cov_fct(x_new, x_new, lengthscales, t1, t2)
+    kappa = Cov_fct(x_new, x_new, Theta_l)
     delta_hat = k_vec.T @ K_inv @ Y_train
     sigma2_delta = kappa - (k_vec.T @ K_inv @ k_vec)
     
@@ -88,7 +88,7 @@ def predict_base_gp(x_new, X_train, Y_train, Theta_l, sigma_epsilon_l):
 
 def predict_non_nested_mf(x_new, thetas, rhos, noises, X_train, Y_train):
     """
-    Recursively computes the mean and variance of the Multi-Fidelity model.
+    Recursively computes the mean and variance of the Multi-Fidelity model (NON-NESTED).
 
     Parameters
     ----------
@@ -113,7 +113,6 @@ def predict_non_nested_mf(x_new, thetas, rhos, noises, X_train, Y_train):
         Predicted variance at the new point for the highest fidelity level.
     gp_variances_at_x : list of floats
         List of predicted variances at the new point for each fidelity level.
-    
     """
     L = len(thetas)
     f_hat_prev = 0.0
@@ -130,7 +129,17 @@ def predict_non_nested_mf(x_new, thetas, rhos, noises, X_train, Y_train):
             target_Y = Y_l
         else:
             rho_prev = rhos[l-2]
-            Y_l_minus_1 = extract_subpart_vector(X_l, X_train[l-1], Y_train[l-1])
+            # CRITICAL NON-NESTED CHANGE:
+            # Replaced extract_subpart_vector with the GP mean prediction
+            Y_l_minus_1 = predict_mf_mean_up_to_level(
+                X_target=X_l, 
+                target_level=l-1, 
+                thetas=thetas, 
+                rhos=rhos, 
+                noises=noises, 
+                X_train=X_train, 
+                Y_train=Y_train
+            )
             target_Y = Y_l - rho_prev * Y_l_minus_1
             
         # Calling the real function to get the prediction at the new point
@@ -252,47 +261,73 @@ def merit_non_nested(x, l_candidate, L, costs, f_best_L, sigma2_e_L, rhos, noise
         return 0.0 
     
   
-    cost_total_L = np.sum(costs) 
-    cost_total_l_candidate = np.sum(costs[:l_candidate])
-    cost_ratio = cost_total_L / cost_total_l_candidate
+    cost_ratio = costs[L-1] / costs[l_candidate-1]
     
-    
-    variance_reduction_sum = 0.0
-    
-    for lp in range(1, l_candidate + 1):
-        idx = lp - 1 
-        
-        var_gp_lp = gp_variances_at_x[idx] 
-        
 
-        delta_sigma2_lp = (var_gp_lp ** 2) / (var_gp_lp + noise_lp)
-        
+    idx = l_candidate - 1 
+    var_gp_lp = gp_variances_at_x[idx] 
     
-        R2_lp = 1.0
-        if lp < L:
-            for i in range(lp, L):
-                R2_lp *= (rhos[i-1] ** 2)
-                
-        
-        variance_reduction_sum += R2_lp * delta_sigma2_lp
-        
+    delta_sigma2_lp = (var_gp_lp ** 2) / (var_gp_lp + noise_lp)
     
-    information_ratio = max(0.0, variance_reduction_sum / max(sigma2_hat_L, 1e-12))
+    R2_lp = 1.0
+    if l_candidate < L:
+        for i in range(l_candidate, L):
+            R2_lp *= (rhos[i-1] ** 2)
+            
+    variance_reduction = R2_lp * delta_sigma2_lp
+    information_ratio = max(0.0, variance_reduction / max(sigma2_hat_L, 1e-12))
     
-    
+    # Equation (24) in the reference paper, combining AEI, cost ratio, and information ratio
     merit = aei_L * cost_ratio * information_ratio
     return merit
 
+#----------------------------------------------------
+def predict_mf_mean_up_to_level(X_target, target_level, thetas, rhos, noises, X_train, Y_train):
+    """
+    Predicts the MF surrogate mean up to a specific level (target_level) 
+    for a set of target points X_target. (NON-NESTED approach).
+    """
+    n_points = X_target.shape[0]
+    f_hat_prev = np.zeros(n_points)
+    
+    for l in range(1, target_level + 1):
+        # residual
+        if l == 1:
+            Delta_Y_train_l = Y_train[l]
+        else:
+            #internal recurssion
+            f_hat_train_prev = predict_mf_mean_up_to_level(X_train[l], l - 1, thetas, rhos, noises, X_train, Y_train)
+            Delta_Y_train_l = Y_train[l] - rhos[l-2] * f_hat_train_prev
+            
+        # Ccovariance matrix for level l
+        K_l = base_covariance_matrix(X_train[l], thetas[l-1]) + noises[l-1] * np.eye(X_train[l].shape[0])
+        K_inv_l = np.linalg.inv(K_l)
+        
+        # prediction of the residual at level l for our target points (X_target)
+        delta_hat_l = np.zeros(n_points)
+        for i, x in enumerate(X_target):
+            # cross-covariance between X_target[i] and X_train[l]
+            k_vec = k_l_vector(x, X_train[l], thetas[l-1])
+            delta_hat_l[i] = k_vec.T @ K_inv_l @ Delta_Y_train_l
+            
+        # recursive update of the mean prediction
+        if l == 1:
+            f_hat_prev = delta_hat_l
+        else:
+            f_hat_prev = rhos[l-2] * f_hat_prev + delta_hat_l
+            
+    return f_hat_prev
+#----------------------------------------------------
 
 def run_non_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true_function):
     """
-    Main loop for the Nested Multi-Fidelity Efficient Global Optimization.
+    Main loop for the Non-Nested Multi-Fidelity Efficient Global Optimization (MF-EGO).
     """
     for iteration in range(n_iterations):
         print(f"\n--- EGO Iteration {iteration + 1}/{n_iterations} ---")
         
         # ==========================================
-        # STEP 1: MODEL TRAINING (From 1 to L)
+        # STEP 1: MODEL TRAINING (From level 1 to L)
         # ==========================================
         rhos = []
         thetas = []
@@ -303,11 +338,22 @@ def run_non_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true
             Y_l = Y_train[l]
             d = X_l.shape[1] 
             
-            Y_l_minus_1 = None 
+            # -----------------------------------------------------------
+            # NON-NESTED:
+            # Instead of extracting exact spatial points from the lower level,
+            # we use the lower-level GP to predict the mean at the current X_l.
+            # -----------------------------------------------------------
+            Y_l_minus_1_target = None 
             if l > 1:
-                Y_l_minus_1 = extract_subpart_vector(X_l, X_train[l-1], Y_train[l-1])
+                Y_l_minus_1_target = predict_mf_mean_up_to_level(
+                    X_target=X_l, 
+                    target_level=l-1, 
+                    thetas=thetas, rhos=rhos, noises=noises, 
+                    X_train=X_train, Y_train=Y_train
+                )
             
-            # a quick function to properly parametrize the log_likelyhood and return the negative for minimization
+            # Wrapper function to parameterize the log-likelihood for the scipy minimizer.
+            # It returns the negative log-likelihood because scipy only minimizes.
             def objective_nll(params):
                 if l == 1:
                     rho_l_minus1 = None
@@ -317,13 +363,13 @@ def run_non_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true
                     Theta_l = params[1:-1]
                     
                 sigma_epsilon_l = params[-1]
-                ll = log_likelihood_mf(rho_l_minus1, Theta_l, sigma_epsilon_l, X_l, Y_l, Y_l_minus_1, l)
+                ll = log_likelihood_mf(rho_l_minus1, Theta_l, sigma_epsilon_l, X_l, Y_l, Y_l_minus_1_target, l)
                 return -ll
             
             best_ll = np.inf
             best_res = None
             
-            # Multi-start training to avoid flat models
+            # Multi-start training to avoid getting stuck in local minima (flat models)
             for attempt in range(3):
                 if l == 1:
                     init_guess = np.concatenate((np.random.uniform(0.2, 1.5, d), [1.0, 1.0], [1e-4]))
@@ -332,13 +378,14 @@ def run_non_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true
                     init_guess = np.concatenate(([np.random.uniform(0.5, 1.5)], np.random.uniform(0.2, 1.5, d), [1.0, 1.0], [1e-4]))
                     param_bounds = [(-5.0, 5.0)] + [(0.01, 5.0)] * d + [(1e-3, 50.0)] * 2 + [(1e-8, 1e-5)]
                 
-                # here we minimize the log likelyhood
+                # Minimize the negative log-likelihood to find optimal hyperparameters
                 res = minimize(objective_nll, init_guess, bounds=param_bounds, method="L-BFGS-B")
                 
                 if res.fun < best_ll:
                     best_ll = res.fun
                     best_res = res
             
+            # Store the best optimized hyperparameters for the current level
             if l == 1:
                 thetas.append(best_res.x[:-1]) 
                 noises.append(best_res.x[-1])  
@@ -359,25 +406,41 @@ def run_non_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true
         next_x = None
         next_l = None
         
+        # Evaluate the merit landscape for each potential fidelity level candidate
         for l_candidate in range(1, L + 1):
             
-            # once again a function to properly parametrize the merit function for optimization and return the negative for minimization
+            # Wrapper function for the acquisition optimization (returns negative merit)
             def objective_merit(x):
-                f_hat_L, sigma2_hat_L, gp_variances_at_x = predict_non_nested_mf(x, thetas, rhos, noises, X_train, Y_train)
-                noise_lp = noises[l_candidate - 1] 
-                
-                merit_val = merit_non_nested(
-                    x, l_candidate, L, costs, f_best_L, sigma2_e_L, rhos, 
-                    noise_lp, gp_variances_at_x, f_hat_L, sigma2_hat_L
-                )
-                
-                # Ensure the value is a scalar and not an error
-                if hasattr(merit_val, 'item'):
-                    merit_val = merit_val.item()
+                try: # we try to predict the error
+                    # Predict final high-fidelity statistics at candidate point x
+                    f_hat_L, sigma2_hat_L, gp_variances_at_x = predict_non_nested_mf(x, thetas, rhos, noises, X_train, Y_train)
+                    noise_lp = noises[l_candidate - 1] 
                     
-                return -merit_val 
+                    f_hat_L = float(np.squeeze(f_hat_L))
+                    sigma2_hat_L = float(np.squeeze(sigma2_hat_L))
+                    gp_variances_at_x = [float(np.squeeze(v)) for v in gp_variances_at_x]
+                    noise_lp = float(noises[l_candidate - 1])
+                    
+                    # Compute the non-nested merit value
+                    merit_val = merit_non_nested(
+                        x, l_candidate, L, costs, f_best_L, sigma2_e_L, rhos, 
+                        noise_lp, gp_variances_at_x, f_hat_L, sigma2_hat_L
+                    )
+                    
+                    # Ensure the returned value is a standard scalar
+                    if hasattr(merit_val, 'item'):
+                        merit_val = merit_val.item()
+                        
+                    return -float(np.squeeze(merit_val))
             
-            # Global Optimization using Differential Evolution
+                except Exception as e:
+                    # showing the real error 
+                    import traceback
+                    print("\nHidden scipy error!")
+                    traceback.print_exc()
+                    raise e
+            
+            # Global Optimization of the merit function using Differential Evolution
             res_merit = differential_evolution(
                 objective_merit, 
                 bounds=bounds, 
@@ -389,12 +452,14 @@ def run_non_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true
             
             merit_value = -res_merit.fun
             
+            # Keep track of the absolute best merit across all fidelity levels
             if merit_value > best_merit_overall:
                 best_merit_overall = merit_value
                 next_x = res_merit.x
                 next_l = l_candidate
 
-        # Failsafe in case of extremely flat merit landscape.        be aware that 0.0 is a special case 
+        # Failsafe: Trigger random exploration if the merit landscape is completely flat.
+        # A merit of 0.0 indicates that no significant variance reduction or expected improvement was found.
         if next_x is None or next_l is None or best_merit_overall <= 0.0:
             print("   Warning: Global merit is null/too low. Random selection triggered (exploration).")
             next_x = np.array([np.random.uniform(b[0], b[1]) for b in bounds])
@@ -403,12 +468,22 @@ def run_non_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true
         print(f"-> Next point: x = {np.round(next_x, 4)} | Fidelity = {next_l} | Merit = {best_merit_overall:.5f}")
 
         # ==========================================
-        # STEP 3: EVALUATION AND NESTED UPDATE
+        # STEP 3: EVALUATION AND DATASET UPDATE
         # ==========================================
-        for l_eval in range(1, next_l + 1):
-            if not is_already_evaluated(next_x, X_train[l_eval]):
-                new_y = true_function(next_x, l_eval)
-                X_train[l_eval] = np.vstack((X_train[l_eval], next_x))
-                Y_train[l_eval] = np.append(Y_train[l_eval], new_y)
+        # -----------------------------------------------------------
+        # CRITICAL NON-NESTED CHANGE:
+        # We ONLY evaluate the selected level (next_l). 
+        # -----------------------------------------------------------
+        l_eval = next_l 
+        
+        if not is_already_evaluated(next_x, X_train[l_eval]):
+            # Evaluate the true black-box function at the chosen fidelity
+            new_y = true_function(next_x, l_eval)
+            
+            # Append the new observation to the specific fidelity dataset
+            X_train[l_eval] = np.vstack((X_train[l_eval], next_x))
+            Y_train[l_eval] = np.append(Y_train[l_eval], new_y)
+        else:
+            print(f"   Warning: Point already evaluated at level {l_eval}. Skipping to avoid duplicate.")
                 
     return X_train, Y_train, thetas, rhos, noises

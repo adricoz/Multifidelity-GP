@@ -10,22 +10,18 @@ def generate_non_nested_lhs(d, n_levels_points):
     Parameters:
     - d: int, dimension of the input space (e.g., 6 for Hartmann 6D)
     - n_levels_points: list of int, number of points for each level from lowest to highest 
-                       [n_1, n_2, ..., n_N], where n_1 > n_2 > ... > n_N
                        
     Returns:
     - X_levels: list of numpy arrays, containing the design points for each fidelity level.
     """
-    # Use scipy's LatinHypercube to generate the largest set first (Level 1)
+    # Use scipy's LatinHypercube
     sampler = qmc.LatinHypercube(d=d, seed=42)
-    max_points = n_levels_points[0]
-    base_sample = sampler.random(n=max_points)
-    
+
     X_levels = []
-    # Sort or select nested subsets from the base sample
-    # For a strictly nested design, Level k is a prefix subset of Level k-1
+
     for n_pts in n_levels_points:
-        # Take the first n_pts from the base Latin Hypercube sample to preserve space-filling properties
-        X_sub = base_sample[:n_pts, :]
+       
+        X_sub = sampler.random(n=n_pts)
         X_levels.append(X_sub)
         
     return X_levels
@@ -55,6 +51,43 @@ def Delta_Y_l(Y_l, Y_l_minus_1, rho_l_minus_1):
 # -----------------------------------------------------------------------------------------
 # Here I'm not entirely sure 
 # -----------------------------------------------------------------------------------------
+# def predict_mf_mean_up_to_level(X_target, target_level, thetas, rhos, noises, X_train, Y_train):
+#     """
+#     Predicts the MF surrogate mean up to a specific level (target_level) 
+#     for a set of target points X_target. (NON-NESTED approach).
+#     """
+#     n_points = X_target.shape[0]
+#     f_hat_prev = np.zeros(n_points)
+    
+#     for l in range(1, target_level + 1):
+#         # 1. Calcul du résidu d'entraînement pour le niveau l
+#         if l == 1:
+#             Delta_Y_train_l = Y_train[l]
+#         else:
+#             # Récursion interne pour construire le résidu du training set du niveau l
+#             f_hat_train_prev = predict_mf_mean_up_to_level(X_train[l], l - 1, thetas, rhos, noises, X_train, Y_train)
+#             Delta_Y_train_l = Y_train[l] - rhos[l-2] * f_hat_train_prev
+            
+#         # 2. Construction de la matrice de covariance du niveau l
+#         K_l = base_covariance_matrix(X_train[l], thetas[l-1]) + noises[l-1] * np.eye(X_train[l].shape[0])
+#         K_inv_l = np.linalg.inv(K_l)
+        
+#         # 3. Prédiction de l'écart au niveau l pour nos points cibles (X_target)
+#         delta_hat_l = np.zeros(n_points)
+#         for i, x in enumerate(X_target):
+#             # Covariance croisée entre X_target[i] et X_train[l]
+#             k_vec = k_l_vector(x, X_train[l], thetas[l-1])
+#             delta_hat_l[i] = k_vec.T @ K_inv_l @ Delta_Y_train_l
+            
+#         # 4. Mise à jour récursive de la prédiction moyenne
+#         if l == 1:
+#             f_hat_prev = delta_hat_l
+#         else:
+#             f_hat_prev = rhos[l-2] * f_hat_prev + delta_hat_l
+            
+#     return f_hat_prev
+
+#---------------------------------------------------------------------------------------
 def extract_subpart_vector(X_higher, X_lower, Y_lower, tol=1e-6):
     """
     Extracts the observation values from the lower fidelity dataset (Y_lower)
