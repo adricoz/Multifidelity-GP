@@ -2,10 +2,10 @@ import numpy as np
 from scipy.stats import qmc
 
 # Generating the Latin Hyper Square 
-def generate_nested_lhs(d, n_levels_points):
+def generate_non_nested_lhs(d, n_levels_points):
     """
-    Generates nested Latin Hypercube Sampling (LHS) designs for N levels of fidelity.
-    Each higher fidelity level's points are a subset of the previous lower fidelity level.
+    Generates non-nested Latin Hypercube Sampling (LHS) designs for N levels of fidelity.
+    Each higher fidelity level's points are independent of the previous lower fidelity level.
     
     Parameters:
     - d: int, dimension of the input space (e.g., 6 for Hartmann 6D)

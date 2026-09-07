@@ -4,8 +4,8 @@ from scipy.optimize import minimize, differential_evolution
 
 # Local imports
 from Hartmann6d import f_l
-from nested_mf_sampling import Delta_Y_l, extract_subpart_vector, is_already_evaluated
-from nested_mf_covariance import base_covariance_matrix, Cov_fct
+from non_nested_mf_sampling import Delta_Y_l, extract_subpart_vector, is_already_evaluated
+from non_nested_mf_covariance import base_covariance_matrix, Cov_fct
 
 def log_likelihood_mf(rho_l_minus1, Theta_l, sigma_epsilon_l, X_l, Y_l, Y_l_minus_1, fidelity_level):
     """
@@ -86,7 +86,7 @@ def predict_base_gp(x_new, X_train, Y_train, Theta_l, sigma_epsilon_l):
 
     return delta_hat_scalar, sigma2_delta_scalar
 
-def predict_nested_mf(x_new, thetas, rhos, noises, X_train, Y_train):
+def predict_non_nested_mf(x_new, thetas, rhos, noises, X_train, Y_train):
     """
     Recursively computes the mean and variance of the Multi-Fidelity model.
 
@@ -209,7 +209,7 @@ def aei_multi_fidelity(f_hat_L, sigma2_hat_L, f_best_L, sigma2_e_L):
     return (ei * penalty).item() if hasattr(ei * penalty, 'item') else (ei * penalty)
 # ------------------------------------------------------------------------------------------
 
-def merit_nested(x, l_candidate, L, costs, f_best_L, sigma2_e_L, rhos, noise_lp, gp_variances_at_x, f_hat_L, sigma2_hat_L):
+def merit_non_nested(x, l_candidate, L, costs, f_best_L, sigma2_e_L, rhos, noise_lp, gp_variances_at_x, f_hat_L, sigma2_hat_L):
 
     """
     Compute the merit function for a candidate point in a multi-fidelity Gaussian Process.
@@ -284,7 +284,7 @@ def merit_nested(x, l_candidate, L, costs, f_best_L, sigma2_e_L, rhos, noise_lp,
     return merit
 
 
-def run_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true_function):
+def run_non_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true_function):
     """
     Main loop for the Nested Multi-Fidelity Efficient Global Optimization.
     """
@@ -363,10 +363,10 @@ def run_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true_fun
             
             # once again a function to properly parametrize the merit function for optimization and return the negative for minimization
             def objective_merit(x):
-                f_hat_L, sigma2_hat_L, gp_variances_at_x = predict_nested_mf(x, thetas, rhos, noises, X_train, Y_train)
+                f_hat_L, sigma2_hat_L, gp_variances_at_x = predict_non_nested_mf(x, thetas, rhos, noises, X_train, Y_train)
                 noise_lp = noises[l_candidate - 1] 
                 
-                merit_val = merit_nested(
+                merit_val = merit_non_nested(
                     x, l_candidate, L, costs, f_best_L, sigma2_e_L, rhos, 
                     noise_lp, gp_variances_at_x, f_hat_L, sigma2_hat_L
                 )

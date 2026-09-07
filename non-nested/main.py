@@ -8,8 +8,8 @@ import sys
 
 # Local imports
 from Hartmann6d import f_l
-from nested_mf_sampling import generate_nested_lhs
-from nested_mf_optimizer import run_nested_mf_ego
+from non_nested_mf_sampling import generate_non_nested_lhs
+from non_nested_mf_optimizer import run_non_nested_mf_ego
 
 # ==========================================
 # LOGGING CLASS
@@ -140,8 +140,8 @@ if __name__ == "__main__":
     print("==========================================\n")
     
     # --- 3. INITIALIZATION ---
-    print("Generating the initial Nested Latin Hypercube Design...")
-    X_nested = generate_nested_lhs(d, args.points)
+    print("Generating the initial Non-Nested Latin Hypercube Design...")
+    X_nested = generate_non_nested_lhs(d, args.points)
     
     X_train = {}
     Y_train = {}
@@ -164,7 +164,7 @@ if __name__ == "__main__":
     print("   STARTING MULTI-FIDELITY EGO")
     print("==========================================")
     
-    X_train_final, Y_train_final, thetas, rhos, noises = run_nested_mf_ego(
+    X_train_final, Y_train_final, thetas, rhos, noises = run_non_nested_mf_ego(
         X_train=X_train, 
         Y_train=Y_train, 
         L=args.levels, 
