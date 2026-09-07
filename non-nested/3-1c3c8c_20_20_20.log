@@ -1,0 +1,23 @@
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 20
+ - Levels (L) : 3
+ - Costs      : [1.0, 3.0, 8.0]
+ - Initial DoE: [20, 20, 20] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (20 points)...
+Evaluating initial Level 2 (20 points)...
+Evaluating initial Level 3 (20 points)...
+
+Initial best High-Fidelity point: -1.0408
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/20 ---
+   GP Level 1 | Log-Likelihood: 42.32
