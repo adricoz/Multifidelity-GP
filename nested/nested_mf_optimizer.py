@@ -174,6 +174,7 @@ def expected_improvement(f_hat, sigma2_hat, f_best):
     ei = sigma_hat * (u * norm.cdf(u) + norm.pdf(u))
     return ei
 # -----------------------------------------------------------------------------------------
+
 def aei_multi_fidelity(f_hat_L, sigma2_hat_L, f_best_L, sigma2_e_L):
     """
     Compute the Augmented Expected Improvement (AEI) for multi-fidelity Gaussian Process.
@@ -207,6 +208,7 @@ def aei_multi_fidelity(f_hat_L, sigma2_hat_L, f_best_L, sigma2_e_L):
     
     return (ei * penalty).item() if hasattr(ei * penalty, 'item') else (ei * penalty)
 # ------------------------------------------------------------------------------------------
+
 def merit_nested(x, l_candidate, L, costs, f_best_L, sigma2_e_L, rhos, noise_lp, gp_variances_at_x, f_hat_L, sigma2_hat_L):
 
     """
@@ -242,7 +244,6 @@ def merit_nested(x, l_candidate, L, costs, f_best_L, sigma2_e_L, rhos, noise_lp,
     float
         Merit value for the candidate point.    
     """
-    
     #aei_L = aei_multi_fidelity(f_hat_L, sigma2_hat_L, f_best_L, sigma2_e_L)
     # quick test for hartmann wuith the expected improvement
     aei_L = expected_improvement(f_hat_L, sigma2_hat_L, f_best_L)
@@ -251,8 +252,8 @@ def merit_nested(x, l_candidate, L, costs, f_best_L, sigma2_e_L, rhos, noise_lp,
         return 0.0 
     
   
-    cost_total_L = sum(costs) 
-    cost_total_l_candidate = sum(costs[:l_candidate])
+    cost_total_L = np.sum(costs) 
+    cost_total_l_candidate = np.sum(costs[:l_candidate])
     cost_ratio = cost_total_L / cost_total_l_candidate
     
     
