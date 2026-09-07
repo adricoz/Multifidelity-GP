@@ -308,7 +308,7 @@ def predict_mf_mean_up_to_level(X_target, target_level, thetas, rhos, noises, X_
         for i, x in enumerate(X_target):
             # cross-covariance between X_target[i] and X_train[l]
             k_vec = k_l_vector(x, X_train[l], thetas[l-1])
-            delta_hat_l[i] = k_vec.T @ K_inv_l @ Delta_Y_train_l
+            delta_hat_l[i] = (k_vec.T @ K_inv_l @ Delta_Y_train_l).item()
             
         # recursive update of the mean prediction
         if l == 1:
