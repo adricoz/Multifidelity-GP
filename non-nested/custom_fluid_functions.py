@@ -109,6 +109,6 @@ def objective_function(x_params, lift_coefficient, level, L):
     Cd = drag_Cd(lift_coefficient, Lambda)
     
     # Objective function could be a combination of drag and lift coefficients, adjusted by level
-    objective_value = Cd + (level / L) * lift_coefficient  # Example formulation
+    #objective_value = Cd + (level / L) * lift_coefficient  # Example formulation
     
-    return float(objective_value)
+    return float(Cd)
