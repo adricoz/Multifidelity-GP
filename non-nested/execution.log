@@ -1,0 +1,150 @@
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 20
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [50, 20, 10] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (50 points)...
+Evaluating initial Level 2 (20 points)...
+Evaluating initial Level 3 (10 points)...
+
+Initial best High-Fidelity point: 0.8707
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/20 ---
+   GP Level 1 | Log-Likelihood: 386.25
+   GP Level 2 | Log-Likelihood: 12.61 | rho = 3.372
+   GP Level 3 | Log-Likelihood: 39.48 | rho = 0.004
+-> Next point: x = [0.0024] | Fidelity = 3 | Merit = 0.01447
+
+--- EGO Iteration 2/20 ---
+   GP Level 1 | Log-Likelihood: 386.94
+   GP Level 2 | Log-Likelihood: 13.11 | rho = 1.041
+   GP Level 3 | Log-Likelihood: 46.26 | rho = 0.011
+-> Next point: x = [0.] | Fidelity = 3 | Merit = 0.00015
+
+--- EGO Iteration 3/20 ---
+   GP Level 1 | Log-Likelihood: 386.09
+   GP Level 2 | Log-Likelihood: 12.90 | rho = 2.348
+   GP Level 3 | Log-Likelihood: 43.39 | rho = 0.013
+-> Next point: x = [0.] | Fidelity = 3 | Merit = 0.00000
+
+--- EGO Iteration 4/20 ---
+   GP Level 1 | Log-Likelihood: 386.73
+   GP Level 2 | Log-Likelihood: 12.47 | rho = 3.990
+   GP Level 3 | Log-Likelihood: 50.72 | rho = 0.013
+   Warning: Global merit is null/too low. Random selection triggered (exploration).
+-> Next point: x = [0.395] | Fidelity = 3 | Merit = 0.00000
+
+--- EGO Iteration 5/20 ---
+   GP Level 1 | Log-Likelihood: 384.42
+   GP Level 2 | Log-Likelihood: 12.29 | rho = 4.028
+   GP Level 3 | Log-Likelihood: -29.18 | rho = -3.853
+-> Next point: x = [0.705] | Fidelity = 3 | Merit = 1.21617
+
+--- EGO Iteration 6/20 ---
+   GP Level 1 | Log-Likelihood: 386.73
+   GP Level 2 | Log-Likelihood: 12.32 | rho = 4.176
+   GP Level 3 | Log-Likelihood: 13.07 | rho = 0.103
+-> Next point: x = [0.] | Fidelity = 2 | Merit = 0.00276
+
+--- EGO Iteration 7/20 ---
+   GP Level 1 | Log-Likelihood: 386.64
+   GP Level 2 | Log-Likelihood: -109011622208.05 | rho = -5.000
+   GP Level 3 | Log-Likelihood: 22.38 | rho = 0.000
+-> Next point: x = [0.] | Fidelity = 3 | Merit = 0.00001
+
+--- EGO Iteration 8/20 ---
+   GP Level 1 | Log-Likelihood: 386.17
+   GP Level 2 | Log-Likelihood: -109011622202.30 | rho = -5.000
+   GP Level 3 | Log-Likelihood: -20.97 | rho = -0.000
+-> Next point: x = [0.9215] | Fidelity = 3 | Merit = 1.88527
+
+--- EGO Iteration 9/20 ---
+   GP Level 1 | Log-Likelihood: 386.50
+   GP Level 2 | Log-Likelihood: -109011593809.87 | rho = 0.953
+   GP Level 3 | Log-Likelihood: -24.91 | rho = -0.000
+-> Next point: x = [0.1675] | Fidelity = 3 | Merit = 2.80865
+
+--- EGO Iteration 10/20 ---
+   GP Level 1 | Log-Likelihood: 386.38
+   GP Level 2 | Log-Likelihood: -109283185198.03 | rho = 5.000
+   GP Level 3 | Log-Likelihood: -33.34 | rho = 0.000
+-> Next point: x = [0.291] | Fidelity = 3 | Merit = 2.92616
+
+--- EGO Iteration 11/20 ---
+   GP Level 1 | Log-Likelihood: 385.75
+   GP Level 2 | Log-Likelihood: -109011574504.99 | rho = 5.000
+   GP Level 3 | Log-Likelihood: -31.02 | rho = -0.000
+-> Next point: x = [0.4948] | Fidelity = 3 | Merit = 2.15808
+
+--- EGO Iteration 12/20 ---
+   GP Level 1 | Log-Likelihood: 386.70
+   GP Level 2 | Log-Likelihood: -109011574508.03 | rho = 5.000
+   GP Level 3 | Log-Likelihood: -33.76 | rho = -0.000
+-> Next point: x = [0.6666] | Fidelity = 3 | Merit = 1.13844
+
+--- EGO Iteration 13/20 ---
+   GP Level 1 | Log-Likelihood: 386.37
+   GP Level 2 | Log-Likelihood: -109275291829.91 | rho = 5.000
+   GP Level 3 | Log-Likelihood: -42.13 | rho = 0.000
+-> Next point: x = [0.7432] | Fidelity = 3 | Merit = 2.89457
+
+--- EGO Iteration 14/20 ---
+   GP Level 1 | Log-Likelihood: 386.21
+   GP Level 2 | Log-Likelihood: -109011574505.49 | rho = 5.000
+   GP Level 3 | Log-Likelihood: -37.82 | rho = -0.000
+-> Next point: x = [0.8843] | Fidelity = 3 | Merit = 1.14068
+
+--- EGO Iteration 15/20 ---
+   GP Level 1 | Log-Likelihood: 386.68
+   GP Level 2 | Log-Likelihood: -109303507293.10 | rho = 5.000
+   GP Level 3 | Log-Likelihood: -29.83 | rho = -0.000
+-> Next point: x = [0.0194] | Fidelity = 3 | Merit = 0.82922
+
+--- EGO Iteration 16/20 ---
+   GP Level 1 | Log-Likelihood: 386.74
+   GP Level 2 | Log-Likelihood: -109011593435.15 | rho = 1.032
+   GP Level 3 | Log-Likelihood: -44.73 | rho = -0.000
+-> Next point: x = [0.2011] | Fidelity = 3 | Merit = 1.74920
+
+--- EGO Iteration 17/20 ---
+   GP Level 1 | Log-Likelihood: 386.71
+   GP Level 2 | Log-Likelihood: -109011574508.23 | rho = 5.000
+   GP Level 3 | Log-Likelihood: -48.46 | rho = -0.000
+-> Next point: x = [0.9576] | Fidelity = 3 | Merit = 2.06447
+
+--- EGO Iteration 18/20 ---
+   GP Level 1 | Log-Likelihood: 386.11
+   GP Level 2 | Log-Likelihood: -109011595716.82 | rho = 0.554
+   GP Level 3 | Log-Likelihood: -49.56 | rho = -0.000
+-> Next point: x = [0.0807] | Fidelity = 3 | Merit = 2.21363
+
+--- EGO Iteration 19/20 ---
+   GP Level 1 | Log-Likelihood: 386.19
+   GP Level 2 | Log-Likelihood: -109234415908.29 | rho = 0.845
+   GP Level 3 | Log-Likelihood: -55.42 | rho = -0.000
+-> Next point: x = [0.5925] | Fidelity = 3 | Merit = 2.58008
+
+--- EGO Iteration 20/20 ---
+   GP Level 1 | Log-Likelihood: 387.01
+   GP Level 2 | Log-Likelihood: -109224757623.25 | rho = -5.000
+   GP Level 3 | Log-Likelihood: -58.44 | rho = -0.000
+-> Next point: x = [0.461] | Fidelity = 3 | Merit = 2.56062
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best HF point found: 0.8409
+Coordinates of the best HF point found: [3.29929915e-09]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
