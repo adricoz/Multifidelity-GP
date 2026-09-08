@@ -189,6 +189,7 @@ if __name__ == "__main__":
     print("   OPTIMIZATION COMPLETED")
     print("==========================================")
     print(f"Absolute best HF point found: {np.min(Y_train_final[args.levels]):.4f}")
+    print (f"Coordinates of the best HF point found: {X_train_final[args.levels][np.argmin(Y_train_final[args.levels])]}")
     
     # --- 5. VISUALIZATION ---
     print("\nGenerating final plots...")
