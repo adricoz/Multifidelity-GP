@@ -1,0 +1,61 @@
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 1
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [1] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (1 points)...
+
+Initial best High-Fidelity point: 1.0669
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/1 ---
+   GP Level 1 | Log-Likelihood: -1.48
+-> Next point: x = [-1.5708] | Fidelity = 1 | Merit = 0.64570
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best HF point found: -0.7300
+Coordinates of the best HF point found: [-1.57079633]
+
+Generating final plots...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 1
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [1] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (1 points)...
+
+Initial best High-Fidelity point: 1.0669
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/1 ---
+   GP Level 1 | Log-Likelihood: -1.48
+-> Next point: x = [-1.5708] | Fidelity = 1 | Merit = 0.69240
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best HF point found: -0.7300
+Coordinates of the best HF point found: [-1.57079633]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.

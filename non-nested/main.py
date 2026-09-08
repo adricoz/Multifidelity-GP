@@ -65,6 +65,11 @@ def plot_ego_results(X_train, Y_train, L, n_initial_hf):
     """
     Generates and saves the analysis plots for the Multi-Fidelity EGO.
     """
+    # ensures that dimension is > 1
+    if X_train[L].shape[1] < 2:
+        print("No plot can be generated for dimensions < 2. Skipping plotting.")
+        return
+    
     y_hf = Y_train[L]
     best_y = np.minimum.accumulate(y_hf)
     
