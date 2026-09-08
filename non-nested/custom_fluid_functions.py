@@ -72,14 +72,14 @@ def Lambda_6132(alpha, lift_coefficient):
         / (2 * alpha * np.pi - lift_coefficient)
     return Lambda
 
-def obfective_function(alpha, lift_coefficient, level, L):
+def objective_function(x_params, lift_coefficient, level, L):
     """
     Calculate the objective function based on the angle of attack (alpha), lift coefficient, level, and total levels.
     Lift coefficient is usually fixed and goal is to minimize the drag coefficent.
     
     Parameters:
-    alpha : float
-        Angle of attack.
+    x_params : tuple
+        A tuple containing (alpha).
     lift_coefficient : float
         Lift coefficient.
     level : int
@@ -91,8 +91,7 @@ def obfective_function(alpha, lift_coefficient, level, L):
     objective_value : float
         Value of the objective function.
     """
-    # Calculate aspect ratio using one of the Lambda functions (e.g., Lambda_6130)
-
+    alpha = x_params
     if level == 1:
         Lambda = Lambda_6130(alpha, lift_coefficient) 
 

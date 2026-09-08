@@ -7,9 +7,11 @@ import argparse
 import sys
 
 # Local imports
-from Hartmann6d import f_l
+from Hartmann6d import f_l # Hartman for testing and calibration purpuses
 from non_nested_mf_sampling import generate_non_nested_lhs
 from non_nested_mf_optimizer import run_non_nested_mf_ego
+
+from custom_fluid_functions import objective_function
 
 # ==========================================
 # LOGGING CLASS
@@ -33,19 +35,28 @@ class LogTee:
 # ==========================================
 # TARGET FUNCTION ADAPTATION
 # ==========================================
+# def evaluate_fidelity(x, level, L):
+#     """
+#     Evaluates the Hartmann 6D function at the requested fidelity level.
+#     """
+#     if not (1 <= level <= L):
+#         raise ValueError(f"Error: Fidelity level {level} is not defined. Must be between 1 and {L}.")
+    
+#     if level == L:
+#         # High Fidelity (True function)
+#         return f_l(x, deg=6, k=np.inf)
+#     else:
+#         # Low Fidelity approximations (k matches the level)
+#         return f_l(x, deg=6, k=level, delta=0.05)
+
 def evaluate_fidelity(x, level, L):
     """
-    Evaluates the Hartmann 6D function at the requested fidelity level.
+    Evaluates our custom Fluid function .
     """
     if not (1 <= level <= L):
         raise ValueError(f"Error: Fidelity level {level} is not defined. Must be between 1 and {L}.")
     
-    if level == L:
-        # High Fidelity (True function)
-        return f_l(x, deg=6, k=np.inf)
-    else:
-        # Low Fidelity approximations (k matches the level)
-        return f_l(x, deg=6, k=level, delta=0.05)
+    return objective_function(x, lift_coefficient=1, level=level, L=L)
 
 # ==========================================
 # VISUALIZATION FUNCTION
@@ -127,8 +138,8 @@ if __name__ == "__main__":
     if len(args.points) != args.levels:
         parser.error(f"Number of point counts provided ({len(args.points)}) must match the number of levels ({args.levels}).")
         
-    d = 6
-    bounds = [(0.0, 1.0) for _ in range(d)]
+    d = 1
+    bounds = [(-0.5*np.pi, 0.5*np.pi) for _ in range(d)]
     
     print("\n==========================================")
     print("   EXPERIMENT CONFIGURATION")
