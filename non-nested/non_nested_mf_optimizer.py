@@ -12,11 +12,18 @@ def log_likelihood_mf(rho_l_minus1, Theta_l, sigma_epsilon_l, X_l, Y_l, Y_l_minu
     Eq.15 Log likelyhood implementation
     """
     # Residuals 
-    Delta_Y_l_val = Delta_Y_l(Y_l, Y_l_minus_1, rho_l_minus1)
+    n = X_l.shape[0]
+
+    # avoid issues of type (5,1) vs (5,) when computing the log-likelihood
+    Y_l_1d = np.squeeze(Y_l)
+    if fidelity_level == 1:
+        Delta_Y_l_val = Y_l_1d
+    else:
+        Y_l_minus_1_1d = np.squeeze(Y_l_minus_1)
+        Delta_Y_l_val = Y_l_1d - rho_l_minus1 * Y_l_minus_1_1d
     
     # basic covariance matrix
     C_l = base_covariance_matrix(X_l, Theta_l)
-    
     # noise
     K_l = C_l + sigma_epsilon_l * np.eye(len(X_l))
     
@@ -27,11 +34,20 @@ def log_likelihood_mf(rho_l_minus1, Theta_l, sigma_epsilon_l, X_l, Y_l, Y_l_minu
         log_det = 2.0 * np.sum(np.log(np.diag(L_chol)))
         
         # Résolution de K_l * alpha = Delta_Y_l_val
-        alpha = np.linalg.solve(L_chol.T, np.linalg.solve(L_chol, Delta_Y_l_val))
+        import scipy.linalg
+        alpha = scipy.linalg.solve(L_chol.T, scipy.linalg.solve(L_chol, Delta_Y_l_val))
         
+        Delta_Y_1d = np.squeeze(Delta_Y_l_val)
+        alpha_1d = np.squeeze(alpha)
+
+        data_fit = -0.5 * np.dot(Delta_Y_1d, alpha_1d)
+
+        log_lik = data_fit - 0.5 * log_det - 0.5 * n * np.log(2 * np.pi)
         # -1/2 * Y^T * K^-1 * Y - 1/2 * log|K| - n/2 * log(2pi)
-        n = len(X_l)
-        log_lik = -0.5 * np.dot(Delta_Y_l_val, alpha) - 0.5 * log_det - 0.5 * n * np.log(2 * np.pi)
+        # #log_lik = -0.5 * np.dot(Delta_Y_l_val, alpha) - 0.5 * log_det - 0.5 * n * np.log(2 * np.pi)
+        # data_fit = -0.5 * (Delta_Y_l_val.T @ alpha)
+        # log_lik = data_fit.item() - 0.5 * log_det - 0.5 * n * np.log(2 * np.pi)
+
         return log_lik
     except np.linalg.LinAlgError:
         # penality if the matric is conditionned
@@ -89,30 +105,6 @@ def predict_base_gp(x_new, X_train, Y_train, Theta_l, sigma_epsilon_l):
 def predict_non_nested_mf(x_new, thetas, rhos, noises, X_train, Y_train):
     """
     Recursively computes the mean and variance of the Multi-Fidelity model (NON-NESTED).
-
-    Parameters
-    ----------
-    x_new : array-like, shape (d,)
-        New point where the prediction is desired.
-    thetas : list of array-like
-        List of hyperparameters for each fidelity level.
-    rhos : list of floats
-        List of correlation coefficients between fidelity levels.   
-    noises : list of floats
-        List of noise variances for each fidelity level.
-    X_train : dict
-        Dictionary containing training input points for each fidelity level.
-    Y_train : dict
-        Dictionary containing training output values for each fidelity level.   
-
-    Returns
-    -------
-    f_hat_prev : float
-        Predicted mean at the new point for the highest fidelity level.
-    sigma2_hat_prev : float
-        Predicted variance at the new point for the highest fidelity level.
-    gp_variances_at_x : list of floats
-        List of predicted variances at the new point for each fidelity level.
     """
     L = len(thetas)
     f_hat_prev = 0.0
@@ -121,16 +113,17 @@ def predict_non_nested_mf(x_new, thetas, rhos, noises, X_train, Y_train):
     
     for l in range(1, L + 1):
         X_l = X_train[l]
-        Y_l = Y_train[l]
+        
+        # 1. SÉCURITÉ ANTI-BROADCASTING : Forcer Y en 1D
+        Y_l_1d = np.squeeze(Y_train[l])
+        
         theta_l = thetas[l-1]
         noise_l = noises[l-1]
         
         if l == 1:
-            target_Y = Y_l
+            target_Y = Y_l_1d
         else:
             rho_prev = rhos[l-2]
-            # CRITICAL NON-NESTED CHANGE:
-            # Replaced extract_subpart_vector with the GP mean prediction
             Y_l_minus_1 = predict_mf_mean_up_to_level(
                 X_target=X_l, 
                 target_level=l-1, 
@@ -140,7 +133,9 @@ def predict_non_nested_mf(x_new, thetas, rhos, noises, X_train, Y_train):
                 X_train=X_train, 
                 Y_train=Y_train
             )
-            target_Y = Y_l - rho_prev * Y_l_minus_1
+            # 2. SÉCURITÉ : Forcer la prédiction en 1D
+            Y_l_minus_1_1d = np.squeeze(Y_l_minus_1)
+            target_Y = Y_l_1d - rho_prev * Y_l_minus_1_1d
             
         # Calling the real function to get the prediction at the new point
         delta_hat, sigma2_delta = predict_base_gp(x_new, X_l, target_Y, theta_l, noise_l)
@@ -291,24 +286,32 @@ def predict_mf_mean_up_to_level(X_target, target_level, thetas, rhos, noises, X_
     f_hat_prev = np.zeros(n_points)
     
     for l in range(1, target_level + 1):
+
+        Y_l_1d = np.squeeze(Y_train[l])
+
         # residual
         if l == 1:
-            Delta_Y_train_l = Y_train[l]
+            # 1d correction
+            Delta_Y_train_l = Y_l_1d
         else:
-            #internal recurssion
+            # internal recursion
             f_hat_train_prev = predict_mf_mean_up_to_level(X_train[l], l - 1, thetas, rhos, noises, X_train, Y_train)
-            Delta_Y_train_l = Y_train[l] - rhos[l-2] * f_hat_train_prev
+            f_hat_train_prev_1d = np.squeeze(f_hat_train_prev)
+
+            # C1d correction
+            Delta_Y_train_l = Y_l_1d - rhos[l-2] * f_hat_train_prev_1d
             
-        # Ccovariance matrix for level l
+        # Covariance matrix for level l
         K_l = base_covariance_matrix(X_train[l], thetas[l-1]) + noises[l-1] * np.eye(X_train[l].shape[0])
         K_inv_l = np.linalg.inv(K_l)
         
         # prediction of the residual at level l for our target points (X_target)
         delta_hat_l = np.zeros(n_points)
         for i, x in enumerate(X_target):
-            # cross-covariance between X_target[i] and X_train[l]
             k_vec = k_l_vector(x, X_train[l], thetas[l-1])
-            delta_hat_l[i] = (k_vec.T @ K_inv_l @ Delta_Y_train_l).item()
+            # cross-covariance between X_target[i] and X_train[l]
+            weights = np.squeeze(k_vec.T @ K_inv_l)
+            delta_hat_l[i] = np.dot(weights, Delta_Y_train_l)
             
         # recursive update of the mean prediction
         if l == 1:

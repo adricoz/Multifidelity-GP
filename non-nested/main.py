@@ -49,14 +49,26 @@ class LogTee:
 #         # Low Fidelity approximations (k matches the level)
 #         return f_l(x, deg=6, k=level, delta=0.05)
 
-def evaluate_fidelity(x, level, L):
+def evaluate_fidelity(x_normalized, level, L):
     """
-    Evaluates our custom Fluid function .
+    Evaluates the custom Fluid function using normalized inputs [0, 1].
     """
     if not (1 <= level <= L):
         raise ValueError(f"Error: Fidelity level {level} is not defined. Must be between 1 and {L}.")
     
-    return objective_function(x, lift_coefficient=1, level=level, L=L)
+    # 1. Dénormalisation : transforms de [0, 1] to [0, 0.5*pi]
+    lower_bound = 0/180 * np.pi
+    upper_bound = 10/180 * np.pi
+    
+    # scalar extraction
+    x_scalar = x_normalized[0]
+    
+    #Physical scale
+    alpha_phys = lower_bound + x_scalar * (upper_bound - lower_bound)
+    
+    # Calling Physics functions 
+    # be careful with alpha
+    return objective_function(alpha_phys, lift_coefficient=1, level=level, L=L)
 
 # ==========================================
 # VISUALIZATION FUNCTION
@@ -144,7 +156,7 @@ if __name__ == "__main__":
         parser.error(f"Number of point counts provided ({len(args.points)}) must match the number of levels ({args.levels}).")
         
     d = 1
-    bounds = [(-0.5*np.pi, 0.5*np.pi) for _ in range(d)]
+    bounds =[(0.0, 1.0) for _ in range(d)]
     
     print("\n==========================================")
     print("   EXPERIMENT CONFIGURATION")
