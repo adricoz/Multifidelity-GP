@@ -58,17 +58,18 @@ def evaluate_fidelity(x_normalized, level, L):
     
     # 1. Dénormalisation : transforms de [0, 1] to [0, 0.5*pi]
     lower_bound = 0/180 * np.pi
-    upper_bound = 10/180 * np.pi
+    upper_bound = 20/180 * np.pi
     
     # scalar extraction
     x_scalar = x_normalized[0]
     
     #Physical scale
     alpha_phys = lower_bound + x_scalar * (upper_bound - lower_bound)
+    lift_coefficient = 0.5 + x_normalized[1]*(1.0- 0.0)  # Assuming the second dimension represents the lift coefficient
     
     # Calling Physics functions 
     # be careful with alpha
-    return objective_function(alpha_phys, lift_coefficient=1, level=level, L=L)
+    return objective_function(alpha_phys, lift_coefficient=lift_coefficient, level=level, L=L)
 
 # ==========================================
 # VISUALIZATION FUNCTION
@@ -119,7 +120,6 @@ def plot_ego_results(X_train, Y_train, L, n_initial_hf):
     plt.tight_layout()
     plt.savefig("ego_convergence_results.png", dpi=300)
     print("\n=> Plot saved as 'ego_convergence_results.png'.")
-    plt.show()
 
 # ==========================================
 # EXECUTION BLOCK (WITH PARSER)
@@ -155,7 +155,7 @@ if __name__ == "__main__":
     if len(args.points) != args.levels:
         parser.error(f"Number of point counts provided ({len(args.points)}) must match the number of levels ({args.levels}).")
         
-    d = 1
+    d = 2
     bounds =[(0.0, 1.0) for _ in range(d)]
     
     print("\n==========================================")
@@ -205,8 +205,8 @@ if __name__ == "__main__":
     print("\n==========================================")
     print("   OPTIMIZATION COMPLETED")
     print("==========================================")
-    print(f"Absolute best HF point found: {np.min(Y_train_final[args.levels]):.4f}")
-    print (f"Coordinates of the best HF point found: {X_train_final[args.levels][np.argmin(Y_train_final[args.levels])]}")
+    print(f"Absolute best point found: {np.min(Y_train_final[args.levels]):.4f}")
+    print (f"Coordinates (normalized) of the best point found: {X_train_final[args.levels][np.argmin(Y_train_final[args.levels])]}")
     
     # --- 5. VISUALIZATION ---
     print("\nGenerating final plots...")
