@@ -56,20 +56,18 @@ def evaluate_fidelity(x_normalized, level, L):
     if not (1 <= level <= L):
         raise ValueError(f"Error: Fidelity level {level} is not defined. Must be between 1 and {L}.")
     
-    # 1. Dénormalisation : transforms de [0, 1] to [0, 0.5*pi]
-    lower_bound = 0/180 * np.pi
-    upper_bound = 20/180 * np.pi
+    lower_bound = 5/180 * np.pi
+    upper_bound = 15/180 * np.pi
     
     # scalar extraction
-    x_scalar = x_normalized[0]
-    
+    x0_scalar = x_normalized[0]
+   
     #Physical scale
-    alpha_phys = lower_bound + x_scalar * (upper_bound - lower_bound)
-    lift_coefficient = 0.5 + x_normalized[1]*(1.0- 0.0)  # Assuming the second dimension represents the lift coefficient
-    
-    # Calling Physics functions 
-    # be careful with alpha
-    return objective_function(alpha_phys, lift_coefficient=lift_coefficient, level=level, L=L)
+    alpha_phys = lower_bound + x0_scalar * (upper_bound - lower_bound)
+
+    x_params = np.array([alpha_phys])
+
+    return objective_function(x_params, level=level, L=L)
 
 # ==========================================
 # VISUALIZATION FUNCTION
@@ -155,7 +153,7 @@ if __name__ == "__main__":
     if len(args.points) != args.levels:
         parser.error(f"Number of point counts provided ({len(args.points)}) must match the number of levels ({args.levels}).")
         
-    d = 2
+    d = 1
     bounds =[(0.0, 1.0) for _ in range(d)]
     
     print("\n==========================================")

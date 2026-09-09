@@ -93,8 +93,12 @@ def predict_base_gp(x_new, X_train, Y_train, Theta_l, sigma_epsilon_l):
     for i in range(len(X_train)):
         k_vec[i] = Cov_fct(x_new, X_train[i], Theta_l)
 
+    # after some debugging we found that diemnsions were not right when 1 single point was found 
+    Y_train_1D = Y_train.reshape(-1)  # Ensure Y_train is 1D
+    k_vec = k_vec.reshape(-1)  # Ensure k_vec is 1D
+
     kappa = Cov_fct(x_new, x_new, Theta_l)
-    delta_hat = k_vec.T @ K_inv @ Y_train
+    delta_hat = k_vec.T @ K_inv @ Y_train_1D
     sigma2_delta = kappa - (k_vec.T @ K_inv @ k_vec)
     
     delta_hat_scalar = delta_hat.item() if hasattr(delta_hat, 'item') else delta_hat

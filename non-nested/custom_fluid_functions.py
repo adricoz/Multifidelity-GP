@@ -1,123 +1,70 @@
 import numpy as np 
+import neuralfoil as nf
+import aerosandbox as asb
 
-# Equation and relations in this file are based on Faltinsen - Hydrodynamics of High-Speed Marine Vehicles, 
-# Cambridge University Press, 2005.
-def drag_Cd(Cl, Lambda):
+# implementation of a typical fluid solver function call...
+# Here we use neuralfoil to compute drag coefficients
+
+def foil_mid_fidelity(alpha, naca_string="naca4412", string_modelclass="xxsmall"):
+
     """
-    Calculate the drag coefficient (Cd) based on the lift coefficient (Cl) and aspect ratio (Lambda).
-    
+    Computes the drag coefficient for a given airfoil at a specific angle of attack and fidelity level.
     Parameters:
-    Cl : float
-        Lift coefficient.
-    Lambda : float
-        Aspect ratio of the wing or airfoil.
-        
+    - alpha: float
+        Angle of attack in degrees.
+    - naca_string: str
+        NACA airfoil designation (default is "naca6412").
+    - string_modelclass: str
+        Model class for the neural network used in the simulation (default is "xxsmall").
     Returns:
-    Cd : float
-        Drag coefficient.
+    - Cd: float
+        The computed drag coefficient.
     """
-    # Empirical relation for drag coefficient based on lift coefficient and aspect ratio
-    Cd = (Cl**2) / (np.pi * Lambda)
-    return Cd
+    aero = nf.get_aero_from_airfoil(
+        airfoil = asb.Airfoil(naca_string),
+        alpha = alpha,
+        Re = 50000,
+        model_size = string_modelclass
+    )
+    return np.squeeze(aero['CD'])
 
-def Lambda_6130(alpha, lift_coefficient):
+def objective_function(x_params, level, L):
+    """    
+    Evaluates the custom Fluid function using physical inputs.
+    params:
+    - x_params: array-like, shape (1,)
+        The input parameters in physical scale.
+    - level: int
+        The fidelity level (1, 2, or L).
+    - L: int
+        The total number of fidelity levels.
     """
-    Calculate the aspect ratio (Lambda) based on the angle of attack (alpha) and lift coefficient.
-    
-    Parameters:
-    alpha : float
-        Angle of attack.
-    lift_coefficient : float
-        Lift coefficient.
-        
-    Returns:
-    Lambda : float
-        Aspect ratio of the wing or airfoil.
-    """
-    Lambda = 2 * lift_coefficient / (2 * np.pi * alpha - lift_coefficient)
-    return Lambda
+    modelclass = ["xxsmall","xsmall","small","medium","large","xlarge","xxlarge","xxxlarge"]
 
-def Lambda_6131(alpha, lift_coefficient):
-    """
-    Calculate the aspect ratio (Lambda) based on the angle of attack (alpha) and lift coefficient.
-    
-    Parameters:
-    alpha : float
-        Angle of attack.
-    lift_coefficient : float
-        Lift coefficient.
-        
-    Returns:
-    Lambda : float
-        Aspect ratio of the wing or airfoil.
-    """
-    Lambda = 8 * alpha * np.pi * lift_coefficient / (-1.0 * lift_coefficient**2 + 4 * alpha**2 * np.pi**2)
-    return Lambda
+    alpha  = float(x_params[0])
 
-def Lambda_6132(alpha, lift_coefficient):
-    """
-    Calculate the aspect ratio (Lambda) based on the angle of attack (alpha) and lift coefficient.
-    
-    Parameters:
-    alpha : float
-        Angle of attack.
-    lift_coefficient : float
-        Lift coefficient.
-        
-    Returns:
-    Lambda : float
-        Aspect ratio of the wing or airfoil.
-    """
-    Lambda = ((2 * lift_coefficient-alpha * np.pi) + np.sqrt(4 * np.pi * alpha * lift_coefficient + alpha * np.pi**2)) \
-        / (2 * alpha * np.pi - lift_coefficient)
-    return Lambda
+    # simple implementation of a 3 levels fidelity function where the fidelity is controlled by
+    # the size of the neural network used to compute the drag coefficient
 
-def objective_function(x_params, lift_coefficient, level, L):
-    """
-    Calculate the objective function based on the angle of attack (alpha), lift coefficient, level, and total levels.
-    Lift coefficient is usually fixed and goal is to minimize the drag coefficent.
-    
-    Parameters:
-    x_params : tuple
-        A tuple containing (alpha).
-    lift_coefficient : float
-        Lift coefficient.
-    level : int
-        Current fidelity level.
-    L : int
-        Total number of fidelity levels.
-        
-    Returns:
-    objective_value : float
-        Value of the objective function.
-    """
-    alpha = x_params
-    if level == 1:
-        Lambda = Lambda_6130(alpha, lift_coefficient) 
+    if L >= 1 and L <= 8:
+       if level < L :
+              modelclass = modelclass[level-1]
+              Cd = foil_mid_fidelity(alpha*180/np.pi, string_modelclass=modelclass)
+              if float(Cd) < 0:
+                      print(f"Warning: Drag coefficient {Cd:.4f} is negative. Returning a high penalty value.")
+                      return 1e9
+              else:
+                  return float(Cd)
+       elif level == L:
+            modelclass = modelclass[-1]
+            Cd = foil_mid_fidelity(alpha*180/np.pi, string_modelclass=modelclass)
 
-    elif level == 2:
-        Lambda = Lambda_6131(alpha, lift_coefficient)
-
-    elif level == 3:
-        Lambda = Lambda_6132(alpha, lift_coefficient)
-
-    else:
-
-        raise ValueError("Level must be 1, 2, or 3.")
-    
-    # Calculate drag coefficient using the drag_Cd function
-    Cd = drag_Cd(lift_coefficient, Lambda)
-    #Cd0 = 0.02
-    #Cd *= alpha**3
-    #Cd+=Cd0
-    
-    Cd0 = 0.02  # Base drag coefficient (can be adjusted based on the specific application)
-    
-    #trying to deal with singularities
-    Cd *= alpha**2
-    Cd += Cd0  # Add base drag to the calculated drag coefficient
-    
-    # Objective function could be a combination of drag and lift coefficients, adjusted by level
-    #objective_value = Cd + (level / L) * lift_coefficient  # Example formulation
-    
-    return float(Cd)
+            if float(Cd) < 0:
+                print(f"Warning: Drag coefficient {Cd:.4f} is negative. Returning a high penalty value.")
+                return 1e9
+            else:
+                return float(Cd)
+       else:
+            raise ValueError(f"Error: Fidelity level {level} is not defined. Must be between 1 and {L}.")
+    if L<1 or L>8:
+        raise ValueError(f"Error: Fidelity level {L} is not defined. Must be between 1 and 8.")

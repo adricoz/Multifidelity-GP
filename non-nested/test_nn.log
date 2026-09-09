@@ -2,6 +2,295 @@
 ==========================================
    EXPERIMENT CONFIGURATION
 ==========================================
+ - Iterations : 20
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [20] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (20 points)...
+
+Initial best High-Fidelity point: -3.7693
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/20 ---
+   GP Level 1 | Log-Likelihood: -59.55
+-> Next point: x = [0.6507] | Fidelity = 1 | Merit = 0.58239
+
+--- EGO Iteration 2/20 ---
+   GP Level 1 | Log-Likelihood: -62.03
+-> Next point: x = [1.] | Fidelity = 1 | Merit = 0.54177
+
+--- EGO Iteration 3/20 ---
+   GP Level 1 | Log-Likelihood: -64.48
+-> Next point: x = [0.1596] | Fidelity = 1 | Merit = 0.84718
+
+--- EGO Iteration 4/20 ---
+   GP Level 1 | Log-Likelihood: -67.14
+-> Next point: x = [0.1203] | Fidelity = 1 | Merit = 0.47912
+
+--- EGO Iteration 5/20 ---
+   GP Level 1 | Log-Likelihood: -68.42
+-> Next point: x = [0.8914] | Fidelity = 1 | Merit = 0.48405
+
+--- EGO Iteration 6/20 ---
+   GP Level 1 | Log-Likelihood: -70.82
+-> Next point: x = [0.0535] | Fidelity = 1 | Merit = 0.44931
+
+--- EGO Iteration 7/20 ---
+   GP Level 1 | Log-Likelihood: -73.09
+-> Next point: x = [0.3075] | Fidelity = 1 | Merit = 0.41220
+
+--- EGO Iteration 8/20 ---
+   GP Level 1 | Log-Likelihood: -75.48
+-> Next point: x = [0.7581] | Fidelity = 1 | Merit = 0.35723
+
+--- EGO Iteration 9/20 ---
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 20
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [20] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (20 points)...
+Warning: Drag coefficient -1.0355 is negative. Returning a high penalty value.
+Warning: Drag coefficient -2.1848 is negative. Returning a high penalty value.
+Warning: Drag coefficient -0.7380 is negative. Returning a high penalty value.
+Warning: Drag coefficient -3.7693 is negative. Returning a high penalty value.
+
+Initial best High-Fidelity point: 0.1702
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/20 ---
+   GP Level 1 | Log-Likelihood: -23619556542.16
+-> Next point: x = [0.2301] | Fidelity = 1 | Merit = 202924.89645
+
+--- EGO Iteration 2/20 ---
+   GP Level 1 | Log-Likelihood: -24861360580.12
+-> Next point: x = [0.2178] | Fidelity = 1 | Merit = 42185.81331
+
+--- EGO Iteration 3/20 ---
+   GP Level 1 | Log-Likelihood: -26651478243.13
+-> Next point: x = [0.9461] | Fidelity = 1 | Merit = 23803.03309
+
+--- EGO Iteration 4/20 ---
+   GP Level 1 | Log-Likelihood: -31111686157.03
+-> Next point: x = [0.3563] | Fidelity = 1 | Merit = 16538.22876
+
+--- EGO Iteration 5/20 ---
+   GP Level 1 | Log-Likelihood: -26763477720.66
+-> Next point: x = [0.7117] | Fidelity = 1 | Merit = 22300.86771
+
+--- EGO Iteration 6/20 ---
+   GP Level 1 | Log-Likelihood: -26820034157.82
+-> Next point: x = [0.2498] | Fidelity = 1 | Merit = 49800.03353
+
+--- EGO Iteration 7/20 ---
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [20] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (20 points)...
+Warning: Drag coefficient -1.0355 is negative. Returning a high penalty value.
+Warning: Drag coefficient -2.1848 is negative. Returning a high penalty value.
+Warning: Drag coefficient -0.7380 is negative. Returning a high penalty value.
+Warning: Drag coefficient -3.7693 is negative. Returning a high penalty value.
+
+Initial best High-Fidelity point: 0.1702
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/5 ---
+   GP Level 1 | Log-Likelihood: -23619556542.16
+-> Next point: x = [0.2301] | Fidelity = 1 | Merit = 202924.89705
+
+--- EGO Iteration 2/5 ---
+   GP Level 1 | Log-Likelihood: -24861360577.80
+-> Next point: x = [0.2178] | Fidelity = 1 | Merit = 42185.81345
+
+--- EGO Iteration 3/5 ---
+   GP Level 1 | Log-Likelihood: -26651478238.77
+-> Next point: x = [0.7117] | Fidelity = 1 | Merit = 22726.99668
+
+--- EGO Iteration 4/5 ---
+   GP Level 1 | Log-Likelihood: -26710479129.69
+-> Next point: x = [0.2499] | Fidelity = 1 | Merit = 50218.95586
+
+--- EGO Iteration 5/5 ---
+   GP Level 1 | Log-Likelihood: -27224403697.69
+-> Next point: x = [0.9461] | Fidelity = 1 | Merit = 24310.05772
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.1702
+Coordinates (normalized) of the best point found: [0.96069678]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [20] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (20 points)...
+Warning: Drag coefficient -1.0154 is negative. Returning a high penalty value.
+Warning: Drag coefficient -2.1646 is negative. Returning a high penalty value.
+Warning: Drag coefficient -0.7180 is negative. Returning a high penalty value.
+Warning: Drag coefficient -3.7491 is negative. Returning a high penalty value.
+
+Initial best High-Fidelity point: 0.1959
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/5 ---
+   GP Level 1 | Log-Likelihood: -30440009267616716.00
+-> Next point: x = [0.8479] | Fidelity = 1 | Merit = 3470655.28272
+
+--- EGO Iteration 2/5 ---
+   GP Level 1 | Log-Likelihood: -23635764090961952.00
+-> Next point: x = [0.2301] | Fidelity = 1 | Merit = 203228158.37294
+
+--- EGO Iteration 3/5 ---
+   GP Level 1 | Log-Likelihood: -24884993054407820.00
+-> Next point: x = [0.2178] | Fidelity = 1 | Merit = 42240396.82375
+
+--- EGO Iteration 4/5 ---
+   GP Level 1 | Log-Likelihood: -26680665248422384.00
+-> Next point: x = [0.7117] | Fidelity = 1 | Merit = 22818502.35679
+
+--- EGO Iteration 5/5 ---
+   GP Level 1 | Log-Likelihood: -26740169379197932.00
+-> Next point: x = [0.2499] | Fidelity = 1 | Merit = 50155239.26130
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.1959
+Coordinates (normalized) of the best point found: [0.96069678]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [20] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (20 points)...
+Warning: Drag coefficient -0.3714 is negative. Returning a high penalty value.
+Warning: Drag coefficient -0.1654 is negative. Returning a high penalty value.
+Warning: Drag coefficient -0.5292 is negative. Returning a high penalty value.
+Warning: Drag coefficient -0.0873 is negative. Returning a high penalty value.
+
+Initial best High-Fidelity point: 0.0398
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/5 ---
+   GP Level 1 | Log-Likelihood: -23619839077660776.00
+-> Next point: x = [0.2301] | Fidelity = 1 | Merit = 202939067.40489
+
+--- EGO Iteration 2/5 ---
+   GP Level 1 | Log-Likelihood: -24861715061835928.00
+-> Next point: x = [0.7113] | Fidelity = 1 | Merit = 16738965.12527
+
+--- EGO Iteration 3/5 ---
+   GP Level 1 | Log-Likelihood: -24921798009171576.00
+-> Next point: x = [0.2178] | Fidelity = 1 | Merit = 42219312.49051
+
+--- EGO Iteration 4/5 ---
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [20] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (20 points)...
+Warning: Drag coefficient -0.3714 is negative. Returning a high penalty value.
+Warning: Drag coefficient -0.1654 is negative. Returning a high penalty value.
+Warning: Drag coefficient -0.5292 is negative. Returning a high penalty value.
+Warning: Drag coefficient -0.0873 is negative. Returning a high penalty value.
+
+Initial best High-Fidelity point: 0.0398
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/5 ---
+   GP Level 1 | Log-Likelihood: -23619839077659956.00
+-> Next point: x = [0.2301] | Fidelity = 1 | Merit = 202939151.69706
+
+--- EGO Iteration 2/5 ---
+   GP Level 1 | Log-Likelihood: -24861714981248512.00
+-> Next point: x = [0.2178] | Fidelity = 1 | Merit = 42198383.33086
+
+--- EGO Iteration 3/5 ---
+   GP Level 1 | Log-Likelihood: -26652158190716044.00
+-> Next point: x = [0.7117] | Fidelity = 1 | Merit = 22728183.66187
+
+--- EGO Iteration 4/5 ---
+   GP Level 1 | Log-Likelihood: -26711154884957244.00
+-> Next point: x = [0.2499] | Fidelity = 1 | Merit = 50232105.10676
+
+--- EGO Iteration 5/5 ---
+   GP Level 1 | Log-Likelihood: -27225038341601948.00
+-> Next point: x = [0.9461] | Fidelity = 1 | Merit = 24310676.39345
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0398
+Coordinates (normalized) of the best point found: [0.20886192]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
  - Iterations : 1
  - Levels (L) : 1
  - Costs      : [1.0]
@@ -11,23 +300,17 @@
 Generating the initial Non-Nested Latin Hypercube Design...
 Evaluating initial Level 1 (1 points)...
 
-Initial best High-Fidelity point: 1.0669
-
 ==========================================
-   STARTING MULTI-FIDELITY EGO
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 1
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [1] points
 ==========================================
 
---- EGO Iteration 1/1 ---
-   GP Level 1 | Log-Likelihood: -1.48
--> Next point: x = [-1.5708] | Fidelity = 1 | Merit = 0.64570
-
-==========================================
-   OPTIMIZATION COMPLETED
-==========================================
-Absolute best HF point found: -0.7300
-Coordinates of the best HF point found: [-1.57079633]
-
-Generating final plots...
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (1 points)...
 
 ==========================================
    EXPERIMENT CONFIGURATION
@@ -41,391 +324,129 @@ Generating final plots...
 Generating the initial Non-Nested Latin Hypercube Design...
 Evaluating initial Level 1 (1 points)...
 
-Initial best High-Fidelity point: 1.0669
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 1
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [1] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (1 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 1
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [1] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (1 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 1
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [1] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (1 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 1
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [1] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (1 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 1
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [1] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (1 points)...
+
+Initial best High-Fidelity point: 0.0208
 
 ==========================================
    STARTING MULTI-FIDELITY EGO
 ==========================================
 
 --- EGO Iteration 1/1 ---
-   GP Level 1 | Log-Likelihood: -1.48
--> Next point: x = [-1.5708] | Fidelity = 1 | Merit = 0.69240
-
-==========================================
-   OPTIMIZATION COMPLETED
-==========================================
-Absolute best HF point found: -0.7300
-Coordinates of the best HF point found: [-1.57079633]
-
-Generating final plots...
-No plot can be generated for dimensions < 2. Skipping plotting.
-
-==========================================
-   EXPERIMENT CONFIGURATION
-==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
-==========================================
-
-Generating the initial Non-Nested Latin Hypercube Design...
-Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
-
-Initial best High-Fidelity point: 0.9973
-
-==========================================
-   STARTING MULTI-FIDELITY EGO
-==========================================
-
---- EGO Iteration 1/5 ---
-
-==========================================
-   EXPERIMENT CONFIGURATION
-==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
-==========================================
-
-Generating the initial Non-Nested Latin Hypercube Design...
-Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
-
-Initial best High-Fidelity point: 0.9973
-
-==========================================
-   STARTING MULTI-FIDELITY EGO
-==========================================
-
---- EGO Iteration 1/5 ---
-   GP Level 1 | Log-Likelihood: 6.09
-
-==========================================
-   EXPERIMENT CONFIGURATION
-==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
-==========================================
-
-Generating the initial Non-Nested Latin Hypercube Design...
-Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
-
-Initial best High-Fidelity point: 0.9973
-
-==========================================
-   STARTING MULTI-FIDELITY EGO
-==========================================
-
---- EGO Iteration 1/5 ---
-
-==========================================
-   EXPERIMENT CONFIGURATION
-==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
-==========================================
-
-Generating the initial Non-Nested Latin Hypercube Design...
-Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
-
-Initial best High-Fidelity point: 0.9973
-
-==========================================
-   STARTING MULTI-FIDELITY EGO
-==========================================
-
---- EGO Iteration 1/5 ---
-   GP Level 1 | Log-Likelihood: 8.62
-
-==========================================
-   EXPERIMENT CONFIGURATION
-==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
-==========================================
-
-Generating the initial Non-Nested Latin Hypercube Design...
-Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
-
-Initial best High-Fidelity point: 0.9973
-
-==========================================
-   STARTING MULTI-FIDELITY EGO
-==========================================
-
---- EGO Iteration 1/5 ---
-   GP Level 1 | Log-Likelihood: 9.96
-   GP Level 2 | Log-Likelihood: 3.60 | rho = 0.783
-
-==========================================
-   EXPERIMENT CONFIGURATION
-==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
-==========================================
-
-Generating the initial Non-Nested Latin Hypercube Design...
-Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
-
-Initial best High-Fidelity point: 0.9973
-
-==========================================
-   STARTING MULTI-FIDELITY EGO
-==========================================
-
---- EGO Iteration 1/5 ---
-   GP Level 1 | Log-Likelihood: 10.67
-
-==========================================
-   EXPERIMENT CONFIGURATION
-==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
-==========================================
-
-Generating the initial Non-Nested Latin Hypercube Design...
-Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
-
-Initial best High-Fidelity point: 0.9973
-
-==========================================
-   STARTING MULTI-FIDELITY EGO
-==========================================
-
---- EGO Iteration 1/5 ---
-   GP Level 1 | Log-Likelihood: 10.41
-   GP Level 2 | Log-Likelihood: 3.60 | rho = 0.783
-
-==========================================
-   EXPERIMENT CONFIGURATION
-==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
-==========================================
-
-Generating the initial Non-Nested Latin Hypercube Design...
-Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
-
-Initial best High-Fidelity point: 0.9973
-
-==========================================
-   STARTING MULTI-FIDELITY EGO
-==========================================
-
---- EGO Iteration 1/5 ---
-   GP Level 1 | Log-Likelihood: 8.61
-   GP Level 2 | Log-Likelihood: 3.60 | rho = 0.783
-   GP Level 3 | Log-Likelihood: 8.46 | rho = 0.374
+   GP Level 1 | Log-Likelihood: 2.08
 
 Hidden scipy error!
 
 ==========================================
    EXPERIMENT CONFIGURATION
 ==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
+ - Iterations : 1
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [1] points
 ==========================================
 
 Generating the initial Non-Nested Latin Hypercube Design...
-Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
+Evaluating initial Level 1 (1 points)...
 
-Initial best High-Fidelity point: 0.9973
+Initial best High-Fidelity point: 0.0938
 
 ==========================================
    STARTING MULTI-FIDELITY EGO
 ==========================================
 
---- EGO Iteration 1/5 ---
-   GP Level 1 | Log-Likelihood: 9.40
-   GP Level 2 | Log-Likelihood: 3.60 | rho = 0.783
-   GP Level 3 | Log-Likelihood: 9.01 | rho = 0.090
+--- EGO Iteration 1/1 ---
+   GP Level 1 | Log-Likelihood: 0.95
 
 Hidden scipy error!
 
 ==========================================
    EXPERIMENT CONFIGURATION
 ==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
+ - Iterations : 1
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [5] points
 ==========================================
 
 Generating the initial Non-Nested Latin Hypercube Design...
 Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
+Warning: Drag coefficient -0.4746 is negative. Returning a high penalty value.
 
-Initial best High-Fidelity point: 0.9973
+Initial best High-Fidelity point: 0.2023
 
 ==========================================
    STARTING MULTI-FIDELITY EGO
 ==========================================
 
---- EGO Iteration 1/5 ---
-   GP Level 1 | Log-Likelihood: 8.62
-   GP Level 2 | Log-Likelihood: 3.60 | rho = 0.784
-   GP Level 3 | Log-Likelihood: 8.06 | rho = 0.822
--> Next point: x = [-1.5708] | Fidelity = 1 | Merit = 1.99130
-
---- EGO Iteration 2/5 ---
-   GP Level 1 | Log-Likelihood: 11.70
-   GP Level 2 | Log-Likelihood: 3.60 | rho = 0.784
-   GP Level 3 | Log-Likelihood: 8.48 | rho = 0.029
--> Next point: x = [-1.4602] | Fidelity = 3 | Merit = 0.75819
-
---- EGO Iteration 3/5 ---
-   GP Level 1 | Log-Likelihood: 9.65
-   GP Level 2 | Log-Likelihood: 3.60 | rho = 0.783
-
-==========================================
-   EXPERIMENT CONFIGURATION
-==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
-==========================================
-
-Generating the initial Non-Nested Latin Hypercube Design...
-Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
-
-Initial best High-Fidelity point: 0.9973
-
-==========================================
-   STARTING MULTI-FIDELITY EGO
-==========================================
-
---- EGO Iteration 1/5 ---
-   GP Level 1 | Log-Likelihood: 11.99
-   GP Level 2 | Log-Likelihood: 3.60 | rho = 0.784
-   GP Level 3 | Log-Likelihood: 9.20 | rho = 0.028
--> Next point: x = [0.] | Fidelity = 2 | Merit = 0.09893
-
---- EGO Iteration 2/5 ---
-   GP Level 1 | Log-Likelihood: 10.68
-   GP Level 2 | Log-Likelihood: -4522.13 | rho = 5.000
-   GP Level 3 | Log-Likelihood: 1.77 | rho = -0.012
--> Next point: x = [0.9099] | Fidelity = 3 | Merit = 1.00989
-
---- EGO Iteration 3/5 ---
-   GP Level 1 | Log-Likelihood: 10.17
-   GP Level 2 | Log-Likelihood: -4522.13 | rho = 5.000
-   GP Level 3 | Log-Likelihood: -0.88 | rho = 0.002
--> Next point: x = [0.] | Fidelity = 3 | Merit = 0.96955
-
---- EGO Iteration 4/5 ---
-   GP Level 1 | Log-Likelihood: 9.12
-   GP Level 2 | Log-Likelihood: -4522.13 | rho = 5.000
-   GP Level 3 | Log-Likelihood: -0.33 | rho = 0.001
--> Next point: x = [0.005] | Fidelity = 3 | Merit = 0.01403
-
---- EGO Iteration 5/5 ---
-   GP Level 1 | Log-Likelihood: 9.46
-   GP Level 2 | Log-Likelihood: -4522.13 | rho = 5.000
-   GP Level 3 | Log-Likelihood: -2.09 | rho = 0.001
--> Next point: x = [1.5708] | Fidelity = 3 | Merit = 0.01099
-
-==========================================
-   OPTIMIZATION COMPLETED
-==========================================
-Absolute best HF point found: 0.8423
-Coordinates of the best HF point found: [1.58340862e-05]
-
-Generating final plots...
-No plot can be generated for dimensions < 2. Skipping plotting.
-
-==========================================
-   EXPERIMENT CONFIGURATION
-==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
-==========================================
-
-Generating the initial Non-Nested Latin Hypercube Design...
-Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
-
-Initial best High-Fidelity point: 1.0468
-
-==========================================
-   STARTING MULTI-FIDELITY EGO
-==========================================
-
---- EGO Iteration 1/5 ---
-   GP Level 1 | Log-Likelihood: 5.22
-   GP Level 2 | Log-Likelihood: 5.11 | rho = 0.609
-   GP Level 3 | Log-Likelihood: 6.77 | rho = 1.185
--> Next point: x = [0.0398] | Fidelity = 3 | Merit = 0.28538
-
---- EGO Iteration 2/5 ---
-   GP Level 1 | Log-Likelihood: 8.75
-   GP Level 2 | Log-Likelihood: 5.11 | rho = 0.609
-   GP Level 3 | Log-Likelihood: 7.94 | rho = 0.365
--> Next point: x = [0.] | Fidelity = 2 | Merit = 0.02106
-
---- EGO Iteration 3/5 ---
-   GP Level 1 | Log-Likelihood: 6.82
-   GP Level 2 | Log-Likelihood: -30670.45 | rho = 5.000
-   GP Level 3 | Log-Likelihood: -3.37 | rho = -0.002
--> Next point: x = [0.7744] | Fidelity = 3 | Merit = 0.24436
-
---- EGO Iteration 4/5 ---
-   GP Level 1 | Log-Likelihood: 5.28
-   GP Level 2 | Log-Likelihood: -30670.47 | rho = 5.000
-   GP Level 3 | Log-Likelihood: -4.82 | rho = -0.001
--> Next point: x = [0.2172] | Fidelity = 3 | Merit = 0.05467
-
---- EGO Iteration 5/5 ---
-   GP Level 1 | Log-Likelihood: 4.43
-   GP Level 2 | Log-Likelihood: -30670.47 | rho = 5.000
-   GP Level 3 | Log-Likelihood: 14.88 | rho = -0.000
+--- EGO Iteration 1/1 ---
+   GP Level 1 | Log-Likelihood: -8333331705463162.00
    Warning: Global merit is null/too low. Random selection triggered (exploration).
--> Next point: x = [0.0457] | Fidelity = 3 | Merit = 0.00000
+-> Next point: x = [0.6732] | Fidelity = 1 | Merit = 0.00000
 
 ==========================================
    OPTIMIZATION COMPLETED
 ==========================================
-Absolute best HF point found: 0.9353
-Coordinates of the best HF point found: [0.03978324]
+Absolute best point found: 0.2023
+Coordinates (normalized) of the best point found: [0.26052639]
 
 Generating final plots...
 No plot can be generated for dimensions < 2. Skipping plotting.
@@ -433,235 +454,45 @@ No plot can be generated for dimensions < 2. Skipping plotting.
 ==========================================
    EXPERIMENT CONFIGURATION
 ==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
+ - Iterations : 1
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [5] points
 ==========================================
 
 Generating the initial Non-Nested Latin Hypercube Design...
 Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
-
-Initial best High-Fidelity point: 1.1466
-
-==========================================
-   STARTING MULTI-FIDELITY EGO
-==========================================
-
---- EGO Iteration 1/5 ---
-   GP Level 1 | Log-Likelihood: 8.31
-   GP Level 2 | Log-Likelihood: 13.00 | rho = 0.555
-   GP Level 3 | Log-Likelihood: 9.64 | rho = 1.415
--> Next point: x = [0.] | Fidelity = 2 | Merit = 0.08143
-
---- EGO Iteration 2/5 ---
-   GP Level 1 | Log-Likelihood: 9.08
-   GP Level 2 | Log-Likelihood: 13.07 | rho = 0.735
-   GP Level 3 | Log-Likelihood: 10.57 | rho = 1.404
--> Next point: x = [0.] | Fidelity = 3 | Merit = 0.10448
-
---- EGO Iteration 3/5 ---
-   GP Level 1 | Log-Likelihood: 9.79
-   GP Level 2 | Log-Likelihood: 13.09 | rho = 0.812
-   GP Level 3 | Log-Likelihood: 14.76 | rho = 1.613
--> Next point: x = [0.] | Fidelity = 2 | Merit = 0.00068
-
---- EGO Iteration 4/5 ---
-   GP Level 1 | Log-Likelihood: 10.97
-   GP Level 2 | Log-Likelihood: 17.80 | rho = 0.806
-   GP Level 3 | Log-Likelihood: 14.50 | rho = 1.467
--> Next point: x = [0.0028] | Fidelity = 1 | Merit = 0.00212
-
---- EGO Iteration 5/5 ---
-   GP Level 1 | Log-Likelihood: 16.30
-   GP Level 2 | Log-Likelihood: 17.98 | rho = 0.840
-   GP Level 3 | Log-Likelihood: 15.26 | rho = 1.781
--> Next point: x = [0.0008] | Fidelity = 1 | Merit = 0.00111
-
-==========================================
-   OPTIMIZATION COMPLETED
-==========================================
-Absolute best HF point found: 1.0382
-Coordinates of the best HF point found: [4.47350206e-06]
-
-Generating final plots...
-No plot can be generated for dimensions < 2. Skipping plotting.
+Warning: Drag coefficient -0.4746 is negative. Returning a high penalty value.
 
 ==========================================
    EXPERIMENT CONFIGURATION
 ==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
+ - Iterations : 1
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [5] points
 ==========================================
 
 Generating the initial Non-Nested Latin Hypercube Design...
 Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
+Warning: Drag coefficient -0.4746 is negative. Returning a high penalty value.
 
-Initial best High-Fidelity point: 2.1424
+Initial best High-Fidelity point: 0.0275
 
 ==========================================
    STARTING MULTI-FIDELITY EGO
 ==========================================
 
---- EGO Iteration 1/5 ---
-   GP Level 1 | Log-Likelihood: 1.96
-   GP Level 2 | Log-Likelihood: 4.18 | rho = 0.631
-   GP Level 3 | Log-Likelihood: 5.11 | rho = 0.489
--> Next point: x = [0.] | Fidelity = 3 | Merit = 0.17784
-
---- EGO Iteration 2/5 ---
-   GP Level 1 | Log-Likelihood: 7.50
-   GP Level 2 | Log-Likelihood: 4.19 | rho = 0.631
-   GP Level 3 | Log-Likelihood: 7.01 | rho = 0.471
--> Next point: x = [0.0594] | Fidelity = 3 | Merit = 0.00000
-
---- EGO Iteration 3/5 ---
-   GP Level 1 | Log-Likelihood: 5.50
-   GP Level 2 | Log-Likelihood: 4.19 | rho = 0.631
-   GP Level 3 | Log-Likelihood: 9.45 | rho = 0.420
--> Next point: x = [0.] | Fidelity = 2 | Merit = 0.00049
-
---- EGO Iteration 4/5 ---
-   GP Level 1 | Log-Likelihood: 2.20
-   GP Level 2 | Log-Likelihood: 4.57 | rho = 0.636
-   GP Level 3 | Log-Likelihood: 11.87 | rho = 0.026
--> Next point: x = [0.0013] | Fidelity = 1 | Merit = 0.00000
-
---- EGO Iteration 5/5 ---
-   GP Level 1 | Log-Likelihood: 15.29
-   GP Level 2 | Log-Likelihood: 4.58 | rho = 0.636
-   GP Level 3 | Log-Likelihood: 8.92 | rho = 0.031
--> Next point: x = [0.] | Fidelity = 3 | Merit = 0.00015
+--- EGO Iteration 1/1 ---
+   GP Level 1 | Log-Likelihood: -8333331718789749.00
+   Warning: Global merit is null/too low. Random selection triggered (exploration).
+-> Next point: x = [0.76] | Fidelity = 1 | Merit = 0.00000
 
 ==========================================
    OPTIMIZATION COMPLETED
 ==========================================
-Absolute best HF point found: 1.8802
-Coordinates of the best HF point found: [7.6834942e-08]
-
-Generating final plots...
-No plot can be generated for dimensions < 2. Skipping plotting.
-
-==========================================
-   EXPERIMENT CONFIGURATION
-==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
-==========================================
-
-Generating the initial Non-Nested Latin Hypercube Design...
-Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
-
-Initial best High-Fidelity point: 0.5777
-
-==========================================
-   STARTING MULTI-FIDELITY EGO
-==========================================
-
---- EGO Iteration 1/5 ---
-   GP Level 1 | Log-Likelihood: 11.25
-   GP Level 2 | Log-Likelihood: 19.00 | rho = 0.509
-   GP Level 3 | Log-Likelihood: 3.76 | rho = 0.976
--> Next point: x = [0.] | Fidelity = 3 | Merit = 0.05898
-
---- EGO Iteration 2/5 ---
-   GP Level 1 | Log-Likelihood: 11.05
-   GP Level 2 | Log-Likelihood: 19.90 | rho = 0.507
-   GP Level 3 | Log-Likelihood: 7.81 | rho = 1.057
--> Next point: x = [0.] | Fidelity = 3 | Merit = 0.00022
-
---- EGO Iteration 3/5 ---
-   GP Level 1 | Log-Likelihood: 11.16
-   GP Level 2 | Log-Likelihood: 19.81 | rho = 0.507
-   GP Level 3 | Log-Likelihood: 14.66 | rho = 2.407
--> Next point: x = [0.] | Fidelity = 2 | Merit = 0.00039
-
---- EGO Iteration 4/5 ---
-   GP Level 1 | Log-Likelihood: 11.70
-   GP Level 2 | Log-Likelihood: 23.27 | rho = 0.522
-   GP Level 3 | Log-Likelihood: 14.72 | rho = 1.846
--> Next point: x = [0.] | Fidelity = 2 | Merit = 0.00015
-
---- EGO Iteration 5/5 ---
-   GP Level 1 | Log-Likelihood: 11.11
-   GP Level 2 | Log-Likelihood: 28.95 | rho = 0.615
-   GP Level 3 | Log-Likelihood: 14.67 | rho = 1.299
--> Next point: x = [0.] | Fidelity = 2 | Merit = 0.00006
-
-==========================================
-   OPTIMIZATION COMPLETED
-==========================================
-Absolute best HF point found: 0.5335
-Coordinates of the best HF point found: [8.77429633e-07]
-
-Generating final plots...
-No plot can be generated for dimensions < 2. Skipping plotting.
-
-==========================================
-   EXPERIMENT CONFIGURATION
-==========================================
- - Iterations : 5
- - Levels (L) : 3
- - Costs      : [1.0, 2.0, 3.0]
- - Initial DoE: [5, 5, 5] points
-==========================================
-
-Generating the initial Non-Nested Latin Hypercube Design...
-Evaluating initial Level 1 (5 points)...
-Evaluating initial Level 2 (5 points)...
-Evaluating initial Level 3 (5 points)...
-
-Initial best High-Fidelity point: 0.9018
-
-==========================================
-   STARTING MULTI-FIDELITY EGO
-==========================================
-
---- EGO Iteration 1/5 ---
-   GP Level 1 | Log-Likelihood: 18.45
-   GP Level 2 | Log-Likelihood: -4.49 | rho = 1.300
-   GP Level 3 | Log-Likelihood: 13.71 | rho = 0.072
--> Next point: x = [0.0416] | Fidelity = 2 | Merit = 0.16705
-
---- EGO Iteration 2/5 ---
-   GP Level 1 | Log-Likelihood: 18.18
-   GP Level 2 | Log-Likelihood: -2.92 | rho = 1.292
-   GP Level 3 | Log-Likelihood: 13.69 | rho = 0.024
--> Next point: x = [0.0333] | Fidelity = 2 | Merit = 0.08283
-
---- EGO Iteration 3/5 ---
-   GP Level 1 | Log-Likelihood: 18.27
-   GP Level 2 | Log-Likelihood: -12.69 | rho = 4.795
-   GP Level 3 | Log-Likelihood: 5.58 | rho = 0.023
--> Next point: x = [0.3782] | Fidelity = 2 | Merit = 0.05953
-
---- EGO Iteration 4/5 ---
-   GP Level 1 | Log-Likelihood: 18.38
-   GP Level 2 | Log-Likelihood: -15.21 | rho = 4.021
-   GP Level 3 | Log-Likelihood: 5.55 | rho = 0.023
--> Next point: x = [0.6498] | Fidelity = 2 | Merit = 0.05028
-
---- EGO Iteration 5/5 ---
-   GP Level 1 | Log-Likelihood: 18.87
-   GP Level 2 | Log-Likelihood: -14.85 | rho = 1.013
-   GP Level 3 | Log-Likelihood: 4.73 | rho = -0.008
--> Next point: x = [0.1451] | Fidelity = 3 | Merit = 0.00703
-
-==========================================
-   OPTIMIZATION COMPLETED
-==========================================
-Absolute best HF point found: 0.8999
-Coordinates of the best HF point found: [0.14505623]
+Absolute best point found: 0.0275
+Coordinates (normalized) of the best point found: [0.26052639]
 
 Generating final plots...
 No plot can be generated for dimensions < 2. Skipping plotting.

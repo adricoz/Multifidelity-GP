@@ -1,0 +1,2262 @@
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 40
+ - Levels (L) : 2
+ - Costs      : [1.0, 5.0]
+ - Initial DoE: [40, 20] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (40 points)...
+Evaluating initial Level 2 (20 points)...
+
+Initial best High-Fidelity point: 0.0071
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/40 ---
+   GP Level 1 | Log-Likelihood: 111.20
+   GP Level 2 | Log-Likelihood: 50.75 | rho = 0.280
+-> Next point: x = [0.] | Fidelity = 1 | Merit = 0.00229
+
+--- EGO Iteration 2/40 ---
+   GP Level 1 | Log-Likelihood: 129.80
+   GP Level 2 | Log-Likelihood: 56.70 | rho = 0.169
+-> Next point: x = [0.] | Fidelity = 2 | Merit = 0.00105
+
+--- EGO Iteration 3/40 ---
+   GP Level 1 | Log-Likelihood: 118.36
+   GP Level 2 | Log-Likelihood: 54.32 | rho = 0.294
+-> Next point: x = [0.0538] | Fidelity = 2 | Merit = 0.00057
+
+--- EGO Iteration 4/40 ---
+   GP Level 1 | Log-Likelihood: 113.46
+   GP Level 2 | Log-Likelihood: 7.46 | rho = -3.923
+-> Next point: x = [0.0444] | Fidelity = 1 | Merit = 0.00579
+
+--- EGO Iteration 5/40 ---
+   GP Level 1 | Log-Likelihood: 123.17
+   GP Level 2 | Log-Likelihood: 57.47 | rho = 0.207
+-> Next point: x = [0.] | Fidelity = 2 | Merit = 0.00037
+
+--- EGO Iteration 6/40 ---
+   GP Level 1 | Log-Likelihood: 123.26
+   GP Level 2 | Log-Likelihood: 63.08 | rho = 0.309
+-> Next point: x = [0.0508] | Fidelity = 2 | Merit = 0.00021
+
+--- EGO Iteration 7/40 ---
+   GP Level 1 | Log-Likelihood: 138.35
+   GP Level 2 | Log-Likelihood: 17.69 | rho = -3.969
+-> Next point: x = [0.0149] | Fidelity = 1 | Merit = 0.00236
+
+--- EGO Iteration 8/40 ---
+   GP Level 1 | Log-Likelihood: 128.37
+   GP Level 2 | Log-Likelihood: 68.48 | rho = 0.303
+-> Next point: x = [0.0216] | Fidelity = 1 | Merit = 0.00023
+
+--- EGO Iteration 9/40 ---
+   GP Level 1 | Log-Likelihood: 136.53
+   GP Level 2 | Log-Likelihood: 16.63 | rho = -3.841
+-> Next point: x = [0.028] | Fidelity = 1 | Merit = 0.01887
+
+--- EGO Iteration 10/40 ---
+   GP Level 1 | Log-Likelihood: 141.00
+   GP Level 2 | Log-Likelihood: 66.97 | rho = 0.343
+-> Next point: x = [0.0412] | Fidelity = 1 | Merit = 0.00110
+
+--- EGO Iteration 11/40 ---
+   GP Level 1 | Log-Likelihood: 147.52
+   GP Level 2 | Log-Likelihood: 65.19 | rho = 0.357
+-> Next point: x = [0.0471] | Fidelity = 2 | Merit = 0.00013
+
+--- EGO Iteration 12/40 ---
+   GP Level 1 | Log-Likelihood: 143.44
+   GP Level 2 | Log-Likelihood: 73.60 | rho = 0.290
+-> Next point: x = [0.0133] | Fidelity = 1 | Merit = 0.00190
+
+--- EGO Iteration 13/40 ---
+   GP Level 1 | Log-Likelihood: 155.52
+   GP Level 2 | Log-Likelihood: 81.78 | rho = 0.189
+-> Next point: x = [0.0296] | Fidelity = 1 | Merit = 0.00020
+
+--- EGO Iteration 14/40 ---
+   GP Level 1 | Log-Likelihood: 160.39
+   GP Level 2 | Log-Likelihood: 23.27 | rho = -3.901
+-> Next point: x = [0.0381] | Fidelity = 1 | Merit = 0.01203
+
+--- EGO Iteration 15/40 ---
+   GP Level 1 | Log-Likelihood: 162.16
+   GP Level 2 | Log-Likelihood: 72.37 | rho = 0.205
+-> Next point: x = [0.0026] | Fidelity = 1 | Merit = 0.00022
+
+--- EGO Iteration 16/40 ---
+   GP Level 1 | Log-Likelihood: 175.53
+   GP Level 2 | Log-Likelihood: 73.43 | rho = 0.298
+-> Next point: x = [0.0382] | Fidelity = 1 | Merit = 0.00058
+
+--- EGO Iteration 17/40 ---
+   GP Level 1 | Log-Likelihood: 180.54
+   GP Level 2 | Log-Likelihood: 69.24 | rho = 0.364
+-> Next point: x = [0.0365] | Fidelity = 1 | Merit = 0.00192
+
+--- EGO Iteration 18/40 ---
+   GP Level 1 | Log-Likelihood: 192.30
+   GP Level 2 | Log-Likelihood: 76.89 | rho = 0.101
+-> Next point: x = [0.] | Fidelity = 2 | Merit = 0.00016
+
+--- EGO Iteration 19/40 ---
+   GP Level 1 | Log-Likelihood: 205.86
+   GP Level 2 | Log-Likelihood: 77.88 | rho = 0.311
+-> Next point: x = [0.0131] | Fidelity = 1 | Merit = 0.00078
+
+--- EGO Iteration 20/40 ---
+   GP Level 1 | Log-Likelihood: 195.67
+   GP Level 2 | Log-Likelihood: 86.78 | rho = 0.190
+-> Next point: x = [0.038] | Fidelity = 1 | Merit = 0.00274
+
+--- EGO Iteration 21/40 ---
+   GP Level 1 | Log-Likelihood: 203.39
+   GP Level 2 | Log-Likelihood: 35.31 | rho = -4.154
+-> Next point: x = [0.0068] | Fidelity = 1 | Merit = 0.10300
+
+--- EGO Iteration 22/40 ---
+   GP Level 1 | Log-Likelihood: 217.62
+   GP Level 2 | Log-Likelihood: 34.59 | rho = -3.689
+-> Next point: x = [0.0426] | Fidelity = 1 | Merit = 0.06005
+
+--- EGO Iteration 23/40 ---
+   GP Level 1 | Log-Likelihood: 226.82
+   GP Level 2 | Log-Likelihood: 75.29 | rho = 0.506
+-> Next point: x = [0.0306] | Fidelity = 1 | Merit = 0.00062
+
+--- EGO Iteration 24/40 ---
+   GP Level 1 | Log-Likelihood: 238.03
+   GP Level 2 | Log-Likelihood: 74.79 | rho = 0.345
+-> Next point: x = [0.0272] | Fidelity = 1 | Merit = 0.00136
+
+--- EGO Iteration 25/40 ---
+   GP Level 1 | Log-Likelihood: 230.48
+   GP Level 2 | Log-Likelihood: 33.30 | rho = -3.976
+-> Next point: x = [0.0138] | Fidelity = 1 | Merit = 0.02012
+
+--- EGO Iteration 26/40 ---
+   GP Level 1 | Log-Likelihood: 253.96
+   GP Level 2 | Log-Likelihood: 74.32 | rho = 0.334
+-> Next point: x = [0.0443] | Fidelity = 2 | Merit = 0.00009
+
+--- EGO Iteration 27/40 ---
+   GP Level 1 | Log-Likelihood: 245.45
+   GP Level 2 | Log-Likelihood: 39.99 | rho = -3.934
+-> Next point: x = [0.0059] | Fidelity = 1 | Merit = 0.09119
+
+--- EGO Iteration 28/40 ---
+   GP Level 1 | Log-Likelihood: 253.91
+   GP Level 2 | Log-Likelihood: 79.43 | rho = 0.296
+-> Next point: x = [0.031] | Fidelity = 1 | Merit = 0.00739
+
+--- EGO Iteration 29/40 ---
+   GP Level 1 | Log-Likelihood: 269.54
+   GP Level 2 | Log-Likelihood: 83.55 | rho = 0.306
+-> Next point: x = [0.0302] | Fidelity = 1 | Merit = 0.00269
+
+--- EGO Iteration 30/40 ---
+   GP Level 1 | Log-Likelihood: 297.50
+   GP Level 2 | Log-Likelihood: 40.28 | rho = -4.052
+-> Next point: x = [0.0368] | Fidelity = 1 | Merit = 0.00604
+
+--- EGO Iteration 31/40 ---
+   GP Level 1 | Log-Likelihood: 306.40
+   GP Level 2 | Log-Likelihood: 80.29 | rho = 0.301
+-> Next point: x = [0.0092] | Fidelity = 1 | Merit = 0.00022
+
+--- EGO Iteration 32/40 ---
+   GP Level 1 | Log-Likelihood: 286.69
+   GP Level 2 | Log-Likelihood: 42.27 | rho = -3.644
+-> Next point: x = [0.0507] | Fidelity = 1 | Merit = 0.16989
+
+--- EGO Iteration 33/40 ---
+   GP Level 1 | Log-Likelihood: 298.82
+   GP Level 2 | Log-Likelihood: 81.96 | rho = 0.323
+-> Next point: x = [0.1051] | Fidelity = 1 | Merit = 0.00381
+
+--- EGO Iteration 34/40 ---
+   GP Level 1 | Log-Likelihood: 301.67
+   GP Level 2 | Log-Likelihood: 83.35 | rho = 0.296
+-> Next point: x = [0.0079] | Fidelity = 1 | Merit = 0.00031
+
+--- EGO Iteration 35/40 ---
+   GP Level 1 | Log-Likelihood: 320.18
+   GP Level 2 | Log-Likelihood: 41.79 | rho = -3.411
+-> Next point: x = [0.0428] | Fidelity = 1 | Merit = 0.05688
+
+--- EGO Iteration 36/40 ---
+   GP Level 1 | Log-Likelihood: 308.58
+   GP Level 2 | Log-Likelihood: 37.36 | rho = -4.276
+-> Next point: x = [0.0287] | Fidelity = 1 | Merit = 0.19420
+
+--- EGO Iteration 37/40 ---
+   GP Level 1 | Log-Likelihood: 321.33
+   GP Level 2 | Log-Likelihood: 42.76 | rho = -4.023
+-> Next point: x = [0.0133] | Fidelity = 1 | Merit = 0.01687
+
+--- EGO Iteration 38/40 ---
+   GP Level 1 | Log-Likelihood: 336.60
+   GP Level 2 | Log-Likelihood: 77.09 | rho = 0.387
+-> Next point: x = [0.0576] | Fidelity = 1 | Merit = 0.00968
+
+--- EGO Iteration 39/40 ---
+   GP Level 1 | Log-Likelihood: 363.93
+   GP Level 2 | Log-Likelihood: 39.19 | rho = -4.355
+-> Next point: x = [0.0005] | Fidelity = 1 | Merit = 0.02764
+
+--- EGO Iteration 40/40 ---
+   GP Level 1 | Log-Likelihood: 355.68
+   GP Level 2 | Log-Likelihood: 41.08 | rho = -3.958
+-> Next point: x = [0.0867] | Fidelity = 1 | Merit = 0.10775
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0071
+Coordinates (normalized) of the best point found: [0.01388203]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 10
+ - Levels (L) : 2
+ - Costs      : [1.0, 5.0]
+ - Initial DoE: [10, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+Evaluating initial Level 2 (5 points)...
+
+Initial best High-Fidelity point: 0.0093
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/10 ---
+   GP Level 1 | Log-Likelihood: 46.16
+   GP Level 2 | Log-Likelihood: 21.46 | rho = 1.022
+-> Next point: x = [0.4266] | Fidelity = 1 | Merit = 0.00059
+
+--- EGO Iteration 2/10 ---
+   GP Level 1 | Log-Likelihood: 54.36
+   GP Level 2 | Log-Likelihood: 21.46 | rho = 1.022
+-> Next point: x = [0.3719] | Fidelity = 1 | Merit = 0.00086
+
+--- EGO Iteration 3/10 ---
+   GP Level 1 | Log-Likelihood: 62.14
+   GP Level 2 | Log-Likelihood: 17.31 | rho = 0.856
+-> Next point: x = [0.2624] | Fidelity = 1 | Merit = 0.00015
+
+--- EGO Iteration 4/10 ---
+   GP Level 1 | Log-Likelihood: 70.16
+   GP Level 2 | Log-Likelihood: 21.45 | rho = 1.021
+-> Next point: x = [0.3397] | Fidelity = 1 | Merit = 0.00148
+
+--- EGO Iteration 5/10 ---
+   GP Level 1 | Log-Likelihood: 77.55
+   GP Level 2 | Log-Likelihood: 21.43 | rho = 1.020
+-> Next point: x = [0.3559] | Fidelity = 1 | Merit = 0.00185
+
+--- EGO Iteration 6/10 ---
+   GP Level 1 | Log-Likelihood: 85.34
+   GP Level 2 | Log-Likelihood: 21.40 | rho = 1.021
+-> Next point: x = [0.3642] | Fidelity = 1 | Merit = 0.00131
+
+--- EGO Iteration 7/10 ---
+   GP Level 1 | Log-Likelihood: 93.51
+   GP Level 2 | Log-Likelihood: 21.42 | rho = 1.019
+-> Next point: x = [0.2967] | Fidelity = 1 | Merit = 0.00137
+
+--- EGO Iteration 8/10 ---
+   GP Level 1 | Log-Likelihood: 101.54
+   GP Level 2 | Log-Likelihood: 21.42 | rho = 1.020
+-> Next point: x = [0.2914] | Fidelity = 1 | Merit = 0.00125
+
+--- EGO Iteration 9/10 ---
+   GP Level 1 | Log-Likelihood: 109.83
+   GP Level 2 | Log-Likelihood: 21.41 | rho = 1.019
+-> Next point: x = [0.378] | Fidelity = 1 | Merit = 0.00197
+
+--- EGO Iteration 10/10 ---
+   GP Level 1 | Log-Likelihood: 118.02
+   GP Level 2 | Log-Likelihood: 21.41 | rho = 1.019
+-> Next point: x = [0.3692] | Fidelity = 1 | Merit = 0.00153
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0093
+Coordinates (normalized) of the best point found: [0.24838245]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 10
+ - Levels (L) : 2
+ - Costs      : [1.0, 5.0]
+ - Initial DoE: [10, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+Evaluating initial Level 2 (5 points)...
+
+Initial best High-Fidelity point: 0.0497
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/10 ---
+   GP Level 1 | Log-Likelihood: 34.32
+   GP Level 2 | Log-Likelihood: 6.83 | rho = 0.282
+-> Next point: x = [0.2592] | Fidelity = 1 | Merit = 0.00012
+
+--- EGO Iteration 2/10 ---
+   GP Level 1 | Log-Likelihood: 32.91
+   GP Level 2 | Log-Likelihood: 11.63 | rho = 1.130
+-> Next point: x = [0.232] | Fidelity = 1 | Merit = 0.00002
+
+--- EGO Iteration 3/10 ---
+   GP Level 1 | Log-Likelihood: 41.54
+   GP Level 2 | Log-Likelihood: 13.81 | rho = 1.123
+-> Next point: x = [0.2444] | Fidelity = 2 | Merit = 0.00001
+
+--- EGO Iteration 4/10 ---
+   GP Level 1 | Log-Likelihood: 51.18
+   GP Level 2 | Log-Likelihood: 17.06 | rho = 1.130
+-> Next point: x = [0.2415] | Fidelity = 2 | Merit = 0.00001
+
+--- EGO Iteration 5/10 ---
+   GP Level 1 | Log-Likelihood: 38.29
+   GP Level 2 | Log-Likelihood: 23.20 | rho = 0.429
+-> Next point: x = [0.2552] | Fidelity = 1 | Merit = 0.00013
+
+--- EGO Iteration 6/10 ---
+   GP Level 1 | Log-Likelihood: 57.47
+   GP Level 2 | Log-Likelihood: 23.43 | rho = 0.248
+-> Next point: x = [0.261] | Fidelity = 1 | Merit = 0.00040
+
+--- EGO Iteration 7/10 ---
+   GP Level 1 | Log-Likelihood: 55.81
+   GP Level 2 | Log-Likelihood: 23.45 | rho = 0.290
+-> Next point: x = [0.2596] | Fidelity = 2 | Merit = 0.00015
+
+--- EGO Iteration 8/10 ---
+   GP Level 1 | Log-Likelihood: 67.40
+   GP Level 2 | Log-Likelihood: 30.93 | rho = 0.311
+-> Next point: x = [0.2588] | Fidelity = 2 | Merit = 0.00012
+
+--- EGO Iteration 9/10 ---
+   GP Level 1 | Log-Likelihood: 65.63
+   GP Level 2 | Log-Likelihood: 38.85 | rho = 0.341
+-> Next point: x = [0.2582] | Fidelity = 2 | Merit = 0.00014
+
+--- EGO Iteration 10/10 ---
+   GP Level 1 | Log-Likelihood: 55.81
+   GP Level 2 | Log-Likelihood: 44.97 | rho = 0.322
+-> Next point: x = [0.2553] | Fidelity = 2 | Merit = 0.00007
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0495
+Coordinates (normalized) of the best point found: [0.25964769]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 10
+ - Levels (L) : 2
+ - Costs      : [1.0, 5.0]
+ - Initial DoE: [10, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+Evaluating initial Level 2 (5 points)...
+
+Initial best High-Fidelity point: 0.0093
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/10 ---
+   GP Level 1 | Log-Likelihood: 46.16
+   GP Level 2 | Log-Likelihood: 21.46 | rho = 1.022
+-> Next point: x = [0.3307] | Fidelity = 1 | Merit = 0.00142
+
+--- EGO Iteration 2/10 ---
+   GP Level 1 | Log-Likelihood: 53.45
+   GP Level 2 | Log-Likelihood: 21.43 | rho = 1.020
+-> Next point: x = [0.3793] | Fidelity = 1 | Merit = 0.00078
+
+--- EGO Iteration 3/10 ---
+   GP Level 1 | Log-Likelihood: 61.49
+   GP Level 2 | Log-Likelihood: 21.42 | rho = 1.022
+-> Next point: x = [0.3734] | Fidelity = 1 | Merit = 0.00178
+
+--- EGO Iteration 4/10 ---
+   GP Level 1 | Log-Likelihood: 69.67
+   GP Level 2 | Log-Likelihood: 21.42 | rho = 1.019
+-> Next point: x = [0.4223] | Fidelity = 1 | Merit = 0.00077
+
+--- EGO Iteration 5/10 ---
+   GP Level 1 | Log-Likelihood: 77.81
+   GP Level 2 | Log-Likelihood: 21.42 | rho = 1.020
+-> Next point: x = [0.3026] | Fidelity = 1 | Merit = 0.00121
+
+--- EGO Iteration 6/10 ---
+   GP Level 1 | Log-Likelihood: 85.81
+   GP Level 2 | Log-Likelihood: 21.41 | rho = 1.020
+-> Next point: x = [0.4176] | Fidelity = 1 | Merit = 0.00028
+
+--- EGO Iteration 7/10 ---
+   GP Level 1 | Log-Likelihood: 94.01
+   GP Level 2 | Log-Likelihood: 21.41 | rho = 1.020
+-> Next point: x = [0.3848] | Fidelity = 1 | Merit = 0.00043
+
+--- EGO Iteration 8/10 ---
+   GP Level 1 | Log-Likelihood: 102.21
+   GP Level 2 | Log-Likelihood: 21.25 | rho = 1.075
+-> Next point: x = [0.3921] | Fidelity = 1 | Merit = 0.00222
+
+--- EGO Iteration 9/10 ---
+   GP Level 1 | Log-Likelihood: 110.44
+   GP Level 2 | Log-Likelihood: 21.41 | rho = 1.020
+-> Next point: x = [0.3213] | Fidelity = 1 | Merit = 0.00107
+
+--- EGO Iteration 10/10 ---
+   GP Level 1 | Log-Likelihood: 118.37
+   GP Level 2 | Log-Likelihood: 17.71 | rho = 0.861
+-> Next point: x = [0.2835] | Fidelity = 1 | Merit = 0.00031
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0093
+Coordinates (normalized) of the best point found: [0.24838245]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 10
+ - Levels (L) : 2
+ - Costs      : [1.0, 5.0]
+ - Initial DoE: [10, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+Evaluating initial Level 2 (5 points)...
+
+Initial best High-Fidelity point: 0.0091
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/10 ---
+   GP Level 1 | Log-Likelihood: 46.18
+   GP Level 2 | Log-Likelihood: 20.03 | rho = 0.990
+-> Next point: x = [0.3667] | Fidelity = 1 | Merit = 0.00064
+
+--- EGO Iteration 2/10 ---
+   GP Level 1 | Log-Likelihood: 53.88
+   GP Level 2 | Log-Likelihood: 21.97 | rho = 0.997
+-> Next point: x = [0.3312] | Fidelity = 1 | Merit = 0.00082
+
+--- EGO Iteration 3/10 ---
+   GP Level 1 | Log-Likelihood: 61.34
+   GP Level 2 | Log-Likelihood: 21.95 | rho = 0.997
+-> Next point: x = [0.3499] | Fidelity = 1 | Merit = 0.00105
+
+--- EGO Iteration 4/10 ---
+   GP Level 1 | Log-Likelihood: 69.34
+   GP Level 2 | Log-Likelihood: 21.94 | rho = 0.996
+-> Next point: x = [0.3288] | Fidelity = 1 | Merit = 0.00097
+
+--- EGO Iteration 5/10 ---
+   GP Level 1 | Log-Likelihood: 77.26
+   GP Level 2 | Log-Likelihood: 21.93 | rho = 0.996
+-> Next point: x = [0.3683] | Fidelity = 1 | Merit = 0.00120
+
+--- EGO Iteration 6/10 ---
+   GP Level 1 | Log-Likelihood: 85.45
+   GP Level 2 | Log-Likelihood: 21.93 | rho = 0.995
+-> Next point: x = [0.3309] | Fidelity = 1 | Merit = 0.00125
+
+--- EGO Iteration 7/10 ---
+   GP Level 1 | Log-Likelihood: 93.45
+   GP Level 2 | Log-Likelihood: 21.92 | rho = 0.995
+-> Next point: x = [0.3201] | Fidelity = 1 | Merit = 0.00119
+
+--- EGO Iteration 8/10 ---
+   GP Level 1 | Log-Likelihood: 101.65
+   GP Level 2 | Log-Likelihood: 21.92 | rho = 0.995
+-> Next point: x = [0.3803] | Fidelity = 1 | Merit = 0.00119
+
+--- EGO Iteration 9/10 ---
+   GP Level 1 | Log-Likelihood: 109.85
+   GP Level 2 | Log-Likelihood: 19.48 | rho = 0.997
+-> Next point: x = [0.4335] | Fidelity = 1 | Merit = 0.00016
+
+--- EGO Iteration 10/10 ---
+   GP Level 1 | Log-Likelihood: 117.78
+   GP Level 2 | Log-Likelihood: 21.92 | rho = 0.995
+-> Next point: x = [0.3259] | Fidelity = 1 | Merit = 0.00143
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0091
+Coordinates (normalized) of the best point found: [0.24838245]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 10
+ - Levels (L) : 3
+ - Costs      : [1.0, 5.0, 10.0]
+ - Initial DoE: [10, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+Evaluating initial Level 2 (5 points)...
+Evaluating initial Level 3 (5 points)...
+
+Initial best High-Fidelity point: 0.0091
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/10 ---
+   GP Level 1 | Log-Likelihood: 46.19
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 10
+ - Levels (L) : 3
+ - Costs      : [1.0, 5.0, 10.0]
+ - Initial DoE: [10, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+Evaluating initial Level 2 (5 points)...
+Evaluating initial Level 3 (5 points)...
+
+Initial best High-Fidelity point: 0.0091
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/10 ---
+   GP Level 1 | Log-Likelihood: 46.17
+   GP Level 2 | Log-Likelihood: 21.46 | rho = 1.022
+   GP Level 3 | Log-Likelihood: 17.80 | rho = 1.106
+-> Next point: x = [0.4018] | Fidelity = 1 | Merit = 0.00101
+
+--- EGO Iteration 2/10 ---
+   GP Level 1 | Log-Likelihood: 54.30
+   GP Level 2 | Log-Likelihood: 21.45 | rho = 1.021
+   GP Level 3 | Log-Likelihood: 17.98 | rho = 1.107
+-> Next point: x = [0.4451] | Fidelity = 1 | Merit = 0.00207
+
+--- EGO Iteration 3/10 ---
+   GP Level 1 | Log-Likelihood: 62.45
+   GP Level 2 | Log-Likelihood: 21.45 | rho = 1.022
+   GP Level 3 | Log-Likelihood: 20.87 | rho = 1.105
+-> Next point: x = [0.432] | Fidelity = 1 | Merit = 0.00249
+
+--- EGO Iteration 4/10 ---
+   GP Level 1 | Log-Likelihood: 70.63
+   GP Level 2 | Log-Likelihood: 21.46 | rho = 1.022
+   GP Level 3 | Log-Likelihood: 20.87 | rho = 1.105
+-> Next point: x = [0.407] | Fidelity = 1 | Merit = 0.00190
+
+--- EGO Iteration 5/10 ---
+   GP Level 1 | Log-Likelihood: 78.83
+   GP Level 2 | Log-Likelihood: 21.45 | rho = 1.022
+   GP Level 3 | Log-Likelihood: 20.87 | rho = 1.105
+-> Next point: x = [0.2858] | Fidelity = 1 | Merit = 0.00136
+
+--- EGO Iteration 6/10 ---
+   GP Level 1 | Log-Likelihood: 86.78
+   GP Level 2 | Log-Likelihood: 21.44 | rho = 1.021
+   GP Level 3 | Log-Likelihood: 20.87 | rho = 1.105
+-> Next point: x = [0.4859] | Fidelity = 1 | Merit = 0.00113
+
+--- EGO Iteration 7/10 ---
+   GP Level 1 | Log-Likelihood: 94.97
+   GP Level 2 | Log-Likelihood: 21.44 | rho = 1.021
+   GP Level 3 | Log-Likelihood: 17.77 | rho = 1.107
+-> Next point: x = [0.3995] | Fidelity = 1 | Merit = 0.00260
+
+--- EGO Iteration 8/10 ---
+   GP Level 1 | Log-Likelihood: 103.13
+   GP Level 2 | Log-Likelihood: 18.37 | rho = 1.017
+   GP Level 3 | Log-Likelihood: 20.87 | rho = 1.109
+-> Next point: x = [0.3906] | Fidelity = 1 | Merit = 0.00412
+
+--- EGO Iteration 9/10 ---
+   GP Level 1 | Log-Likelihood: 111.24
+   GP Level 2 | Log-Likelihood: 20.16 | rho = 0.851
+   GP Level 3 | Log-Likelihood: 17.34 | rho = 1.293
+-> Next point: x = [0.4013] | Fidelity = 1 | Merit = 0.00107
+
+--- EGO Iteration 10/10 ---
+   GP Level 1 | Log-Likelihood: 119.52
+   GP Level 2 | Log-Likelihood: 18.56 | rho = 1.022
+   GP Level 3 | Log-Likelihood: 20.87 | rho = 1.104
+-> Next point: x = [0.4195] | Fidelity = 1 | Merit = 0.00367
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0091
+Coordinates (normalized) of the best point found: [0.2443233]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 10
+ - Levels (L) : 3
+ - Costs      : [1.0, 5.0, 10.0]
+ - Initial DoE: [10, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+Evaluating initial Level 2 (5 points)...
+Evaluating initial Level 3 (5 points)...
+
+Initial best High-Fidelity point: 0.0091
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/10 ---
+   GP Level 1 | Log-Likelihood: 46.21
+   GP Level 2 | Log-Likelihood: 18.82 | rho = 0.900
+   GP Level 3 | Log-Likelihood: 20.46 | rho = 1.231
+-> Next point: x = [0.3799] | Fidelity = 1 | Merit = 0.00115
+
+--- EGO Iteration 2/10 ---
+   GP Level 1 | Log-Likelihood: 54.34
+   GP Level 2 | Log-Likelihood: 22.97 | rho = 1.031
+   GP Level 3 | Log-Likelihood: 20.87 | rho = 1.096
+-> Next point: x = [0.4439] | Fidelity = 1 | Merit = 0.00120
+
+--- EGO Iteration 3/10 ---
+   GP Level 1 | Log-Likelihood: 62.13
+   GP Level 2 | Log-Likelihood: 22.97 | rho = 1.032
+   GP Level 3 | Log-Likelihood: 18.30 | rho = 1.100
+-> Next point: x = [0.3951] | Fidelity = 1 | Merit = 0.00145
+
+--- EGO Iteration 4/10 ---
+   GP Level 1 | Log-Likelihood: 70.37
+   GP Level 2 | Log-Likelihood: 22.96 | rho = 1.032
+   GP Level 3 | Log-Likelihood: 20.89 | rho = 1.095
+-> Next point: x = [0.4006] | Fidelity = 1 | Merit = 0.00379
+
+--- EGO Iteration 5/10 ---
+   GP Level 1 | Log-Likelihood: 78.48
+   GP Level 2 | Log-Likelihood: 21.44 | rho = 0.901
+   GP Level 3 | Log-Likelihood: 17.54 | rho = 1.264
+-> Next point: x = [0.4393] | Fidelity = 1 | Merit = 0.00280
+
+--- EGO Iteration 6/10 ---
+   GP Level 1 | Log-Likelihood: 86.72
+   GP Level 2 | Log-Likelihood: 22.24 | rho = 1.113
+   GP Level 3 | Log-Likelihood: 20.98 | rho = 1.024
+-> Next point: x = [0.3814] | Fidelity = 1 | Merit = 0.00454
+
+--- EGO Iteration 7/10 ---
+   GP Level 1 | Log-Likelihood: 94.75
+   GP Level 2 | Log-Likelihood: 18.45 | rho = 1.166
+   GP Level 3 | Log-Likelihood: 18.03 | rho = 0.979
+-> Next point: x = [0.4319] | Fidelity = 1 | Merit = 0.00358
+
+--- EGO Iteration 8/10 ---
+   GP Level 1 | Log-Likelihood: 102.91
+   GP Level 2 | Log-Likelihood: 22.95 | rho = 1.032
+   GP Level 3 | Log-Likelihood: 13.43 | rho = 1.504
+-> Next point: x = [0.0299] | Fidelity = 1 | Merit = 0.00202
+
+--- EGO Iteration 9/10 ---
+   GP Level 1 | Log-Likelihood: 109.90
+   GP Level 2 | Log-Likelihood: 17.08 | rho = 0.809
+   GP Level 3 | Log-Likelihood: 19.96 | rho = 1.353
+-> Next point: x = [0.4047] | Fidelity = 1 | Merit = 0.00208
+
+--- EGO Iteration 10/10 ---
+   GP Level 1 | Log-Likelihood: 118.11
+   GP Level 2 | Log-Likelihood: 22.84 | rho = 1.027
+   GP Level 3 | Log-Likelihood: 20.35 | rho = 1.159
+-> Next point: x = [0.4148] | Fidelity = 1 | Merit = 0.00527
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0091
+Coordinates (normalized) of the best point found: [0.2443233]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 10
+ - Levels (L) : 9
+ - Costs      : [1.0, 5.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0]
+ - Initial DoE: [10, 5, 5, 5, 5, 5, 5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+Evaluating initial Level 2 (5 points)...
+Evaluating initial Level 3 (5 points)...
+Evaluating initial Level 4 (5 points)...
+Evaluating initial Level 5 (5 points)...
+Evaluating initial Level 6 (5 points)...
+Evaluating initial Level 7 (5 points)...
+Evaluating initial Level 8 (5 points)...
+Evaluating initial Level 9 (5 points)...
+
+Initial best High-Fidelity point: 0.0091
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/10 ---
+   GP Level 1 | Log-Likelihood: 46.21
+   GP Level 2 | Log-Likelihood: 19.93 | rho = 1.035
+   GP Level 3 | Log-Likelihood: 18.01 | rho = 1.103
+   GP Level 4 | Log-Likelihood: 20.04 | rho = 0.901
+   GP Level 5 | Log-Likelihood: 22.30 | rho = 1.000
+   GP Level 6 | Log-Likelihood: 20.61 | rho = 1.085
+   GP Level 7 | Log-Likelihood: 21.36 | rho = 0.985
+   GP Level 8 | Log-Likelihood: 22.01 | rho = 0.946
+   GP Level 9 | Log-Likelihood: 19.08 | rho = 1.024
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 10
+ - Levels (L) : 9
+ - Costs      : [1.0, 5.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0]
+ - Initial DoE: [10, 5, 5, 5, 5, 5, 5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 2
+ - Levels (L) : 8
+ - Costs      : [1.0, 5.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0]
+ - Initial DoE: [10, 8, 6, 5, 4, 3, 2, 1] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+Evaluating initial Level 2 (8 points)...
+Evaluating initial Level 3 (6 points)...
+Evaluating initial Level 4 (5 points)...
+Evaluating initial Level 5 (4 points)...
+Evaluating initial Level 6 (3 points)...
+Evaluating initial Level 7 (2 points)...
+Evaluating initial Level 8 (1 points)...
+
+Initial best High-Fidelity point: 0.0096
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/2 ---
+   GP Level 1 | Log-Likelihood: 46.19
+   GP Level 2 | Log-Likelihood: 36.83 | rho = 1.087
+   GP Level 3 | Log-Likelihood: 29.49 | rho = 0.862
+   GP Level 4 | Log-Likelihood: 23.18 | rho = 1.142
+   GP Level 5 | Log-Likelihood: 20.93 | rho = 0.932
+   GP Level 6 | Log-Likelihood: 14.51 | rho = 1.064
+   GP Level 7 | Log-Likelihood: 6.75 | rho = 0.729
+   GP Level 8 | Log-Likelihood: 2.19 | rho = 1.019
+
+Hidden scipy error!
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 2
+ - Levels (L) : 8
+ - Costs      : [1.0, 5.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0]
+ - Initial DoE: [10, 8, 6, 5, 4, 3, 3, 2] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+Evaluating initial Level 2 (8 points)...
+Evaluating initial Level 3 (6 points)...
+Evaluating initial Level 4 (5 points)...
+Evaluating initial Level 5 (4 points)...
+Evaluating initial Level 6 (3 points)...
+Evaluating initial Level 7 (3 points)...
+Evaluating initial Level 8 (2 points)...
+
+Initial best High-Fidelity point: 0.0091
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/2 ---
+   GP Level 1 | Log-Likelihood: 46.22
+   GP Level 2 | Log-Likelihood: 37.00 | rho = 1.093
+   GP Level 3 | Log-Likelihood: 29.49 | rho = 0.858
+   GP Level 4 | Log-Likelihood: 23.18 | rho = 1.142
+   GP Level 5 | Log-Likelihood: 20.92 | rho = 0.932
+   GP Level 6 | Log-Likelihood: 14.51 | rho = 1.064
+   GP Level 7 | Log-Likelihood: 13.83 | rho = 0.842
+   GP Level 8 | Log-Likelihood: 7.24 | rho = 0.690
+-> Next point: x = [0.2593] | Fidelity = 1 | Merit = 0.00040
+
+--- EGO Iteration 2/2 ---
+   GP Level 1 | Log-Likelihood: 54.29
+   GP Level 2 | Log-Likelihood: 35.03 | rho = 1.215
+   GP Level 3 | Log-Likelihood: 29.98 | rho = 0.867
+   GP Level 4 | Log-Likelihood: 23.48 | rho = 1.122
+   GP Level 5 | Log-Likelihood: 21.86 | rho = 0.934
+   GP Level 6 | Log-Likelihood: 14.50 | rho = 1.042
+   GP Level 7 | Log-Likelihood: 14.65 | rho = 0.881
+   GP Level 8 | Log-Likelihood: 7.24 | rho = 0.732
+-> Next point: x = [0.2881] | Fidelity = 1 | Merit = 0.00124
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0091
+Coordinates (normalized) of the best point found: [0.2644519]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 2
+ - Levels (L) : 8
+ - Costs      : [1.0, 5.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0]
+ - Initial DoE: [10, 8, 6, 5, 4, 3, 2, 1] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+Evaluating initial Level 2 (8 points)...
+Evaluating initial Level 3 (6 points)...
+Evaluating initial Level 4 (5 points)...
+Evaluating initial Level 5 (4 points)...
+Evaluating initial Level 6 (3 points)...
+Evaluating initial Level 7 (2 points)...
+Evaluating initial Level 8 (1 points)...
+
+Initial best High-Fidelity point: 0.0096
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/2 ---
+   GP Level 1 | Log-Likelihood: 46.21
+   GP Level 2 | Log-Likelihood: 36.96 | rho = 1.076
+   GP Level 3 | Log-Likelihood: 29.48 | rho = 0.870
+   GP Level 4 | Log-Likelihood: 23.11 | rho = 1.144
+   GP Level 5 | Log-Likelihood: 18.02 | rho = 0.884
+   GP Level 6 | Log-Likelihood: 14.47 | rho = 1.114
+   GP Level 7 | Log-Likelihood: 6.75 | rho = 0.727
+   GP Level 8 | Log-Likelihood: 2.19 | rho = 1.019
+
+Hidden scipy error!
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 2
+ - Levels (L) : 8
+ - Costs      : [1.0, 5.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0]
+ - Initial DoE: [10, 8, 6, 5, 4, 3, 2, 1] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+Evaluating initial Level 2 (8 points)...
+Evaluating initial Level 3 (6 points)...
+Evaluating initial Level 4 (5 points)...
+Evaluating initial Level 5 (4 points)...
+Evaluating initial Level 6 (3 points)...
+Evaluating initial Level 7 (2 points)...
+Evaluating initial Level 8 (1 points)...
+
+Initial best High-Fidelity point: 0.0096
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/2 ---
+   GP Level 1 | Log-Likelihood: 46.17
+   GP Level 2 | Log-Likelihood: 36.93 | rho = 1.086
+   GP Level 3 | Log-Likelihood: 26.75 | rho = 0.863
+   GP Level 4 | Log-Likelihood: 20.45 | rho = 1.204
+   GP Level 5 | Log-Likelihood: 18.06 | rho = 0.903
+   GP Level 6 | Log-Likelihood: 14.51 | rho = 1.059
+   GP Level 7 | Log-Likelihood: 6.75 | rho = 0.731
+   GP Level 8 | Log-Likelihood: 2.19 | rho = 1.013
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (), k_vec shape: (1,), K_inv shape: (1, 1)
+
+Hidden scipy error!
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 2
+ - Levels (L) : 8
+ - Costs      : [1.0, 5.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0]
+ - Initial DoE: [10, 8, 6, 5, 4, 3, 2, 1] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+Evaluating initial Level 2 (8 points)...
+Evaluating initial Level 3 (6 points)...
+Evaluating initial Level 4 (5 points)...
+Evaluating initial Level 5 (4 points)...
+Evaluating initial Level 6 (3 points)...
+Evaluating initial Level 7 (2 points)...
+Evaluating initial Level 8 (1 points)...
+
+Initial best High-Fidelity point: 0.0096
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/2 ---
+   GP Level 1 | Log-Likelihood: 46.20
+   GP Level 2 | Log-Likelihood: 37.01 | rho = 1.082
+   GP Level 3 | Log-Likelihood: 29.49 | rho = 0.866
+   GP Level 4 | Log-Likelihood: 23.18 | rho = 1.142
+   GP Level 5 | Log-Likelihood: 20.92 | rho = 0.932
+   GP Level 6 | Log-Likelihood: 14.51 | rho = 1.064
+   GP Level 7 | Log-Likelihood: 6.75 | rho = 0.729
+   GP Level 8 | Log-Likelihood: 2.19 | rho = 1.019
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+Debug: Y_train_1D shape: (4,), k_vec shape: (4,), K_inv shape: (4, 4)
+Debug: Y_train_1D shape: (3,), k_vec shape: (3,), K_inv shape: (3, 3)
+Debug: Y_train_1D shape: (2,), k_vec shape: (2,), K_inv shape: (2, 2)
+Debug: Y_train_1D shape: (1,), k_vec shape: (1,), K_inv shape: (1, 1)
+Debug: Y_train_1D shape: (10,), k_vec shape: (10,), K_inv shape: (10, 10)
+Debug: Y_train_1D shape: (8,), k_vec shape: (8,), K_inv shape: (8, 8)
+Debug: Y_train_1D shape: (6,), k_vec shape: (6,), K_inv shape: (6, 6)
+Debug: Y_train_1D shape: (5,), k_vec shape: (5,), K_inv shape: (5, 5)
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 2
+ - Levels (L) : 8
+ - Costs      : [1.0, 5.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0]
+ - Initial DoE: [10, 8, 6, 5, 4, 3, 2, 1] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (10 points)...
+Evaluating initial Level 2 (8 points)...
+Evaluating initial Level 3 (6 points)...
+Evaluating initial Level 4 (5 points)...
+Evaluating initial Level 5 (4 points)...
+Evaluating initial Level 6 (3 points)...
+Evaluating initial Level 7 (2 points)...
+Evaluating initial Level 8 (1 points)...
+
+Initial best High-Fidelity point: 0.0096
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/2 ---
+   GP Level 1 | Log-Likelihood: 46.12
+   GP Level 2 | Log-Likelihood: 39.91 | rho = 1.350
+   GP Level 3 | Log-Likelihood: 26.45 | rho = 0.896
+   GP Level 4 | Log-Likelihood: 23.77 | rho = 1.074
+   GP Level 5 | Log-Likelihood: 19.90 | rho = 0.938
+   GP Level 6 | Log-Likelihood: 14.47 | rho = 1.014
+   GP Level 7 | Log-Likelihood: 6.75 | rho = 0.764
+   GP Level 8 | Log-Likelihood: 2.19 | rho = 0.958
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 2
+ - Levels (L) : 2
+ - Costs      : [1.0, 1.0]
+ - Initial DoE: [100, 100] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (100 points)...
+Evaluating initial Level 2 (100 points)...
+
+Initial best High-Fidelity point: 0.0079
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/2 ---
+   GP Level 1 | Log-Likelihood: 762.32
+   GP Level 2 | Log-Likelihood: 664.70 | rho = 0.965
+-> Next point: x = [0.3569] | Fidelity = 2 | Merit = 0.00107
+
+--- EGO Iteration 2/2 ---
+   GP Level 1 | Log-Likelihood: 762.10
+   GP Level 2 | Log-Likelihood: 687.42 | rho = 0.971
+-> Next point: x = [0.3123] | Fidelity = 1 | Merit = 0.00025
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0079
+Coordinates (normalized) of the best point found: [0.30499259]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 2
+ - Costs      : [1.0, 1.0]
+ - Initial DoE: [20, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (20 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 2
+ - Costs      : [1.0, 1.0]
+ - Initial DoE: [20, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (20 points)...
+Evaluating initial Level 2 (5 points)...
+
+Initial best High-Fidelity point: 0.0361
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/5 ---
+   GP Level 1 | Log-Likelihood: 90.98
+   GP Level 2 | Log-Likelihood: 11.23 | rho = 0.990
+-> Next point: x = [0.2008] | Fidelity = 2 | Merit = 0.00669
+
+--- EGO Iteration 2/5 ---
+   GP Level 1 | Log-Likelihood: 89.64
+   GP Level 2 | Log-Likelihood: 13.57 | rho = 0.842
+-> Next point: x = [0.1706] | Fidelity = 2 | Merit = 0.01527
+
+--- EGO Iteration 3/5 ---
+   GP Level 1 | Log-Likelihood: 94.44
+   GP Level 2 | Log-Likelihood: 8.74 | rho = 2.805
+-> Next point: x = [0.1786] | Fidelity = 2 | Merit = 0.00073
+
+--- EGO Iteration 4/5 ---
+   GP Level 1 | Log-Likelihood: 109.96
+   GP Level 2 | Log-Likelihood: 18.81 | rho = 0.572
+-> Next point: x = [0.2161] | Fidelity = 2 | Merit = 0.00010
+
+--- EGO Iteration 5/5 ---
+   GP Level 1 | Log-Likelihood: 97.15
+   GP Level 2 | Log-Likelihood: 21.39 | rho = 0.514
+-> Next point: x = [0.] | Fidelity = 2 | Merit = 0.00159
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0318
+Coordinates (normalized) of the best point found: [0.21605178]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 20
+ - Levels (L) : 2
+ - Costs      : [1.0, 1.0]
+ - Initial DoE: [20, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (20 points)...
+Evaluating initial Level 2 (5 points)...
+
+Initial best High-Fidelity point: 0.0361
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/20 ---
+   GP Level 1 | Log-Likelihood: 96.65
+   GP Level 2 | Log-Likelihood: 11.12 | rho = 0.849
+-> Next point: x = [0.1985] | Fidelity = 2 | Merit = 0.01795
+
+--- EGO Iteration 2/20 ---
+   GP Level 1 | Log-Likelihood: 93.77
+   GP Level 2 | Log-Likelihood: 13.57 | rho = 0.842
+-> Next point: x = [0.2293] | Fidelity = 2 | Merit = 0.01528
+
+--- EGO Iteration 3/20 ---
+   GP Level 1 | Log-Likelihood: 94.07
+   GP Level 2 | Log-Likelihood: 10.69 | rho = 3.390
+-> Next point: x = [0.1696] | Fidelity = 1 | Merit = 0.00181
+
+--- EGO Iteration 4/20 ---
+   GP Level 1 | Log-Likelihood: 104.39
+   GP Level 2 | Log-Likelihood: 17.61 | rho = 1.077
+-> Next point: x = [0.6983] | Fidelity = 2 | Merit = 0.00112
+
+--- EGO Iteration 5/20 ---
+   GP Level 1 | Log-Likelihood: 102.48
+   GP Level 2 | Log-Likelihood: 11.12 | rho = 1.096
+-> Next point: x = [0.] | Fidelity = 2 | Merit = 0.00316
+
+--- EGO Iteration 6/20 ---
+   GP Level 1 | Log-Likelihood: 116.97
+   GP Level 2 | Log-Likelihood: 13.95 | rho = 0.867
+-> Next point: x = [0.1831] | Fidelity = 2 | Merit = 0.00053
+
+--- EGO Iteration 7/20 ---
+   GP Level 1 | Log-Likelihood: 114.46
+   GP Level 2 | Log-Likelihood: 18.19 | rho = 1.171
+-> Next point: x = [0.1895] | Fidelity = 2 | Merit = 0.00028
+
+--- EGO Iteration 8/20 ---
+   GP Level 1 | Log-Likelihood: 109.22
+   GP Level 2 | Log-Likelihood: 22.99 | rho = 0.644
+-> Next point: x = [0.1889] | Fidelity = 2 | Merit = 0.00018
+
+--- EGO Iteration 9/20 ---
+   GP Level 1 | Log-Likelihood: 102.28
+   GP Level 2 | Log-Likelihood: 27.95 | rho = 3.747
+-> Next point: x = [0.1571] | Fidelity = 1 | Merit = 0.00062
+
+--- EGO Iteration 10/20 ---
+   GP Level 1 | Log-Likelihood: 110.96
+   GP Level 2 | Log-Likelihood: 47.18 | rho = 0.919
+-> Next point: x = [0.2481] | Fidelity = 2 | Merit = 0.00012
+
+--- EGO Iteration 11/20 ---
+   GP Level 1 | Log-Likelihood: 110.66
+   GP Level 2 | Log-Likelihood: 37.56 | rho = 1.036
+-> Next point: x = [0.1859] | Fidelity = 1 | Merit = 0.00009
+
+--- EGO Iteration 12/20 ---
+   GP Level 1 | Log-Likelihood: 133.14
+   GP Level 2 | Log-Likelihood: 50.19 | rho = 0.986
+-> Next point: x = [0.4273] | Fidelity = 2 | Merit = 0.00002
+
+--- EGO Iteration 13/20 ---
+   GP Level 1 | Log-Likelihood: 134.41
+   GP Level 2 | Log-Likelihood: 42.80 | rho = 1.474
+-> Next point: x = [0.1786] | Fidelity = 2 | Merit = 0.00001
+
+--- EGO Iteration 14/20 ---
+   GP Level 1 | Log-Likelihood: 117.46
+   GP Level 2 | Log-Likelihood: 56.34 | rho = 0.730
+-> Next point: x = [0.2162] | Fidelity = 1 | Merit = 0.00009
+
+--- EGO Iteration 15/20 ---
+   GP Level 1 | Log-Likelihood: 126.73
+   GP Level 2 | Log-Likelihood: 61.33 | rho = 0.989
+-> Next point: x = [0.8338] | Fidelity = 2 | Merit = 0.00000
+
+--- EGO Iteration 16/20 ---
+   GP Level 1 | Log-Likelihood: 126.89
+   GP Level 2 | Log-Likelihood: 52.82 | rho = 0.600
+-> Next point: x = [0.1849] | Fidelity = 1 | Merit = 0.00001
+
+--- EGO Iteration 17/20 ---
+   GP Level 1 | Log-Likelihood: 136.46
+   GP Level 2 | Log-Likelihood: 53.40 | rho = 1.449
+-> Next point: x = [0.1791] | Fidelity = 1 | Merit = 0.00004
+
+--- EGO Iteration 18/20 ---
+   GP Level 1 | Log-Likelihood: 158.98
+   GP Level 2 | Log-Likelihood: 52.65 | rho = 4.459
+-> Next point: x = [0.1793] | Fidelity = 2 | Merit = 0.00000
+
+--- EGO Iteration 19/20 ---
+   GP Level 1 | Log-Likelihood: 141.06
+   GP Level 2 | Log-Likelihood: 58.98 | rho = 0.676
+-> Next point: x = [0.1698] | Fidelity = 1 | Merit = 0.00003
+
+--- EGO Iteration 20/20 ---
+   GP Level 1 | Log-Likelihood: 151.39
+   GP Level 2 | Log-Likelihood: 55.61 | rho = 1.654
+-> Next point: x = [0.1731] | Fidelity = 1 | Merit = 0.00019
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0321
+Coordinates (normalized) of the best point found: [0.22930432]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 20
+ - Levels (L) : 2
+ - Costs      : [1.0, 1.0]
+ - Initial DoE: [20, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (20 points)...
+Evaluating initial Level 2 (5 points)...
+
+Initial best High-Fidelity point: 0.0403
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/20 ---
+   GP Level 1 | Log-Likelihood: 80.15
+   GP Level 2 | Log-Likelihood: 4.07 | rho = 0.947
+-> Next point: x = [0.] | Fidelity = 2 | Merit = 0.01471
+
+--- EGO Iteration 2/20 ---
+   GP Level 1 | Log-Likelihood: 121.76
+   GP Level 2 | Log-Likelihood: 5.25 | rho = 1.346
+-> Next point: x = [0.6056] | Fidelity = 2 | Merit = 0.00125
+
+--- EGO Iteration 3/20 ---
+   GP Level 1 | Log-Likelihood: 124.14
+   GP Level 2 | Log-Likelihood: 7.38 | rho = 0.569
+-> Next point: x = [0.6038] | Fidelity = 2 | Merit = 0.00005
+
+--- EGO Iteration 4/20 ---
+   GP Level 1 | Log-Likelihood: 114.51
+   GP Level 2 | Log-Likelihood: 11.29 | rho = 0.905
+-> Next point: x = [0.6066] | Fidelity = 2 | Merit = 0.00000
+
+--- EGO Iteration 5/20 ---
+   GP Level 1 | Log-Likelihood: 80.89
+   GP Level 2 | Log-Likelihood: 16.08 | rho = 1.084
+-> Next point: x = [0.605] | Fidelity = 2 | Merit = 0.00000
+
+--- EGO Iteration 6/20 ---
+   GP Level 1 | Log-Likelihood: 121.82
+   GP Level 2 | Log-Likelihood: 20.00 | rho = 0.605
+-> Next point: x = [0.6093] | Fidelity = 2 | Merit = 0.00000
+
+--- EGO Iteration 7/20 ---
+   GP Level 1 | Log-Likelihood: 122.40
+   GP Level 2 | Log-Likelihood: 47.01 | rho = 0.917
+-> Next point: x = [0.4923] | Fidelity = 2 | Merit = 0.00075
+
+--- EGO Iteration 8/20 ---
+   GP Level 1 | Log-Likelihood: 124.14
+   GP Level 2 | Log-Likelihood: 51.88 | rho = 0.930
+-> Next point: x = [0.4736] | Fidelity = 2 | Merit = 0.00022
+
+--- EGO Iteration 9/20 ---
+   GP Level 1 | Log-Likelihood: 80.57
+   GP Level 2 | Log-Likelihood: 56.50 | rho = 1.004
+-> Next point: x = [0.4781] | Fidelity = 1 | Merit = 0.00003
+
+--- EGO Iteration 10/20 ---
+   GP Level 1 | Log-Likelihood: 84.90
+   GP Level 2 | Log-Likelihood: 56.32 | rho = 1.180
+-> Next point: x = [0.4773] | Fidelity = 1 | Merit = 0.00003
+
+--- EGO Iteration 11/20 ---
+   GP Level 1 | Log-Likelihood: 136.83
+   GP Level 2 | Log-Likelihood: 23.86 | rho = -0.363
+-> Next point: x = [0.5649] | Fidelity = 2 | Merit = 0.00000
+
+--- EGO Iteration 12/20 ---
+   GP Level 1 | Log-Likelihood: 138.41
+   GP Level 2 | Log-Likelihood: 27.46 | rho = 1.334
+-> Next point: x = [0.5514] | Fidelity = 2 | Merit = 0.00000
+
+--- EGO Iteration 13/20 ---
+   GP Level 1 | Log-Likelihood: 135.40
+   GP Level 2 | Log-Likelihood: 33.23 | rho = -0.749
+-> Next point: x = [0.5617] | Fidelity = 1 | Merit = 0.00000
+
+--- EGO Iteration 14/20 ---
+   GP Level 1 | Log-Likelihood: 95.22
+   GP Level 2 | Log-Likelihood: 60.61 | rho = 0.614
+-> Next point: x = [0.4758] | Fidelity = 2 | Merit = 0.00013
+
+--- EGO Iteration 15/20 ---
+   GP Level 1 | Log-Likelihood: 148.41
+   GP Level 2 | Log-Likelihood: 34.65 | rho = 0.728
+-> Next point: x = [0.5516] | Fidelity = 2 | Merit = 0.00000
+
+--- EGO Iteration 16/20 ---
+   GP Level 1 | Log-Likelihood: 94.60
+   GP Level 2 | Log-Likelihood: 76.77 | rho = 0.837
+-> Next point: x = [0.4715] | Fidelity = 2 | Merit = 0.00012
+
+--- EGO Iteration 17/20 ---
+   GP Level 1 | Log-Likelihood: 147.43
+   GP Level 2 | Log-Likelihood: 41.87 | rho = 0.896
+-> Next point: x = [0.5473] | Fidelity = 2 | Merit = 0.00000
+
+--- EGO Iteration 18/20 ---
+   GP Level 1 | Log-Likelihood: 148.41
+   GP Level 2 | Log-Likelihood: 92.84 | rho = 0.770
+-> Next point: x = [0.4679] | Fidelity = 2 | Merit = 0.00020
+
+--- EGO Iteration 19/20 ---
+   GP Level 1 | Log-Likelihood: 94.61
+   GP Level 2 | Log-Likelihood: 50.49 | rho = 1.079
+-> Next point: x = [0.5475] | Fidelity = 2 | Merit = 0.00000
+
+--- EGO Iteration 20/20 ---
+   GP Level 1 | Log-Likelihood: 95.20
+   GP Level 2 | Log-Likelihood: 108.78 | rho = 1.352
+-> Next point: x = [0.4751] | Fidelity = 2 | Merit = 0.00011
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0379
+Coordinates (normalized) of the best point found: [0.47578009]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
