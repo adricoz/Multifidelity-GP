@@ -45,6 +45,10 @@ The project is executed from the terminal via `main.py`. The default parameters 
 ```bash
 pip install numpy scipy matplotlib
 ```
+**Install the required dependencies for the custom fluid dynamics functions:**
+```bash
+pip install neurofoil aerosandbox
+```
 **Running the EGO Algorithm**
 ```bash
 python main.py
