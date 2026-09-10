@@ -11,8 +11,8 @@ from Hartmann6d import f_l # Hartman for testing and calibration purpuses
 from non_nested_mf_sampling import generate_non_nested_lhs
 from non_nested_mf_optimizer import run_non_nested_mf_ego
 
-from custom_fluid_functions import objective_function
-
+#from tests.custom_fluid_functions import objective_function
+from tests.optim_neuralfoil import objective_function
 # ==========================================
 # LOGGING CLASS
 # ==========================================
@@ -49,25 +49,39 @@ class LogTee:
 #         # Low Fidelity approximations (k matches the level)
 #         return f_l(x, deg=6, k=level, delta=0.05)
 
-def evaluate_fidelity(x_normalized, level, L):
+def evaluate_fidelity(x_normalized, level, L, target_cl=1.0,coordinates_only=False):
     """
     Evaluates the custom Fluid function using normalized inputs [0, 1].
     """
     if not (1 <= level <= L):
         raise ValueError(f"Error: Fidelity level {level} is not defined. Must be between 1 and {L}.")
-    
-    lower_bound = 5/180 * np.pi
-    upper_bound = 15/180 * np.pi
-    
+    #-----------------------------------------------------------------
+
     # scalar extraction
-    x0_scalar = x_normalized[0]
-   
-    #Physical scale
-    alpha_phys = lower_bound + x0_scalar * (upper_bound - lower_bound)
+    # angle of attack
+    lower_bound = -5
+    upper_bound = 15
+    #-----------------------------------------------------------------
+    #naca profile generation
+    # we create our own naca profile
+    camber = int(x_normalized[0] * 7) + 2  # Camber between 1 and 10
+    pos_camber = int(3)
+    thickness = int(x_normalized[1] * 9) + 8  # Thickness between 8 and 17
+    if thickness < 10:
+        naca_string = f"naca{camber:.0f}{pos_camber:.0f}0{thickness:.0f}"
+    else:
+        naca_string = f"naca{camber:.0f}{pos_camber:.0f}{thickness:.0f}"
+    # example naca string: "naca6412"
+    #-----------------------------------------------------------------
 
-    x_params = np.array([alpha_phys])
-
-    return objective_function(x_params, level=level, L=L)
+    if coordinates_only:
+                #print (f"Coordinates (non-normalized) Evaluating at alpha: {np.rad2deg(alpha_phys):.4f} deg, NACA: {naca_string}, Level: {level}/{L}")
+                cd, cl, alpha = objective_function(naca_string=naca_string, target_cl=target_cl, level=level, L=L)
+                print (f"Coordinates (non-normalized) of best point for NACA: {naca_string}, Cl: {cl:.4f}, Alpha: {alpha:.4f}, Level: {level}/{L}")
+                print(f"best value of the drag coefficient : {cd:.4f}")
+    else:
+        cd, cl , _ = objective_function(naca_string=naca_string, target_cl=target_cl, level=level, L=L)
+        return cd + 10*np.abs(cl - target_cl)  # Penalize deviation from target Cl
 
 # ==========================================
 # VISUALIZATION FUNCTION
@@ -93,6 +107,8 @@ def plot_ego_results(X_train, Y_train, L, n_initial_hf):
     ax1.set_ylabel("Target function value")
     ax1.set_title("EGO Convergence (Hartmann 6D)")
     ax1.grid(True, linestyle=':', alpha=0.7)
+    ax1.set_xlim(n_initial_hf - 3, len(best_y))
+    ax1.set_ylim(best_y[n_initial_hf -3]*1.1, best_y[n_initial_hf]*0.9)
     ax1.legend()
     
     # --- PLOT 2: 2D SPATIAL PROJECTION ---
@@ -153,7 +169,7 @@ if __name__ == "__main__":
     if len(args.points) != args.levels:
         parser.error(f"Number of point counts provided ({len(args.points)}) must match the number of levels ({args.levels}).")
         
-    d = 1
+    d = 2
     bounds =[(0.0, 1.0) for _ in range(d)]
     
     print("\n==========================================")
@@ -203,9 +219,11 @@ if __name__ == "__main__":
     print("\n==========================================")
     print("   OPTIMIZATION COMPLETED")
     print("==========================================")
-    print(f"Absolute best point found: {np.min(Y_train_final[args.levels]):.4f}")
-    print (f"Coordinates (normalized) of the best point found: {X_train_final[args.levels][np.argmin(Y_train_final[args.levels])]}")
-    
+    print(f"Absolute best point found: {np.min(Y_train_final[args.levels]):.8f}")
+    #print (f"Coordinates (normalized) of the best point found: {X_train_final[args.levels][np.argmin(Y_train_final[args.levels])]}")
+    best_coord = X_train_final[args.levels][np.argmin(Y_train_final[args.levels])]
+    evaluate_fidelity(best_coord, level=args.levels, L=args.levels, coordinates_only=True)
+
     # --- 5. VISUALIZATION ---
     print("\nGenerating final plots...")
     n_initial_hf = args.points[-1]

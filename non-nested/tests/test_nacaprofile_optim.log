@@ -1,0 +1,143 @@
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 3
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 3
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+Evaluating at alpha: 0.0952 rad, NACA: naca4315, Level: 1/3
+Evaluating at alpha: 0.1327 rad, NACA: naca8313, Level: 1/3
+Evaluating at alpha: 0.2003 rad, NACA: naca2313, Level: 1/3
+Evaluating at alpha: 0.2461 rad, NACA: naca539, Level: 1/3
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 3
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+Evaluating at alpha: 0.0952 rad, NACA: naca4315, Level: 1/3
+Evaluating at alpha: 0.1327 rad, NACA: naca8313, Level: 1/3
+Evaluating at alpha: 0.2003 rad, NACA: naca2313, Level: 1/3
+Evaluating at alpha: 0.2461 rad, NACA: naca5390, Level: 1/3
+Evaluating at alpha: 0.1695 rad, NACA: naca6390, Level: 1/3
+Evaluating initial Level 2 (5 points)...
+Evaluating at alpha: 0.1608 rad, NACA: naca7311, Level: 2/3
+Evaluating at alpha: 0.1059 rad, NACA: naca7314, Level: 2/3
+Evaluating at alpha: 0.2380 rad, NACA: naca2380, Level: 2/3
+Evaluating at alpha: 0.2155 rad, NACA: naca4312, Level: 2/3
+Evaluating at alpha: 0.1505 rad, NACA: naca6316, Level: 2/3
+Evaluating initial Level 3 (5 points)...
+Evaluating at alpha: 0.1121 rad, NACA: naca2311, Level: 3/3
+Evaluating at alpha: 0.1501 rad, NACA: naca8380, Level: 3/3
+Evaluating at alpha: 0.1688 rad, NACA: naca3315, Level: 3/3
+Evaluating at alpha: 0.2109 rad, NACA: naca6313, Level: 3/3
+Evaluating at alpha: 0.2578 rad, NACA: naca5314, Level: 3/3
+
+Initial best High-Fidelity point: 0.0107
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/3 ---
+   GP Level 1 | Log-Likelihood: 0.93
+   GP Level 2 | Log-Likelihood: 4.66 | rho = -0.269
+   GP Level 3 | Log-Likelihood: 12.61 | rho = 0.725
+-> Next point: x = [0.2907 1.     0.3876] | Fidelity = 1 | Merit = 0.07413
+Evaluating at alpha: 0.1380 rad, NACA: naca9311, Level: 1/3
+
+--- EGO Iteration 2/3 ---
+   GP Level 1 | Log-Likelihood: 1.59
+   GP Level 2 | Log-Likelihood: 4.02 | rho = -0.158
+   GP Level 3 | Log-Likelihood: 8.64 | rho = 0.685
+-> Next point: x = [0.     0.     0.7191] | Fidelity = 2 | Merit = 0.05936
+Evaluating at alpha: 0.0873 rad, NACA: naca2314, Level: 2/3
+
+--- EGO Iteration 3/3 ---
+   GP Level 1 | Log-Likelihood: 1.59
+   GP Level 2 | Log-Likelihood: 6.07 | rho = 0.058
+   GP Level 3 | Log-Likelihood: 16.58 | rho = 0.726
+-> Next point: x = [0.     1.     0.4457] | Fidelity = 2 | Merit = 0.08918
+Evaluating at alpha: 0.0873 rad, NACA: naca9312, Level: 2/3
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0107
+Coordinates (normalized) of the best point found: [0.14233438 0.0635009  0.3720495 ]
+
+Generating final plots...
+
+=> Plot saved as 'ego_convergence_results.png'.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 3
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+Evaluating initial Level 2 (5 points)...
+Evaluating initial Level 3 (5 points)...
+
+Initial best High-Fidelity point: 0.0107
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/3 ---
+   GP Level 1 | Log-Likelihood: -0.52
+   GP Level 2 | Log-Likelihood: 5.58 | rho = -0.522
+   GP Level 3 | Log-Likelihood: 7.89 | rho = 0.708
+-> Next point: x = [0.0701 0.5043 0.4278] | Fidelity = 1 | Merit = 0.30763
+
+--- EGO Iteration 2/3 ---
+   GP Level 1 | Log-Likelihood: 0.70
+   GP Level 2 | Log-Likelihood: 4.95 | rho = 0.697
+   GP Level 3 | Log-Likelihood: 6.39 | rho = 0.540
+-> Next point: x = [0. 0. 1.] | Fidelity = 1 | Merit = 0.16494
+
+--- EGO Iteration 3/3 ---
+   GP Level 1 | Log-Likelihood: 1.52
+   GP Level 2 | Log-Likelihood: 8.60 | rho = 0.452
+   GP Level 3 | Log-Likelihood: 13.86 | rho = 1.029
+-> Next point: x = [0.     0.8705 0.3589] | Fidelity = 1 | Merit = 0.22496
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0107
+Coordinates (normalized) of the best point found: [0.14233438 0.0635009  0.3720495 ]
+Coordinates (non-normalized) Evaluating at alpha: 0.1121 rad, NACA: naca2311, Level: 3/3
+
+Generating final plots...
+
+=> Plot saved as 'ego_convergence_results.png'.

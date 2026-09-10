@@ -496,3 +496,194 @@ Coordinates (normalized) of the best point found: [0.26052639]
 
 Generating final plots...
 No plot can be generated for dimensions < 2. Skipping plotting.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 3
+ - Costs      : [1.0, 2.0, 3.0]
+ - Initial DoE: [5, 5, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+Evaluating initial Level 2 (5 points)...
+Evaluating initial Level 3 (5 points)...
+
+Initial best High-Fidelity point: 0.0119
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/5 ---
+   GP Level 1 | Log-Likelihood: 16.75
+   GP Level 2 | Log-Likelihood: 29.15 | rho = 0.993
+   GP Level 3 | Log-Likelihood: 21.23 | rho = 1.241
+-> Next point: x = [0.] | Fidelity = 3 | Merit = 0.00090
+
+--- EGO Iteration 2/5 ---
+   GP Level 1 | Log-Likelihood: 14.57
+   GP Level 2 | Log-Likelihood: 29.77 | rho = 0.999
+   GP Level 3 | Log-Likelihood: 26.90 | rho = 1.285
+-> Next point: x = [0.0008] | Fidelity = 1 | Merit = 0.00012
+
+--- EGO Iteration 3/5 ---
+   GP Level 1 | Log-Likelihood: 22.25
+   GP Level 2 | Log-Likelihood: 29.77 | rho = 0.998
+   GP Level 3 | Log-Likelihood: 27.09 | rho = 1.303
+-> Next point: x = [0.0167] | Fidelity = 1 | Merit = 0.00016
+
+--- EGO Iteration 4/5 ---
+   GP Level 1 | Log-Likelihood: 30.33
+   GP Level 2 | Log-Likelihood: 23.83 | rho = 0.882
+   GP Level 3 | Log-Likelihood: 26.84 | rho = 1.315
+-> Next point: x = [0.0994] | Fidelity = 1 | Merit = 0.00006
+
+--- EGO Iteration 5/5 ---
+   GP Level 1 | Log-Likelihood: 38.24
+   GP Level 2 | Log-Likelihood: 26.79 | rho = 0.999
+   GP Level 3 | Log-Likelihood: 26.77 | rho = 1.279
+-> Next point: x = [0.026] | Fidelity = 1 | Merit = 0.00025
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 0.0106
+Coordinates (normalized) of the best point found: [2.52684475e-05]
+
+Generating final plots...
+No plot can be generated for dimensions < 2. Skipping plotting.
