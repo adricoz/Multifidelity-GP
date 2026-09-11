@@ -68,3 +68,35 @@ def objective_function(x_params, level, L):
             raise ValueError(f"Error: Fidelity level {level} is not defined. Must be between 1 and {L}.")
     if L<1 or L>8:
         raise ValueError(f"Error: Fidelity level {L} is not defined. Must be between 1 and 8.")
+
+def generate_continuous_naca4(m_camber, p_position, t_thickness, n_points=100):
+    """
+    Generates mathematicl coordinates for the naca profile.
+    """
+    x = np.linspace(0, 1, n_points)
+    
+    # camber
+    y_c = np.where(x < p_position,
+                   m_camber / p_position**2 * (2 * p_position * x - x**2),
+                   m_camber / (1 - p_position)**2 * ((1 - 2 * p_position) + 2 * p_position * x - x**2))
+    
+    # 2. Dérivée pour l'angle
+    dyc_dx = np.where(x < p_position,
+                      2 * m_camber / p_position**2 * (p_position - x),
+                      2 * m_camber / (1 - p_position)**2 * (p_position - x))
+    theta = np.arctan(dyc_dx)
+    
+    # thickness
+    y_t = 5 * t_thickness * (0.2969 * np.sqrt(x) - 0.1260 * x - 0.3516 * x**2 + 0.2843 * x**3 - 0.1015 * x**4)
+    
+    # outer / inner
+    x_u = x - y_t * np.sin(theta)
+    y_u = y_c + y_t * np.cos(theta)
+    x_l = x + y_t * np.sin(theta)
+    y_l = y_c - y_t * np.cos(theta)
+    
+    # leading edge and trailing edge
+    x_coords = np.concatenate((x_u[::-1], x_l[1:]))
+    y_coords = np.concatenate((y_u[::-1], y_l[1:]))
+    
+    return np.column_stack((x_coords, y_coords))

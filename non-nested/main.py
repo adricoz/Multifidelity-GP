@@ -12,7 +12,10 @@ from non_nested_mf_sampling import generate_non_nested_lhs
 from non_nested_mf_optimizer import run_non_nested_mf_ego
 
 #from tests.custom_fluid_functions import objective_function
-from tests.optim_neuralfoil import objective_function
+from tests.optim_neuralfoil import objective_function, generate_continuous_naca4
+import neuralfoil as nf
+import aerosandbox as asb
+
 # ==========================================
 # LOGGING CLASS
 # ==========================================
@@ -49,39 +52,90 @@ class LogTee:
 #         # Low Fidelity approximations (k matches the level)
 #         return f_l(x, deg=6, k=level, delta=0.05)
 
-def evaluate_fidelity(x_normalized, level, L, target_cl=1.0,coordinates_only=False):
+# def evaluate_fidelity(x_normalized, level, L, target_cl=1.0,coordinates_only=False):
+#     """
+#     Evaluates the custom Fluid function using normalized inputs [0, 1].
+#     """
+#     if not (1 <= level <= L):
+#         raise ValueError(f"Error: Fidelity level {level} is not defined. Must be between 1 and {L}.")
+#     #-----------------------------------------------------------------
+
+#     # scalar extraction
+#     # angle of attack
+#     lower_bound = -5
+#     upper_bound = 15
+#     #-----------------------------------------------------------------
+#     #naca profile generation
+#     # we create our own naca profile
+#     camber = int(x_normalized[0] * 7) + 2  # Camber between 1 and 10
+#     pos_camber = int(3)
+#     thickness = int(x_normalized[1] * 9) + 8  # Thickness between 8 and 17
+#     if thickness < 10:
+#         naca_string = f"naca{camber:.0f}{pos_camber:.0f}0{thickness:.0f}"
+#     else:
+#         naca_string = f"naca{camber:.0f}{pos_camber:.0f}{thickness:.0f}"
+#     # example naca string: "naca6412"
+#     #-----------------------------------------------------------------
+
+#     if coordinates_only:
+#                 #print (f"Coordinates (non-normalized) Evaluating at alpha: {np.rad2deg(alpha_phys):.4f} deg, NACA: {naca_string}, Level: {level}/{L}")
+#                 cd, cl, alpha = objective_function(naca_string=naca_string, target_cl=target_cl, level=level, L=L)
+#                 print (f"Coordinates (non-normalized) of best point for NACA: {naca_string}, Cl: {cl:.4f}, Alpha: {alpha:.4f}, Level: {level}/{L}")
+#                 print(f"best value of the drag coefficient : {cd:.4f}")
+#     else:
+#         cd, cl , _ = objective_function(naca_string=naca_string, target_cl=target_cl, level=level, L=L)
+#         return cd + 10*np.abs(cl - target_cl)  # Penalize deviation from target Cl
+
+
+def evaluate_fidelity(x_normalized, level, L, target_cl=1.0, coordinates_only=False):
     """
-    Evaluates the custom Fluid function using normalized inputs [0, 1].
+    Evaluates a continuous NACA airfoil for the Gaussian Process, 
+    but also computes and displays its closest classic "4-digit NACA" equivalent.
     """
     if not (1 <= level <= L):
         raise ValueError(f"Error: Fidelity level {level} is not defined. Must be between 1 and {L}.")
-    #-----------------------------------------------------------------
 
-    # scalar extraction
-    # angle of attack
-    lower_bound = -5
-    upper_bound = 15
-    #-----------------------------------------------------------------
-    #naca profile generation
-    # we create our own naca profile
-    camber = int(x_normalized[0] * 7) + 2  # Camber between 1 and 10
-    pos_camber = int(3)
-    thickness = int(x_normalized[1] * 9) + 8  # Thickness between 8 and 17
-    if thickness < 10:
-        naca_string = f"naca{camber:.0f}{pos_camber:.0f}0{thickness:.0f}"
-    else:
-        naca_string = f"naca{camber:.0f}{pos_camber:.0f}{thickness:.0f}"
-    # example naca string: "naca6412"
-    #-----------------------------------------------------------------
+    # --- 1. Continuous Denormalization (for the GP math) ---
+    m_camber = 0.02 + x_normalized[0] * (0.09 - 0.02)    # Exact camber (between 2% and 9%)
+    p_position = 0.3                                     # Fixed position of maximum camber (30%)
+    t_thickness = 0.08 + x_normalized[1] * (0.17 - 0.08) # Exact thickness (between 8% and 17%)
 
+    # --- 2. Reconstructing the standard NACA name (for human readability) ---
+    # We round to the nearest integer to find the classic NACA equivalent
+    camber_int = int(round(m_camber * 100))      # e.g., 0.0423 -> 4
+    pos_int = int(round(p_position * 10))        # e.g., 0.3 -> 3
+    thick_int = int(round(t_thickness * 100))    # e.g., 0.128 -> 13
+    
+    # Formatting: if thickness < 10, add a leading zero (e.g., 09)
+    naca_string = f"naca{camber_int}{pos_int}{thick_int:02d}"
+
+    # Highly precise name (optional, to differentiate very similar airfoils in the GP)
+    exact_name = f"naca_{m_camber*100:.2f}_{pos_int}_{t_thickness*100:.2f}"
+
+    # --- 3. Airfoil Object Creation ---
+    coords = generate_continuous_naca4(m_camber, p_position, t_thickness)
+    custom_naca = asb.Airfoil(name=exact_name, coordinates=coords)
+
+    # --- 4. Evaluation and Output ---
     if coordinates_only:
-                #print (f"Coordinates (non-normalized) Evaluating at alpha: {np.rad2deg(alpha_phys):.4f} deg, NACA: {naca_string}, Level: {level}/{L}")
-                cd, cl, alpha = objective_function(naca_string=naca_string, target_cl=target_cl, level=level, L=L)
-                print (f"Coordinates (non-normalized) of best point for NACA: {naca_string}, Cl: {cl:.4f}, Alpha: {alpha:.4f}, Level: {level}/{L}")
-                print(f"best value of the drag coefficient : {cd:.4f}")
+        # Pass the custom_naca object to NeuralFoil
+        cd, cl, alpha = objective_function(airfoil_obj=custom_naca, target_cl=target_cl, level=level, L=L)
+        
+        print(f"==================================================")
+        print(f" BEST AIRFOIL FOUND (Level {level}/{L})")
+        print(f"==================================================")
+        print(f"Closest standard NACA  : ** {naca_string.upper()} **")
+        print(f"Exact values found     : Camber {m_camber*100:.2f}%, Thickness {t_thickness*100:.2f}%")
+        print(f"Aerodynamic performance: Cl = {cl:.4f} | Cd = {cd:.4f} | Alpha = {alpha:.2f}°")
+        print(f"==================================================")
+        
+        return cd 
     else:
-        cd, cl , _ = objective_function(naca_string=naca_string, target_cl=target_cl, level=level, L=L)
-        return cd + 10*np.abs(cl - target_cl)  # Penalize deviation from target Cl
+        cd, cl, _ = objective_function(airfoil_obj=custom_naca, target_cl=target_cl, level=level, L=L)
+        
+        # Soft penalty on the target Cl to guide the optimizer
+        merit = cd + 10.0 * np.abs(cl - target_cl)
+        return float(merit)
 
 # ==========================================
 # VISUALIZATION FUNCTION
