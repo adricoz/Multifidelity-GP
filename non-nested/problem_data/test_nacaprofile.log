@@ -1,0 +1,337 @@
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 60
+ - Levels (L) : 2
+ - Costs      : [1.0, 1.0]
+ - Initial DoE: [35, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (35 points)...
+Evaluating initial Level 2 (5 points)...
+
+Initial best High-Fidelity point: -1.7391
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/60 ---
+   GP Level 1 | Log-Likelihood: -5.23
+   GP Level 2 | Log-Likelihood: -3.96 | rho = 1.126
+-> Next point: x = [0.0724 0.6618 0.6208] | Fidelity = 1 | Merit = 0.14647
+
+--- EGO Iteration 2/60 ---
+   GP Level 1 | Log-Likelihood: -12.24
+   GP Level 2 | Log-Likelihood: 0.76 | rho = 0.988
+-> Next point: x = [0.0193 0.765  0.616 ] | Fidelity = 1 | Merit = 0.21375
+
+--- EGO Iteration 3/60 ---
+   GP Level 1 | Log-Likelihood: -10.79
+   GP Level 2 | Log-Likelihood: 1.12 | rho = 0.980
+-> Next point: x = [0.0356 0.5846 0.6223] | Fidelity = 1 | Merit = 0.16348
+
+--- EGO Iteration 4/60 ---
+   GP Level 1 | Log-Likelihood: -9.81
+   GP Level 2 | Log-Likelihood: 2.29 | rho = 0.933
+-> Next point: x = [0.     0.5564 0.6228] | Fidelity = 2 | Merit = 0.13515
+
+--- EGO Iteration 5/60 ---
+   GP Level 1 | Log-Likelihood: -9.81
+   GP Level 2 | Log-Likelihood: 3.08 | rho = 0.809
+-> Next point: x = [0.     0.366  0.6353] | Fidelity = 1 | Merit = 0.07648
+
+--- EGO Iteration 6/60 ---
+   GP Level 1 | Log-Likelihood: -9.43
+   GP Level 2 | Log-Likelihood: 1.60 | rho = 0.784
+-> Next point: x = [0.8563 0.     0.4587] | Fidelity = 1 | Merit = 0.00276
+
+--- EGO Iteration 7/60 ---
+   GP Level 1 | Log-Likelihood: -11.33
+   GP Level 2 | Log-Likelihood: 3.33 | rho = 1.025
+-> Next point: x = [0.     0.4428 0.6255] | Fidelity = 2 | Merit = 0.04881
+
+--- EGO Iteration 8/60 ---
+   GP Level 1 | Log-Likelihood: -47.99
+   GP Level 2 | Log-Likelihood: -3.12 | rho = 1.287
+-> Next point: x = [0.0186 0.765  0.615 ] | Fidelity = 1 | Merit = 1.99202
+
+--- EGO Iteration 9/60 ---
+   GP Level 1 | Log-Likelihood: -14.62
+   GP Level 2 | Log-Likelihood: 5.64 | rho = 1.071
+-> Next point: x = [0.     0.7256 0.6408] | Fidelity = 1 | Merit = 0.10729
+
+--- EGO Iteration 10/60 ---
+   GP Level 1 | Log-Likelihood: -22.57
+   GP Level 2 | Log-Likelihood: 4.76 | rho = 1.062
+-> Next point: x = [0.0202 0.5189 0.6589] | Fidelity = 2 | Merit = 0.41746
+
+--- EGO Iteration 11/60 ---
+   GP Level 1 | Log-Likelihood: -12.97
+   GP Level 2 | Log-Likelihood: 2.52 | rho = 0.905
+-> Next point: x = [0.     0.4852 0.6144] | Fidelity = 2 | Merit = 0.04245
+
+--- EGO Iteration 12/60 ---
+   GP Level 1 | Log-Likelihood: -12.97
+   GP Level 2 | Log-Likelihood: -5.45 | rho = 2.531
+-> Next point: x = [0.     0.9283 0.6276] | Fidelity = 2 | Merit = 2.83387
+
+--- EGO Iteration 13/60 ---
+   GP Level 1 | Log-Likelihood: -14.09
+   GP Level 2 | Log-Likelihood: 2.78 | rho = 0.936
+-> Next point: x = [0.0506 0.4592 0.6126] | Fidelity = 1 | Merit = 0.04926
+
+--- EGO Iteration 14/60 ---
+   GP Level 1 | Log-Likelihood: -15.40
+   GP Level 2 | Log-Likelihood: 9.26 | rho = 0.955
+-> Next point: x = [0.     0.6441 0.6357] | Fidelity = 2 | Merit = 0.09318
+
+--- EGO Iteration 15/60 ---
+   GP Level 1 | Log-Likelihood: -15.40
+   GP Level 2 | Log-Likelihood: 10.06 | rho = 0.924
+-> Next point: x = [0.     0.3259 0.5986] | Fidelity = 1 | Merit = 0.00197
+
+--- EGO Iteration 16/60 ---
+   GP Level 1 | Log-Likelihood: -17.31
+   GP Level 2 | Log-Likelihood: -10.00 | rho = 4.639
+-> Next point: x = [0.3623 0.3972 0.5831] | Fidelity = 2 | Merit = 4.91965
+
+--- EGO Iteration 17/60 ---
+   GP Level 1 | Log-Likelihood: -19.75
+   GP Level 2 | Log-Likelihood: 6.85 | rho = 0.492
+-> Next point: x = [0.0722 0.2977 0.6214] | Fidelity = 1 | Merit = 0.02427
+
+--- EGO Iteration 18/60 ---
+   GP Level 1 | Log-Likelihood: -20.19
+   GP Level 2 | Log-Likelihood: 7.02 | rho = 1.003
+-> Next point: x = [0.051  0.4882 0.6172] | Fidelity = 2 | Merit = 0.15279
+
+--- EGO Iteration 19/60 ---
+   GP Level 1 | Log-Likelihood: -70.90
+   GP Level 2 | Log-Likelihood: 1.89 | rho = -0.290
+-> Next point: x = [0.1102 0.     0.6182] | Fidelity = 1 | Merit = 0.77228
+
+--- EGO Iteration 20/60 ---
+   GP Level 1 | Log-Likelihood: -22.32
+   GP Level 2 | Log-Likelihood: 3.11 | rho = 0.939
+-> Next point: x = [0.     0.701  0.6232] | Fidelity = 2 | Merit = 0.05407
+
+--- EGO Iteration 21/60 ---
+   GP Level 1 | Log-Likelihood: -50.77
+   GP Level 2 | Log-Likelihood: 1.69 | rho = 0.589
+-> Next point: x = [1. 1. 1.] | Fidelity = 1 | Merit = 0.19155
+
+--- EGO Iteration 22/60 ---
+   GP Level 1 | Log-Likelihood: -25.95
+   GP Level 2 | Log-Likelihood: 4.43 | rho = 0.873
+-> Next point: x = [0.9294 0.4997 0.4465] | Fidelity = 1 | Merit = 0.00404
+
+--- EGO Iteration 23/60 ---
+   GP Level 1 | Log-Likelihood: -25.85
+   GP Level 2 | Log-Likelihood: 3.31 | rho = 0.890
+-> Next point: x = [0.     0.7353 0.6294] | Fidelity = 2 | Merit = 0.04644
+
+--- EGO Iteration 24/60 ---
+   GP Level 1 | Log-Likelihood: -24.00
+   GP Level 2 | Log-Likelihood: 4.83 | rho = 0.946
+-> Next point: x = [0.     0.9314 0.6361] | Fidelity = 1 | Merit = 0.02598
+
+--- EGO Iteration 25/60 ---
+   GP Level 1 | Log-Likelihood: -32.05
+   GP Level 2 | Log-Likelihood: 17.01 | rho = 1.090
+-> Next point: x = [0.1087 0.1651 0.5856] | Fidelity = 1 | Merit = 0.16887
+
+--- EGO Iteration 26/60 ---
+   GP Level 1 | Log-Likelihood: -77.91
+   GP Level 2 | Log-Likelihood: 5.12 | rho = -0.253
+-> Next point: x = [1.     0.6685 0.644 ] | Fidelity = 2 | Merit = 0.26993
+
+--- EGO Iteration 27/60 ---
+   GP Level 1 | Log-Likelihood: -78.97
+   GP Level 2 | Log-Likelihood: 2.34 | rho = -0.237
+-> Next point: x = [0.     0.3772 1.    ] | Fidelity = 2 | Merit = 0.06661
+
+--- EGO Iteration 28/60 ---
+   GP Level 1 | Log-Likelihood: -31.76
+   GP Level 2 | Log-Likelihood: 18.37 | rho = 1.118
+-> Next point: x = [0.1222 0.4121 0.5885] | Fidelity = 1 | Merit = 0.06588
+
+--- EGO Iteration 29/60 ---
+   GP Level 1 | Log-Likelihood: -86.73
+   GP Level 2 | Log-Likelihood: 1.45 | rho = -0.218
+-> Next point: x = [0.3572 0.     0.7137] | Fidelity = 2 | Merit = 0.11932
+
+--- EGO Iteration 30/60 ---
+   GP Level 1 | Log-Likelihood: -30.81
+   GP Level 2 | Log-Likelihood: 19.41 | rho = 1.126
+-> Next point: x = [0.0987 0.2154 0.5901] | Fidelity = 2 | Merit = 0.14813
+
+--- EGO Iteration 31/60 ---
+   GP Level 1 | Log-Likelihood: -78.58
+   GP Level 2 | Log-Likelihood: -0.08 | rho = 0.320
+-> Next point: x = [0.0106 0.017  0.5977] | Fidelity = 2 | Merit = 0.27249
+
+--- EGO Iteration 32/60 ---
+   GP Level 1 | Log-Likelihood: -33.96
+   GP Level 2 | Log-Likelihood: 4.07 | rho = 0.734
+-> Next point: x = [0.0746 0.1523 0.5756] | Fidelity = 2 | Merit = 0.05245
+
+--- EGO Iteration 33/60 ---
+   GP Level 1 | Log-Likelihood: -32.90
+   GP Level 2 | Log-Likelihood: 22.92 | rho = 1.083
+-> Next point: x = [0.8618 0.0791 0.3331] | Fidelity = 1 | Merit = 0.01196
+
+--- EGO Iteration 34/60 ---
+   GP Level 1 | Log-Likelihood: -83.23
+   GP Level 2 | Log-Likelihood: -0.83 | rho = -0.182
+-> Next point: x = [0.3173 0.     0.7951] | Fidelity = 2 | Merit = 0.03562
+
+--- EGO Iteration 35/60 ---
+   GP Level 1 | Log-Likelihood: -36.17
+   GP Level 2 | Log-Likelihood: 5.59 | rho = 0.805
+-> Next point: x = [0.1053 0.1441 0.5998] | Fidelity = 2 | Merit = 0.06008
+
+--- EGO Iteration 36/60 ---
+   GP Level 1 | Log-Likelihood: -77.01
+   GP Level 2 | Log-Likelihood: -1.26 | rho = 0.316
+-> Next point: x = [0.     0.     0.4755] | Fidelity = 2 | Merit = 0.10388
+
+--- EGO Iteration 37/60 ---
+   GP Level 1 | Log-Likelihood: -82.71
+   GP Level 2 | Log-Likelihood: -28.23 | rho = 0.311
+-> Next point: x = [1.     0.     0.2474] | Fidelity = 2 | Merit = 2.43303
+
+--- EGO Iteration 38/60 ---
+   GP Level 1 | Log-Likelihood: -36.17
+   GP Level 2 | Log-Likelihood: 4.72 | rho = 0.946
+-> Next point: x = [0.1091 0.1624 0.5688] | Fidelity = 2 | Merit = 0.17547
+
+--- EGO Iteration 39/60 ---
+   GP Level 1 | Log-Likelihood: -32.45
+   GP Level 2 | Log-Likelihood: 13.48 | rho = 1.015
+-> Next point: x = [0.8638 0.0847 0.3327] | Fidelity = 2 | Merit = 0.11562
+
+--- EGO Iteration 40/60 ---
+   GP Level 1 | Log-Likelihood: -36.17
+   GP Level 2 | Log-Likelihood: 5.53 | rho = 0.892
+-> Next point: x = [0.1057 0.3826 0.5939] | Fidelity = 2 | Merit = 0.11285
+
+--- EGO Iteration 41/60 ---
+   GP Level 1 | Log-Likelihood: -87.18
+   GP Level 2 | Log-Likelihood: -3.04 | rho = 0.539
+-> Next point: x = [0.4555 0.     0.9702] | Fidelity = 1 | Merit = 0.47891
+
+--- EGO Iteration 42/60 ---
+   GP Level 1 | Log-Likelihood: -36.84
+   GP Level 2 | Log-Likelihood: 5.34 | rho = 0.996
+-> Next point: x = [0.1374 0.1737 0.55  ] | Fidelity = 2 | Merit = 0.11954
+
+--- EGO Iteration 43/60 ---
+   GP Level 1 | Log-Likelihood: -35.25
+   GP Level 2 | Log-Likelihood: 16.52 | rho = 0.863
+-> Next point: x = [0.8654 0.0914 0.3221] | Fidelity = 2 | Merit = 0.04087
+
+--- EGO Iteration 44/60 ---
+   GP Level 1 | Log-Likelihood: -83.43
+   GP Level 2 | Log-Likelihood: -33.28 | rho = -0.239
+-> Next point: x = [0.5708 1.     0.185 ] | Fidelity = 2 | Merit = 2.09064
+
+--- EGO Iteration 45/60 ---
+   GP Level 1 | Log-Likelihood: -36.84
+   GP Level 2 | Log-Likelihood: 5.89 | rho = 0.854
+-> Next point: x = [0.1518 0.2345 0.58  ] | Fidelity = 2 | Merit = 0.04948
+
+--- EGO Iteration 46/60 ---
+   GP Level 1 | Log-Likelihood: -33.26
+   GP Level 2 | Log-Likelihood: 15.82 | rho = 1.003
+-> Next point: x = [0.1572 0.1915 0.5564] | Fidelity = 1 | Merit = 0.03980
+
+--- EGO Iteration 47/60 ---
+   GP Level 1 | Log-Likelihood: -33.71
+   GP Level 2 | Log-Likelihood: 16.14 | rho = 0.949
+-> Next point: x = [0.847  0.2308 0.3504] | Fidelity = 1 | Merit = 0.06636
+
+--- EGO Iteration 48/60 ---
+   GP Level 1 | Log-Likelihood: -36.06
+   GP Level 2 | Log-Likelihood: 16.39 | rho = 0.923
+-> Next point: x = [0.8575 0.1389 0.3474] | Fidelity = 2 | Merit = 0.06662
+
+--- EGO Iteration 49/60 ---
+   GP Level 1 | Log-Likelihood: -33.29
+   GP Level 2 | Log-Likelihood: 17.10 | rho = 0.933
+-> Next point: x = [0.868  0.005  0.3492] | Fidelity = 1 | Merit = 0.03231
+
+--- EGO Iteration 50/60 ---
+   GP Level 1 | Log-Likelihood: -32.58
+   GP Level 2 | Log-Likelihood: 16.41 | rho = 0.926
+-> Next point: x = [0.8098 0.0627 0.3424] | Fidelity = 1 | Merit = 0.02911
+
+--- EGO Iteration 51/60 ---
+   GP Level 1 | Log-Likelihood: -31.92
+   GP Level 2 | Log-Likelihood: 16.58 | rho = 0.930
+-> Next point: x = [0.8479 0.2182 0.3418] | Fidelity = 2 | Merit = 0.02998
+
+--- EGO Iteration 52/60 ---
+   GP Level 1 | Log-Likelihood: -31.92
+   GP Level 2 | Log-Likelihood: 18.14 | rho = 0.929
+-> Next point: x = [0.1081 0.4216 0.5796] | Fidelity = 2 | Merit = 0.02248
+
+--- EGO Iteration 53/60 ---
+   GP Level 1 | Log-Likelihood: -91.03
+   GP Level 2 | Log-Likelihood: -1.56 | rho = 0.242
+-> Next point: x = [0.0168 0.12   0.6181] | Fidelity = 2 | Merit = 0.04761
+
+--- EGO Iteration 54/60 ---
+   GP Level 1 | Log-Likelihood: -31.92
+   GP Level 2 | Log-Likelihood: 20.80 | rho = 0.923
+-> Next point: x = [0.8397 0.0759 0.3431] | Fidelity = 2 | Merit = 0.01651
+
+--- EGO Iteration 55/60 ---
+   GP Level 1 | Log-Likelihood: -31.92
+   GP Level 2 | Log-Likelihood: 22.65 | rho = 0.924
+-> Next point: x = [0.7601 0.5161 0.3935] | Fidelity = 1 | Merit = 0.00667
+
+--- EGO Iteration 56/60 ---
+   GP Level 1 | Log-Likelihood: -32.64
+   GP Level 2 | Log-Likelihood: 22.85 | rho = 0.916
+-> Next point: x = [0.7954 0.415  0.3774] | Fidelity = 2 | Merit = 0.01398
+
+--- EGO Iteration 57/60 ---
+   GP Level 1 | Log-Likelihood: -32.64
+   GP Level 2 | Log-Likelihood: 23.14 | rho = 0.929
+-> Next point: x = [0.8115 0.7153 0.3804] | Fidelity = 1 | Merit = 0.01519
+
+--- EGO Iteration 58/60 ---
+   GP Level 1 | Log-Likelihood: -32.52
+   GP Level 2 | Log-Likelihood: 23.65 | rho = 0.932
+-> Next point: x = [0.7874 0.6271 0.3933] | Fidelity = 2 | Merit = 0.01241
+
+--- EGO Iteration 59/60 ---
+   GP Level 1 | Log-Likelihood: -32.52
+   GP Level 2 | Log-Likelihood: 24.46 | rho = 0.933
+-> Next point: x = [0.0158 0.0939 0.6146] | Fidelity = 1 | Merit = 0.04037
+
+--- EGO Iteration 60/60 ---
+   GP Level 1 | Log-Likelihood: -37.56
+   GP Level 2 | Log-Likelihood: 26.64 | rho = 0.908
+-> Next point: x = [0.1709 0.8305 0.5513] | Fidelity = 1 | Merit = 0.01243
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: -1.80835558
+==================================================
+ BEST AIRFOIL FOUND (Level 2/2)
+==================================================
+Closest standard NACA  : ** NACA8309 **
+Exact values found     : Camber 8.00%, Thickness 9.25%
+Aerodynamic performance: Cl = 1.0065 | Cd = 0.0151 | Alpha = 1.95°
+==================================================
+
+=> Best points and hyperparameters saved to TXT (for reading) and JSON (for reloading).
+
+Generating final plots...
+
+=> Plot saved as 'problem_data/ego_convergence_results.png'.
