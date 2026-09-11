@@ -138,9 +138,9 @@ def evaluate_fidelity(x_normalized, level, L, target_cl=1.0, coordinates_only=Fa
         cd, cl, _ = objective_function(airfoil_obj=custom_naca, alpha=alpha_phys, level=level, L=L)
         
         # penalty on the target Cl to guide the optimizer
-        weight = 2.0
+        weight = 10.0
         merit = cd + weight * (cl - target_cl)**2
-        return float(merit)
+        return float(np.log10(merit))
 
 # ==========================================
 # VISUALIZATION FUNCTION

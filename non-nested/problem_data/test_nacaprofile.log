@@ -313,3 +313,50 @@ Aerodynamic performance: Cl = 1.0133 | Cd = 0.0165 | Alpha = 7.25°
 Generating final plots...
 
 => Plot saved as 'problem_data/ego_convergence_results.png'.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 2
+ - Levels (L) : 2
+ - Costs      : [1.0, 1.0]
+ - Initial DoE: [35, 5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (35 points)...
+Evaluating initial Level 2 (5 points)...
+
+Initial best High-Fidelity point: -1.7391
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/2 ---
+   GP Level 1 | Log-Likelihood: -5.23
+   GP Level 2 | Log-Likelihood: -3.96 | rho = 1.126
+-> Next point: x = [0.0724 0.6618 0.6208] | Fidelity = 1 | Merit = 0.14647
+
+--- EGO Iteration 2/2 ---
+   GP Level 1 | Log-Likelihood: -12.24
+   GP Level 2 | Log-Likelihood: 0.76 | rho = 0.988
+-> Next point: x = [0.0193 0.765  0.616 ] | Fidelity = 1 | Merit = 0.21376
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: -1.73908022
+==================================================
+ BEST AIRFOIL FOUND (Level 2/2)
+==================================================
+Closest standard NACA  : ** NACA2311 **
+Exact values found     : Camber 2.35%, Thickness 11.13%
+Aerodynamic performance: Cl = 1.0133 | Cd = 0.0165 | Alpha = 7.25°
+==================================================
+
+=> Best points and hyperparameters saved to TXT (for reading) and JSON (for reloading).
+
+Generating final plots...
+
+=> Plot saved as 'problem_data/ego_convergence_results.png'.

@@ -33,12 +33,12 @@ print("Loading model data...")
 with open("problem_data/optimization_results.json", "r") as f:
     data = json.load(f)
 
-X_train = np.array(data["training_data"]["level_1"]["X_train"])
-Y_train = np.array(data["training_data"]["level_1"]["Y_train"]).reshape(-1, 1)
+X_train = np.array(data["training_data"]["level_2"]["X_train"])
+Y_train = np.array(data["training_data"]["level_2"]["Y_train"]).reshape(-1, 1)
 
 # Using the correct key based on your current JSON structure
-theta = np.array(data["hyperparameters"]["level_1"]["theta"])
-noise = data["hyperparameters"]["level_1"]["noise"]
+theta = np.array(data["hyperparameters"]["level_2"]["theta"])
+noise = data["hyperparameters"]["level_2"]["noise"]
 
 # Number of actual dimensions in the dataset (will be 3)
 d = X_train.shape[1]
@@ -76,7 +76,7 @@ Z_mesh = Z_pred.reshape(X0_mesh.shape)
 print("Generating the plot...")
 fig = plt.figure(figsize=(14, 6))
 
-# --- Plot 1: 3D Surface ---
+# Plot 1: 3D Surface ---
 ax1 = fig.add_subplot(121, projection='3d')
 surf = ax1.plot_surface(X0_mesh, X1_mesh, Z_mesh, cmap='viridis', edgecolor='none', alpha=0.8)
 
@@ -89,7 +89,7 @@ ax1.set_ylabel("Param 2 (Normalized)")
 ax1.set_zlabel("Objective (Cd + Penalty)")
 ax1.view_init(elev=30, azim=-45)
 
-# --- Plot 2: Heatmap (2D Contour) ---
+# Plot 2: Heatmap (2D Contour) ---
 ax2 = fig.add_subplot(122)
 contour = ax2.contourf(X0_mesh, X1_mesh, Z_mesh, levels=50, cmap='viridis')
 ax2.scatter(X_train[:, 0], X_train[:, 1], color='red', s=30, edgecolors='black', label='Observations')
@@ -105,4 +105,4 @@ fig.colorbar(contour, ax=ax2, label="Objective Value")
 
 plt.tight_layout()
 plt.savefig("problem_data/response_surface.png", dpi=300)
-plt.show()
+plt.close()
