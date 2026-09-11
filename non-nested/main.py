@@ -16,6 +16,9 @@ from tests.optim_neuralfoil import objective_function, generate_continuous_naca4
 import neuralfoil as nf
 import aerosandbox as asb
 
+#imports fopr dealing with files and directories
+import os
+import json
 # ==========================================
 # LOGGING CLASS
 # ==========================================
@@ -282,22 +285,50 @@ if __name__ == "__main__":
 
     #writing the bests accumulated points to a text file independent of the dimension of the problem
     #createing the directory if it does not exist
-    import os
+
     if not os.path.exists("problem_data"):
         os.makedirs("problem_data")
+
     with open("problem_data/best_points.txt", "w") as f:
         f.write("Best points found during the optimization:\n")
+
         for l in range(1, args.levels + 1):
             best_idx = np.argmin(Y_train_final[l])
             best_x = X_train_final[l][best_idx]
             best_y = Y_train_final[l][best_idx]
-            f.write(f"Level {l}: Best X = {best_x}, Best Y = {best_y:.8f}\n")
+            f.write(f"Level {l}: Best X = {np.array(best_x).round(4).tolist()}, Best Y = {best_y:.8f}\n")
     # writing the hyperparameters of the problesm to a text file
     with open("problem_data/hyperparameters.txt", "w") as f:
         f.write("Hyperparameters of the Gaussian Process:\n")
-        for l in range(0, args.levels-1):
-            f.write(f"Level {l}: Theta = {thetas[l]}, Rho = {rhos[l]}, Noise = {noises[l]}\n")
-    print("\n=> Best points and hyperparameters saved to 'best_points.txt' and 'hyperparameters.txt'.")
+        
+        for l in range(args.levels):
+            rho_val = rhos[l] if l < len(rhos) else "N/A"
+            f.write(f"Level {l+1}: Theta = {thetas[l]}, Rho = {rho_val}, Noise = {noises[l]}\n")
+    
+    # json files for python
+    export_data = {
+        "best_points": {},
+        "hyperparameters": {}
+    }
+    
+    for l in range(1, args.levels + 1):
+        best_idx = np.argmin(Y_train_final[l])
+        export_data["best_points"][f"level_{l}"] = {
+            "x": np.array(X_train_final[l][best_idx]).tolist(),
+            "y": float(Y_train_final[l][best_idx])
+        }
+
+    for l in range(args.levels):
+        export_data["hyperparameters"][f"level_{l+1}"] = {
+            "theta": np.array(thetas[l]).tolist(),
+            "noise": float(noises[l]),
+            "rho": float(rhos[l]) if l < len(rhos) else None
+        }
+
+    with open("problem_data/optimization_results.json", "w") as f:
+        json.dump(export_data, f, indent=4)
+
+    print("\n=> Best points and hyperparameters saved to TXT (for reading) and JSON (for reloading).")
 
 
     # --- 5. VISUALIZATION ---
