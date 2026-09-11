@@ -102,8 +102,8 @@ def evaluate_fidelity(x_normalized, level, L, target_cl=1.0, coordinates_only=Fa
     m_camber = 0.02 + x_normalized[0] * (0.09 - 0.02)    # Exact camber (between 2% and 9%)
     p_position = 0.3                                     # Fixed position of maximum camber (30%)
     t_thickness = 0.08 + x_normalized[1] * (0.17 - 0.08) # Exact thickness (between 8% and 17%)
-    alpha_phys = -5 + x_normalized[2] * (15 + 5)          # Exact angle of attack (between -5° and 15°)
-
+    #alpha_phys = 0 + x_normalized[2] * (15 - 0)          # Exact angle of attack (between -5° and 15°)
+    alpha_phys = 5.00
     # Reconstructing the standard NACA name (for human readability) ---
     # We round to the nearest integer to find the classic NACA equivalent
     camber_int = int(round(m_camber * 100))      # ex 0.0423 -> 4
@@ -166,7 +166,7 @@ def plot_ego_results(X_train, Y_train, L, n_initial_hf, location = "problem_data
     ax1.set_ylabel("Target function value")
     ax1.set_title("EGO Convergence")
     ax1.grid(True, linestyle=':', alpha=0.7)
-   # ax1.set_xlim(n_initial_hf - 2, len(best_y))
+    ax1.set_xlim(1, len(best_y))
    # ax1.set_ylim(best_y[n_initial_hf]*0.9, best_y[n_initial_hf-2]*1.1)
     ax1.legend()
     
@@ -228,7 +228,7 @@ if __name__ == "__main__":
     if len(args.points) != args.levels:
         parser.error(f"Number of point counts provided ({len(args.points)}) must match the number of levels ({args.levels}).")
         
-    d = 3
+    d = 2
     bounds =[(0.0, 1.0) for _ in range(d)]
     
     print("\n==========================================")

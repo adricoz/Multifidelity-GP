@@ -1,3 +1,3 @@
 Best points found during the optimization:
-Level 1: Best X = [0.8618, 0.0791, 0.3331], Best Y = -1.80709802
-Level 2: Best X = [0.8575, 0.1389, 0.3474], Best Y = -1.80835558
+Level 1: Best X = [0.3543, 0.0], Best Y = -1.85183194
+Level 2: Best X = [0.3567, 0.0], Best Y = -1.85691102
