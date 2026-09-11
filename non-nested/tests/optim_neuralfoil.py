@@ -97,19 +97,27 @@ def generate_continuous_naca4(m_camber, p_position, t_thickness, n_points=100):
     
     return np.column_stack((x_coords, y_coords))
 
-def objective_function(airfoil_obj, alpha, target_cl, level, L):
+def objective_function(airfoil_obj, alpha, level, L):
     """
     
     """
-    
+    modelclasses = ["xxsmall","xsmall","small","medium","large","xlarge","xxlarge","xxxlarge"]
+    if L >= 1 and L <= len(modelclasses):
+        #definition of the modelclass based on the fidelity level
+        if level < L :
+            modelclass = modelclasses[int(level/L)*len(modelclasses)]
+        elif level == L:
+             modelclass = modelclasses[-1]
+        else:
+             raise ValueError(f"Error: Fidelity level {level} is not defined. Must be between 1 and {L}.")
+
     try:
         # NeuralFoil with personalized object!
         aero = nf.get_aero_from_airfoil(
             airfoil=airfoil_obj,
             alpha=alpha, 
             Re=5e5,
-            mach=0.0,
-            model_size = "xxlarge",
+            model_size = modelclass,
             n_crit=1,
             xtr_upper=0.1,
             xtr_lower=0.1

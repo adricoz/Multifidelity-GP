@@ -103,11 +103,11 @@ def evaluate_fidelity(x_normalized, level, L, target_cl=1.0, coordinates_only=Fa
 
     # Reconstructing the standard NACA name (for human readability) ---
     # We round to the nearest integer to find the classic NACA equivalent
-    camber_int = int(round(m_camber * 100))      # e.g., 0.0423 -> 4
-    pos_int = int(round(p_position * 10))        # e.g., 0.3 -> 3
-    thick_int = int(round(t_thickness * 100))    # e.g., 0.128 -> 13
+    camber_int = int(round(m_camber * 100))      # ex 0.0423 -> 4
+    pos_int = int(round(p_position * 10))        # ex., 0.3 -> 3
+    thick_int = int(round(t_thickness * 100))    # ex, 0.128 -> 13
     
-    # Formatting: if thickness < 10, add a leading zero (e.g., 09)
+    # Formatting: if thickness < 10, add a leading zero (ex, 09)
     naca_string = f"naca{camber_int}{pos_int}{thick_int:02d}"
 
     # Highly precise name (optional, to differentiate very similar airfoils in the GP)
@@ -120,7 +120,7 @@ def evaluate_fidelity(x_normalized, level, L, target_cl=1.0, coordinates_only=Fa
     #  Evaluation and Output ---
     if coordinates_only:
         # Pass the custom_naca object to NeuralFoil
-        cd, cl, alpha = objective_function(airfoil_obj=custom_naca,alpha = alpha_phys, target_cl=target_cl, level=level, L=L)
+        cd, cl, alpha = objective_function(airfoil_obj=custom_naca,alpha = alpha_phys, level=level, L=L)
         
         print(f"==================================================")
         print(f" BEST AIRFOIL FOUND (Level {level}/{L})")
@@ -132,16 +132,17 @@ def evaluate_fidelity(x_normalized, level, L, target_cl=1.0, coordinates_only=Fa
         
         return cd 
     else:
-        cd, cl, _ = objective_function(airfoil_obj=custom_naca, alpha=alpha_phys, target_cl=target_cl, level=level, L=L)
+        cd, cl, _ = objective_function(airfoil_obj=custom_naca, alpha=alpha_phys, level=level, L=L)
         
         # penalty on the target Cl to guide the optimizer
-        merit = cd + 1e6 * np.abs(cl - target_cl)
+        weight = 2.0
+        merit = cd + weight * (cl - target_cl)**2
         return float(merit)
 
 # ==========================================
 # VISUALIZATION FUNCTION
 # ==========================================
-def plot_ego_results(X_train, Y_train, L, n_initial_hf):
+def plot_ego_results(X_train, Y_train, L, n_initial_hf, location = "problem_data/ego_convergence_results.png"):
     """
     Generates and saves the analysis plots for the Multi-Fidelity EGO.
     """
@@ -160,10 +161,10 @@ def plot_ego_results(X_train, Y_train, L, n_initial_hf):
     ax1.axvline(x=n_initial_hf - 1, color='red', linestyle='--', label='End of Initial DoE')
     ax1.set_xlabel("Total number of High-Fidelity evaluations")
     ax1.set_ylabel("Target function value")
-    ax1.set_title("EGO Convergence (Hartmann 6D)")
+    ax1.set_title("EGO Convergence")
     ax1.grid(True, linestyle=':', alpha=0.7)
-    ax1.set_xlim(n_initial_hf - 3, len(best_y))
-    ax1.set_ylim(best_y[n_initial_hf -3]*1.1, best_y[n_initial_hf]*0.9)
+   # ax1.set_xlim(n_initial_hf - 2, len(best_y))
+   # ax1.set_ylim(best_y[n_initial_hf]*0.9, best_y[n_initial_hf-2]*1.1)
     ax1.legend()
     
     # --- PLOT 2: 2D SPATIAL PROJECTION ---
@@ -187,8 +188,8 @@ def plot_ego_results(X_train, Y_train, L, n_initial_hf):
     ax2.grid(True, linestyle=':', alpha=0.7)
     
     plt.tight_layout()
-    plt.savefig("ego_convergence_results.png", dpi=300)
-    print("\n=> Plot saved as 'ego_convergence_results.png'.")
+    plt.savefig(location, dpi=300)
+    print(f"\n=> Plot saved as '{location}'.")
 
 # ==========================================
 # EXECUTION BLOCK (WITH PARSER)
@@ -210,8 +211,8 @@ if __name__ == "__main__":
     parser.add_argument('--points', type=int, nargs='+', default=[60, 20, 8], 
                         help='Number of initial DoE points per level. Example: --points 60 20 8')
     
-    parser.add_argument('--logname', type=str, default="execution.log", 
-                        help='Name of the log file (default: execution.log).')
+    parser.add_argument('--logname', type=str, default="problem_data/execution.log", 
+                        help='Name of the log file (default: problem_data/execution.log).')
 
     args = parser.parse_args()
     
@@ -270,7 +271,7 @@ if __name__ == "__main__":
         n_iterations=args.iters, 
         true_function=target_function
     )
-    
+
     print("\n==========================================")
     print("   OPTIMIZATION COMPLETED")
     print("==========================================")
@@ -278,6 +279,26 @@ if __name__ == "__main__":
     #print (f"Coordinates (normalized) of the best point found: {X_train_final[args.levels][np.argmin(Y_train_final[args.levels])]}")
     best_coord = X_train_final[args.levels][np.argmin(Y_train_final[args.levels])]
     evaluate_fidelity(best_coord, level=args.levels, L=args.levels, coordinates_only=True)
+
+    #writing the bests accumulated points to a text file independent of the dimension of the problem
+    #createing the directory if it does not exist
+    import os
+    if not os.path.exists("problem_data"):
+        os.makedirs("problem_data")
+    with open("problem_data/best_points.txt", "w") as f:
+        f.write("Best points found during the optimization:\n")
+        for l in range(1, args.levels + 1):
+            best_idx = np.argmin(Y_train_final[l])
+            best_x = X_train_final[l][best_idx]
+            best_y = Y_train_final[l][best_idx]
+            f.write(f"Level {l}: Best X = {best_x}, Best Y = {best_y:.8f}\n")
+    # writing the hyperparameters of the problesm to a text file
+    with open("problem_data/hyperparameters.txt", "w") as f:
+        f.write("Hyperparameters of the Gaussian Process:\n")
+        for l in range(0, args.levels-1):
+            f.write(f"Level {l}: Theta = {thetas[l]}, Rho = {rhos[l]}, Noise = {noises[l]}\n")
+    print("\n=> Best points and hyperparameters saved to 'best_points.txt' and 'hyperparameters.txt'.")
+
 
     # --- 5. VISUALIZATION ---
     print("\nGenerating final plots...")
