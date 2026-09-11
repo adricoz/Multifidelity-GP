@@ -308,7 +308,8 @@ if __name__ == "__main__":
     # json files for python
     export_data = {
         "best_points": {},
-        "hyperparameters": {}
+        "hyperparameters": {},
+        "training_data": {}
     }
     
     for l in range(1, args.levels + 1):
@@ -323,6 +324,12 @@ if __name__ == "__main__":
             "theta": np.array(thetas[l]).tolist(),
             "noise": float(noises[l]),
             "rho": float(rhos[l]) if l < len(rhos) else None
+        }
+
+    for l in range(1, args.levels + 1):
+        export_data["training_data"][f"level_{l}"] = {
+            "X_train": np.array(X_train_final[l]).tolist(),
+            "Y_train": np.array(Y_train_final[l]).tolist()
         }
 
     with open("problem_data/optimization_results.json", "w") as f:
