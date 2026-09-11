@@ -1,0 +1,520 @@
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 2
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 2
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [5] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (5 points)...
+
+Initial best High-Fidelity point: 1000010.0000
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/2 ---
+   GP Level 1 | Log-Likelihood: -6064900014.64
+-> Next point: x = [1. 1.] | Fidelity = 1 | Merit = 5205.83901
+
+--- EGO Iteration 2/2 ---
+   GP Level 1 | Log-Likelihood: -6170465600.63
+-> Next point: x = [0.5247 0.    ] | Fidelity = 1 | Merit = 2888.75198
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 1000010.00000000
+==================================================
+ BEST AIRFOIL FOUND (Level 1/1)
+==================================================
+Closest standard NACA  : ** NACA8309 **
+Exact values found     : Camber 7.92%, Thickness 9.01%
+Aerodynamic performance: Cl = 0.0000 | Cd = 1000000.0000 | Alpha = 5.00°
+==================================================
+
+Generating final plots...
+
+=> Plot saved as 'ego_convergence_results.png'.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 20
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [40] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (40 points)...
+
+Initial best High-Fidelity point: 1000010.0000
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/20 ---
+   GP Level 1 | Log-Likelihood: -6672531700.34
+-> Next point: x = [9.991e-01 1.000e-04] | Fidelity = 1 | Merit = 9.32581
+
+--- EGO Iteration 2/20 ---
+   GP Level 1 | Log-Likelihood: -6674571055.10
+-> Next point: x = [0.0002 0.0001] | Fidelity = 1 | Merit = 8.41883
+
+--- EGO Iteration 3/20 ---
+   GP Level 1 | Log-Likelihood: -6676658655.58
+-> Next point: x = [0.9998 0.9999] | Fidelity = 1 | Merit = 7.56530
+
+--- EGO Iteration 4/20 ---
+   GP Level 1 | Log-Likelihood: -6678869360.29
+-> Next point: x = [7.e-04 1.e+00] | Fidelity = 1 | Merit = 7.33197
+
+--- EGO Iteration 5/20 ---
+   GP Level 1 | Log-Likelihood: -6681308559.39
+-> Next point: x = [0.0004 0.003 ] | Fidelity = 1 | Merit = 1.80999
+
+--- EGO Iteration 6/20 ---
+   GP Level 1 | Log-Likelihood: -6681763506.75
+-> Next point: x = [9.995e-01 7.000e-04] | Fidelity = 1 | Merit = 1.97961
+
+--- EGO Iteration 7/20 ---
+   GP Level 1 | Log-Likelihood: -6682232505.94
+-> Next point: x = [0.4171 0.5205] | Fidelity = 1 | Merit = 0.45992
+
+--- EGO Iteration 8/20 ---
+   GP Level 1 | Log-Likelihood: -6682465644.08
+-> Next point: x = [0.0034 0.9953] | Fidelity = 1 | Merit = 1.79262
+
+--- EGO Iteration 9/20 ---
+   GP Level 1 | Log-Likelihood: -6683052895.85
+-> Next point: x = [1.     0.9976] | Fidelity = 1 | Merit = 1.70297
+
+--- EGO Iteration 10/20 ---
+   GP Level 1 | Log-Likelihood: -6683502434.62
+-> Next point: x = [0.5257 0.342 ] | Fidelity = 1 | Merit = 0.09244
+
+--- EGO Iteration 11/20 ---
+   GP Level 1 | Log-Likelihood: -6683631194.99
+-> Next point: x = [0.5231 0.4561] | Fidelity = 1 | Merit = 0.30421
+
+--- EGO Iteration 12/20 ---
+   GP Level 1 | Log-Likelihood: -6683877968.81
+-> Next point: x = [0.4481 0.5088] | Fidelity = 1 | Merit = 0.62298
+
+--- EGO Iteration 13/20 ---
+   GP Level 1 | Log-Likelihood: -6684119268.76
+-> Next point: x = [0.5176 0.5202] | Fidelity = 1 | Merit = 0.50099
+
+--- EGO Iteration 14/20 ---
+   GP Level 1 | Log-Likelihood: -6684329349.98
+-> Next point: x = [0.5163 0.4176] | Fidelity = 1 | Merit = 0.25739
+
+--- EGO Iteration 15/20 ---
+   GP Level 1 | Log-Likelihood: -6684480195.84
+-> Next point: x = [0.4576 0.4747] | Fidelity = 1 | Merit = 0.46233
+
+--- EGO Iteration 16/20 ---
+   GP Level 1 | Log-Likelihood: -6684655257.22
+-> Next point: x = [0.4572 0.5133] | Fidelity = 1 | Merit = 0.44638
+
+--- EGO Iteration 17/20 ---
+   GP Level 1 | Log-Likelihood: -6684817514.26
+-> Next point: x = [0.4463 0.496 ] | Fidelity = 1 | Merit = 0.23514
+
+--- EGO Iteration 18/20 ---
+   GP Level 1 | Log-Likelihood: -6684961125.26
+-> Next point: x = [0.4766 0.5054] | Fidelity = 1 | Merit = 0.02570
+
+--- EGO Iteration 19/20 ---
+   GP Level 1 | Log-Likelihood: -6685099031.23
+-> Next point: x = [0.4897 0.471 ] | Fidelity = 1 | Merit = 0.28682
+
+--- EGO Iteration 20/20 ---
+   GP Level 1 | Log-Likelihood: -6685221131.55
+-> Next point: x = [0.0014 0.9984] | Fidelity = 1 | Merit = 1.40024
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 1000010.00000000
+==================================================
+ BEST AIRFOIL FOUND (Level 1/1)
+==================================================
+Closest standard NACA  : ** NACA7309 **
+Exact values found     : Camber 7.46%, Thickness 9.48%
+Aerodynamic performance: Cl = 0.0000 | Cd = 1000000.0000 | Alpha = 5.00°
+==================================================
+
+Generating final plots...
+
+=> Plot saved as 'ego_convergence_results.png'.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 20
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [40] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (40 points)...
+
+Initial best High-Fidelity point: 2000000.0000
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/20 ---
+   GP Level 1 | Log-Likelihood: -26689593481.25
+-> Next point: x = [9.999e-01 3.000e-04] | Fidelity = 1 | Merit = 18.69954
+
+--- EGO Iteration 2/20 ---
+   GP Level 1 | Log-Likelihood: -26697776624.55
+-> Next point: x = [0.0002 0.0012] | Fidelity = 1 | Merit = 16.89805
+
+--- EGO Iteration 3/20 ---
+   GP Level 1 | Log-Likelihood: -26706070684.28
+-> Next point: x = [1. 1.] | Fidelity = 1 | Merit = 15.15107
+
+--- EGO Iteration 4/20 ---
+   GP Level 1 | Log-Likelihood: -26714909846.27
+-> Next point: x = [1.000e-04 9.993e-01] | Fidelity = 1 | Merit = 14.76852
+
+--- EGO Iteration 5/20 ---
+   GP Level 1 | Log-Likelihood: -26724686622.43
+-> Next point: x = [0.5169 0.4892] | Fidelity = 1 | Merit = 0.86449
+
+--- EGO Iteration 6/20 ---
+   GP Level 1 | Log-Likelihood: -26725458545.12
+-> Next point: x = [0.444  0.4646] | Fidelity = 1 | Merit = 0.90026
+
+--- EGO Iteration 7/20 ---
+   GP Level 1 | Log-Likelihood: -26726097360.03
+-> Next point: x = [0.0012 0.9978] | Fidelity = 1 | Merit = 4.08759
+
+--- EGO Iteration 8/20 ---
+   GP Level 1 | Log-Likelihood: -26728528019.36
+-> Next point: x = [9.972e-01 3.000e-04] | Fidelity = 1 | Merit = 4.23264
+
+--- EGO Iteration 9/20 ---
+   GP Level 1 | Log-Likelihood: -26730775041.31
+-> Next point: x = [0.4847 0.5051] | Fidelity = 1 | Merit = 0.93603
+
+--- EGO Iteration 10/20 ---
+   GP Level 1 | Log-Likelihood: -26731600705.35
+-> Next point: x = [0.0005 0.0001] | Fidelity = 1 | Merit = 4.09412
+
+--- EGO Iteration 11/20 ---
+   GP Level 1 | Log-Likelihood: -26733894507.76
+-> Next point: x = [0.9993 0.998 ] | Fidelity = 1 | Merit = 3.96416
+
+--- EGO Iteration 12/20 ---
+   GP Level 1 | Log-Likelihood: -26735888661.08
+-> Next point: x = [0.9987 0.0012] | Fidelity = 1 | Merit = 2.05970
+
+--- EGO Iteration 13/20 ---
+   GP Level 1 | Log-Likelihood: -26736881744.69
+-> Next point: x = [0.5301 0.5424] | Fidelity = 1 | Merit = 1.02043
+
+--- EGO Iteration 14/20 ---
+   GP Level 1 | Log-Likelihood: -26737748866.73
+-> Next point: x = [0.5544 0.5068] | Fidelity = 1 | Merit = 1.01612
+
+--- EGO Iteration 15/20 ---
+   GP Level 1 | Log-Likelihood: -26738502878.44
+-> Next point: x = [0.442  0.5049] | Fidelity = 1 | Merit = 0.97680
+
+--- EGO Iteration 16/20 ---
+   GP Level 1 | Log-Likelihood: -26739281611.17
+-> Next point: x = [0.5455 0.5021] | Fidelity = 1 | Merit = 1.01370
+
+--- EGO Iteration 17/20 ---
+   GP Level 1 | Log-Likelihood: -26739924989.38
+-> Next point: x = [0.453 0.476] | Fidelity = 1 | Merit = 0.66672
+
+--- EGO Iteration 18/20 ---
+   GP Level 1 | Log-Likelihood: -26740572233.66
+-> Next point: x = [0.4617 0.5164] | Fidelity = 1 | Merit = 0.76729
+
+--- EGO Iteration 19/20 ---
+   GP Level 1 | Log-Likelihood: -26741170367.07
+-> Next point: x = [0.445  0.4818] | Fidelity = 1 | Merit = 0.89830
+
+--- EGO Iteration 20/20 ---
+   GP Level 1 | Log-Likelihood: -26741698358.85
+-> Next point: x = [0.5077 0.5394] | Fidelity = 1 | Merit = 0.68425
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 2000000.00000000
+==================================================
+ BEST AIRFOIL FOUND (Level 1/1)
+==================================================
+Closest standard NACA  : ** NACA7309 **
+Exact values found     : Camber 7.46%, Thickness 9.48%
+Aerodynamic performance: Cl = 0.0000 | Cd = 1000000.0000 | Alpha = 5.00°
+==================================================
+
+Generating final plots...
+
+=> Plot saved as 'ego_convergence_results.png'.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 20
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [40] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (40 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 20
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [40] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (40 points)...
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 20
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [40] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (40 points)...
+
+Initial best High-Fidelity point: 2000000.0000
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/20 ---
+   GP Level 1 | Log-Likelihood: -28615259555.86
+-> Next point: x = [9.999e-01 1.000e-04 1.000e+00] | Fidelity = 1 | Merit = 68.49114
+
+--- EGO Iteration 2/20 ---
+   GP Level 1 | Log-Likelihood: -28629997343.39
+-> Next point: x = [0.9998 0.9999 1.    ] | Fidelity = 1 | Merit = 41.93353
+
+--- EGO Iteration 3/20 ---
+   GP Level 1 | Log-Likelihood: -28638030889.12
+-> Next point: x = [0.000e+00 2.000e-04 9.998e-01] | Fidelity = 1 | Merit = 42.99157
+
+--- EGO Iteration 4/20 ---
+   GP Level 1 | Log-Likelihood: -28653068362.63
+-> Next point: x = [0.0007 0.0003 0.0003] | Fidelity = 1 | Merit = 40.93244
+
+--- EGO Iteration 5/20 ---
+   GP Level 1 | Log-Likelihood: -28670663315.18
+-> Next point: x = [1.000e-04 9.999e-01 9.999e-01] | Fidelity = 1 | Merit = 28.18131
+
+--- EGO Iteration 6/20 ---
+   GP Level 1 | Log-Likelihood: -28680806849.55
+-> Next point: x = [9.961e-01 9.984e-01 6.000e-04] | Fidelity = 1 | Merit = 15.53352
+
+--- EGO Iteration 7/20 ---
+   GP Level 1 | Log-Likelihood: -28689683446.19
+-> Next point: x = [0.4009 0.4547 0.3678] | Fidelity = 1 | Merit = 1.79076
+
+--- EGO Iteration 8/20 ---
+   GP Level 1 | Log-Likelihood: -28693365719.78
+-> Next point: x = [0.4905 0.5528 0.5423] | Fidelity = 1 | Merit = 2.16250
+
+--- EGO Iteration 9/20 ---
+   GP Level 1 | Log-Likelihood: -28697983057.87
+-> Next point: x = [9.966e-01 2.800e-03 6.000e-04] | Fidelity = 1 | Merit = 11.07307
+
+--- EGO Iteration 10/20 ---
+   GP Level 1 | Log-Likelihood: -28705518009.55
+-> Next point: x = [0.4856 0.4746 0.4956] | Fidelity = 1 | Merit = 2.07812
+
+--- EGO Iteration 11/20 ---
+   GP Level 1 | Log-Likelihood: -28710353479.29
+-> Next point: x = [0.4425 0.4448 0.4826] | Fidelity = 1 | Merit = 2.61513
+
+--- EGO Iteration 12/20 ---
+   GP Level 1 | Log-Likelihood: -28714353932.54
+-> Next point: x = [0.4462 0.5412 0.4616] | Fidelity = 1 | Merit = 1.38072
+
+--- EGO Iteration 13/20 ---
+   GP Level 1 | Log-Likelihood: -28717521818.82
+-> Next point: x = [4.000e-04 9.996e-01 1.000e-03] | Fidelity = 1 | Merit = 16.60796
+
+--- EGO Iteration 14/20 ---
+   GP Level 1 | Log-Likelihood: -28726971382.49
+-> Next point: x = [0.5211 0.5515 0.5766] | Fidelity = 1 | Merit = 1.89531
+
+--- EGO Iteration 15/20 ---
+   GP Level 1 | Log-Likelihood: -28730025414.56
+-> Next point: x = [0.4249 0.4594 0.4148] | Fidelity = 1 | Merit = 1.26085
+
+--- EGO Iteration 16/20 ---
+   GP Level 1 | Log-Likelihood: -28732955945.86
+-> Next point: x = [0.5659 0.5209 0.4782] | Fidelity = 1 | Merit = 1.23824
+
+--- EGO Iteration 17/20 ---
+   GP Level 1 | Log-Likelihood: -28735613597.96
+-> Next point: x = [0.4889 0.5157 0.4554] | Fidelity = 1 | Merit = 1.40045
+
+--- EGO Iteration 18/20 ---
+   GP Level 1 | Log-Likelihood: -28738418932.68
+-> Next point: x = [0.4249 0.4168 0.5334] | Fidelity = 1 | Merit = 2.02561
+
+--- EGO Iteration 19/20 ---
+   GP Level 1 | Log-Likelihood: -28740788180.30
+-> Next point: x = [0.4263 0.4876 0.4463] | Fidelity = 1 | Merit = 1.01554
+
+--- EGO Iteration 20/20 ---
+   GP Level 1 | Log-Likelihood: -28742986124.97
+-> Next point: x = [0.4784 0.4344 0.593 ] | Fidelity = 1 | Merit = 1.36530
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 2000000.00000000
+==================================================
+ BEST AIRFOIL FOUND (Level 1/1)
+==================================================
+Closest standard NACA  : ** NACA7313 **
+Exact values found     : Camber 6.94%, Thickness 12.63%
+Aerodynamic performance: Cl = 0.0000 | Cd = 1000000.0000 | Alpha = 0.57°
+==================================================
+
+Generating final plots...
+
+=> Plot saved as 'ego_convergence_results.png'.
+
+==========================================
+   EXPERIMENT CONFIGURATION
+==========================================
+ - Iterations : 5
+ - Levels (L) : 1
+ - Costs      : [1.0]
+ - Initial DoE: [40] points
+==========================================
+
+Generating the initial Non-Nested Latin Hypercube Design...
+Evaluating initial Level 1 (40 points)...
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+
+Initial best High-Fidelity point: 2000000.0000
+
+==========================================
+   STARTING MULTI-FIDELITY EGO
+==========================================
+
+--- EGO Iteration 1/5 ---
+   GP Level 1 | Log-Likelihood: -28615259555.86
+-> Next point: x = [0.9998 0.     0.9999] | Fidelity = 1 | Merit = 68.50791
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+
+--- EGO Iteration 2/5 ---
+   GP Level 1 | Log-Likelihood: -28629996953.36
+-> Next point: x = [1.000e-04 1.000e-04 9.999e-01] | Fidelity = 1 | Merit = 44.25010
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+
+--- EGO Iteration 3/5 ---
+   GP Level 1 | Log-Likelihood: -28645927730.40
+-> Next point: x = [0.9999 0.9999 0.9996] | Fidelity = 1 | Merit = 39.50269
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+
+--- EGO Iteration 4/5 ---
+   GP Level 1 | Log-Likelihood: -28653069479.76
+-> Next point: x = [0.0004 0.0005 0.0001] | Fidelity = 1 | Merit = 40.99380
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+
+--- EGO Iteration 5/5 ---
+   GP Level 1 | Log-Likelihood: -28670670448.25
+-> Next point: x = [2.000e-04 9.992e-01 9.993e-01] | Fidelity = 1 | Merit = 27.98033
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+
+==========================================
+   OPTIMIZATION COMPLETED
+==========================================
+Absolute best point found: 2000000.00000000
+An error occurred during the aerodynamic computation: get_aero_from_airfoil() got an unexpected keyword argument 'mach'
+==================================================
+ BEST AIRFOIL FOUND (Level 1/1)
+==================================================
+Closest standard NACA  : ** NACA7313 **
+Exact values found     : Camber 6.94%, Thickness 12.63%
+Aerodynamic performance: Cl = 0.0000 | Cd = 1000000.0000 | Alpha = 0.57°
+==================================================
+
+Generating final plots...
+
+=> Plot saved as 'ego_convergence_results.png'.

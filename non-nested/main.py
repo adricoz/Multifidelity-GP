@@ -95,12 +95,13 @@ def evaluate_fidelity(x_normalized, level, L, target_cl=1.0, coordinates_only=Fa
     if not (1 <= level <= L):
         raise ValueError(f"Error: Fidelity level {level} is not defined. Must be between 1 and {L}.")
 
-    # --- 1. Continuous Denormalization (for the GP math) ---
+    # Continuous Denormalization (for the GP math) ---
     m_camber = 0.02 + x_normalized[0] * (0.09 - 0.02)    # Exact camber (between 2% and 9%)
     p_position = 0.3                                     # Fixed position of maximum camber (30%)
     t_thickness = 0.08 + x_normalized[1] * (0.17 - 0.08) # Exact thickness (between 8% and 17%)
+    alpha_phys = -5 + x_normalized[2] * (15 + 5)          # Exact angle of attack (between -5° and 15°)
 
-    # --- 2. Reconstructing the standard NACA name (for human readability) ---
+    # Reconstructing the standard NACA name (for human readability) ---
     # We round to the nearest integer to find the classic NACA equivalent
     camber_int = int(round(m_camber * 100))      # e.g., 0.0423 -> 4
     pos_int = int(round(p_position * 10))        # e.g., 0.3 -> 3
@@ -112,14 +113,14 @@ def evaluate_fidelity(x_normalized, level, L, target_cl=1.0, coordinates_only=Fa
     # Highly precise name (optional, to differentiate very similar airfoils in the GP)
     exact_name = f"naca_{m_camber*100:.2f}_{pos_int}_{t_thickness*100:.2f}"
 
-    # --- 3. Airfoil Object Creation ---
+    # Airfoil Object Creation ---
     coords = generate_continuous_naca4(m_camber, p_position, t_thickness)
     custom_naca = asb.Airfoil(name=exact_name, coordinates=coords)
 
-    # --- 4. Evaluation and Output ---
+    #  Evaluation and Output ---
     if coordinates_only:
         # Pass the custom_naca object to NeuralFoil
-        cd, cl, alpha = objective_function(airfoil_obj=custom_naca, target_cl=target_cl, level=level, L=L)
+        cd, cl, alpha = objective_function(airfoil_obj=custom_naca,alpha = alpha_phys, target_cl=target_cl, level=level, L=L)
         
         print(f"==================================================")
         print(f" BEST AIRFOIL FOUND (Level {level}/{L})")
@@ -131,10 +132,10 @@ def evaluate_fidelity(x_normalized, level, L, target_cl=1.0, coordinates_only=Fa
         
         return cd 
     else:
-        cd, cl, _ = objective_function(airfoil_obj=custom_naca, target_cl=target_cl, level=level, L=L)
+        cd, cl, _ = objective_function(airfoil_obj=custom_naca, alpha=alpha_phys, target_cl=target_cl, level=level, L=L)
         
-        # Soft penalty on the target Cl to guide the optimizer
-        merit = cd + 10.0 * np.abs(cl - target_cl)
+        # penalty on the target Cl to guide the optimizer
+        merit = cd + 1e6 * np.abs(cl - target_cl)
         return float(merit)
 
 # ==========================================
@@ -223,7 +224,7 @@ if __name__ == "__main__":
     if len(args.points) != args.levels:
         parser.error(f"Number of point counts provided ({len(args.points)}) must match the number of levels ({args.levels}).")
         
-    d = 2
+    d = 3
     bounds =[(0.0, 1.0) for _ in range(d)]
     
     print("\n==========================================")

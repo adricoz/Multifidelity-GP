@@ -67,7 +67,7 @@ def foil_mid_fidelity(alpha, naca_string="naca4412", string_modelclass="xxsmall"
 #         raise ValueError(f"Error: Fidelity level {L} is not defined. Must be between 1 and 8.")
 def generate_continuous_naca4(m_camber, p_position, t_thickness, n_points=100):
     """
-    Generates mathematicl coordinates for the naca profile.
+    Generates mathematical coordinates for the naca profile.
     """
     x = np.linspace(0, 1, n_points)
     
@@ -76,7 +76,7 @@ def generate_continuous_naca4(m_camber, p_position, t_thickness, n_points=100):
                    m_camber / p_position**2 * (2 * p_position * x - x**2),
                    m_camber / (1 - p_position)**2 * ((1 - 2 * p_position) + 2 * p_position * x - x**2))
     
-    # 2. Dérivée pour l'angle
+    # angle derivative of camber line
     dyc_dx = np.where(x < p_position,
                       2 * m_camber / p_position**2 * (p_position - x),
                       2 * m_camber / (1 - p_position)**2 * (p_position - x))
@@ -97,32 +97,35 @@ def generate_continuous_naca4(m_camber, p_position, t_thickness, n_points=100):
     
     return np.column_stack((x_coords, y_coords))
 
-def objective_function(airfoil_obj, target_cl, level, L):
+def objective_function(airfoil_obj, alpha, target_cl, level, L):
     """
-    Évalue l'objet AeroSandbox via NeuralFoil.
-    (Je fixe alpha=5.0 ici comme dans ton exemple, mais tu peux le rendre variable).
+    
     """
-    alpha = 5.0 
     
     try:
-        # NeuralFoil mange directement notre objet airfoil_obj personnalisé !
+        # NeuralFoil with personalized object!
         aero = nf.get_aero_from_airfoil(
             airfoil=airfoil_obj,
             alpha=alpha, 
-            Re=5e6,
-            mach=0.0
+            Re=5e5,
+            mach=0.0,
+            model_size = "xxlarge",
+            n_crit=1,
+            xtr_upper=0.1,
+            xtr_lower=0.1
         )
         
-        # Extraction sécurisée (selon la version de NeuralFoil)
+        # secure extraction
         cl = float(np.squeeze(aero["CL"]))
         cd = float(np.squeeze(aero["CD"]))
         
-        # Filtre anti-crash
+        # filter for negative or NaN drag coefficients
         if np.isnan(cd) or cd <= 0:
+            print("Cd is NaN or negative. Returning a high penalty value.")
             return 1e6, 0.0, alpha
             
         return cd, cl, alpha
         
     except Exception as e:
-        # En cas de forme trop extrême, on renvoie une pénalité
+        print(f"An error occurred during the aerodynamic computation: {e}")
         return 1e6, 0.0, alpha
