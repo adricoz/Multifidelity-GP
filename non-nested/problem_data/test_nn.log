@@ -160,18 +160,18 @@ Initial best High-Fidelity point: -1.7091
 
 --- EGO Iteration 29/40 ---
    GP Level 1 | Log-Likelihood: 11.88
-   GP Level 2 | Log-Likelihood: -6.86 | rho = 3.170
--> Next point: x = [0. 0.] | Fidelity = 2 | Merit = 0.68290
+   GP Level 2 | Log-Likelihood: -6.86 | rho = 3.110
+-> Next point: x = [0. 0.] | Fidelity = 2 | Merit1= 0.68290
 
 --- EGO Iteration 30/40 ---
    GP Level 1 | Log-Likelihood: 10.52
-   GP Level 2 | Log-Likelihood: 34.87 | rho = 0.979
--> Next point: x = [0.3898 0.6313] | Fidelity = 1 | Merit = 0.00000
+   GP Level 2 | Log-Likelihood: 34.87 | rho = 0.919
+-> Next point: x = [0.3898 0.6313] | Fidelity = 11| Merit = 0.00000
 
 --- EGO Iteration 31/40 ---
    GP Level 1 | Log-Likelihood: 14.13
-   GP Level 2 | Log-Likelihood: 35.80 | rho = 0.987
--> Next point: x = [1. 0.] | Fidelity = 1 | Merit = 0.00000
+   GP Level 2 | Log-Likelihood: 35.80 | rho = 0.917
+-> Next point: x = [1. 0.] | Fidelity = 1 | Merit1= 0.00000
 
 --- EGO Iteration 32/40 ---
    GP Level 1 | Log-Likelihood: -10.02

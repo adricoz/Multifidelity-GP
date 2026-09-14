@@ -137,3 +137,53 @@ def objective_function(airfoil_obj, alpha, level, L):
     except Exception as e:
         print(f"An error occurred during the aerodynamic computation: {e}")
         return 1e6, 0.0, alpha
+
+def find_optimal_foil(alpha= 5.0):
+    inst_cl = []
+    inst_cd = []
+    naca_profile = [] 
+    # naca profile generation
+    pos_camber = int(3)
+
+    for camber in range(4, 10, 1):
+        camber = int(camber)
+        for thickness in range(8, 18, 1):
+            thickness = int(thickness)
+            if thickness < 10:
+                naca_string = f"naca{camber:.0f}{pos_camber:.0f}0{thickness:.0f}"
+            else:
+                naca_string = f"naca{camber:.0f}{pos_camber:.0f}{thickness:.0f}"
+            # example naca string: "naca6412"
+            Cd, Cl = foil_mid_fidelity(alpha = alpha, naca_string = naca_string, string_modelclass = "xxlarge")
+            inst_cl.append(Cl)
+            inst_cd.append(Cd)
+            naca_profile.append(naca_string)
+
+    return inst_cl, inst_cd, naca_profile
+
+""" cl, cd, naca =  find_optimal_foil(alpha = 5.0)
+import matplotlib.pyplot as plt
+plt.figure(figsize=(35, 25))
+
+plt.scatter(cd, cl, color='royalblue', edgecolors='k', s=80, zorder=3)
+for i in range(len(naca)):
+    plt.annotate(
+        naca[i], 
+        (cd[i], cl[i]),              # position of the point
+        textcoords="offset points",  # how to position the text
+        xytext=(8, -3),              # pixel shift: 8 to the right 3 down
+        ha='left',                   # horizontal alignement
+        va='center',                 # vertical alignment
+        fontsize=12,
+        alpha=0.85
+    )
+
+plt.title("$alpha = 5°$")
+plt.xlabel("$C_d$", fontsize=25)
+plt.ylabel("$C_l)", fontsize=25)
+plt.grid(True, linestyle='--', alpha=0.5, zorder=1)
+
+#plt.xlim(0.013, 0.018)
+#plt.ylim(0.85, 1.2)
+plt.tight_layout() 
+plt.savefig("cl_vs_cd_naca.png", dpi=500) """
