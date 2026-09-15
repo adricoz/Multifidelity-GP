@@ -137,7 +137,7 @@ def predict_non_nested_mf(x_new, thetas, rhos, noises, X_train, Y_train):
                 X_train=X_train, 
                 Y_train=Y_train
             )
-            # 2. SÉCURITÉ : Forcer la prédiction en 1D
+            # security: forces the preediction to be 1D
             Y_l_minus_1_1d = np.squeeze(Y_l_minus_1)
             target_Y = Y_l_1d - rho_prev * Y_l_minus_1_1d
             
