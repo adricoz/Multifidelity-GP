@@ -1,6 +1,6 @@
 # this file is all about defining the kernel (covariance function) used for gaussian processes
 import numpy as np
-from non-nested.non_nested_mf_covariance import base_covariance_matrix
+from non_nested.non_nested_mf_covariance import base_covariance_matrix
 
 class Kernel:
     def __init__(self, lengthscale, variance):
