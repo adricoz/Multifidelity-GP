@@ -97,10 +97,21 @@ def generate_continuous_naca4(m_camber, p_position, t_thickness, n_points=100):
     
     return np.column_stack((x_coords, y_coords))
 
-def objective_function(airfoil_obj, alpha, level, L):
+from scipy.optimize import root_scalar
+
+def objective_function(airfoil_obj, target_cl, level, L):
     """
     
     """
+    def erreur_cl(alpha_test):
+            aero = nf.get_aero_from_airfoil(
+                airfoil=airfoil_obj, alpha=alpha_test, Re=5e5, 
+                model_size="xxxlarge", n_crit=1, xtr_upper=0.1, xtr_lower=0.1
+            )
+            cl_actuel = float(np.squeeze(aero["CL"]))
+            return cl_actuel - target_cl
+
+    
     modelclasses = ["xxsmall","xsmall","small","medium","large","xlarge","xxlarge","xxxlarge"]
     if L >= 1 and L <= len(modelclasses):
         #definition of the modelclass based on the fidelity level
@@ -112,10 +123,13 @@ def objective_function(airfoil_obj, alpha, level, L):
              raise ValueError(f"Error: Fidelity level {level} is not defined. Must be between 1 and {L}.")
 
     try:
+        result = root_scalar(erreur_cl, bracket=[-5.0, 15.0], method='brentq')      
+        alpha_perfect = result.root
+
         # NeuralFoil with personalized object!
         aero = nf.get_aero_from_airfoil(
             airfoil=airfoil_obj,
-            alpha=alpha, 
+            alpha=alpha_perfect, 
             Re=5e5,
             model_size = modelclass,
             n_crit=1,
@@ -130,13 +144,13 @@ def objective_function(airfoil_obj, alpha, level, L):
         # filter for negative or NaN drag coefficients
         if np.isnan(cd) or cd <= 0:
             print("Cd is NaN or negative. Returning a high penalty value.")
-            return 1e6, 0.0, alpha
+            return 1e6, 0.0, alpha_perfect
             
-        return cd, cl, alpha
+        return cd, cl, alpha_perfect
         
     except Exception as e:
         print(f"An error occurred during the aerodynamic computation: {e}")
-        return 1e6, 0.0, alpha
+        return 1e6, 0.0, 0.0
 
 def find_optimal_foil(alpha= 5.0):
     inst_cl = []

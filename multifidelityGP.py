@@ -1,0 +1,1 @@
+# This file is all about defining the classes about the multifidelity Gaussian process. The main class is the MultifidelityGP, which is a wrapper around the GPy library. It allows for the creation of a multifidelity Gaussian process regressor

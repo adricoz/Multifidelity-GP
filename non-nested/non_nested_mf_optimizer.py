@@ -252,9 +252,9 @@ def merit_non_nested(x, l_candidate, L, costs, f_best_L, sigma2_e_L, rhos, noise
     float
         Merit value for the candidate point.    
     """
-    #aei_L = aei_multi_fidelity(f_hat_L, sigma2_hat_L, f_best_L, sigma2_e_L)
+    aei_L = aei_multi_fidelity(f_hat_L, sigma2_hat_L, f_best_L, sigma2_e_L)
     # quick test for hartmann wuith the expected improvement
-    aei_L = expected_improvement(f_hat_L, sigma2_hat_L, f_best_L)
+    #aei_L = expected_improvement(f_hat_L, sigma2_hat_L, f_best_L)
 
     if aei_L <= 0:
         return 0.0 
@@ -452,7 +452,7 @@ def run_non_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true
                 objective_merit, 
                 bounds=bounds, 
                 popsize=10, 
-                maxiter=50,
+                maxiter=50, #hard coded but could be changed
                 tol=1e-3,
                 updating='deferred'
             )
@@ -486,11 +486,10 @@ def run_non_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true
         if not is_already_evaluated(next_x, X_train[l_eval]):
             # Evaluate the true black-box function at the chosen fidelity
             new_y = true_function(next_x, l_eval)
-            
             # Append the new observation to the specific fidelity dataset
             X_train[l_eval] = np.vstack((X_train[l_eval], next_x))
             Y_train[l_eval] = np.append(Y_train[l_eval], new_y)
+        
         else:
             print(f"   Warning: Point already evaluated at level {l_eval}. Skipping to avoid duplicate.")
-                
     return X_train, Y_train, thetas, rhos, noises

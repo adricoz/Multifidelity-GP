@@ -102,8 +102,8 @@ def evaluate_fidelity(x_normalized, level, L, target_cl=1.0, coordinates_only=Fa
     m_camber = 0.02 + x_normalized[0] * (0.09 - 0.02)    # Exact camber (between 2% and 9%)
     p_position = 0.3                                     # Fixed position of maximum camber (30%)
     t_thickness = 0.08 + x_normalized[1] * (0.17 - 0.08) # Exact thickness (between 8% and 17%)
-    #alpha_phys = 0 + x_normalized[2] * (15 - 0)          # Exact angle of attack (between -5° and 15°)
-    alpha_phys = 5.00
+    #alpha_phys = 0 + x_normalized[2] * (8 - 0)          # Exact angle of attack (between 0° and 8°)
+    #alpha_phys = 5.00
     # Reconstructing the standard NACA name (for human readability) ---
     # We round to the nearest integer to find the classic NACA equivalent
     camber_int = int(round(m_camber * 100))      # ex 0.0423 -> 4
@@ -123,7 +123,7 @@ def evaluate_fidelity(x_normalized, level, L, target_cl=1.0, coordinates_only=Fa
     #  Evaluation and Output ---
     if coordinates_only:
         # Pass the custom_naca object to NeuralFoil
-        cd, cl, alpha = objective_function(airfoil_obj=custom_naca,alpha = alpha_phys, level=level, L=L)
+        cd, cl, alpha = objective_function(airfoil_obj=custom_naca, target_cl=target_cl, level=level, L=L)
         
         print(f"==================================================")
         print(f" BEST AIRFOIL FOUND (Level {level}/{L})")
@@ -135,7 +135,7 @@ def evaluate_fidelity(x_normalized, level, L, target_cl=1.0, coordinates_only=Fa
         
         return cd 
     else:
-        cd, cl, _ = objective_function(airfoil_obj=custom_naca, alpha=alpha_phys, level=level, L=L)
+        cd, cl, _ = objective_function(airfoil_obj=custom_naca, target_cl=target_cl, level=level, L=L)
         
         # penalty on the target Cl to guide the optimizer
         weight = 10.0
@@ -228,7 +228,7 @@ if __name__ == "__main__":
     if len(args.points) != args.levels:
         parser.error(f"Number of point counts provided ({len(args.points)}) must match the number of levels ({args.levels}).")
         
-    d = 2
+    d = np.shape(args.points)[0]  # Dimension of the problem (inferred from the first level)
     bounds =[(0.0, 1.0) for _ in range(d)]
     
     print("\n==========================================")
@@ -274,7 +274,6 @@ if __name__ == "__main__":
         n_iterations=args.iters, 
         true_function=target_function
     )
-
     print("\n==========================================")
     print("   OPTIMIZATION COMPLETED")
     print("==========================================")
