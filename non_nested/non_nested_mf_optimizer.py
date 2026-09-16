@@ -1,11 +1,13 @@
 import numpy as np
-from scipy.stats import norm
-from scipy.optimize import minimize, differential_evolution
 
 # Local imports
-from Hartmann6d import f_l
-from non_nested_mf_sampling import Delta_Y_l, extract_subpart_vector, is_already_evaluated
-from non_nested_mf_covariance import base_covariance_matrix, Cov_fct, k_l_vector
+from non_nested_mf_covariance import Cov_fct, base_covariance_matrix, k_l_vector
+from non_nested_mf_sampling import (
+    is_already_evaluated,
+)
+from scipy.optimize import differential_evolution, minimize
+from scipy.stats import norm
+
 
 def log_likelihood_mf(rho_l_minus1, Theta_l, sigma_epsilon_l, X_l, Y_l, Y_l_minus_1, fidelity_level):
     """
@@ -392,7 +394,7 @@ def run_non_nested_mf_ego(X_train, Y_train, L, costs, bounds, n_iterations, true
                     best_ll = res.fun
                     best_res = res
             
-            # Store the best optimized hyperparameters for the current level
+            # Store the best optimized hyperparamet3ers for the current level
             if l == 1:
                 thetas.append(best_res.x[:-1]) 
                 noises.append(best_res.x[-1])  
