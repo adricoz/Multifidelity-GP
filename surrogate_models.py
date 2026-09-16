@@ -20,9 +20,8 @@ class GaussianProcess:
 
     def fit(self, X, Y, n_restarts = 3):
         self.X_train = X
-        self.Y_train = np.squeeze(Y)
+        self.Y_train = Y.reshape(-1, 1) 
         d = X.shape[1]
-            
         def objective_nll(params):
             self.kernel.set_params(params[:-1])
             self.noise = params[-1]
@@ -31,24 +30,26 @@ class GaussianProcess:
                 K = self.kernel.get_covariance_matrix(self.X_train) + self.noise * np.eye(len(self.X_train))
                 L = np.linalg.cholesky(K)
                 alpha = scipy.linalg.solve(L.T, scipy.linalg.solve(L, self.Y_train))
+                print("We got here")
                 log_det = 2.0 * np.sum(np.log(np.diag(L)))
                 data_fit = 0.5 * np.dot(self.Y_train, alpha)
                 nll = data_fit + 0.5 * log_det + 0.5 * len(self.X_train) * np.log(2 * np.pi)
                 return float(nll) #must be float for scipy
             except np.linalg.LinAlgError:
                 return 1e10
-            
         best_nll = np.inf
         best_params = None
 
         param_bounds = [(0.01, 5.0)] * d + [(1e-3, 50.0), (1e-6, 1.0), (1e-8, 1e-5)]
 
         for _ in range(n_restarts):
+
             init_guess = np.concatenate((np.random.uniform(0.2, 1.5, d), [1.0, 1e-4, 1e-6]))
             res = minimize(objective_nll, init_guess, bounds=param_bounds, method='L-BFGS-B')
             if res.fun < best_nll:
                 best_nll = res.fun
                 best_params = res.x
+
         if best_params is not None:
             self.kernel.set_params(best_params[:-1])
             self.noise = best_params[-1]
@@ -84,7 +85,8 @@ class MultifidelityModel:
                 rho = 1.0
                 self.rhos[l - 2] = rho
                 target_Y = Y_l - rho * f_prev
-            self.gps[l - 1].fit(X_l, target_Y, bounds = experiment_data.bounds, n_restarts = 3)
+            #self.gps[l - 1].fit(X_l, target_Y, bounds = experiment_data.bounds, n_restarts = 3)
+            self.gps[l - 1].fit(X_l, target_Y, n_restarts = 3)
             logger.info(f"GP level {l} trained. Noise: {self.gps[l - 1].noise:.6f}")
 
     def _predict_up_to(self, x_new, level):

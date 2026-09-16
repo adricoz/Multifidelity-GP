@@ -3,7 +3,7 @@ import logging
 import numpy as np
 
 from data_management import ExperimentData
-from kernels import SqaredExponentialKernel
+from kernels import SquaredExponentialKernel
 from optimizer import AcquisitionFunction, EGOOptimizer
 from simulator import Simulator
 from surrogate_models import MultifidelityModel
@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
     data = ExperimentData(bounds=bounds, costs=costs)
     simu = Simulator(L=L)
-    model = MultifidelityModel(L=L, kernel_class = SqaredExponentialKernel)
+    model = MultifidelityModel(L=L, kernel_class = SquaredExponentialKernel)
     acq = AcquisitionFunction(model=model, data=data)
     ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq)
 
