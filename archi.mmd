@@ -1,0 +1,40 @@
+---
+references:
+  - "File: /data_management.py"
+  - "File: /kernels.py"
+  - "File: /main.py"
+  - "File: /optimizer.py"
+  - "File: /simulator.py"
+  - "File: /surrogate_models.py"
+generationTime: 2026-09-16T15:51:44.251Z
+---
+architecture-beta
+    group application(server)[Application Layer]
+    group optimization(cloud)[Optimization Layer]
+    group data(database)[Data Layer]
+    group surrogate(server)[Surrogate Layer]
+    group simulation(server)[Simulation Layer]
+    group external(internet)[External Systems]
+
+    service main(server)[Main Entry] in application
+
+    service ego(server)[EGO Optimizer] in optimization
+    service acquisition(server)[Acquisition Function] in optimization
+
+    service experiment(database)[Experiment Data] in data
+
+    service model(server)[Multifidelity Model] in surrogate
+    service gp(server)[Gaussian Processes] in surrogate
+    service kernel(server)[Kernel Functions] in surrogate
+
+    service simulator(server)[Airfoil Simulator] in simulation
+    service aero(internet)[Aero Analysis Tools] in external
+
+    main{group}:R --> L:ego{group}
+    ego:R --> L:acquisition
+    ego{group}:L --> R:experiment{group}
+    ego{group}:B --> T:simulator{group}
+    experiment{group}:R --> L:model{group}
+    model:B --> T:gp
+    gp:R --> L:kernel
+    simulator{group}:R --> L:aero{group}
