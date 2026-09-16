@@ -63,8 +63,8 @@ class ExperimentData:
         self.bounds = bounds
         self.costs = costs
         self.dim = len(bounds)
-        self.X_dict = None
-        self.Y_dict = None
+        self.X_dict = {}
+        self.Y_dict = {}
 
     def generate_initial_design(self, n_points_list):
         """Generates an initial design of experiments based on the provided number of points for each fidelity level

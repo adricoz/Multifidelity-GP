@@ -162,81 +162,27 @@ class AcquisitionFunction:
         )
 
 class EGOOptimizer:
-    def __init__(self, data, model, simulator, AcquisitionFunction):
+    def __init__(self, data, model, simulator, acquisition):
         self.data = data
         self.model = model
         self.simulator = simulator
-        self.AcquisitionFunction = AcquisitionFunction
+        self.acquisition = acquisition
 
     def step(self):
-        pass
+        self.model.fit(self.data)
     def run(self, n_iterations):
-        pass
+        for iteration in range(n_iterations):
+            logger.info(f"\n--- EGO Iteration {iteration + 1}/{n_iterations} ---")
+            self.step()
+
     def _find_next_point(self):
-        f_best_L = np.min(Y_train[L]) 
-        sigma2_e_L = noises[-1]       
-        
-        best_merit_overall = -np.inf
-        next_x = None
-        next_l = None
-        
-        # Evaluate the merit landscape for each potential fidelity level candidate
-        for l_candidate in range(1, L + 1):
-            
-            # Wrapper function for the acquisition optimization (returns negative merit)
-            def objective_merit(x):
-                try: # we try to predict the error
-                    # Predict final high-fidelity statistics at candidate point x
-                    f_hat_L, sigma2_hat_L, gp_variances_at_x = predict_non_nested_mf(x, thetas, rhos, noises, X_train, Y_train)
-                    noise_lp = noises[l_candidate - 1] 
-                    
-                    f_hat_L = float(np.squeeze(f_hat_L))
-                    sigma2_hat_L = float(np.squeeze(sigma2_hat_L))
-                    gp_variances_at_x = [float(np.squeeze(v)) for v in gp_variances_at_x]
-                    noise_lp = float(noises[l_candidate - 1])
-                    
-                    # Compute the non-nested merit value
-                    merit_val = merit_non_nested(
-                        x, l_candidate, L, costs, f_best_L, sigma2_e_L, rhos, 
-                        noise_lp, gp_variances_at_x, f_hat_L, sigma2_hat_L
-                    )
-                    
-                    # Ensure the returned value is a standard scalar
-                    if hasattr(merit_val, 'item'):
-                        merit_val = merit_val.item()
-                        
-                    return -float(np.squeeze(merit_val))
-            
-                except Exception as e:
-                    # showing the real error 
-                    import traceback
-                    logger.error("\nHidden scipy error!")
-                    traceback.print_exc()
-                    raise e
-            
-            # Global Optimization of the merit function using Differential Evolution
-            res_merit = differential_evolution(
-                objective_merit, 
-                bounds=bounds, 
-                popsize=10, 
-                maxiter=50, #hard coded but could be changed
-                tol=1e-3,
-                updating='deferred'
-            )
-            
-            merit_value = -res_merit.fun
-            
-            # Keep track of the absolute best merit across all fidelity levels
-            if merit_value > best_merit_overall:
-                best_merit_overall = merit_value
-                next_x = res_merit.x
-                next_l = l_candidate
+        def objective_wrapper(x):
+            merits = [self.acquisition.evaluate_merit(x, l) for l in range(1, self.model.L + 1)]
+            best_merit = max(merits)
+            return -best_merit  # We minimize the negative merit
+        # differential evolution to find the next point
+        result = differential_evolution(objective_wrapper, self.data.bounds)
 
-        # Failsafe: Trigger random exploration if the merit landscape is completely flat.
-        # A merit of 0.0 indicates that no significant variance reduction or expected improvement was found.
-        if next_x is None or next_l is None or best_merit_overall <= 0.0:
-            logger.warning("   Warning: Global merit is null/too low. Random selection triggered (exploration).")
-            next_x = np.array([np.random.uniform(b[0], b[1]) for b in bounds])
-            next_l = L 
-
-        logger.info(f"-> Next point: x = {np.round(next_x, 4)} | Fidelity = {next_l} | Merit = {best_merit_overall:.5f}")
+        x_optimal = result.x
+        l_optimal = np.argmax([self.acquisition.evaluate_merit(x_optimal, l) for l in range(1, self.model.L + 1)]) + 1
+        return x_optimal, l_optimal

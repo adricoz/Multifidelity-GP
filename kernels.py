@@ -84,7 +84,7 @@ def k_l_vector(x, X_train, Theta_l):
 # ----------------------------------------------------------------------
 
 class Kernel:
-    def __init__(self, Theta):
+    def __init__(self):
         """
         Initializes the Kernel with the given hyperparameters.
         
@@ -94,7 +94,7 @@ class Kernel:
         Returns:
         - None
         """
-        self.Theta = Theta
+        self.Theta = None
 
     def __call__(self, x, y):
         """

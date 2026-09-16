@@ -1,9 +1,10 @@
 from venv import logger
 
 import numpy as np
+from scipy.linalg import cholesky, solve
 from scipy.optimize import minimize
 
-from kernels import Cov_fct, base_covariance_matrix, k_l_vector
+from kernels import Cov_fct, base_covariance_matrix, k_l_vector, Kernel
 
 
 def predict_base_gp(x_new, X_train, Y_train, Theta_l, sigma_epsilon_l):
