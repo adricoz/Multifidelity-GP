@@ -85,79 +85,26 @@ def k_l_vector(x, X_train, Theta_l):
 
 class Kernel:
     def __init__(self):
-        """
-        Initializes the Kernel with the given hyperparameters.
-        
-        Args:
-        - Theta: list or numpy array, hyperparameters of the kernel.
-        
-        Returns:
-        - None
-        """
-        self.Theta = None
 
-    def __call__(self, x, y):
-        """
-        Computes the covariance between two input points x and y.
-        
-        Args:
-        - x: numpy array of shape (n_features,), first input point.
-        - y: numpy array of shape (n_features,), second input point.
-        
-        Returns:
-        - covariance: float, the computed covariance value between x and y.
-        """
-        return Cov_fct(x, y, self.Theta)
-    
+        self.lengthscale = None
+        self.signal_variance = None
+        self.bias_variance = None
+
+    def set_params(self, Theta):
+        d = len(Theta) - 2
+        self.lengthscale = Theta[:d]
+        self.signal_variance = Theta[d]
+        self.bias_variance = Theta[d + 1]
+
     def get_covariance_matrix(self, X):
-        """
-        Computes the covariance matrix for a set of input points X.
-        
-        Args:
-        - X: numpy array of shape (n, d), the input dataset.
-        
-        Returns:
-        - K: numpy array of shape (n, n), the covariance matrix.
-        
-        """
-        return base_covariance_matrix(X, self.Theta)
+        raise NotImplementedError("This method should be implemented in subclasses.")
     
     def get_cross_variance_vector(self, x_new, X):
-        """
-        Computes the cross-variance vector between a new input point and a set of training points.
-        
-        Args:
-        - x_new: numpy array of shape (n_features,), the new input point.
-        - X: numpy array of shape (n, d), the training dataset.
-        
-        Returns:
-        - k_star: numpy array of shape (n,), the cross-variance vector.
-        """
-        return k_l_vector(x_new, X, self.Theta)
+        raise NotImplementedError("This method should be implemented in subclasses.")
 
 class SquaredExponentialKernel(Kernel):
-    def __init__(self, Theta):
-        """
-        Initializes the Squared Exponential Kernel with the given hyperparameters.
-        
-        Args:
-        - Theta: list or numpy array, hyperparameters of the kernel (lengthscale and variance).
-        
-        Returns:
-        - None
-        """
-        self.lengthscale = Theta[:-1]
-        self.variance = Theta[-1]
+    def get_covariance_matrix(self, X):
+        return base_covariance_matrix(X, np.concatenate([self.lengthscale, [self.signal_variance, self.bias_variance]]))
 
-    def __call__(self, x, y):
-        """
-        Computes the covariance between two input points x and y using the squared exponential formula.
-        
-        Args:
-        - x: numpy array of shape (n_features,), first input point.
-        - y: numpy array of shape (n_features,), second input point.
-        
-        Returns:
-        - covariance: float, the computed covariance value between x and y.
-        """
-        pass
+    def get_cross_variance_vector(self, x_new, X):
+        return k_l_vector(x_new, X, np.concatenate([self.lengthscale, [self.signal_variance, self.bias_variance]]))
