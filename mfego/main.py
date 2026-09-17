@@ -1,7 +1,6 @@
 import logging
 
 import numpy as np
-
 from acquisition import AcquisitionFunction
 from data_management import ExperimentData
 from kernels import SquaredExponentialKernel
