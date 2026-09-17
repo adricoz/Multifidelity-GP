@@ -45,10 +45,13 @@ if __name__ == "__main__":
     data.generate_initial_design(points_per_level=initial_points)
 
     for l in range(1, L + 1):
+        y_values = []
         for x in data.X_dict[l]:
             y = simu.evaluate(x, level=l)
-            data.add_observation(l, x, y)
+            y_values.append(y)
+        data.Y_dict[l] = np.array(y_values)
     print(f"Initial best HF observation: { np.min(data.Y_dict[L]):.4f}")
 
     # Launch
-    ego.run(n_iterations = 20)
+    ego.run(n_iterations = 10)
+    print(f"Final best HF observation: { np.min(data.Y_dict[L]):.4f}")

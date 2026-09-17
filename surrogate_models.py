@@ -65,11 +65,11 @@ class GaussianProcess:
         self.K_inv = np.linalg.solve(self.L_chol.T, np.linalg.solve(self.L_chol, np.eye(len(self.X_train)))
                                         )
     def predict(self, X_new):
-        k_vec = self.kernel.get_cross_covariance_vector(X_new, self.X_train)
+        k_vec = self.kernel.get_cross_variance_vector(X_new, self.X_train)
         kappa = self.kernel.signal_variance + self.kernel.bias_variance
 
-        f_hat = float(k_vec.T @ self.K_inv @ self.Y_train)
-        sigma2_hat = float(kappa +self.noise - (k_vec.T @ self.K_inv @ k_vec))
+        f_hat = float(np.squeeze(k_vec.T @ self.K_inv @ self.Y_train))
+        sigma2_hat = float(np.squeeze(kappa +self.noise - (k_vec.T @ self.K_inv @ k_vec)))
 
         return f_hat, sigma2_hat
 

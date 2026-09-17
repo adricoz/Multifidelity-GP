@@ -90,6 +90,9 @@ class Kernel:
         self.signal_variance = None
         self.bias_variance = None
 
+    def get_params(self):
+        return np.concatenate([self.lengthscale, [self.signal_variance, self.bias_variance]])
+    
     def set_params(self, Theta):
         d = len(Theta) - 2
         self.lengthscale = Theta[:d]

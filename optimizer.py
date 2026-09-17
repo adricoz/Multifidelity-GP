@@ -20,7 +20,7 @@ class EGOOptimizer:
             "X_dict": {str(k): v.tolist() for k, v in self.data.X_dict.items()},
             "Y_dict": {str(k): v.tolist() for k, v in self.data.Y_dict.items()},
             "rhos": self.model.rhos,
-            "gp_params": [gp.kernel.get_params() for gp in self.model.gps]
+            "gp_params": [gp.kernel.get_params().tolist() for gp in self.model.gps],
         }
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(state, f, indent=4)
