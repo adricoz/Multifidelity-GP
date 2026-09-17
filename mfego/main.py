@@ -28,6 +28,7 @@ if __name__ == "__main__":
             This is a placeholder implementation. Replace with actual simulation code.
             """
             # Example: Eqs: (17) of the reference article.
+            # It should always deal with exections...
             try:
                 x = design_point[0]
                 f_1 = 0.5 *(6 * x - 2)**2 * np.sin(12 * x - 4) + 10 * (x - 1)
@@ -50,7 +51,7 @@ if __name__ == "__main__":
     L = 2  # Number of fidelity levels
     bounds = [(0.0, 1.0)] # 1D: Normalized
     costs = [1.0, 1.0]  # Example costs
-    initial_points = [10, 10]  # Number of points for each fidelity level
+    initial_points = [11, 4]  # Number of points for each fidelity level
 
     data = ExperimentData(bounds=bounds, costs=costs)
     simu = FunctionSimulator(num_levels=L)
@@ -58,17 +59,18 @@ if __name__ == "__main__":
     acq = AcquisitionFunction(model=model, data=data)
     ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq)
 
-    print("Generating initial design...")
+    logging.info("Generating initial design...")  # noqa: LOG015
+
     data.generate_initial_design(points_per_level=initial_points)
     for l in range(1, L + 1):
         y_values = []
-        print(f"Level {l} design points: {data.x_dict[l]}")
+        logging.info(f"Level {l} design points: {data.x_dict[l]}")
         for x in data.x_dict[l]:
             y = simu.evaluate(x, level=l)
             y_values.append(y)
         data.y_dict[l] = np.array(y_values)
-    print(f"Initial best HF observation: { np.min(data.y_dict[L]):.4f}")
+    logging.info(f"Initial best HF observation: { np.min(data.y_dict[L]):.4f}")  # noqa: LOG015
 
     # Launch
-    ego.run(n_iterations = 10)
-    print(f"Final best HF observation: { np.min(data.y_dict[L]):.4f}")
+    ego.run(n_iterations = 1)
+    logging.info(f"Final best HF observation: { np.min(data.y_dict[L]):.4f}")  # noqa: LOG015

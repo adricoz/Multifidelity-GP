@@ -26,6 +26,8 @@ class ExperimentData:
         upper_bounds = [b[1] for b in self.bounds]
 
         for l, n_points in enumerate(points_per_level, start = 1):
+            # we make sure to have different seeds for the different levels 
+            # to avoid redondency
             sampler = qmc.LatinHypercube(d = self.dim, seed = 42 + l)
             sample_unit = sampler.random(n = n_points)
             self.x_dict[l] = qmc.scale(sample_unit, lower_bounds, upper_bounds)

@@ -30,7 +30,7 @@ def predict_gp(X_test, X_train, Y_train, theta, noise):
 # 1. LOADING DATA
 # ==========================================
 print("Loading model data...")
-with open("problem_data/optimization_results.json", "r") as f:
+with open("ego_backup.json", "r") as f:
     data = json.load(f)
 
 X_train = np.array(data["training_data"]["level_2"]["X_train"])
@@ -104,5 +104,5 @@ ax2.legend()
 fig.colorbar(contour, ax=ax2, label="Objective Value")
 
 plt.tight_layout()
-plt.savefig("problem_data/response_surface.png", dpi=300)
+plt.savefig("response_surface.png", dpi=300)
 plt.close()
