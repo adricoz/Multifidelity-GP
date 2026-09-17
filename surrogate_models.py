@@ -19,19 +19,25 @@ class GaussianProcess:
         self.K_inv = None
 
     def fit(self, X, Y, n_restarts = 3):
+        """Fit the Gaussian Process model to the training data and optimize hyperparameters."""
+        
         self.X_train = X
-        self.Y_train = Y.reshape(-1, 1) 
+        self.Y_train = np.squeeze(Y) 
         d = X.shape[1]
+
         def objective_nll(params):
+            """Negative log-likelihood function to be minimized."""
+
             self.kernel.set_params(params[:-1])
             self.noise = params[-1]
 
             try:
-                K = self.kernel.get_covariance_matrix(self.X_train) + self.noise * np.eye(len(self.X_train))
-                L = np.linalg.cholesky(K)
-                alpha = scipy.linalg.solve(L.T, scipy.linalg.solve(L, self.Y_train))
-                print("We got here")
-                log_det = 2.0 * np.sum(np.log(np.diag(L)))
+                # Compute the covariance matrix K and its Cholesky decomposition
+                covariance_matrix = self.kernel.get_covariance_matrix(self.X_train) + self.noise * np.eye(len(self.X_train))
+                l_chol = np.linalg.cholesky(covariance_matrix)
+                
+                alpha = scipy.linalg.solve(l_chol.T, scipy.linalg.solve(l_chol, self.Y_train))
+                log_det = 2.0 * np.sum(np.log(np.diag(l_chol)))
                 data_fit = 0.5 * np.dot(self.Y_train, alpha)
                 nll = data_fit + 0.5 * log_det + 0.5 * len(self.X_train) * np.log(2 * np.pi)
                 return float(nll) #must be float for scipy
@@ -40,6 +46,7 @@ class GaussianProcess:
         best_nll = np.inf
         best_params = None
 
+        # Define bounds for the hyperparameters
         param_bounds = [(0.01, 5.0)] * d + [(1e-3, 50.0), (1e-6, 1.0), (1e-8, 1e-5)]
 
         for _ in range(n_restarts):
@@ -53,8 +60,8 @@ class GaussianProcess:
         if best_params is not None:
             self.kernel.set_params(best_params[:-1])
             self.noise = best_params[-1]
-        K = self.kernel.get_covariance_matrix(self.X_train) + self.noise * np.eye(len(self.X_train))
-        self.L_chol = np.linalg.cholesky(K)
+        covariance_matrix = self.kernel.get_covariance_matrix(self.X_train) + self.noise * np.eye(len(self.X_train))
+        self.L_chol = np.linalg.cholesky(covariance_matrix)
         self.K_inv = np.linalg.solve(self.L_chol.T, np.linalg.solve(self.L_chol, np.eye(len(self.X_train)))
                                         )
     def predict(self, X_new):
@@ -87,21 +94,21 @@ class MultifidelityModel:
                 target_Y = Y_l - rho * f_prev
             #self.gps[l - 1].fit(X_l, target_Y, bounds = experiment_data.bounds, n_restarts = 3)
             self.gps[l - 1].fit(X_l, target_Y, n_restarts = 3)
-            logger.info(f"GP level {l} trained. Noise: {self.gps[l - 1].noise:.6f}")
+            logger.info("GP level %s trained. Noise: %.6f", l, self.gps[l - 1].noise)
 
     def _predict_up_to(self, x_new, level):
-        fhat = 0.0
+        f_hat = 0.0
         sigma_2_hat = 0.0
 
         for l in range(1, level + 1):
             delta_f, delta_sigma2 = self.gps[l-1].predict(x_new)
 
             if l == 1:
-                fhat = delta_f
+                f_hat = delta_f
                 sigma_2_hat = delta_sigma2
             else:
                 rho = self.rhos[l - 2]
-                f_hat = rho * fhat + delta_f
+                f_hat = rho * f_hat + delta_f
                 sigma_2_hat = (rho**2) * sigma_2_hat + delta_sigma2
         return f_hat, sigma_2_hat
     

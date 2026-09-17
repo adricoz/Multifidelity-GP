@@ -2,23 +2,41 @@ import logging
 
 import numpy as np
 
+from acquisition import AcquisitionFunction
 from data_management import ExperimentData
 from kernels import SquaredExponentialKernel
-from optimizer import AcquisitionFunction, EGOOptimizer
-from simulator import Simulator
+from optimizer import EGOOptimizer
+from simulator import BaseSimulator
 from surrogate_models import MultifidelityModel
 
 logging.basicConfig(level=logging.INFO)
 
+
+
 if __name__ == "__main__":
+    class FoilSimulator(BaseSimulator):
+        def __init__(self, L, target_cl_value):
+            super().__init__(L)
+            self.target_cl = target_cl_value
+
+        def evaluate(self, x, level):
+            """
+            Evaluate the simulator at a given point and fidelity level.
+            This is a placeholder implementation. Replace with actual simulation code.
+            """
+            # Example: simple quadratic function with noise
+            noise = np.random.normal(0, 0.01)*1.0/level  # Noise increases with lower fidelity
+            return (x[0] - 0.5) ** 2 + (x[1] - 0.5) ** 2 + noise
+    
     # Define bounds for the design variables
     L = 2  # Number of fidelity levels
     bounds = [(0.0, 1.0), (0.0, 1.0)] # 2D: Camber, Thickness
     costs = [1.0, 1.0]  # Example costs for three fidelity levels
     initial_points = [10, 10]  # Number of points for each fidelity level
+    target_cl = 1.0  # Target lift coefficient
 
     data = ExperimentData(bounds=bounds, costs=costs)
-    simu = Simulator(L=L)
+    simu = FoilSimulator(L=L, target_cl_value=target_cl)
     model = MultifidelityModel(L=L, kernel_class = SquaredExponentialKernel)
     acq = AcquisitionFunction(model=model, data=data)
     ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq)
