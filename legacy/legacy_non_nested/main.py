@@ -1,24 +1,25 @@
-import argparse
-import numpy as np
-import matplotlib.pyplot as plt
-
 # for printing in a logfile 
 import argparse
-import sys
-
-# Local imports
-from Hartmann6d import f_l # Hartman for testing and calibration purpuses
-from non_nested_mf_sampling import generate_non_nested_lhs
-from non_nested_mf_optimizer import run_non_nested_mf_ego
-
-#from tests.custom_fluid_functions import objective_function
-from tests.optim_neuralfoil import objective_function, generate_continuous_naca4
-import neuralfoil as nf
-import aerosandbox as asb
+import json
 
 #imports fopr dealing with files and directories
 import os
-import json
+import sys
+
+import aerosandbox as asb
+import matplotlib.pyplot as plt
+import neuralfoil as nf
+import numpy as np
+
+# Local imports
+from Hartmann6d import f_l  # Hartman for testing and calibration purpuses
+from non_nested_mf_optimizer import run_non_nested_mf_ego
+from non_nested_mf_sampling import generate_non_nested_lhs
+
+#from tests.custom_fluid_functions import objective_function
+from tests.optim_neuralfoil import generate_continuous_naca4, objective_function
+
+
 # ==========================================
 # LOGGING CLASS
 # ==========================================
