@@ -1,12 +1,12 @@
 import logging
 
 import numpy as np
-from acquisition import AcquisitionFunction
-from data_management import ExperimentData
-from kernels import SquaredExponentialKernel
-from optimizer import EGOOptimizer
-from simulator import BaseSimulator
-from surrogate_models import MultifidelityModel
+from src.acquisition import AcquisitionFunction
+from src.data_management import ExperimentData
+from src.kernels import SquaredExponentialKernel
+from src.optimizer import EGOOptimizer
+from src.simulator import BaseSimulator
+from src.surrogate_models import MultifidelityModel
 
 logging.basicConfig(level=logging.INFO)
 
