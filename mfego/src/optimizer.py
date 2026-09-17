@@ -1,21 +1,32 @@
-
+"""
+This module implements the Efficient Global Optimization
+(EGO) algorithm for multifidelity optimization.
+"""
 import json
 import logging
 
-logger = logging.getLogger(__name__)
-
 import numpy as np
-from scipy.optimize import differential_evolution
+import scipy.optimize
+
+from mfego.src.acquisition import AcquisitionFunction
+from mfego.src.simulator import BaseSimulator
+from mfego.src.surrogate_models import MultifidelityModel
+
+logger = logging.getLogger(__name__)
 
 
 class EGOOptimizer:
-    def __init__(self, data, model, simulator, acquisition):
+    """Class for the Efficient Global Optimization (EGO) algorithm."""
+
+    def __init__(self, data, model: MultifidelityModel,
+                 simulator: BaseSimulator, acquisition: AcquisitionFunction):
         self.data = data
         self.model = model
         self.simulator = simulator
         self.acquisition = acquisition
 
-    def save_state(self, filename) -> None:
+    def save_state(self, filename: str) -> None:
+        """Save the current state of the optimizer to a JSON file."""
         state = {
             "X_dict": {str(k): v.tolist() for k, v in self.data.X_dict.items()},
             "Y_dict": {str(k): v.tolist() for k, v in self.data.Y_dict.items()},
@@ -25,22 +36,26 @@ class EGOOptimizer:
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(state, f, indent=4)
 
+    def _find_next_point(self) -> tuple[np.ndarray, int, float]:
+        """Find the next point to evaluate by maximizing the acquisition function."""
+        def objective_wrapper(x: np.ndarray) -> float:
+            """Wrapper function for the objective function to be minimized."""
+            merits = [self.acquisition.evaluate_merit(x, l) for l in range(1, self.model.L + 1)]
+            best_merit = max(merits)
 
-    def _find_next_point(self):
-            def objective_wrapper(x):
-                merits = [self.acquisition.evaluate_merit(x, l) for l in range(1, self.model.L + 1)]
-                best_merit = max(merits)
-                return -best_merit  # We minimize the negative merit
-            # differential evolution to find the next point
-            result = differential_evolution(objective_wrapper, self.data.bounds, popsize=10, maxiter=50, updating="deferred")
-    
-            x_optimal = result.x
-            l_optimal = np.argmax([self.acquisition.evaluate_merit(x_optimal, l) for l in range(1, self.model.L + 1)]) + 1
-            return x_optimal, l_optimal, -result.fun  # Return the merit value as well
+            return -best_merit  # We minimize the negative merit
+        # differential evolution to find the next point
+        result = scipy.optimize.differential_evolution(objective_wrapper, self.data.bounds,
+                                                        popsize=10, maxiter=50, updating="deferred")
+        x_optimal = result.x
+        l_optimal = np.argmax([self.acquisition.evaluate_merit(x_optimal, l)
+                               for l in range(1, self.model.L + 1)]) + 1
+        return x_optimal, l_optimal, -result.fun  # Return the merit value as well
 
-    def ask(self):
+    def ask(self) -> tuple[np.ndarray, int, float]:
         """
-        Phase 1: Asking for the next point to evaluate. Ideal for Human in the loop type of process
+        Phase 1: Asking for the next point to evaluate.
+        Ideal for Human in the loop type of process
         """
         #train the model
         self.model.fit(self.data)
@@ -49,9 +64,10 @@ class EGOOptimizer:
         self.save_state("ego_backup.json")
         return x_next, l_next, merit
 
-    def tell(self, x_evaluated, level, y_result):
+    def tell(self, x_evaluated: np.ndarray, level: int, y_result: float) -> None:
         """
-        Phase 2: Telling the optimizer the result of the evaluation. Ideal for Human in the loop type of process
+        Phase 2: Telling the optimizer the result of the
+        evaluation. Ideal for Human in the loop type of process
         """
         self.data.add_observation(level, x_evaluated, y_result)
         #Security: saves the optimizer state in json file for later analysis
@@ -60,6 +76,7 @@ class EGOOptimizer:
     def run(self, n_iterations) -> None:
         """
         Auto Pilot mode: runs the EGO optimization loop for a specified number of iterations.
+        (iterations with ask/tell scheme)
         """
         for iteration in range(n_iterations):
             logger.info(
@@ -68,7 +85,6 @@ class EGOOptimizer:
                 n_iterations,
             )
             # we use also the ask/tell scheme
-            # search point
             x_next, l_next, merit = self.ask()
 
             #Failsafe

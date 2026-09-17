@@ -1,48 +1,65 @@
+"""
+Core Module, implementing the Gaussian Process and Multifidelity Model classes.
+"""
 import logging
 
+import numpy as np
 import scipy
+from data_management import ExperimentData
+from kernels import Kernel
+from scipy.optimize import minimize
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-import numpy as np
-from scipy.optimize import minimize
-
 
 class GaussianProcess:
-    def __init__(self, kernel):
-        self.X_train = None
-        self.Y_train = None
+    """
+    Core of the Gaussian Process. This class handels
+      the fitting and prediction of the GP model.
+    """
+    def __init__(self, kernel: Kernel):
+        self.x_train = None
+        self.y_train = None
         self.kernel = kernel
         self.noise = 1e-6
-        self.L_chol = None
-        self.K_inv = None
+        self.l_chol = None
+        self.k_inv = None
 
-    def fit(self, X, Y, n_restarts = 3):
-        """Fit the Gaussian Process model to the training data and optimize hyperparameters."""
-        
-        self.X_train = X
-        self.Y_train = np.squeeze(Y) 
-        d = X.shape[1]
+    def fit(self, x_train, y_train, n_restarts=3):
+        """
+        Fit the Gaussian Process model to the training data and optimize hyperparameters.
+        """
+
+        self.x_train = x_train
+        self.y_train = np.squeeze(y_train)
+        d = x_train.shape[1]
 
         def objective_nll(params):
-            """Negative log-likelihood function to be minimized."""
+            """
+            Negative log-likelihood function to be minimized.
+            """
 
             self.kernel.set_params(params[:-1])
             self.noise = params[-1]
 
             try:
                 # Compute the covariance matrix K and its Cholesky decomposition
-                covariance_matrix = self.kernel.get_covariance_matrix(self.X_train) + self.noise * np.eye(len(self.X_train))
+                covariance_matrix = self.kernel.get_covariance_matrix(self.x_train) \
+                                           + self.noise * np.eye(len(self.x_train))
                 l_chol = np.linalg.cholesky(covariance_matrix)
-                
-                alpha = scipy.linalg.solve(l_chol.T, scipy.linalg.solve(l_chol, self.Y_train))
+                alpha = scipy.linalg.solve(l_chol.T, scipy.linalg.solve(l_chol, self.y_train))
                 log_det = 2.0 * np.sum(np.log(np.diag(l_chol)))
-                data_fit = 0.5 * np.dot(self.Y_train, alpha)
-                nll = data_fit + 0.5 * log_det + 0.5 * len(self.X_train) * np.log(2 * np.pi)
-                return float(nll) #must be float for scipy
+                data_fit = 0.5 * np.dot(self.y_train, alpha)
+
+                # Eqs. (15), (16) from the reference article
+                nll = data_fit + 0.5 * log_det + 0.5 * len(self.x_train) * np.log(2 * np.pi)
+                #must be float for scipy
+                return float(nll)
+
             except np.linalg.LinAlgError:
                 return 1e10
+
         best_nll = np.inf
         best_params = None
 
@@ -57,46 +74,70 @@ class GaussianProcess:
                 best_nll = res.fun
                 best_params = res.x
 
+        # Need to take care of the else case too...
         if best_params is not None:
             self.kernel.set_params(best_params[:-1])
             self.noise = best_params[-1]
-        covariance_matrix = self.kernel.get_covariance_matrix(self.X_train) + self.noise * np.eye(len(self.X_train))
-        self.L_chol = np.linalg.cholesky(covariance_matrix)
-        self.K_inv = np.linalg.solve(self.L_chol.T, np.linalg.solve(self.L_chol, np.eye(len(self.X_train)))
+
+        else:
+            raise ValueError("No valid parameters found.")
+
+        covariance_matrix = self.kernel.get_covariance_matrix(self.x_train) \
+                                   + self.noise * np.eye(len(self.x_train))
+
+        self.l_chol = np.linalg.cholesky(covariance_matrix)
+        self.k_inv  = np.linalg.solve(self.l_chol.T,
+                  np.linalg.solve(self.l_chol, np.eye(len(self.x_train)))
                                         )
-    def predict(self, X_new):
-        k_vec = self.kernel.get_cross_variance_vector(X_new, self.X_train)
+
+    def predict(self, x_new: np.ndarray) -> tuple[float, float]:
+        """
+        Predict the mean and variance of the Gaussian Process at new input points.
+        """
+
+        k_vec = self.kernel.get_cross_variance_vector(x_new, self.x_train)
         kappa = self.kernel.signal_variance + self.kernel.bias_variance
 
-        f_hat = float(np.squeeze(k_vec.T @ self.K_inv @ self.Y_train))
-        sigma2_hat = float(np.squeeze(kappa +self.noise - (k_vec.T @ self.K_inv @ k_vec)))
+        f_hat = float(np.squeeze(k_vec.T @ self.k_inv @ self.y_train))
+        sigma2_hat = float(np.squeeze(kappa +self.noise - (k_vec.T @ self.k_inv @ k_vec)))
 
         return f_hat, sigma2_hat
 
 class MultifidelityModel:
-    def __init__(self, L, kernel_class):
-        self.L = L
-        self.gps = [GaussianProcess(kernel_class()) for _ in range(L)]  # List to hold GaussianProcess instances for each fidelity level
-        self.rhos = [1.0 for _ in range(L - 1)]  # Initialize correlation coefficients between levels
+    """
+    Multifidelity Gaussian Process model that combines multiple fidelity levels.
+    """
+    def __init__(self, l, kernel_class: type[Kernel]):
+        self.num_levels = l
+        # List to hold GaussianProcess instances for each fidelity level
+        self.gps = [GaussianProcess(kernel_class()) for _ in range(l)]
+        # Initialize correlation coefficients between levels
+        self.rhos = [1.0 for _ in range(l - 1)]
 
-    def fit(self, experiment_data):
-        for l in range(1, self.L + 1):
-            X_l = experiment_data.X_dict[l]
-            Y_l = experiment_data.Y_dict[l]
+    def fit(self, experiment_data: type[ExperimentData]) -> None:
+        """
+        Fit one Gaussian process to each fidelity level in the data.
+        """
+        for l in range(1, self.num_levels + 1):
+            x_l = experiment_data.X_dict[l]
+            y_l = experiment_data.Y_dict[l]
 
             if l == 1:
-                target_Y = Y_l
+                target_y = y_l
             else:
                 #NoN nested approach
-                f_prev = np.array([self._predict_up_to(x, l-1)[0] for x in X_l])
+                f_prev = np.array([self._predict_up_to(x, l-1)[0] for x in x_l])
                 rho = 1.0
                 self.rhos[l - 2] = rho
-                target_Y = Y_l - rho * f_prev
-            #self.gps[l - 1].fit(X_l, target_Y, bounds = experiment_data.bounds, n_restarts = 3)
-            self.gps[l - 1].fit(X_l, target_Y, n_restarts = 3)
+                target_y = y_l - rho * f_prev
+
+            self.gps[l - 1].fit(x_l, target_y, n_restarts = 3)
             logger.info("GP level %s trained. Noise: %.6f", l, self.gps[l - 1].noise)
 
-    def _predict_up_to(self, x_new, level):
+    def _predict_up_to(self, x_new: np.ndarray, level: int) -> tuple[float, float]:
+        """
+        Predict the mean and variance of the multifidelity model up to a specified fidelity level.
+        """
         f_hat = 0.0
         sigma_2_hat = 0.0
 
@@ -111,16 +152,20 @@ class MultifidelityModel:
                 f_hat = rho * f_hat + delta_f
                 sigma_2_hat = (rho**2) * sigma_2_hat + delta_sigma2
         return f_hat, sigma_2_hat
-    
+
     def predict(self, x_new):
-        "Return the final prediction AND individual variances for the merit function"
+        """
+        Return the final prediction AND individual variances for the merit function
+        """
         f_hat = 0.0
         sigma_2_hat = 0.0
         gp_variances = []
 
-        for l in range(1, self.L + 1):
+        for l in range(1, self.num_levels + 1):
+            #GaussianProcess prediction for each level
             delta_f, delta_sigma2 = self.gps[l-1].predict(x_new)
             gp_variances.append(delta_sigma2)
+
             if l == 1:
                 f_hat = delta_f
                 sigma_2_hat = delta_sigma2
