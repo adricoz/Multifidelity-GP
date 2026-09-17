@@ -3,8 +3,8 @@ This module essnetialy implements the merit function for the EGO algo.
 """
 import numpy as np  # noqa: I001
 from scipy.stats import norm
-from data_management import ExperimentData
-from surrogate_models import MultifidelityModel
+from src.data_management import ExperimentData
+from src.surrogate_models import MultifidelityModel
 
 
 class AcquisitionFunction:
@@ -22,7 +22,7 @@ class AcquisitionFunction:
         f_hat_l, sigma2_hat_l, gp_variances = self.model.predict(x)
 
         # Best observed value at the highest fidelity level
-        f_best_l = np.min(self.data.Y_dict[self.model.L])
+        f_best_l = np.min(self.data.y_dict[self.model.num_levels])
 
         sigma_l = np.sqrt(max(sigma2_hat_l, 1e-12))
         if sigma_l > 0:
@@ -34,14 +34,15 @@ class AcquisitionFunction:
             return 0.0
 
         # Essentially compute cost and infromation ratios to return AEI
-        cost_ratio = self.data.costs[self.model.L - 1] / self.data.costs[candidate_level - 1]
+        cost_ratio = self.data.costs[self.model.num_levels - 1] \
+                         / self.data.costs[candidate_level - 1]
         var_gp_lp = gp_variances[candidate_level - 1]
         noise_lp = self.model.gps[candidate_level - 1].noise
         delta_sigma2_lp = (var_gp_lp ** 2) / (var_gp_lp + noise_lp)
 
         r2_lp = 1.0
-        if candidate_level < self.model.L:
-            for i in range(candidate_level, self.model.L):
+        if candidate_level < self.model.num_levels:
+            for i in range(candidate_level, self.model.num_levels):
                 r2_lp *= (self.model.rhos[i-1]**2)
 
         information_ratio = max(0.0, (r2_lp * delta_sigma2_lp) / max(sigma2_hat_l, 1e-12))

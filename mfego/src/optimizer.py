@@ -7,10 +7,9 @@ import logging
 
 import numpy as np
 import scipy.optimize
-
-from mfego.src.acquisition import AcquisitionFunction
-from mfego.src.simulator import BaseSimulator
-from mfego.src.surrogate_models import MultifidelityModel
+from src.acquisition import AcquisitionFunction
+from src.simulator import BaseSimulator
+from src.surrogate_models import MultifidelityModel
 
 logger = logging.getLogger(__name__)
 
@@ -28,8 +27,8 @@ class EGOOptimizer:
     def save_state(self, filename: str) -> None:
         """Save the current state of the optimizer to a JSON file."""
         state = {
-            "X_dict": {str(k): v.tolist() for k, v in self.data.X_dict.items()},
-            "Y_dict": {str(k): v.tolist() for k, v in self.data.Y_dict.items()},
+            "X_dict": {str(k): v.tolist() for k, v in self.data.x_dict.items()},
+            "Y_dict": {str(k): v.tolist() for k, v in self.data.y_dict.items()},
             "rhos": self.model.rhos,
             "gp_params": [gp.kernel.get_params().tolist() for gp in self.model.gps],
         }
@@ -40,7 +39,8 @@ class EGOOptimizer:
         """Find the next point to evaluate by maximizing the acquisition function."""
         def objective_wrapper(x: np.ndarray) -> float:
             """Wrapper function for the objective function to be minimized."""
-            merits = [self.acquisition.evaluate_merit(x, l) for l in range(1, self.model.L + 1)]
+            merits = [self.acquisition.evaluate_merit(x, l) \
+                      for l in range(1, self.model.num_levels + 1)]
             best_merit = max(merits)
 
             return -best_merit  # We minimize the negative merit
@@ -49,7 +49,7 @@ class EGOOptimizer:
                                                         popsize=10, maxiter=50, updating="deferred")
         x_optimal = result.x
         l_optimal = np.argmax([self.acquisition.evaluate_merit(x_optimal, l)
-                               for l in range(1, self.model.L + 1)]) + 1
+                               for l in range(1, self.model.num_levels + 1)]) + 1
         return x_optimal, l_optimal, -result.fun  # Return the merit value as well
 
     def ask(self) -> tuple[np.ndarray, int, float]:
@@ -91,7 +91,7 @@ class EGOOptimizer:
             if merit <= 0.0:
                 logger.warning("Warning: Merit is 0. Random selection triggered.")
                 x_next = np.array([np.random.uniform(b[0], b[1]) for b in self.data.bounds])
-                l_next = self.model.L
+                l_next = self.model.num_levels
 
             logger.info(
                 "\nNext selected point to evaluate: %s | Level: %d | Merit: %f",

@@ -5,9 +5,9 @@ import logging
 
 import numpy as np
 import scipy
-from data_management import ExperimentData
-from kernels import Kernel
 from scipy.optimize import minimize
+from src.data_management import ExperimentData
+from src.kernels import Kernel
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -119,8 +119,8 @@ class MultifidelityModel:
         Fit one Gaussian process to each fidelity level in the data.
         """
         for l in range(1, self.num_levels + 1):
-            x_l = experiment_data.X_dict[l]
-            y_l = experiment_data.Y_dict[l]
+            x_l = experiment_data.x_dict[l]
+            y_l = experiment_data.y_dict[l]
 
             if l == 1:
                 target_y = y_l
