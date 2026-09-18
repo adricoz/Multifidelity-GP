@@ -67,7 +67,7 @@ class ModelVisualizer:
 
         return model
 
-    def plot_convergence(self, save_path: str = "convergence_plot.png") -> None:
+    def plot_convergence(self, save_path: str = "convergence_plot.png", target: float = None) -> None:
         """Best point as a function of the cumulative cost."""
         cost_history = self.state.get("cost_history", [])
         best_y_history = self.state.get("best_y_history", [])
@@ -75,14 +75,24 @@ class ModelVisualizer:
         if not cost_history or not best_y_history:
             print("No convergence history found in the JSON file.")
             return
+        if target is not None and not isinstance(target, (int, float)):
+            print(f"Invalid target value: {target}. It must be a numeric type.")
+            return
 
         plt.figure(figsize=(10, 6))
-        plt.step(cost_history, best_y_history, where='post', color='b',
-                  linewidth=2, marker='o')
 
         plt.title("Cost vs best HF observation")
         plt.xlabel("Cumulative cost")
-        plt.ylabel("Best HF observation")
+        if target is not None:
+            plt.step(cost_history, np.abs(best_y_history - target* np.ones_like(best_y_history)), where='post', color='b',
+                              linewidth=2, marker='o')
+            plt.yscale('log')
+            plt.ylabel("Absolute distance to target")
+        else:
+            plt.step(cost_history, best_y_history, where='post', color='b',
+                              linewidth=2, marker='o')
+            plt.ylabel("Best HF observation")
+
         plt.grid(True, linestyle='--', alpha=0.7)
         plt.tight_layout()
 
@@ -171,9 +181,11 @@ class ModelVisualizer:
         plt.colorbar(contour, label="Predicted Value (HF)")
 
         # Hystory of evolution
+        print("string", str(self.num_levels))
         hf_points = np.array(self.state["X_dict"][str(self.num_levels)])
         if hf_points.size > 0:
-            plt.scatter(hf_points[:, param_x_idx], hf_points[:, param_y_idx], 
+            print(f"HF points shape: {hf_points.shape}")
+            plt.scatter(hf_points[param_x_idx], hf_points[param_y_idx],
                         color='red', marker='x', label="HF Evaluations")
 
         plt.title(f"Response Surface (Dimensions {param_x_idx} & {param_y_idx})")

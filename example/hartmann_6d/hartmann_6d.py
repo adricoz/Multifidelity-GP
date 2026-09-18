@@ -2,8 +2,18 @@
 Main script to run a Multi Fidelity Efficient Global Optimization (EGO) process.
 """
 import logging
+import os
+import sys
 
 import numpy as np
+
+# Resolve imports relative to this file rather than the process working
+# directory (which may be different when the example is launched externally).
+mfego_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "mfego"))
+sys.path.append(mfego_path)
+
+# pylint: disable=import-error,wrong-import-position
+from .Hartmann6d import evaluate_fidelity
 from src.acquisition import AcquisitionFunction
 from src.data_management import ExperimentData
 from src.kernels import SquaredExponentialKernel
@@ -13,7 +23,7 @@ from src.surrogate_models import MultifidelityModel
 from src.visualization import ModelVisualizer
 
 logging.basicConfig(
-    filename='logfile.log',
+    filename='example/hartmann_6d/logfile.log',
     level=logging.INFO,
     format=' %(levelname)s - %(message)s',
     force = True,
@@ -25,7 +35,7 @@ if __name__ == "__main__":
     # Define a simple simulator for demonstration purposes
     class FunctionSimulator(BaseSimulator):
         """
-        A simple simulator that evaluates a quadratic function with noise.
+        A simple simulator for the Hartmann 6d function with multi-fidelity approximation.
         Subclass of BaseSimulator
         """
         def evaluate(self, design_point: list, level: int) -> float:
@@ -35,18 +45,10 @@ if __name__ == "__main__":
             """
             # Example: Eqs: (17) of the reference article.
             # It should always deal with exections...
+            L = 2 # Number of fidelity levels
             try:
-                x = design_point[0]
-                f_1 = 0.5 *(6 * x - 2)**2 * np.sin(12 * x - 4) + 10 * (x - 1)
-                if level == 1:
-                    return f_1, {"y": f_1}
-                if level == 2:
-                    f2 = 2 * f_1 - 20* (x -1)
-                    return f2, {"y": f2}
-                if level > 2:
-                    raise ValueError(f"Invalid fidelity level: {level}. Must be 1 or 2.")
-                if not isinstance(level, int):
-                    raise TypeError(f"Fidelity level must be an integer, got {type(level)}.")
+               return evaluate_fidelity(design_point, level, L), \
+                   {"y": evaluate_fidelity(design_point, level, L)}
 
             except (IndexError, TypeError, ValueError) as e:
                 logger.error( \
@@ -56,15 +58,17 @@ if __name__ == "__main__":
 
     # Define bounds for the design variables
     L = 2  # Number of fidelity levels
-    bounds = [(0.0, 1.0)] # 1D: Normalized
+    bounds = [(0.0, 1.0), (0.0, 1.0), (0.0, 1.0), \
+               (0.0, 1.0), (0.0, 1.0), (0.0, 1.0)] # 6D: Normalized
     costs = [1.0, 10.0]  # Example costs
-    initial_points = [10, 4]  # Number of points for each fidelity level
+    initial_points = [20, 10]  # Number of points for each fidelity level
 
     data = ExperimentData(bounds=bounds, costs=costs)
     simu = FunctionSimulator(num_levels=L)
     model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel)
     acq = AcquisitionFunction(model=model, data=data)
-    ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq)
+    ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq, 
+                       save_state_path = "example/hartmann_6d/ego_backup.json")
 
     logger.info("Generating initial design...")
 
@@ -87,10 +91,13 @@ if __name__ == "__main__":
     logger.info("Initial best HF observation: %.4f", np.min(data.y_dict[L]))
 
     # Launch
-    _, _ = ego.run(n_iterations = 10)
+    _, _ = ego.run(n_iterations = 30)
     logger.info("Final best HF observation: %.4f", np.min(data.y_dict[L]))
 
     # Visualize the results
-    vizualizer = ModelVisualizer("ego_backup.json", num_levels=L)
-    vizualizer.plot_convergence(target = -6.020740055767082786553)
-    vizualizer.plot_response_1d()
+    vizualizer = ModelVisualizer(num_levels=L, 
+                                 json_filepath = "example/hartmann_6d/ego_backup.json")
+    vizualizer.plot_convergence(target = -3.32236801141551385541, \
+                                save_path = "example/hartmann_6d/convergence_plot.png")
+    vizualizer.plot_response_surface_2d(save_path = \
+                                        "example/hartmann_6d/response_surface_2d.png")

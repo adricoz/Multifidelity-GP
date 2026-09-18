@@ -1,0 +1,213 @@
+ INFO - Generating initial design...
+ INFO - Level 1 design points: [[0.66738504 0.34781123 0.64899852 0.60803937 0.52064285 0.58876474]
+ [0.16241039 0.63681539 0.5790011  0.82744843 0.20223427 0.45540492]
+ [0.63606835 0.93607329 0.97890002 0.04979611 0.63455381 0.8524123 ]
+ [0.05808976 0.02324359 0.47572557 0.85274367 0.37034129 0.5028566 ]
+ [0.30010591 0.54831177 0.69407197 0.06194006 0.69369313 0.43290786]
+ [0.38499904 0.72244775 0.34746901 0.27745148 0.07222917 0.94404147]
+ [0.48292875 0.07477241 0.03480174 0.32910818 0.72927195 0.19533431]
+ [0.77060018 0.19629721 0.17097403 0.79585642 0.12304381 0.35746155]
+ [0.28556019 0.39586276 0.833976   0.52877504 0.91939172 0.14242341]
+ [0.94980193 0.10784588 0.87724553 0.67131847 0.45993359 0.26183765]
+ [0.7069033  0.83390245 0.94031027 0.19936482 0.33019715 0.76967474]
+ [0.82167412 0.85605919 0.75861108 0.57517324 0.59386545 0.22497117]
+ [0.9540257  0.40595721 0.51629622 0.36705471 0.40854839 0.31564808]
+ [0.01879036 0.57991192 0.73002466 0.12568282 0.80591351 0.01792366]
+ [0.55872675 0.97486596 0.27317673 0.71506035 0.76527119 0.73902633]
+ [0.85365326 0.48876632 0.36709129 0.43188225 0.03592493 0.8003387 ]
+ [0.11602346 0.28583204 0.11364055 0.96236745 0.28185657 0.65334177]
+ [0.50152574 0.68672888 0.41346556 0.93990498 0.88907904 0.06136775]
+ [0.40273921 0.77520146 0.23429844 0.23588466 0.17731038 0.96798597]
+ [0.20405052 0.21262405 0.05602197 0.46205824 0.97848038 0.60232735]]
+ INFO - Level 2 design points: [[0.38774345 0.57418869 0.95942293 0.40308161 0.28376829 0.71427063]
+ [0.88369547 0.06620381 0.43222772 0.73834658 0.40450638 0.65885992]
+ [0.90603582 0.20732513 0.12844283 0.19805379 0.32026007 0.50992448]
+ [0.74761372 0.68028373 0.88192068 0.51546049 0.99127589 0.84537936]
+ [0.07965761 0.46987197 0.50228455 0.97233749 0.73164899 0.12326148]
+ [0.67117677 0.88534404 0.72278394 0.25463806 0.67121204 0.27883772]
+ [0.10163784 0.13536931 0.34769361 0.88858045 0.50875559 0.96672132]
+ [0.22092589 0.70946632 0.07941543 0.60220519 0.11058021 0.34338738]
+ [0.52756858 0.37226059 0.62762957 0.05688663 0.86745093 0.03031282]
+ [0.46168722 0.92954851 0.21484702 0.37291806 0.07935007 0.46796341]]
+ INFO - Initial best HF observation: -1.0895
+ INFO - --- EGO Iteration 1/30 ---
+ INFO - GP level 1 trained. Noise: 0.000001
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.0209 0.989  1.     0.0052 0.     0.0222] | Level: 2 | Merit: 0.684246
+ INFO -     -> Evaluated value: -0.008376 at level 2
+ INFO - --- EGO Iteration 2/30 ---
+ INFO - GP level 1 trained. Noise: 0.000001
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.9708 1.     0.12   0.     0.     0.9158] | Level: 2 | Merit: 0.086063
+ INFO -     -> Evaluated value: -0.002299 at level 2
+ INFO - --- EGO Iteration 3/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.02   0.8135 0.5605 0.4743 0.1064 0.6955] | Level: 2 | Merit: 0.126943
+ INFO -     -> Evaluated value: -0.313890 at level 2
+ INFO - --- EGO Iteration 4/30 ---
+ INFO - GP level 1 trained. Noise: 0.000001
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.3522 0.7295 0.2523 0.5561 0.091  0.3849] | Level: 2 | Merit: 0.156738
+ INFO -     -> Evaluated value: -1.726312 at level 2
+ INFO - --- EGO Iteration 5/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.3796 0.9801 0.0548 0.6501 0.0111 0.2434] | Level: 2 | Merit: 0.058900
+ INFO -     -> Evaluated value: -2.024944 at level 2
+ INFO - --- EGO Iteration 6/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [3.993e-01 9.946e-01 4.000e-04 7.809e-01 1.400e-03 2.970e-02] | Level: 2 | Merit: 0.078875
+ INFO -     -> Evaluated value: -1.544963 at level 2
+ INFO - --- EGO Iteration 7/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.4028 1.     0.0049 0.6077 0.0043 0.957 ] | Level: 2 | Merit: 0.056130
+ INFO -     -> Evaluated value: -0.128751 at level 2
+ INFO - --- EGO Iteration 8/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [3.528e-01 9.861e-01 5.000e-04 9.713e-01 2.000e-03 2.237e-01] | Level: 2 | Merit: 0.058138
+ INFO -     -> Evaluated value: -0.421875 at level 2
+ INFO - --- EGO Iteration 9/30 ---
+ INFO - GP level 1 trained. Noise: 0.000001
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [4.083e-01 9.858e-01 3.752e-01 6.121e-01 8.000e-04 1.437e-01] | Level: 2 | Merit: 0.079625
+ INFO -     -> Evaluated value: -2.338522 at level 2
+ INFO - --- EGO Iteration 10/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.4239 0.9808 0.7184 0.5882 0.0063 0.043 ] | Level: 2 | Merit: 0.075109
+ INFO -     -> Evaluated value: -2.532909 at level 2
+ INFO - --- EGO Iteration 11/30 ---
+ INFO - GP level 1 trained. Noise: 0.000001
+ INFO - GP level 2 trained. Noise: 0.000010
+ INFO - 
+Next selected point to evaluate: [4.047e-01 9.730e-01 9.940e-01 5.649e-01 1.000e-02 2.000e-04] | Level: 2 | Merit: 0.074728
+ INFO -     -> Evaluated value: -2.596339 at level 2
+ INFO - --- EGO Iteration 12/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000010
+ INFO - 
+Next selected point to evaluate: [0.4166 0.0118 0.9877 0.5703 0.9994 0.    ] | Level: 2 | Merit: 0.040352
+ INFO -     -> Evaluated value: -0.000525 at level 2
+ INFO - --- EGO Iteration 13/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.1738 0.467  0.7883 0.1604 0.702  0.9891] | Level: 2 | Merit: 0.000059
+ INFO -     -> Evaluated value: -0.180986 at level 2
+ INFO - --- EGO Iteration 14/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.4167 0.9856 0.9962 0.5663 0.1106 0.    ] | Level: 2 | Merit: 0.042456
+ INFO -     -> Evaluated value: -2.915248 at level 2
+ INFO - --- EGO Iteration 15/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [4.160e-01 9.994e-01 9.986e-01 5.647e-01 1.683e-01 4.000e-04] | Level: 2 | Merit: 0.049005
+ INFO -     -> Evaluated value: -2.709775 at level 2
+ INFO - --- EGO Iteration 16/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.4243 0.7114 0.9935 0.5591 0.1009 0.    ] | Level: 2 | Merit: 0.019932
+ INFO -     -> Evaluated value: -2.493460 at level 2
+ INFO - --- EGO Iteration 17/30 ---
+ INFO - GP level 1 trained. Noise: 0.000001
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.4054 1.     0.0501 0.5559 0.0972 0.    ] | Level: 2 | Merit: 0.025882
+ INFO -     -> Evaluated value: -2.743926 at level 2
+ INFO - --- EGO Iteration 18/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [4.053e-01 9.955e-01 9.959e-01 5.906e-01 9.580e-02 2.000e-04] | Level: 2 | Merit: 0.017695
+ INFO -     -> Evaluated value: -2.859935 at level 2
+ INFO - --- EGO Iteration 19/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000010
+ INFO - 
+Next selected point to evaluate: [0.4315 0.9999 0.9996 0.5413 0.0977 0.0134] | Level: 2 | Merit: 0.027299
+ INFO -     -> Evaluated value: -2.789810 at level 2
+ INFO - --- EGO Iteration 20/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000010
+ INFO - 
+Next selected point to evaluate: [4.206e-01 8.886e-01 9.929e-01 5.761e-01 1.125e-01 3.000e-04] | Level: 2 | Merit: 0.214318
+ INFO -     -> Evaluated value: -3.168078 at level 2
+ INFO - --- EGO Iteration 21/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.4451 0.8813 0.9976 0.5955 0.1218 0.    ] | Level: 2 | Merit: 0.007647
+ INFO -     -> Evaluated value: -3.074775 at level 2
+ INFO - --- EGO Iteration 22/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.3988 0.8809 0.999  0.5686 0.1162 0.0162] | Level: 2 | Merit: 0.020017
+ INFO -     -> Evaluated value: -3.188665 at level 2
+ INFO - --- EGO Iteration 23/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.4067 0.8831 0.994  0.5668 0.106  0.0495] | Level: 2 | Merit: 0.004637
+ INFO -     -> Evaluated value: -3.196119 at level 2
+ INFO - --- EGO Iteration 24/30 ---
+ INFO - GP level 1 trained. Noise: 0.000002
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.4058 0.8817 0.978  0.5681 0.1085 0.0333] | Level: 1 | Merit: 0.005183
+ INFO -     -> Evaluated value: -3.298346 at level 1
+ INFO - --- EGO Iteration 25/30 ---
+ INFO - GP level 1 trained. Noise: 0.000000
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.4025 0.8845 1.     0.5644 0.1044 0.0019] | Level: 1 | Merit: 0.060732
+ INFO -     -> Evaluated value: -3.327204 at level 1
+ INFO - --- EGO Iteration 26/30 ---
+ INFO - GP level 1 trained. Noise: 0.000000
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.4018 0.8841 0.565  0.5659 0.0997 0.0301] | Level: 1 | Merit: 0.018004
+ INFO -     -> Evaluated value: -3.327096 at level 1
+ INFO - --- EGO Iteration 27/30 ---
+ INFO - GP level 1 trained. Noise: 0.000010
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.4045 0.8846 1.     0.5628 0.0998 0.047 ] | Level: 1 | Merit: 0.035685
+ INFO -     -> Evaluated value: -3.314279 at level 1
+ INFO - --- EGO Iteration 28/30 ---
+ INFO - GP level 1 trained. Noise: 0.000000
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.3985 0.8644 0.9957 0.5547 0.1048 0.0246] | Level: 1 | Merit: 0.014428
+ INFO -     -> Evaluated value: -3.364889 at level 1
+ INFO - --- EGO Iteration 29/30 ---
+ INFO - GP level 1 trained. Noise: 0.000010
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.789 1.    0.    0.    0.    0.   ] | Level: 1 | Merit: 0.000258
+ INFO -     -> Evaluated value: -2.500004 at level 1
+ INFO - --- EGO Iteration 30/30 ---
+ INFO - GP level 1 trained. Noise: 0.000000
+ INFO - GP level 2 trained. Noise: 0.000000
+ INFO - 
+Next selected point to evaluate: [0.4036 0.9403 0.5731 0.5576 0.1025 0.0167] | Level: 1 | Merit: 2.219036
+ INFO -     -> Evaluated value: -3.221170 at level 1
+ INFO - Final best HF observation: -3.1961

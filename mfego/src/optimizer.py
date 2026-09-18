@@ -30,11 +30,13 @@ class EGOOptimizer:
     """Class for the Efficient Global Optimization (EGO) algorithm."""
 
     def __init__(self, data, model: MultifidelityModel,
-                 simulator: BaseSimulator, acquisition: AcquisitionFunction):
+                 simulator: BaseSimulator, acquisition: AcquisitionFunction, 
+                 save_state_path: str = "ego_backup.json"):
         self.data = data
         self.model = model
         self.simulator = simulator
         self.acquisition = acquisition
+        self.save_state_path = save_state_path
 
         # follow the convergence and the costs
         self.current_total_cost = 0.0
@@ -118,7 +120,7 @@ class EGOOptimizer:
         self.model.fit(self.data)
         x_next, l_next, merit = self._find_next_point()
         # Security: saves the optimizer state in json file for later analysis
-        self.save_state("ego_backup.json")
+        self.save_state(self.save_state_path)
         return x_next, l_next, merit
 
     def tell(self, x_evaluated: np.ndarray, level: int, 
@@ -135,7 +137,7 @@ class EGOOptimizer:
         self.cost_history.append(self.current_total_cost)
         self.best_y_history.append(best_hf)
 
-        self.save_state("ego_backup.json")
+        self.save_state(self.save_state_path)
 
     def run(self, n_iterations) -> tuple[list[float], list[float]]:
         """

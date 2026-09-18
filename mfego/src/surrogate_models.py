@@ -92,7 +92,7 @@ class GaussianProcess:
 
     def predict(self, x_new: np.ndarray) -> tuple[float, float]:
         """
-        Predict the mean and variance of the Gaussian Process at new input points.
+        Predicts the mean and variance of the Gaussian Process at new input points.
         """
 
         k_vec = self.kernel.get_cross_variance_vector(x_new, self.x_train)
