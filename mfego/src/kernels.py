@@ -47,7 +47,7 @@ def base_covariance_matrix(x: np.ndarray, theta_l: np.ndarray) -> np.ndarray:
             covariance_matrix[i, j] = val
             covariance_matrix[j, i] = val
 
-            return covariance_matrix
+    return covariance_matrix
 # 3/3 ---------------------------------------------------------------------------------------------
 def k_l_vector(x: np.ndarray, x_train: np.ndarray, theta_l: np.ndarray) -> np.ndarray:
     """

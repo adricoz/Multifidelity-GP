@@ -35,29 +35,34 @@ class ModelVisualizer:
         model = MultifidelityModel(self.num_levels, SquaredExponentialKernel)
         model.rhos = self.state.get("rhos", [1.0] * (self.num_levels - 1))
 
+        # Rebuild each GP with the loaded data level by level
         for l in range(self.num_levels):
             level_str = str(l + 1)
             x_train = np.array(self.state["X_dict"][level_str])
-            y_train = np.array(self.state["Y_dict"][level_str])
-
-            gp = model.gps[l]
-            gp.x_train = x_train
-            gp.y_train = np.squeeze(y_train)
+            y_train_raw = np.array(self.state["Y_dict"][level_str])
 
             # Inject gemoetrical hyperparams
             gp_params = np.array(self.state["gp_params"][l])
-            gp.kernel.set_params(gp_params)
+            model.gps[l].kernel.set_params(gp_params)
+            model.gps[l].noise = self.state.get("noises", [1e-6] * self.num_levels)[l]
 
-            # Noise
-            gp.noise = self.state.get("noises", [1e-6] * self.num_levels)[l]
+            if l == 0:
+                target_y = y_train_raw
+            else: # this is essentially Eq. 13 of the reference article
+                rho = model.rhos[l - 1]
+                f_prev = np.array([model._predict_up_to(x.reshape(1, -1), l)[0] for x in x_train])
+                target_y = y_train_raw - rho * f_prev
+
+            gp = model.gps[l]
+            gp.x_train = x_train
+            gp.y_train = np.squeeze(target_y)
 
             # Inverse matrix recalculation
             covariance_matrix = gp.kernel.get_covariance_matrix(gp.x_train) \
                                        + gp.noise * np.eye(len(gp.x_train))
-
             gp.l_chol = np.linalg.cholesky(covariance_matrix)
-            gp.k_inv = np.linalg.solve(gp.l_chol.T, 
-                                       np.linalg.solve(gp.l_chol, 
+            gp.k_inv = np.linalg.solve(gp.l_chol.T,
+                                       np.linalg.solve(gp.l_chol,
                                       np.eye(len(gp.x_train))))
 
         return model
