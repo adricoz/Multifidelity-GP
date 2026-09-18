@@ -195,5 +195,5 @@ class ModelVisualizer:
         plt.tight_layout()
 
         plt.savefig(save_path, dpi=300)
-        print(f"Surface de réponse 2D sauvegardée sous : {save_path}")
+        print(f"Response surface saved as : {save_path}")
         plt.close()

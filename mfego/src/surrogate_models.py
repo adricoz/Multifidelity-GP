@@ -55,7 +55,7 @@ class GaussianProcess:
                 # Eqs. (15), (16) from the reference article
                 nll = data_fit + 0.5 * log_det + 0.5 * len(self.x_train) * np.log(2 * np.pi)
                 #must be float for scipy
-                return float(nll)
+                return float(np.squeeze(nll))
 
             except np.linalg.LinAlgError:
                 return 1e10
