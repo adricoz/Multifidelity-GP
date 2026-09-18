@@ -107,14 +107,14 @@ class MultifidelityModel:
     """
     Multifidelity Gaussian Process model that combines multiple fidelity levels.
     """
-    def __init__(self, l, kernel_class: type[Kernel]):
+    def __init__(self, l, kernel_class: Kernel):
         self.num_levels = l
         # List to hold GaussianProcess instances for each fidelity level
         self.gps = [GaussianProcess(kernel_class()) for _ in range(l)]
         # Initialize correlation coefficients between levels
         self.rhos = [1.0 for _ in range(l - 1)]
 
-    def fit(self, experiment_data: type[ExperimentData]) -> None:
+    def fit(self, experiment_data: ExperimentData) -> None:
         """
         Fit one Gaussian process to each fidelity level in the data.
         """

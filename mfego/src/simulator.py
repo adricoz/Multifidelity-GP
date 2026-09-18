@@ -19,9 +19,13 @@ class BaseSimulator(ABC):
         self.num_levels = num_levels
 
     @abstractmethod
-    def evaluate(self, design_point: list, level: int) -> float:
+    def evaluate(self, design_point: list, level: int) -> tuple[float, dict]:
         """
         Abstract method to evaluate the simulator at a given point and fidelity level.
         Must be implemented by subclasses. Could run Neuralfoil, Xfoil, CFD, RANS ...
+
+        MUST return:
+        1. The value to be minimized by the GP (ex: log10(drag))
+        2. A dictionary of real valkues
         """
         pass

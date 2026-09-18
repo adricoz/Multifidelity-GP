@@ -10,6 +10,7 @@ from src.kernels import SquaredExponentialKernel
 from src.optimizer import EGOOptimizer
 from src.simulator import BaseSimulator
 from src.surrogate_models import MultifidelityModel
+from src.visualization import ModelVisualizer
 
 logging.basicConfig(level=logging.INFO)
 
@@ -33,9 +34,10 @@ if __name__ == "__main__":
                 x = design_point[0]
                 f_1 = 0.5 *(6 * x - 2)**2 * np.sin(12 * x - 4) + 10 * (x - 1)
                 if level == 1:
-                    return f_1
+                    return f_1, {"y": f_1}
                 if level == 2:
-                    return 2 * f_1 - 20* (x -1)
+                    f2 = 2 * f_1 - 20* (x -1)
+                    return f2, {"y": f2}
                 if level > 2:
                     raise ValueError(f"Invalid fidelity level: {level}. Must be 1 or 2.")
                 if not isinstance(level, int):
@@ -45,13 +47,13 @@ if __name__ == "__main__":
                 logging.error( \
                     "Error evaluating simulator at point %s and level %s: %s", \
                      design_point, level, e)  # noqa: LOG015
-                return np.nan  # Return NaN to indicate an error in evaluation
+                return np.nan, {}  # Return NaN to indicate an error in evaluation
 
     # Define bounds for the design variables
     L = 2  # Number of fidelity levels
     bounds = [(0.0, 1.0)] # 1D: Normalized
-    costs = [1.0, 1.0]  # Example costs
-    initial_points = [11, 4]  # Number of points for each fidelity level
+    costs = [1.0, 10.0]  # Example costs
+    initial_points = [4, 2]  # Number of points for each fidelity level
 
     data = ExperimentData(bounds=bounds, costs=costs)
     simu = FunctionSimulator(num_levels=L)
@@ -64,13 +66,26 @@ if __name__ == "__main__":
     data.generate_initial_design(points_per_level=initial_points)
     for l in range(1, L + 1):
         y_values = []
+        metrics_list = []
+
         logging.info(f"Level {l} design points: {data.x_dict[l]}")
+
         for x in data.x_dict[l]:
-            y = simu.evaluate(x, level=l)
-            y_values.append(y)
+            y_opt, metrics = simu.evaluate(x, level=l)
+    
+            y_values.append(y_opt)
+            metrics_list.append(metrics)
+        
         data.y_dict[l] = np.array(y_values)
+        data.metrics_dict[l] = metrics_list
+
     logging.info(f"Initial best HF observation: { np.min(data.y_dict[L]):.4f}")  # noqa: LOG015
 
     # Launch
-    ego.run(n_iterations = 1)
+    _, _ = ego.run(n_iterations = 10)
     logging.info(f"Final best HF observation: { np.min(data.y_dict[L]):.4f}")  # noqa: LOG015
+
+    # Visualize the results
+    vizualizer = ModelVisualizer("ego_backup.json", num_levels=L)
+    vizualizer.plot_convergence()
+    vizualizer.plot_response_1d()

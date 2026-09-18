@@ -11,7 +11,7 @@ class AcquisitionFunction:
     """
     Class for the acquisition/merit function Eq.20 and 24 of the reference article.
     """
-    def __init__(self, model: type[MultifidelityModel], data: type[ExperimentData]):
+    def __init__(self, model: MultifidelityModel, data: ExperimentData):
         self.model = model
         self.data = data
 

@@ -17,6 +17,7 @@ class ExperimentData:
         self.dim = len(bounds)
         self.x_dict = {} #Format: {1: array(...), 2: array(...)}
         self.y_dict = {} #Format: {1: array(...), 2: array(...)}
+        self.metrics_dict = {} #Format: {1: array(...), 2: array(...)}
 
     def generate_initial_design(self, points_per_level: List[int]) -> None:
         """Generates an initial design of experiments based 
@@ -32,6 +33,7 @@ class ExperimentData:
             sample_unit = sampler.random(n = n_points)
             self.x_dict[l] = qmc.scale(sample_unit, lower_bounds, upper_bounds)
             self.y_dict[l] = np.array([])  # Initialize y_dict for this level
+            self.metrics_dict[l] = []  # Initialize metrics_dict for this level
 
     def is_already_evaluated(self, level: int, x: np.ndarray, tol: float = 1e-6) -> bool:
         """
@@ -43,13 +45,20 @@ class ExperimentData:
         return np.min(distances) < tol
 
 
-    def add_observation(self, level: int, x_new: np.ndarray, y_new: float) -> None:
+
+    def add_observation(self, level: int, x_new: np.ndarray, 
+                        y_new: float, metrics: dict) -> None:
         """
         Add a new observation to the experimental data.
         """
+        if metrics is None:
+            metrics = {}
+
         if level not in self.x_dict or self.x_dict[level].size == 0:
             self.x_dict[level] = np.array([x_new])
             self.y_dict[level] = np.array([y_new])
+            self.metrics_dict[level] = [metrics]
         else:
             self.x_dict[level] = np.vstack([self.x_dict[level], x_new])
             self.y_dict[level] = np.append(self.y_dict[level], y_new)
+            self.metrics_dict[level].append(metrics)
