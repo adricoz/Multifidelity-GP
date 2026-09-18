@@ -1,0 +1,78 @@
+2026-09-18 12:34:22,506 - INFO - Generating initial design...
+2026-09-18 12:34:22,506 - INFO - Level 1 design points: [[0.13477007]
+ [0.09562247]
+ [0.99799704]
+ [0.31607874]
+ [0.5412857 ]
+ [0.77752948]
+ [0.22482077]
+ [0.47363078]
+ [0.85800221]
+ [0.65489686]]
+2026-09-18 12:34:22,506 - INFO - Level 2 design points: [[0.21935862]
+ [0.43547173]
+ [0.89855732]
+ [0.50770401]]
+2026-09-18 12:34:22,507 - INFO - Initial best HF observation: -0.4580
+2026-09-18 12:34:22,507 - INFO - --- EGO Iteration 1/10 ---
+2026-09-18 12:34:22,741 - INFO - GP level 1 trained. Noise: 0.000000
+2026-09-18 12:34:22,804 - INFO - GP level 2 trained. Noise: 0.000010
+2026-09-18 12:34:22,886 - INFO - 
+Next selected point to evaluate: [0.7263] | Level: 1 | Merit: 0.679730
+2026-09-18 12:34:22,887 - INFO -     -> Evaluated value: -5.516406 at level 1
+2026-09-18 12:34:22,887 - INFO - --- EGO Iteration 2/10 ---
+2026-09-18 12:34:24,021 - INFO - GP level 1 trained. Noise: 0.000000
+2026-09-18 12:34:24,801 - INFO - GP level 2 trained. Noise: 0.000000
+2026-09-18 12:34:24,840 - INFO - 
+Next selected point to evaluate: [0.4614] | Level: 1 | Merit: 30.485701
+2026-09-18 12:34:24,840 - INFO -     -> Evaluated value: -5.090626 at level 1
+2026-09-18 12:34:24,840 - INFO - --- EGO Iteration 3/10 ---
+2026-09-18 12:34:40,184 - INFO - GP level 1 trained. Noise: 0.000000
+2026-09-18 12:34:40,267 - INFO - GP level 2 trained. Noise: 0.000010
+2026-09-18 12:34:40,327 - INFO - 
+Next selected point to evaluate: [0.7447] | Level: 2 | Merit: 0.676842
+2026-09-18 12:34:40,328 - INFO -     -> Evaluated value: -5.939619 at level 2
+2026-09-18 12:34:40,328 - INFO - --- EGO Iteration 4/10 ---
+2026-09-18 12:34:55,662 - INFO - GP level 1 trained. Noise: 0.000000
+2026-09-18 12:34:55,723 - INFO - GP level 2 trained. Noise: 0.000010
+2026-09-18 12:34:55,750 - INFO - 
+Next selected point to evaluate: [0.0935] | Level: 2 | Merit: 4.657036
+2026-09-18 12:34:55,751 - INFO -     -> Evaluated value: -0.539845 at level 2
+2026-09-18 12:34:55,751 - INFO - --- EGO Iteration 5/10 ---
+2026-09-18 12:35:11,154 - INFO - GP level 1 trained. Noise: 0.000000
+2026-09-18 12:35:11,238 - INFO - GP level 2 trained. Noise: 0.000000
+2026-09-18 12:35:11,266 - INFO - 
+Next selected point to evaluate: [0.1278] | Level: 2 | Merit: 3.478008
+2026-09-18 12:35:11,267 - INFO -     -> Evaluated value: -0.950464 at level 2
+2026-09-18 12:35:11,267 - INFO - --- EGO Iteration 6/10 ---
+2026-09-18 12:35:26,423 - INFO - GP level 1 trained. Noise: 0.000000
+2026-09-18 12:35:35,030 - INFO - GP level 2 trained. Noise: 0.000010
+2026-09-18 12:35:35,079 - INFO - 
+Next selected point to evaluate: [0.7242] | Level: 2 | Merit: 0.068786
+2026-09-18 12:35:35,079 - INFO -     -> Evaluated value: -5.499294 at level 2
+2026-09-18 12:35:35,079 - INFO - --- EGO Iteration 7/10 ---
+2026-09-18 12:35:57,668 - INFO - GP level 1 trained. Noise: 0.000009
+2026-09-18 12:36:06,591 - INFO - GP level 2 trained. Noise: 0.000010
+2026-09-18 12:36:06,637 - INFO - 
+Next selected point to evaluate: [0.767] | Level: 1 | Merit: 37.494177
+2026-09-18 12:36:06,638 - INFO -     -> Evaluated value: -5.314422 at level 1
+2026-09-18 12:36:06,638 - INFO - --- EGO Iteration 8/10 ---
+2026-09-18 12:36:31,227 - INFO - GP level 1 trained. Noise: 0.000000
+2026-09-18 12:36:41,346 - INFO - GP level 2 trained. Noise: 0.000010
+2026-09-18 12:36:41,440 - INFO - 
+Next selected point to evaluate: [0.7562] | Level: 2 | Merit: 0.069709
+2026-09-18 12:36:41,440 - INFO -     -> Evaluated value: -6.020188 at level 2
+2026-09-18 12:36:41,440 - INFO - --- EGO Iteration 9/10 ---
+2026-09-18 12:36:57,653 - INFO - GP level 1 trained. Noise: 0.000000
+2026-09-18 12:36:59,395 - INFO - GP level 2 trained. Noise: 0.000000
+2026-09-18 12:36:59,464 - INFO - 
+Next selected point to evaluate: [0.] | Level: 1 | Merit: 0.000000
+2026-09-18 12:36:59,464 - INFO -     -> Evaluated value: -8.486396 at level 1
+2026-09-18 12:36:59,464 - INFO - --- EGO Iteration 10/10 ---
+2026-09-18 12:37:13,105 - INFO - GP level 1 trained. Noise: 0.000000
+2026-09-18 12:37:15,478 - INFO - GP level 2 trained. Noise: 0.000000
+2026-09-18 12:37:15,486 - WARNING - Warning: Merit is 0. Random selection triggered.
+2026-09-18 12:37:15,486 - INFO - 
+Next selected point to evaluate: [0.3947] | Level: 2 | Merit: 0.000000
+2026-09-18 12:37:15,487 - INFO -     -> Evaluated value: 0.090870 at level 2
+2026-09-18 12:37:15,487 - INFO - Final best HF observation: -6.0202

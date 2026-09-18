@@ -12,8 +12,13 @@ from src.simulator import BaseSimulator
 from src.surrogate_models import MultifidelityModel
 from src.visualization import ModelVisualizer
 
-logging.basicConfig(level=logging.INFO)
-
+logging.basicConfig(
+    filename='logfile.log',
+    level=logging.INFO,
+    format=' %(levelname)s - %(message)s',
+    force = True,
+    )
+logger = logging.getLogger(__name__)
 
 
 if __name__ == "__main__":
@@ -44,16 +49,16 @@ if __name__ == "__main__":
                     raise TypeError(f"Fidelity level must be an integer, got {type(level)}.")
 
             except (IndexError, TypeError, ValueError) as e:
-                logging.error( \
+                logger.error( \
                     "Error evaluating simulator at point %s and level %s: %s", \
-                     design_point, level, e)  # noqa: LOG015
+                     design_point, level, e)
                 return np.nan, {}  # Return NaN to indicate an error in evaluation
 
     # Define bounds for the design variables
     L = 2  # Number of fidelity levels
     bounds = [(0.0, 1.0)] # 1D: Normalized
     costs = [1.0, 10.0]  # Example costs
-    initial_points = [4, 2]  # Number of points for each fidelity level
+    initial_points = [10, 4]  # Number of points for each fidelity level
 
     data = ExperimentData(bounds=bounds, costs=costs)
     simu = FunctionSimulator(num_levels=L)
@@ -61,29 +66,29 @@ if __name__ == "__main__":
     acq = AcquisitionFunction(model=model, data=data)
     ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq)
 
-    logging.info("Generating initial design...")  # noqa: LOG015
+    logger.info("Generating initial design...")
 
     data.generate_initial_design(points_per_level=initial_points)
     for l in range(1, L + 1):
         y_values = []
         metrics_list = []
 
-        logging.info(f"Level {l} design points: {data.x_dict[l]}")
+        logger.info("Level %s design points: %s", l, data.x_dict[l])
 
         for x in data.x_dict[l]:
             y_opt, metrics = simu.evaluate(x, level=l)
-    
+
             y_values.append(y_opt)
             metrics_list.append(metrics)
-        
+
         data.y_dict[l] = np.array(y_values)
         data.metrics_dict[l] = metrics_list
 
-    logging.info(f"Initial best HF observation: { np.min(data.y_dict[L]):.4f}")  # noqa: LOG015
+    logger.info("Initial best HF observation: %.4f", np.min(data.y_dict[L]))
 
     # Launch
     _, _ = ego.run(n_iterations = 10)
-    logging.info(f"Final best HF observation: { np.min(data.y_dict[L]):.4f}")  # noqa: LOG015
+    logger.info("Final best HF observation: %.4f", np.min(data.y_dict[L]))
 
     # Visualize the results
     vizualizer = ModelVisualizer("ego_backup.json", num_levels=L)
