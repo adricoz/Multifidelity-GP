@@ -72,7 +72,7 @@ The program is entirely Object-Oriented (OOP). This isolates the mathematical pu
 
 One can find an illusrtration of the class hierarchy in the following diagramm:
 
-<img src="./charts/mfego_structure.svg" width="70%" alt="mfego structure">$
+<p align="center"><img src="./charts/mfego_structure.svg" width="80%" alt="mfego structure"/></p>
 
 We also give the general structure of the repo with the main files to consider. 
 
