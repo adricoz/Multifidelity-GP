@@ -17,16 +17,16 @@ Multifidelity-GP/
 │   ├── hartmann_6d/            # showcase of the convergence of the algo. with Hartmann 6D function
 │   │   ├── convergence_plot.png
 │   │   ├── ego_backup.json
-│   │   ├── hartmann_6d.py
-│   │   ├── Hartmann6d.py
-│   │   ├── logfile.log
+│   │   ├── hartmann_6d.py      # essentially the main 
+│   │   ├── Hartmann6d.py       # core Hartmann function
+│   │   ├── logfile.log         # example logfile
 │   │   └── response_surface_2d.png
 │   └── hydrofoil_optim/        # Simple case of a hydrofoil optimization
 │   │   ├── convergence_plot.png
 │   │   ├── ego_backup.json
-│   │   ├── hydrofoil_optim.py
-│   │   ├── logfile.log
-│   │   ├── optim_neuralfoil.py
+│   │   ├── hydrofoil_optim.py  # essentially thge main
+│   │   ├── logfile.log             
+│   │   ├── optim_neuralfoil.py # function called by the main using neural foil
 │   │   └── response_surface_2d.png
 ├── 📂legacy/                   # History of the project with first functions ...
 │   ├── legacy_nested/
