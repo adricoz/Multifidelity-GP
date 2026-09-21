@@ -207,7 +207,7 @@ data.generate_initial_design(points_per_level=initial_points)
 ```
 
 Which automatically generates a LHS with the given points/dimensions.
-A quick non mendatory loop cn be implemented to update the dictionnary of y evaluations an metrics with initial LHS points since it is not done natively inside the code. 
+A quick non mendatory loop can be implemented to update the dictionnary of the mais function (y=f(x)) evaluations and metrics with initial LHS points since it is not done natively inside the code.
 
 ```python
 for l in range(1, L + 1):
