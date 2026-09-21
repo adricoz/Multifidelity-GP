@@ -82,7 +82,7 @@ class FunctionSimulator(BaseSimulator):
         A simple simulator that evaluates a quadratic function with noise.
         Subclass of BaseSimulator
         """
-        def evaluate(self, design_point: list, level: int) -> float:
+        def evaluate(self, design_point: list, level: int) -> float, dict:
             """
             Evaluate the simulator at a given point and fidelity level.
             This is a placeholder implementation. Replace with actual simulation code.
@@ -108,8 +108,9 @@ class FunctionSimulator(BaseSimulator):
                      design_point, level, e)
                 return np.nan, {}  # Return NaN to indicate an error in evaluation
 ```
+It is important to state that function evaluate should return a `float` and a `dict`. One is used to optimize the process, but can/should be modified with a `log10()` function to smothen the results and convergence. The `dict` stands for later fitting pupuses in the surrogate to extract real world behaviour of the data.
 
-We can the create an instance of the class:
+We can then create an instance of the class:
 
 ```code
 simu = FunctionSimulator(num_levels=L)
