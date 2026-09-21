@@ -5,7 +5,7 @@
 ## Directory Structure
 
 ```
-Multifidelity-GP-Clean/
+Multifidelity-GP-Clean/  
 ├──  **.gitignore**
 ├── charts/
 │   └── 🖼️ relations.png
