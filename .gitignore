@@ -2,15 +2,12 @@ __pycache__/
 *py[cod]
 *$py.class
 
-mfego/__pycache__/
-*py[cod]
-*$py.class
-
 typings/
 
 venv/
 env/
 .env
 
+*.pyc
 
 .ipynb_checkpoints/
