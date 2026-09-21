@@ -28,9 +28,9 @@ Multifidelity-GP-Clean/
 ├── 📂legacy/
 │   ├── legacy_nested/
 |   |   └── ...
-│   └── legacy_non_nested/
+│   ├── legacy_non_nested/
 │   │   └── ...
-├── 📂 mfego/                   \# Project's main source code
+├── 📂 mfego/                   # Project's main source code
 │   ├── convergence_plot.png
 │   ├── ego_backup.json
 │   ├── logfile.log
@@ -47,6 +47,7 @@ Multifidelity-GP-Clean/
 ├── 📖 **README.md**
 ├── 📂 sandbox/
 │   └── 📄 gaussian_process_singlefidelity_sandbox.ipynb
+```
 
 The programm is object oriented (POO) with multiple classes and a hierarchy being the basis of the gaussian process and the EGO algorithm.
 ![mfego structure](./charts/mfego_structure.svg)
