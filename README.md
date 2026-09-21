@@ -76,7 +76,7 @@ data = ExperimentData(bounds=bounds, costs=costs)
 Then one needs to implement a child class of the `BaseSimulator` class which is an abstract one. This was done to separate fully the 
 physical/real-world case scenarios. The only method required to be implemented is the method `evaluate(self, design_point, level)`. An example is being given bellow with an analytical 2 level of fidelity function:
 
-```code
+```python
 class FunctionSimulator(BaseSimulator):
         """
         A simple simulator that evaluates a quadratic function with noise.
@@ -108,6 +108,7 @@ class FunctionSimulator(BaseSimulator):
                      design_point, level, e)
                 return np.nan, {}  # Return NaN to indicate an error in evaluation
 ```
+
 It is important to state that function evaluate should return a `float` and a `dict`. One is used to optimize the process, but can/should be modified with a `log10()` function to smothen the results and convergence. The `dict` stands for later fitting pupuses in the surrogate to extract real world behaviour of the data.
 
 We can then create an instance of the class:
@@ -118,32 +119,32 @@ simu = FunctionSimulator(num_levels=L)
 
 We need to create a model instance of the `MultifidelityModel` class which requires a `Kernel` for the covariance computation. Kernel is an abstract class with a child classe `SquaredExponentialKernel` already impelemnted which is exactly what is presented in the reference article. As for now we have only the `MultifidelityModel` class but one could imagine that in the futer we could extend the framework to single fidelity (SF) as well.
 
-```code
+```python
 model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel)
 ```
 
 The foundations of the optimizer are almost comple. We still need to create an instance of the `AcquisitionFunction` which is nothing else than the Merit function (Eq. 24).
 
-```code
+```python
 acq = AcquisitionFunction(model=model, data=data)
 ```
 
 Once all of this has been completed, we can finally give all the pieces to the EGO optimizer (Algorithm 1 in the reference article) which is done trough an instance of the `EGOOptimizer` class:
 
-```code
+```python
 ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq)
 ```
 
 Remaining steps are the initialization of the data with the method:
 
-```code
+```python
 data.generate_initial_design(points_per_level=initial_points)
 ```
 
 Which automatically generates a LHS with the given points/dimensions.
 A quick non mendatory loop cn be implemented to update the dictionnary of y evaluations an metrics with initial LHS points since it is not done natively inside the code. 
 
-```code
+```python
 for l in range(1, L + 1):
         y_values = []
         metrics_list = []
@@ -162,7 +163,7 @@ for l in range(1, L + 1):
 
 Then one just needs to run the EGO algorithm with the desired amount of iterations. 
 
-```code
+```python
 _, _ = ego.run(n_iterations = 10)
 ```
 
@@ -172,7 +173,7 @@ Here we do not recall the outputs of the method since all the hystory has been s
 
 Troughout the code, we use a logger so one could decide to save all log info in a seperate file siply via:
 
-```code
+```python
 import logging
 
 logging.basicConfig(
