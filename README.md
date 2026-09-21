@@ -52,8 +52,8 @@ The program is entirely Object-Oriented (OOP). This isolates the mathematical pu
 
     Handles the non-nested recursive approximation. Relies on the `GaussianProcess` class from which it makes a list of for each level of fidelity.
 
-    * `MultifidelityModel.fit(data)`: Sequentially optimizes the hyper-parameters ($\theta$, $\rho$, $\sigma_\epsilon$) for all discrepancy GPs by maximizing the log-marginal likelihood 
-    * `MultifidelityModel.predict(x_new)`: Returns the mean $\hat{f}(x)$ and variance $\hat{\sigma}^2(x)$ using the Le Gratiet recursive formulation.
+    * `MultifidelityModel.fit(data)`: Sequentially optimizes the hyper-parameters ($\theta$, $\rho$, $\sigma_\epsilon$) for all discrepancy GPs by maximizing the log-marginal likelihood.
+    * `MultifidelityModel.predict(x_new)`: Returns the mean $\hat{f}(x)$ and variance $\hat{\sigma}^2(x)$ using the Le Gratiet recursive formulation. In addition matrix inversion is based on Colesky decomposition to ensure stability of the matrix inversion. Namely the symmetry of the matrices. In earlier vrerison, standard `numpy.linlg.inv()` was used but showed some weaknesses.
     * `Kernel.get_cross_covariance_vector(x, X)`: Optimized, vectorized spatial distance computation.
 
 4. **EGOOptimizer (The Controller)**

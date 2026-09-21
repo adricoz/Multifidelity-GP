@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 class GaussianProcess:
     """
-    Core of the Gaussian Process. This class handels
+    Core of the Gaussian Process. This class handles
       the fitting and prediction of the GP model.
     """
     def __init__(self, kernel: Kernel):
@@ -92,9 +92,9 @@ class GaussianProcess:
 
     def predict(self, x_new: np.ndarray) -> tuple[float, float]:
         """
-        Predicts the mean and variance of the Gaussian Process at new input points.
+        Predicts the mean and variance of the Gaussian Process at new input point.
         """
-
+        
         k_vec = self.kernel.get_cross_variance_vector(x_new, self.x_train)
         kappa = self.kernel.signal_variance + self.kernel.bias_variance
 
