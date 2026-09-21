@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "vstirbu.vscode-mermaid-preview"
+        "vstirbu.vscode-mermaid-preview",
+        "kspavankumar.project-structure-explorer"
     ]
 }

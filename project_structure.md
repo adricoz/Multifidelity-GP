@@ -1,9 +1,10 @@
-# Non-nested Multi fidelity gaussian Processes and surrogates
-This repo is all about implementing a Non-Nested Multy Fidelity Gaussian Process (NN-MF-GP) togeter with an improved Efficient Global Optimization (EGO) algorithm based on the article "A Non-Nested Infilling Srategy for Multi-Fidelity Efficient Global Optimisation" by Sacher et al. (2021). It is a first approach to developping a fully fonctionning framework for Fluid Dynamics computations acceleration. Nevertheless the current state of the project is general enough to be applicable to any appropriate case scenario where the cost of computation is the main decision factor. The current document explains the structure of the repo and the structure of the code with step by step guide for its usage.
-
 # 📁 Multifidelity-GP-Clean - Project Structure
 
-## Quick Overvi at the directory structure```
+## Quick Overview
+
+## Directory Structure
+
+```
 Multifidelity-GP-Clean/
 ├──  **.gitignore**
 ├── charts/
@@ -44,7 +45,5 @@ Multifidelity-GP-Clean/
 │   │   └── 📄 visualization.py
 ├── 📖 **README.md**
 ├── 📂 sandbox/
-│   └── 📄 gaussian_process_singlefidelity_sandbox.ipy'```
+│   └── 📄 gaussian_process_singlefidelity_sandbox.ipynb
 
-IThe programm is object oriented with multiple classes and a hierarchy being the basis of the gaussian process and the EGO algorithm. 
-nb
