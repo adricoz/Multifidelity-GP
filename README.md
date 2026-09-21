@@ -46,19 +46,20 @@ The program is entirely Object-Oriented (OOP). This isolates the mathematical pu
 
     A completely isolated class mapping the normalized optimization space [0, 1] to physical parameters.
 
-    * `evaluate(design_point, level)`: Translates mathematical vectors into physical shapes, handles root-finding (e.g., enforcing $C_l = 1.0$), and returns the objective value (e.g., $C_d$) or a "death penalty" for unfeasible designs.
+    * `evaluate(design_point, level)`: Translates mathematical vectors into physical shapes, handles root-finding (e.g., enforcing $C_l = 1.0$), and returns the objective value (e.g., $C_d$).
 
 3. **MultifidelityModel & Kernel (Math Engine)**
 
-    Handles the non-nested recursive approximation.
+    Handles the non-nested recursive approximation. Relies on the `GaussianProcess` class from which it makes a list of for each level of fidelity.
 
     * `MultifidelityModel.fit(data)`: Sequentially optimizes the hyper-parameters ($\theta$, $\rho$, $\sigma_\epsilon$) for all discrepancy GPs by maximizing the log-marginal likelihood 
     * `MultifidelityModel.predict(x_new)`: Returns the mean $\hat{f}(x)$ and variance $\hat{\sigma}^2(x)$ using the Le Gratiet recursive formulation.
     * `Kernel.get_cross_covariance_vector(x, X)`: Optimized, vectorized spatial distance computation.
 
-4. **GOOptimizer (The Controller)**
+4. **EGOOptimizer (The Controller)**
 
-    Implements an Ask-and-Tell architecture, making it suitable for both fast analytical functions and days-long CFD computations.
+    Implements an Ask-and-Tell architecture, making it suitable for both fast analytical functions and long CFD computations. It also relies on a separate class  `AcquisitionFunction` coreresponding to essentially the Merit functiuon.
+
     * `ask()`: Fits the model and maximizes the merit function (Eq. 24) to return the optimal next x and level to evaluate, without blocking the code.
     * `tell(x, level, y)`: Ingests the result from an external solver and updates the dataset.
     * `run(n_iterations)`: Automated loop combining ask and tell for fast-evaluating functions.
@@ -234,7 +235,7 @@ _, _ = ego.run(n_iterations = 10)
 
 Here we do not recall the outputs of the method since all the hystory has been saved in `"ego_backup.json"` by default.
 
-## Optinnal: Ask/Tell scheme for long computations
+## Optinnal-1: Ask/Tell scheme for long computations
 
 ```python
 # 1st Ask for a point
@@ -248,6 +249,18 @@ ego.save_state("backup.json")
 
 ego.load_state("backup.json")
 ego.tell(x_evaluated=x_next, level=l_next, y_result=0.015)
+```
+
+## Optinnal-2: Plotting the results 
+
+Some standard plotting fonctions are already impleemnted for quick vizualisatuion of the results and convergence.
+
+```python
+from visualization import ModelVisualizer
+
+viz = ModelVisualizer(json_filepath="backup.json", num_levels=L)
+viz.plot_convergence(save_path="convergence.png")
+viz.plot_response_surface_2d(param_x_idx=0, param_y_idx=1, save_path="surface.png")
 ```
 
 ## Nota-Bene
