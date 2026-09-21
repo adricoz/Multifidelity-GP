@@ -11,32 +11,32 @@ Multifidelity-GP-Clean/
 ├── charts/
 │   └── 🖼️ relations.png
 ├── example/
-│   ├── hartmann_6d/
+│   ├── hartmann_6d/            # showcase of the convergence of the algo. with Hartmann 6D function
 │   │   ├── convergence_plot.png
 │   │   ├── ego_backup.json
 │   │   ├── hartmann_6d.py
 │   │   ├── Hartmann6d.py
 │   │   ├── logfile.log
 │   │   └── response_surface_2d.png
-│   └── hydrofoil_optim/
+│   └── hydrofoil_optim/        # Simple case of a hydrofoil optimization
 │   │   ├── convergence_plot.png
 │   │   ├── ego_backup.json
 │   │   ├── hydrofoil_optim.py
 │   │   ├── logfile.log
 │   │   ├── optim_neuralfoil.py
 │   │   └── response_surface_2d.png
-├── 📂legacy/
+├── 📂legacy/                   # History of the project with first functions ...
 │   ├── legacy_nested/
 |   |   └── ...
 │   ├── legacy_non_nested/
 │   │   └── ...
-├── 📂 mfego/                   # Project's main source code
+├── 📂 mfego/                   # Project's main directory
 │   ├── convergence_plot.png
 │   ├── ego_backup.json
 │   ├── logfile.log
 │   ├── main.py
 │   ├── response_1d.png
-│   └── 📁 src/
+│   └── 📁 src/                 # Source code 
 │   │   ├── 📄 acquisition.py
 │   │   ├── 📄 data_management.py
 │   │   ├── 📄 kernels.py
@@ -45,9 +45,9 @@ Multifidelity-GP-Clean/
 │   │   ├── 📄 surrogate_models.py
 │   │   └── 📄 visualization.py
 ├── 📖 **README.md**
-├── 📂 sandbox/
+├── 📂 sandbox/                 # Theoretical case with a simple Single-fidelity GP
 │   └── 📄 gaussian_process_singlefidelity_sandbox.ipynb
 ```
 
 The programm is object oriented (POO) with multiple classes and a hierarchy being the basis of the gaussian process and the EGO algorithm.
-![mfego structure](./charts/mfego_structure.svg)
+<img src="./charts/mfego_structure.svg" width="70%" alt="mfego structure">
