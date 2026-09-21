@@ -3,13 +3,7 @@ This repo is all about implementing a Non-Nested Multy Fidelity Gaussian Process
 
 # 📁 Multifidelity-GP-Clean - Project Structure
 
-## Quick Overvi at the directory structure```
-
-# 📁 Multifidelity-GP-Clean - Project Structure
-
-## Quick Overview
-
-## Directory Structure
+## Quick Overview at the directory structure```
 
 ```
 Multifidelity-GP-Clean/  
@@ -54,6 +48,5 @@ Multifidelity-GP-Clean/
 ├── 📂 sandbox/
 │   └── 📄 gaussian_process_singlefidelity_sandbox.ipynb
 
-
-The programm is object oriented with multiple classes and a hierarchy being the basis of the gaussian process and the EGO algorithm. 
-nb
+The programm is object oriented (POO) with multiple classes and a hierarchy being the basis of the gaussian process and the EGO algorithm.
+![mfego structure](./charts/mfego_structure.svg)

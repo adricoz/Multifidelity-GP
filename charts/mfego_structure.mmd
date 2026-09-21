@@ -1,0 +1,96 @@
+---
+query: writ something on the arows to make it clearer
+references:
+  - "File: /c:/Users/SIM/AppData/Local/Temp/.temp-repair/Untitled-1-repaired.new"
+generationTime: 2026-09-21T09:33:40.521Z
+---
+classDiagram
+    direction TB
+
+    class Main {
+        +run()
+    }
+
+    class DataManager {
+        -low_fidelity_data
+        -high_fidelity_data
+        +load_data()
+        +add_sample()
+        +get_training_data()
+        +save_backup()
+    }
+
+    class Simulator {
+        <<interface>>
+        +evaluate(x)
+    }
+
+    class LowFidelitySimulator {
+        +evaluate(x)
+    }
+
+    class HighFidelitySimulator {
+        +evaluate(x)
+    }
+
+    class Kernel {
+        <<interface>>
+        +compute(x1, x2)
+    }
+
+    class GaussianProcess {
+        -kernel
+        -training_data
+        +fit(X, y)
+        +predict(X)
+        +update(X, y)
+    }
+
+    class MultiFidelityGP {
+        -low_model
+        -high_model
+        +fit()
+        +predict(x)
+        +update()
+    }
+
+    class AcquisitionFunction {
+        <<interface>>
+        +evaluate(model, x)
+    }
+
+    class Optimizer {
+        -model
+        -acquisition
+        +optimize()
+        +select_next_point()
+    }
+
+    class Visualizer {
+        +plot_convergence()
+        +plot_response()
+        +save_figures()
+    }
+
+    Main --> DataManager : manages data
+    Main --> LowFidelitySimulator : creates model
+    Main --> HighFidelitySimulator : creates model
+    Main --> MultiFidelityGP : builds surrogate
+    Main --> Optimizer : starts EGO
+    Main --> Visualizer : generates plots
+
+    Simulator <|.. LowFidelitySimulator : implements
+    Simulator <|.. HighFidelitySimulator : implements
+
+    GaussianProcess --> Kernel : evaluates covariance
+    GaussianProcess <|-- MultiFidelityGP : extends
+
+    MultiFidelityGP --> DataManager : reads samples
+    MultiFidelityGP *-- GaussianProcess : combines models
+
+    Optimizer --> MultiFidelityGP : requests predictions
+    Optimizer --> AcquisitionFunction : scores candidates
+    Optimizer --> Simulator : evaluates points
+
+    Simulator --> DataManager : stores results
+    Visualizer --> DataManager : reads history
