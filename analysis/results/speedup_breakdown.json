@@ -1,0 +1,78 @@
+{
+  "ablation": [
+    {
+      "step": "Initial code (legacy/legacy_mfego_initial)",
+      "time_s": 46.41088890000174
+    },
+    {
+      "step": "Corrected code, all optimizations OFF",
+      "time_s": 24.853296799999953
+    },
+    {
+      "step": "+ N1 vectorized covariance matrix",
+      "time_s": 6.136256000001595
+    },
+    {
+      "step": "+ N3 analytical gradient (log-space)",
+      "time_s": 4.28967730000295
+    },
+    {
+      "step": "+ N4 Cholesky solves, batch prediction",
+      "time_s": 4.452487200000178
+    },
+    {
+      "step": "+ N6 vectorized merit and DE",
+      "time_s": 0.81207490000088
+    },
+    {
+      "step": "+ N8 warm start (= corrected code)",
+      "time_s": 0.6938860999980534
+    }
+  ],
+  "micro_benchmarks": {
+    "covariance_matrix_s": {
+      "25": {
+        "loop": 0.0030919999990146607,
+        "vectorized": 3.529999958118424e-05
+      },
+      "50": {
+        "loop": 0.008105800003249897,
+        "vectorized": 9.199999840348028e-05
+      },
+      "100": {
+        "loop": 0.035739399998419685,
+        "vectorized": 0.0003268000000389293
+      },
+      "200": {
+        "loop": 0.12103690000003553,
+        "vectorized": 0.0020766000016010366
+      },
+      "400": {
+        "loop": 0.47498410000116564,
+        "vectorized": 0.008474500002193963
+      }
+    },
+    "gp_fit": {
+      "finite differences": {
+        "time_s": 0.27407469999889145,
+        "covariance_matrices": 1872
+      },
+      "analytical gradient": {
+        "time_s": 0.07378659999812953,
+        "covariance_matrices": 189
+      },
+      "initial code": {
+        "time_s": 18.30351789999986,
+        "covariance_matrices": 4511
+      }
+    },
+    "prediction_2500_points_s": {
+      "explicit inverse, point by point": 0.062000899997656234,
+      "Cholesky, batch": 0.005171400000108406
+    },
+    "merit_population_60x2_s": {
+      "point by point, level by level (L^2 predictions)": 0.029567699999461183,
+      "one batch": 0.0003742000008060131
+    }
+  }
+}
