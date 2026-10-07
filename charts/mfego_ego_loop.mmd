@@ -1,0 +1,24 @@
+%% EGO loop of the mfego framework (EGOOptimizer.run / ask / tell), Algorithm 1 of Sacher et al.
+flowchart TD
+    A["DOE: ExperimentData.generate_initial_design<br/>+ evaluation of every level"] --> B["run(): DOE cost counted<br/>first history point"]
+    B --> C["ask(): MultifidelityModel.fit<br/>level 1 then l = 2..L<br/>residual y_l - rho f_hat_(l-1) (Eq. 18)<br/>rho profiled / fixed (Eq. 15)"]
+    C --> D["AcquisitionFunction.update()<br/>effective best x_best, f_best (Eq. 19)"]
+    D --> E["Differential evolution (vectorized)<br/>max over levels of M(x, l) (Eq. 24)<br/>AEI x W_L/W_l x R2 dsigma2 / sigma2_L"]
+    E --> F{"merit > 0 ?"}
+    F -- yes --> G["(x_next, l_next)"]
+    F -- "no" --> H{"x_best evaluated<br/>at level L ?"}
+    H -- no --> I["x_next = x_best, l_next = L<br/>(confirmation of the optimum)"]
+    H -- yes --> J{"stop_on_convergence ?"}
+    J -- yes --> Z
+    J -- no --> K["random x_next, l_next = L"]
+    I --> G
+    K --> G
+    G --> L{"already evaluated<br/>at this level ?"}
+    L -- yes --> M["random point at the same level<br/>(warning, avoids stalls)"]
+    L -- no --> N["simulator.evaluate(x_next, l_next)"]
+    N --> O["tell(): add_observation<br/>(NaN = failed, excluded from the GP)<br/>cost + history, save_state JSON"]
+    O --> P{"iterations left ?"}
+    M --> N
+    P -- yes --> C
+    P -- no --> Z["final fit on all the data<br/>save_state (exact 'surrogate' snapshot)<br/>summary()"]
+    Z --> Q["export_surrogate() / load_surrogate()<br/>ModelVisualizer (PNG + plotly HTML)"]
