@@ -1,0 +1,16 @@
+%% mfego <-> bdToolbox foil pipeline (pipelines/bdtoolbox_foil)
+flowchart LR
+    CFG["config JSON<br/>variables, levels, flow,<br/>objective, optimization"] --> RUN["run.py<br/>runs/MMDD_HHMMSS/<br/>log + total time"]
+    RUN --> EGO["mfego EGOOptimizer<br/>NN-MF-EGO, rho computed"]
+    EGO -- "u in [0,1]^d, level" --> SIM["BdToolboxFoilSimulator"]
+    SIM --> GEO["geometry.py<br/>to_physical + section<br/>NACA4 / Kulfan / PARSEC"]
+    GEO --> BACK{"backend of the level"}
+    BACK -- "level 1, 2" --> NF["NeuralFoil<br/>xxsmall ... xxxlarge"]
+    BACK -- "level 3" --> XF["bdFoil core XFOIL<br/>run_polar (soft/xfoil.exe)"]
+    BACK -. "3D template" .-> LLT["NonPlanarSolver<br/>lifting line"]
+    BACK -. "3D template" .-> AVL["bdFoil core AVL<br/>campaign.run_case"]
+    NF --> OBJ["objectives.py<br/>Cd at CL target<br/>(NaN outside branch)"]
+    XF --> OBJ
+    OBJ -- "value, metrics" --> EGO
+    EGO --> OUT["ego_backup.json, surrogate.json,<br/>results.json, plotly figures"]
+    PARSEC["bdSec SectionParsec<br/>(bdToolbox)"] -.-> GEO

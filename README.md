@@ -53,7 +53,20 @@ python -m pytest
 python -m pytest -m "not slow"
 ```
 
-Each run writes `ego_backup.json` (full state), `surrogate.json` (exported surrogate), `logfile.log` and the plots (`*.png` static, `*.html` interactive) in the working directory (`example/<case>/` for the examples).
+Each run writes all its outputs in its own directory `runs/<MMDD_HHMMSS>/` next to the script (`mfego/runs/`, `example/<case>/runs/`), with the same convention as bdFoil (Paris time):
+
+* `<prefix>_<MMDD_HHMMSS>.log` (UTF-8): start banner, iterations, optimization summary (best point, cost, points per level, ρ, **time spent in model fitting / search of the next point / simulation**, mean simulation time per level) and, at the end, the **total computation time** (written even if the run fails);
+* `ego_backup.json` (full state), `surrogate.json` (exported surrogate), the plots (`*.png` static, `*.html` interactive).
+
+The `runs/` directories are not versioned (`.gitignore`).
+
+```bash
+# Hartmann benchmark against scikit-learn, SMT and BoTorch (dedicated environment, see below)
+.venv-benchmark\Scripts\python -m nbconvert --to notebook --execute --inplace --ExecutePreprocessor.kernel_name=mfego-benchmark benchmarks/hartmann_benchmark.ipynb
+
+# foil optimization with the bdToolbox / bdFoil solvers (conda env "bdToolbox")
+C:\Users\SIM\.conda\envs\bdToolbox\python.exe -m pipelines.bdtoolbox_foil.run --config pipelines/configs/section2d_naca_3levels.json
+```
 
 ## Architecture & Class Methods
 
@@ -77,8 +90,8 @@ The program is entirely Object-Oriented (OOP). This isolates the mathematical pu
 
     Handles the non-nested recursive approximation. Relies on the `GaussianProcess` class from which it makes a list of for each level of fidelity.
 
-    * `MultifidelityModel(l, kernel_class, estimate_rho=False, rho_init=1.0, rho_bounds=(-5, 5), min_points_rho=None, seed=None)`.
-    * `MultifidelityModel.fit(data)`: Sequentially optimizes, level by level, the hyper-parameters ($\theta$, $\sigma_\epsilon$) of the discrepancy GPs by maximizing the log-marginal likelihood (Eqs. 15-16, MLE - no Leave-One-Out). The outputs are normalized and the hyper-parameters are optimized in log-space with an analytical gradient. The correlation coefficient $\rho$: with `estimate_rho=True` it is profiled out of the likelihood with its closed form (Le Gratiet Eq. 4.10, Sacher Eq. 15) once a level has at least `min_points_rho` points (default $d+4$), and kept to `rho_init` before; with `estimate_rho=False` (default) it is always `rho_init`, i.e. the additive model $\rho = 1$. The default was chosen with `analysis/scripts/rho_study.py` (report, Sec. 10): estimating $\rho$ is recommended when the levels have different scales (e.g. Forrester, $\rho = 2$, used in `main.py`) and enough high-fidelity points are available.
+    * `MultifidelityModel(l, kernel_class, estimate_rho=True, rho_init=1.0, rho_bounds=(-5, 5), min_points_rho=None, seed=None)`.
+    * `MultifidelityModel.fit(data)`: Sequentially optimizes, level by level, the hyper-parameters ($\theta$, $\sigma_\epsilon$) of the discrepancy GPs by maximizing the log-marginal likelihood (Eqs. 15-16, MLE - no Leave-One-Out). The outputs are normalized and the hyper-parameters are optimized in log-space with an analytical gradient. The correlation coefficient $\rho_{(l-1)}$ is a parameter of the likelihood of **every** level $l \geq 2$, level 2 included (Sacher Eq. 15, Algorithm 1): by default (`estimate_rho=True`) it is **computed at every fit**, profiled out of the likelihood with its closed form (Le Gratiet Eq. 4.10). Options: `min_points_rho=k` keeps $\rho$ = `rho_init` while a level has fewer than $k$ points (hybrid mode), `estimate_rho=False` always uses `rho_init` (additive model). The behaviour with very few points is studied in `analysis/scripts/rho_study.py` (report, Sec. 10).
     * `MultifidelityModel.predict(x_new)` / `predict_batch(X, level=None)`: Returns the mean $\hat{f}(x)$ and variance $\hat{\sigma}^2(x)$ using the Le Gratiet recursive formulation (Eqs. 11-12), at the highest level or at any intermediate level. The covariance matrices are factorized once with a Cholesky decomposition (no explicit inverse).
     * `Kernel.get_cross_variance_vector(x, X)` / `get_cross_covariance_matrix(X_new, X)`: Optimized, vectorized spatial distance computation (squared exponential kernel of Eq. 2).
 
@@ -122,38 +135,49 @@ Multifidelity-GP/
 ├── .gitignore
 ├── pytest.ini
 ├── requirements.txt
+├── requirements-benchmark.txt   # dedicated environment of the benchmark notebook
 ├── 📂 analysis/                 # Theoretical / numerical review of the code
 │   ├── RAPPORT_ANALYSE.md       # Report: issues, fixes [FIX-<ID>], before/after measurements
 │   ├── figures/                 # interactive (plotly) figures of the report
 │   ├── results/                 # numerical results (JSON) of the analysis scripts
 │   └── scripts/                 # reproducible analysis scripts (before/after)
+├── 📂 benchmarks/               # mfego vs scikit-learn, SMT and BoTorch on Hartmann 6D
+│   ├── hartmann_benchmark.ipynb # executed notebook (accuracy, optimization at equal cost, speed)
+│   ├── bench_lib.py             # problem, model wrappers, optimization loops
+│   └── figures/                 # interactive figures of the notebook
 ├── charts/
-│   ├── mfego_structure.mmd/.svg/.png   # class diagram
-│   └── mfego_ego_loop.mmd/.svg/.png    # EGO loop
+│   ├── mfego_structure.mmd/.svg/.png     # class diagram
+│   ├── mfego_ego_loop.mmd/.svg/.png      # EGO loop
+│   └── bdtoolbox_pipeline.mmd/.svg/.png  # foil pipeline
 ├── example/
 │   ├── hartmann_6d/             # showcase of the convergence of the algo. with Hartmann 6D function
 │   │   ├── hartmann_6d.py       # essentially the main
 │   │   ├── Hartmann6d.py        # core Hartmann function (Eqs. 30-32)
-│   │   └── outputs: ego_backup.json, surrogate.json, logfile.log, *.png, *.html
+│   │   └── runs/<MMDD_HHMMSS>/  # outputs of each run (log, JSON, figures), not versioned
 │   └── hydrofoil_optim/         # Simple case of a hydrofoil optimization (L = 2, or L = 1 single-fidelity test)
 │       ├── hydrofoil_optim.py   # essentially the main
 │       ├── optim_neuralfoil.py  # function called by the main using neural foil
-│       └── outputs: ego_backup.json, surrogate.json, logfile.log, *.png, *.html
+│       └── runs/<MMDD_HHMMSS>/
 ├── 📂 legacy/                   # History of the project
 │   ├── legacy_mfego_initial/    # frozen copy of the code before the review
 │   ├── legacy_nested/
 │   └── legacy_non_nested/
 ├── 📂 mfego/                    # Project's main directory
 │   ├── main.py                  # 1D Forrester example
-│   ├── outputs: ego_backup.json, surrogate.json, logfile.log, *.png, *.html
+│   ├── runs/<MMDD_HHMMSS>/      # outputs of each run (log, JSON, figures), not versioned
 │   └── 📁 src/                  # Source code 
 │       ├── 📄 acquisition.py
 │       ├── 📄 data_management.py
 │       ├── 📄 kernels.py
 │       ├── 📄 optimizer.py
+│       ├── 📄 run_utils.py       # run directory, log file, total computation time
 │       ├── 📄 simulator.py
 │       ├── 📄 surrogate_models.py
 │       └── 📄 visualization.py
+├── 📂 pipelines/                # connection with bdToolbox / bdFoil (see pipelines/README.md)
+│   ├── bdtoolbox_foil/          # foil optimization: geometry, solvers, objectives, runner
+│   ├── configs/                 # JSON configurations (2D operational, 3D template)
+│   └── runs/<MMDD_HHMMSS>/      # outputs of each run, not versioned
 ├── 📖 README.md
 ├── 📂 references/               # Sacher et al. (2021), Le Gratiet (2013)
 ├── 📂 sandbox/                  # Theoretical case with a simple Single-fidelity GP
@@ -216,8 +240,7 @@ simu = FunctionSimulator(num_levels=L)
 We need to create a model instance of the `MultifidelityModel` class which requires a `Kernel` for the covariance computation. Kernel is an abstract class with a child class `SquaredExponentialKernel` already implemented which is exactly what is presented in the reference article (Eq. 2). The model also works with a single fidelity level (`l=1`), which is then a plain GP.
 
 ```python
-model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel,
-                           estimate_rho = True, seed = 0)  # rho estimated (Eq. 15)
+model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel, seed = 0)  # rho computed (Eq. 15)
 ```
 
 The foundations of the optimizer are almost complete. We still need to create an instance of the `AcquisitionFunction` which is nothing else than the Merit function (Eq. 24).
@@ -305,19 +328,32 @@ viz.plot_convergence_interactive(save_path="convergence.html")
 viz.plot_response_surface_2d_interactive(param_x_idx=0, param_y_idx=1, save_path="surface.html")
 ```
 
+## Optional-4: Benchmark against existing GP libraries
+
+`benchmarks/hartmann_benchmark.ipynb` compares mfego with scikit-learn (single-fidelity GP), SMT (KRG, and MFK: recursive co-kriging of Le Gratiet, the same theory as mfego) and BoTorch (SingleTaskGP / qLogEI, SingleTaskMultiFidelityGP / multi-fidelity knowledge gradient) on the multi-fidelity Hartmann 6D problem of the article: accuracy of the surrogates, optimization at equal cost budget, speed. Its libraries (torch, botorch, smt) live in a dedicated environment:
+
+```bash
+python -m venv .venv-benchmark
+.venv-benchmark\Scripts\python -m pip install -r requirements-benchmark.txt
+.venv-benchmark\Scripts\python -m ipykernel install --prefix .venv-benchmark --name mfego-benchmark
+```
+
+then open the notebook with the `Python (.venv-benchmark)` kernel (`QUICK = True` for a run of a few minutes).
+
+## Optional-5: Foil optimization with bdToolbox
+
+`pipelines/bdtoolbox_foil` optimizes 2D sections (NACA 4-digit, Kulfan, PARSEC from bdSec) with fidelity levels taken among NeuralFoil models and the XFOIL engine of bdFoil core, from a JSON configuration; 3D backends (non-planar lifting line, AVL) are provided as templates. See `pipelines/README.md`.
+
 ## Nota-Bene
 
-Throughout the code, we use a logger so one could decide to save all log info in a separate file simply via (the framework itself never configures the logging):
+Throughout the code, we use a logger; the framework itself never configures the logging. The scripts use `src/run_utils.py` (same convention as bdFoil):
 
 ```python
-import logging
+from src.run_utils import RunTimer, create_run, setup_logging
 
-logging.basicConfig(
-    filename='logfile.log',
-    filemode='w',
-    level=logging.INFO,
-    format=' %(levelname)s - %(message)s',
-    force = True,
-    )
-logger = logging.getLogger(__name__)
+run = create_run(os.path.dirname(os.path.abspath(__file__)), prefix="my_study")
+setup_logging(run.log_path)            # runs/<MMDD_HHMMSS>/my_study_<MMDD_HHMMSS>.log
+with RunTimer("my study"):             # start banner + total computation time at the end
+    ...
+    ego = EGOOptimizer(..., save_state_path=run.path("ego_backup.json"))
 ```

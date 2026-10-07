@@ -76,8 +76,16 @@ classDiagram
         +tell(x, level, y, metrics)
         +run(n_iterations, stop_on_convergence)
         +save_state(path) / load_state(path)
+        +timings (fit / search / simulation)
         +export_surrogate(path)
         +summary()
+    }
+
+    class run_utils {
+        <<module>>
+        +create_run(base_dir, prefix) RunContext
+        +setup_logging(log_path)
+        +RunTimer(name) total computation time
     }
 
     class NumpyEncoder {
@@ -115,3 +123,4 @@ classDiagram
     EGOOptimizer ..> NumpyEncoder : JSON state / export
     ModelVisualizer ..> MultifidelityModel : from_dict(state["surrogate"])
     load_surrogate ..> MultifidelityModel : from_dict
+    run_utils ..> EGOOptimizer : runs/MMDD_HHMMSS/ outputs and log
