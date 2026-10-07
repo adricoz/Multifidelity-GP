@@ -11,3 +11,17 @@ env/
 *.pyc
 
 .ipynb_checkpoints/
+# [FIX-L1] one directory per run (log, JSON, figures): runs are not versioned
+**/runs/
+# outputs written by the scripts before the runs/ convention
+mfego/*.json
+mfego/*.log
+mfego/*.png
+mfego/*.html
+example/*/*.json
+example/*/*.log
+example/*/*.png
+example/*/*.html
+
+# benchmark environment (requirements-benchmark.txt)
+.venv-benchmark/

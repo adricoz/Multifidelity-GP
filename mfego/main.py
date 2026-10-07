@@ -2,28 +2,29 @@
 Main script to run a Multi Fidelity Efficient Global Optimization (EGO) process.
 """
 import logging
+import os
 
 import numpy as np
 from src.acquisition import AcquisitionFunction
 from src.data_management import ExperimentData
 from src.kernels import SquaredExponentialKernel
 from src.optimizer import EGOOptimizer
+from src.run_utils import RunTimer, create_run, setup_logging
 from src.simulator import BaseSimulator
 from src.surrogate_models import MultifidelityModel
 from src.visualization import ModelVisualizer
 
-logging.basicConfig(
-    filename='logfile.log',
-    # [FIX-E3] one clean log per run (the default 'a' mode mixed several runs in one file)
-    filemode='w',
-    level=logging.INFO,
-    format=' %(levelname)s - %(message)s',
-    force = True,
-    )
+# [FIX-L1] the logging is configured in the __main__ block, in a timestamped run directory
+# (bdFoil convention: runs/<MMDD_HHMMSS>/mfego_<MMDD_HHMMSS>.log, Paris time)
+HERE = os.path.dirname(os.path.abspath(__file__))
 logger = logging.getLogger(__name__)
 
 
 if __name__ == "__main__":
+    # [FIX-L1] one directory per run (log, ego_backup.json, surrogate.json, figures)
+    run = create_run(HERE, prefix="mfego")
+    setup_logging(run.log_path)
+
     # Define a simple simulator for demonstration purposes
     class FunctionSimulator(BaseSimulator):
         """
@@ -63,44 +64,50 @@ if __name__ == "__main__":
     initial_points = [10, 4]  # Number of points for each fidelity level
     SEED = 0  # [FIX-R1] reproducible run
 
-    data = ExperimentData(bounds=bounds, costs=costs)
-    simu = FunctionSimulator(num_levels=L)
-    # [FIX-T1c] rho is computed at every fit (default, Sacher Eq. 15): the levels of Eq. 17
-    # differ by a factor rho = 2
-    model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel, seed = SEED)
-    acq = AcquisitionFunction(model=model, data=data)
-    ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq, seed = SEED)
+    # [FIX-L1] start banner and total computation time written at the end of the log
+    with RunTimer("mfego - Forrester example (Eq. 17)"):
+        logger.info("Run directory: %s", run.run_dir)
+        data = ExperimentData(bounds=bounds, costs=costs)
+        simu = FunctionSimulator(num_levels=L)
+        # [FIX-T1c] rho is computed at every fit (default, Sacher Eq. 15): the levels of Eq. 17
+        # differ by a factor rho = 2
+        model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel, seed = SEED)
+        acq = AcquisitionFunction(model=model, data=data)
+        ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq,
+                           save_state_path = run.path("ego_backup.json"), seed = SEED)
 
-    logger.info("Generating initial design...")
+        logger.info("Generating initial design...")
 
-    data.generate_initial_design(points_per_level=initial_points)
-    for l in range(1, L + 1):
-        y_values = []
-        metrics_list = []
+        data.generate_initial_design(points_per_level=initial_points)
+        for l in range(1, L + 1):
+            y_values = []
+            metrics_list = []
 
-        logger.info("Level %s design points: %s", l, data.x_dict[l])
+            logger.info("Level %s design points: %s", l, data.x_dict[l])
 
-        for x in data.x_dict[l]:
-            y_opt, metrics = simu.evaluate(x, level=l)
+            for x in data.x_dict[l]:
+                y_opt, metrics = simu.evaluate(x, level=l)
 
-            y_values.append(y_opt)
-            metrics_list.append(metrics)
+                y_values.append(y_opt)
+                metrics_list.append(metrics)
 
-        data.y_dict[l] = np.array(y_values)
-        data.metrics_dict[l] = metrics_list
+            data.y_dict[l] = np.array(y_values)
+            data.metrics_dict[l] = metrics_list
 
-    logger.info("Initial best HF observation: %.4f", np.nanmin(data.y_dict[L]))
+        logger.info("Initial best HF observation: %.4f", np.nanmin(data.y_dict[L]))
 
-    # Launch
-    _, _ = ego.run(n_iterations = 10)
-    logger.info("Final best HF observation: %.4f", np.nanmin(data.y_dict[L]))
-    # [FIX-X1] self-contained surrogate file, reload with src.surrogate_models.load_surrogate
-    ego.export_surrogate("surrogate.json")
+        # Launch
+        _, _ = ego.run(n_iterations = 10)
+        logger.info("Final best HF observation: %.4f", np.nanmin(data.y_dict[L]))
+        # [FIX-X1] self-contained surrogate file, reload with src.surrogate_models.load_surrogate
+        ego.export_surrogate(run.path("surrogate.json"))
 
-    # Visualize the results
-    vizualizer = ModelVisualizer("ego_backup.json", num_levels=L)
-    vizualizer.plot_convergence(target = -6.020740055767082786553)
-    vizualizer.plot_response_1d()
-    # [FIX-X3] interactive (plotly) versions of the plots
-    vizualizer.plot_convergence_interactive(target = -6.020740055767082786553)
-    vizualizer.plot_response_1d_interactive()
+        # Visualize the results
+        vizualizer = ModelVisualizer(run.path("ego_backup.json"), num_levels=L)
+        vizualizer.plot_convergence(target = -6.020740055767082786553,
+                                    save_path = run.path("convergence_plot.png"))
+        vizualizer.plot_response_1d(save_path = run.path("response_1d.png"))
+        # [FIX-X3] interactive (plotly) versions of the plots
+        vizualizer.plot_convergence_interactive(target = -6.020740055767082786553,
+                                                save_path = run.path("convergence_plot.html"))
+        vizualizer.plot_response_1d_interactive(save_path = run.path("response_1d.html"))

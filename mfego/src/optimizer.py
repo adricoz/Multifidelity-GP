@@ -4,6 +4,7 @@ This module implements the Efficient Global Optimization
 """
 import json
 import logging
+import time
 
 import numpy as np
 import scipy.optimize
@@ -49,6 +50,9 @@ class EGOOptimizer:
         # optimizer is created BEFORE the DOE is generated and evaluated, so counting it here
         # always gave 0.
         self._doe_cost_counted = False
+        # [FIX-L2] wall time spent in each phase (s), and simulation times per level
+        self.timings = {"model_fit": 0.0, "acquisition": 0.0, "simulation": 0.0}
+        self.simulation_times = {}
 
     def _init_doe_cost(self) -> None:
         """Initialize the total cost based on the initial DOE."""
@@ -146,10 +150,15 @@ class EGOOptimizer:
         Ideal for Human in the loop type of process
         """
         #train the model
+        # [FIX-L2] time of each phase (fit / search of the next point)
+        start = time.perf_counter()
         self.model.fit(self.data)
+        self.timings["model_fit"] += time.perf_counter() - start
+        start = time.perf_counter()
         # [FIX-T3] effective best solution of Eq. 19 for the new model
         self.acquisition.update()
         x_next, l_next, merit = self._find_next_point()
+        self.timings["acquisition"] += time.perf_counter() - start
         # Security: saves the optimizer state in json file for later analysis
         self.save_state(self.save_state_path)
         return x_next, l_next, merit
@@ -234,14 +243,21 @@ class EGOOptimizer:
                 )
                 x_next = np.array([self.rng.uniform(b[0], b[1]) for b in self.data.bounds])
 
+            # [FIX-L2] simulation time (total and per level)
+            start = time.perf_counter()
             y_new, metrics = self.simulator.evaluate(x_next, l_next)
+            elapsed = time.perf_counter() - start
+            self.timings["simulation"] += elapsed
+            self.simulation_times.setdefault(int(l_next), []).append(elapsed)
             self.tell(x_next, l_next, y_new, metrics)
             logger.info("    -> Evaluated value: %.6f at level %d", y_new, l_next)
 
         # [FIX-X2] final fit on ALL the data: the saved state (and the in-memory model) now
         # correspond to a trained model (previously the last point was saved with the
         # hyperparameters of the previous fit).
+        start = time.perf_counter()
         self.model.fit(self.data)
+        self.timings["model_fit"] += time.perf_counter() - start
         self.acquisition.update()
         self.save_state(self.save_state_path)
         self.summary()
@@ -265,6 +281,10 @@ class EGOOptimizer:
             "n_failed_per_level": {l: self.data.n_failed(l)
                                    for l in range(1, self.model.num_levels + 1)},
             "rhos": [float(r) for r in self.model.rhos],
+            # [FIX-L2] time per phase and mean simulation time per level (to tune the costs)
+            "timings_s": {k: round(v, 3) for k, v in self.timings.items()},
+            "mean_simulation_time_per_level_s": {
+                l: round(float(np.mean(t)), 4) for l, t in sorted(self.simulation_times.items())},
         }
         if log:
             logger.info("Optimization summary: %s", json.dumps(info, cls=NumpyEncoder))
