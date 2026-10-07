@@ -26,6 +26,21 @@ def test_rho_is_estimated_on_forrester(forrester_data):
     assert model.rhos[0] == pytest.approx(2.0, abs=0.1)
 
 
+def test_rho_is_computed_by_default_at_every_level(forrester_data):
+    """[FIX-T1c] default: rho_(l-1) is estimated for every level l >= 2 (Sacher Eq. 15), with
+    no fallback, even with very few high-fidelity points."""
+    model = MultifidelityModel(2, SquaredExponentialKernel, seed=0)
+    assert model.estimate_rho and model.min_points_rho is None
+    model.fit(forrester_data)
+    assert model.rhos[0] == pytest.approx(2.0, abs=0.1)
+    few = ExperimentData(bounds=[(0.0, 1.0)], costs=[1.0, 10.0])
+    few.generate_initial_design(points_per_level=[10, 3])
+    fill_data(few, [forrester_lf, forrester_hf])
+    model = MultifidelityModel(2, SquaredExponentialKernel, seed=0)
+    model.fit(few)
+    assert model.rhos[0] != 1.0  # computed even with 3 HF points
+
+
 def test_fixed_rho_option_reproduces_previous_behaviour(forrester_data):
     """estimate_rho=False keeps rho = rho_init (the previous code always used rho = 1)."""
     assert fitted_model(forrester_data, estimate_rho=False).rhos == [1.0]

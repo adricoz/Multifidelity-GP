@@ -321,7 +321,7 @@ class MultifidelityModel:
     """
     Multifidelity Gaussian Process model that combines multiple fidelity levels.
     """
-    def __init__(self, l, kernel_class: Kernel, estimate_rho: bool = False,
+    def __init__(self, l, kernel_class: Kernel, estimate_rho: bool = True,
                  rho_init: float = 1.0, rho_bounds: tuple[float, float] = (-5.0, 5.0),
                  min_points_rho: int = None, n_restarts: int = 3, seed: int = None):
         self.num_levels = l
@@ -333,10 +333,11 @@ class MultifidelityModel:
         # Initialize correlation coefficients between levels
         # (level 1 has no rho since Y(0) = 0, Sacher Eq. 9: rhos[l-2] links level l-1 to l)
         self.rhos = [rho_init for _ in range(l - 1)]
-        # [FIX-T1/T1b] rho options: estimate_rho=True -> profiled estimate (Sacher Eq. 15),
-        # fixed to rho_init until a level has at least min_points_rho points (default: d + 4).
-        # estimate_rho=False (default, previous behaviour) -> rho = rho_init (additive model).
-        # The default was chosen with analysis/scripts/rho_study.py (see the report, Sec. 10).
+        # [FIX-T1c] default: rho is ALWAYS computed, for every level l >= 2 (level 2 included):
+        # rho_(l-1) is a parameter of the likelihood of level l (Sacher Eq. 15, Algorithm 1),
+        # profiled with its closed form (Le Gratiet Eq. 4.10).
+        # [FIX-T1b] options: min_points_rho=k keeps rho = rho_init until a level has k points
+        # (hybrid mode, no fallback by default); estimate_rho=False -> rho = rho_init.
         self.estimate_rho = estimate_rho
         self.rho_init = rho_init
         self.rho_bounds = rho_bounds
@@ -361,9 +362,9 @@ class MultifidelityModel:
             else:
                 #NoN nested approach (Eq. 18): residual w.r.t. the previous level prediction
                 f_prev = self._predict_batch_up_to(x_l, l - 1)[0]
-                # [FIX-T1/T1b] rho is estimated (profiled) only with enough points
-                min_points = self.min_points_rho if self.min_points_rho is not None \
-                             else x_l.shape[1] + 4
+                # [FIX-T1c] rho estimated (profiled) at every fit; [FIX-T1b] optional
+                # fallback to rho_init while the level has fewer than min_points_rho points
+                min_points = self.min_points_rho if self.min_points_rho is not None else 0
                 estimate = self.estimate_rho and len(y_l) >= min_points
                 self.rhos[l - 2] = self.gps[l - 1].fit(
                     x_l, y_l, n_restarts = self.n_restarts, f_prev = f_prev,
