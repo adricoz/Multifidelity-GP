@@ -184,7 +184,7 @@ class ModelVisualizer:
 
         plt.figure(figsize=(10, 6))
         top_label = self._level_label(self.num_levels)
-        plt.plot(x_test, y_pred, 'b-', label=f'Predicted Mean ({top_label})', linewidth=2)
+        plt.plot(x_test, y_pred, 'b-', label=f'Predicted mean - {top_label}', linewidth=2)
         plt.fill_between(x_test.flatten(),
                          y_pred - 1.96 * y_std, y_pred + 1.96 * y_std,
                          alpha=0.2, color='blue', label='Uncertainty (95%)')
@@ -193,14 +193,14 @@ class ModelVisualizer:
             for l in range(1, self.num_levels):
                 mean_l = self.model.predict_batch(x_test, level=l)[0]
                 plt.plot(x_test, mean_l, '--', color=LEVEL_COLORS[(l - 1) % 8],
-                         label=f"Predicted Mean ({self._level_label(l)})")
+                         label=f"Predicted mean - {self._level_label(l)}")
 
         for l in range(1, self.num_levels + 1):
             x_obs, y_obs, _ = self._observations(l)
             if y_obs.size > 0:
                 plt.scatter(x_obs[:, 0], y_obs, color=LEVEL_COLORS[(l - 1) % 8],
                             marker=LEVEL_MARKERS[(l - 1) % 8], s=50, zorder=5,
-                            edgecolors='k', label=f"Evaluations ({self._level_label(l)})")
+                            edgecolors='k', label=f"Evaluations - {self._level_label(l)}")
 
         plt.title("Prediction of the MF-EGO")
         plt.xlabel("x")
@@ -231,7 +231,7 @@ class ModelVisualizer:
 
         plt.figure(figsize=(8, 6))
         contour = plt.contourf(x_mesh, y_mesh, z_mesh, levels=50, cmap='viridis')
-        plt.colorbar(contour, label=f"Predicted Value ({self._level_label(self.num_levels)})")
+        plt.colorbar(contour, label=f"Predicted value - {self._level_label(self.num_levels)}")
 
         # Hystory of evolution
         for l in range(1, self.num_levels + 1):
@@ -240,7 +240,7 @@ class ModelVisualizer:
                 # [FIX-X3] columns of the parameters (was points[idx] = rows, wrong points)
                 plt.scatter(points[:, param_x_idx], points[:, param_y_idx],
                             color=LEVEL_COLORS[(l - 1) % 8], marker=LEVEL_MARKERS[(l - 1) % 8],
-                            edgecolors='k', label=f"Evaluations ({self._level_label(l)})")
+                            edgecolors='k', label=f"Evaluations - {self._level_label(l)}")
 
         plt.title(f"Response Surface (Dimensions {param_x_idx} & {param_y_idx})")
         plt.xlabel(f"Parameter {param_x_idx}")
@@ -304,16 +304,16 @@ class ModelVisualizer:
                                  fill="toself", fillcolor="rgba(31,119,180,0.2)",
                                  line={"width": 0}, name="Uncertainty (95%)", hoverinfo="skip"))
         fig.add_trace(go.Scatter(x=x_flat, y=y_pred, mode="lines", line={"color": "#1f77b4"},
-                                 name=f"Predicted mean ({self._level_label(self.num_levels)})"))
+                                 name=f"Predicted mean - {self._level_label(self.num_levels)}"))
         for l in range(1, self.num_levels):
             fig.add_trace(go.Scatter(x=x_flat, y=self.model.predict_batch(x_test, level=l)[0],
                                      mode="lines", line={"dash": "dash"},
-                                     name=f"Predicted mean ({self._level_label(l)})"))
+                                     name=f"Predicted mean - {self._level_label(l)}"))
         for l in range(1, self.num_levels + 1):
             x_obs, y_obs, _ = self._observations(l)
             fig.add_trace(go.Scatter(x=x_obs[:, 0] if y_obs.size else [], y=y_obs,
                                      mode="markers", marker={"size": 9, "line": {"width": 1}},
-                                     name=f"Evaluations ({self._level_label(l)})"))
+                                     name=f"Evaluations - {self._level_label(l)}"))
         fig.update_layout(title="Prediction of the MF-EGO", xaxis_title="x",
                           yaxis_title="Target value", template="plotly_white")
         fig.write_html(save_path, include_plotlyjs=include_plotlyjs)
@@ -333,7 +333,7 @@ class ModelVisualizer:
         mean, var, _ = self.model.predict_batch(x_test)
 
         fig = make_subplots(rows=1, cols=2, subplot_titles=(
-            f"Predicted mean ({self._level_label(self.num_levels)})", "Predicted std"))
+            f"Predicted mean - {self._level_label(self.num_levels)}", "Predicted std"))
         fig.add_trace(go.Contour(x=x_mesh[0], y=y_mesh[:, 0], z=mean.reshape(x_mesh.shape),
                                  colorscale="Viridis", colorbar={"x": 0.45}, name="mean"),
                       row=1, col=1)
@@ -349,7 +349,7 @@ class ModelVisualizer:
                     x=points[:, param_x_idx], y=points[:, param_y_idx], mode="markers",
                     marker={"symbol": l - 1, "size": 9, "line": {"width": 1}},
                     text=[f"y = {v:.6g}" for v in values], showlegend=col == 1,
-                    legendgroup=str(l), name=f"Evaluations ({self._level_label(l)})"),
+                    legendgroup=str(l), name=f"Evaluations - {self._level_label(l)}"),
                     row=1, col=col)
         fig.update_xaxes(title_text=f"Parameter {param_x_idx}")
         fig.update_yaxes(title_text=f"Parameter {param_y_idx}")

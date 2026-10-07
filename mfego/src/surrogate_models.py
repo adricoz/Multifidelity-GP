@@ -96,7 +96,8 @@ class GaussianProcess:
 
         # Define bounds for the hyperparameters
         # [FIX-N2] log-space bounds (see the module constants)
-        param_bounds = [LENGTHSCALE_BOUNDS] * d                        + [SIGNAL_VARIANCE_BOUNDS, BIAS_VARIANCE_BOUNDS, NOISE_BOUNDS]
+        param_bounds = [LENGTHSCALE_BOUNDS] * d \
+                       + [SIGNAL_VARIANCE_BOUNDS, BIAS_VARIANCE_BOUNDS, NOISE_BOUNDS]
         log_bounds = [(np.log(lo), np.log(hi)) for lo, hi in param_bounds]
 
         # [FIX-N7] normalization at rho_init, then (if rho is estimated and rho_hat is far from
@@ -131,10 +132,12 @@ class GaussianProcess:
             self.kernel.set_params(params[:-1])
             self.noise = params[-1]
 
-            covariance_matrix = self.kernel.get_covariance_matrix(self.x_train)                                        + self.noise * np.eye(n)
+            covariance_matrix = self.kernel.get_covariance_matrix(self.x_train) \
+                                       + self.noise * np.eye(n)
             l_chol, _ = safe_cholesky(covariance_matrix)
             self.rho = self._profile_rho(l_chol, *rho_args)
-            if f_prev is None or not estimate_rho                or abs(self.rho - rho_ref) <= 1e-3 * max(1.0, abs(rho_ref)):
+            if f_prev is None or not estimate_rho \
+               or abs(self.rho - rho_ref) <= 1e-3 * max(1.0, abs(rho_ref)):
                 break
             rho_ref, restarts = self.rho, 1
 
@@ -162,7 +165,8 @@ class GaussianProcess:
 
         try:
             # Compute the covariance matrix K and its Cholesky decomposition
-            covariance_matrix = self.kernel.get_covariance_matrix(self.x_train)                                        + self.noise * np.eye(n)
+            covariance_matrix = self.kernel.get_covariance_matrix(self.x_train) \
+                                       + self.noise * np.eye(n)
             # [FIX-N5] jitter instead of an immediate failure
             l_chol, _ = safe_cholesky(covariance_matrix)
         except np.linalg.LinAlgError:
