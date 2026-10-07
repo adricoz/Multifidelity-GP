@@ -317,7 +317,7 @@ class MultifidelityModel:
     """
     Multifidelity Gaussian Process model that combines multiple fidelity levels.
     """
-    def __init__(self, l, kernel_class: Kernel, estimate_rho: bool = True,
+    def __init__(self, l, kernel_class: Kernel, estimate_rho: bool = False,
                  rho_init: float = 1.0, rho_bounds: tuple[float, float] = (-5.0, 5.0),
                  min_points_rho: int = None, n_restarts: int = 3, seed: int = None):
         self.num_levels = l
@@ -329,8 +329,10 @@ class MultifidelityModel:
         # Initialize correlation coefficients between levels
         # (level 1 has no rho since Y(0) = 0, Sacher Eq. 9: rhos[l-2] links level l-1 to l)
         self.rhos = [rho_init for _ in range(l - 1)]
-        # [FIX-T1/T1b] rho options: profiled estimate (Sacher Eq. 15), or fixed to rho_init,
-        # or fixed until a level has at least min_points_rho points (default: d + 4)
+        # [FIX-T1/T1b] rho options: estimate_rho=True -> profiled estimate (Sacher Eq. 15),
+        # fixed to rho_init until a level has at least min_points_rho points (default: d + 4).
+        # estimate_rho=False (default, previous behaviour) -> rho = rho_init (additive model).
+        # The default was chosen with analysis/scripts/rho_study.py (see the report, Sec. 10).
         self.estimate_rho = estimate_rho
         self.rho_init = rho_init
         self.rho_bounds = rho_bounds

@@ -221,17 +221,22 @@ class EGOOptimizer:
                 merit,
             )
 
-            if not self.data.is_already_evaluated(l_next, x_next):
-                y_new, metrics = self.simulator.evaluate(x_next, l_next)
-                self.tell(x_next, l_next, y_new, metrics)
-                logger.info("    -> Evaluated value: %.6f at level %d", y_new, l_next)
-
-            else:
+            if self.data.is_already_evaluated(l_next, x_next):
+                # [FIX-R7] the iteration was skipped: with a seeded search and a model that
+                # does not change (e.g. failed point excluded from the GP), the same point was
+                # proposed again at every iteration (stall). A random point of the same level
+                # is evaluated instead (exploration).
                 logger.warning(
-                    "Point %s at level %d has already been evaluated. Skipping evaluation.",
+                    "Point %s at level %d has already been evaluated. "
+                    "Random point evaluated instead.",
                     np.round(x_next, 4),
                     l_next,
                 )
+                x_next = np.array([self.rng.uniform(b[0], b[1]) for b in self.data.bounds])
+
+            y_new, metrics = self.simulator.evaluate(x_next, l_next)
+            self.tell(x_next, l_next, y_new, metrics)
+            logger.info("    -> Evaluated value: %.6f at level %d", y_new, l_next)
 
         # [FIX-X2] final fit on ALL the data: the saved state (and the in-memory model) now
         # correspond to a trained model (previously the last point was saved with the

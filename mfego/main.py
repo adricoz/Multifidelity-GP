@@ -65,7 +65,10 @@ if __name__ == "__main__":
 
     data = ExperimentData(bounds=bounds, costs=costs)
     simu = FunctionSimulator(num_levels=L)
-    model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel, seed = SEED)
+    # [FIX-T1] rho estimated (profiled likelihood, Sacher Eq. 15): the levels of Eq. 17 differ
+    # by a factor rho = 2, recovered once the HF level has d + 4 = 5 points (hybrid mode)
+    model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel,
+                               estimate_rho = True, seed = SEED)
     acq = AcquisitionFunction(model=model, data=data)
     ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq, seed = SEED)
 
