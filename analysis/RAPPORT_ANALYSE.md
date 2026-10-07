@@ -14,7 +14,11 @@ Références utilisées pour tout le rapport :
   citée pour la paramétrisation log et le gradient de la vraisemblance).
 
 Chaque modification du code porte un commentaire `# [FIX-<ID>]` (en anglais) qui renvoie à l'identifiant de ce rapport :
-`grep -rn "\[FIX-" mfego example` les liste toutes (115 occurrences dans le code Python).
+`grep -rn "\[FIX-" mfego example` les liste toutes (127 occurrences dans le code Python, étape 2 comprise).
+
+**Étape 2 (07/10/2026)** — voir la **Partie II** en fin de rapport : ρ désormais **toujours calculé** (§10.4), logs
+horodatés avec temps total (§18), explication détaillée des gains de vitesse (§9), **benchmark Hartmann** contre scikit-learn,
+SMT et BoTorch (§19), **passerelle bdToolbox** pour l'optimisation de foils (§20), journal de l'étape 2 (§21).
 
 ---
 
@@ -35,7 +39,7 @@ L'implémentation reprend fidèlement la **structure** de la méthode de Sacher 
 Éq. 18, variance récursive Éq. 12, mérite Éq. 24 avec ratio de coûts et produit des ρ²). En revanche, l'audit a relevé :
 
 1. **Des écarts théoriques** : ρ figé à 1 sans possibilité de l'estimer alors que l'article l'estime (Éq. 15) — l'estimation
-   est désormais disponible (ρ profilé, mode hybride) et une étude dédiée (§10) a conduit à garder ρ = 1 par défaut ; facteur AEI (Éq. 20) absent ; valeur de
+   est désormais implémentée (ρ profilé) et, depuis l'étape 2, **ρ est calculé par défaut à tous les niveaux** (§10.4) ; facteur AEI (Éq. 20) absent ; valeur de
    référence de l'EI différente de l'Éq. 19 ; réduction de variance calculée avec la variance bruitée au lieu de la variance
    latente (Éq. 22, 28-29). Le legacy non imbriqué estimait ρ et contenait l'AEI : ce sont des **régressions**.
 2. **Des bornes d'hyperparamètres mal posées** : bornes absolues sur des sorties non normalisées → bornes actives sur tous les
@@ -94,7 +98,7 @@ python analysis/scripts/rho_study.py               # étude de ρ (parallèle, p
 | ID | Gravité | Constat (avant) | État |
 |---|---|---|---|
 | R6 | **Critique** | Le paquet ne s'importe pas (traitlets) sous Python 3.13 / 3.14 sans traitlets | Corrigé |
-| T1 | **Critique** | ρ figé à 1 sans possibilité de l'estimer (Éq. 15) ; Forrester RMSE 4,36 au lieu de 0,19 avec ρ estimé | Option `estimate_rho` ajoutée (ρ profilé + mode hybride) ; défaut ρ = 1 conservé après étude (§10) |
+| T1 | **Critique** | ρ figé à 1 sans possibilité de l'estimer (Éq. 15) ; Forrester RMSE 4,36 au lieu de 0,19 avec ρ estimé | ρ profilé (Le Gratiet Éq. 4.10) ; **calculé par défaut à tous les niveaux depuis l'étape 2** (T1c, §10.4) ; ρ = 1 et mode hybride en options |
 | X2 | **Critique** | JSON = données n+1 + hyperparamètres n ; surface tracée ≠ modèle entraîné | Corrigé |
 | E1 | **Critique** | Constantes Hartmann fausses ; minimum −3,3975 ; cible −3,32237 fausse | Corrigé |
 | N7/N2 | **Majeur** | Bornes absolues, y non normalisé : bornes actives partout, modèle dépendant des unités | Corrigé |
@@ -128,7 +132,7 @@ python analysis/scripts/rho_study.py               # étude de ρ (parallèle, p
 | 4-5 | Moyenne kᵀK⁻¹Y, variance κ + σ² − kᵀK⁻¹k (bruit inclus) | Conforme (inverse explicite) | Conforme (Cholesky, N4) |
 | 9 | Y⁽ˡ⁾ = ρ₍ₗ₋₁₎Y⁽ˡ⁻¹⁾ + δY⁽ˡ⁾, Y⁽⁰⁾ = 0 | Structure conforme | Conservée |
 | 11-12 | Moyenne et variance récursives | Conformes | Conservées (vectorisées) |
-| 15-16 | Vraisemblance de niveau l en (ρ, θ, σ²) | **ρ absent (=1)** | ρ profilé avec `estimate_rho=True` (T1) ; ρ = 1 par défaut après étude (§10) |
+| 15-16 | Vraisemblance de niveau l en (ρ, θ, σ²) | **ρ absent (=1)** | ρ profilé, calculé à chaque ajustement (T1, T1c) |
 | 18 | Résidu non imbriqué y⁽ˡ⁾ − ρ f̂⁽ˡ⁻¹⁾(X⁽ˡ⁾) | Conforme (ρ = 1) | Conforme |
 | 19 | EI avec f̂⁽ᴸ⁾(x_best), x_best « effective best » sur ∪X⁽ˡ⁾ | **min des y HF observés** | Conforme (T3) |
 | 20 | AEI : EI·(1 − σ_ε / √(σ̂² + σ²_ε)) | **absent** | Conforme (T2) |
@@ -145,10 +149,10 @@ Le niveau 1 n'a pas de ρ (Y⁽⁰⁾ = 0) : l'initialisation `rhos = [1.0, …]
 Fixer ρ = 1 pour l ≥ 2 revient à un modèle de **correction additive** : δ⁽ˡ⁾ doit alors absorber (ρ_vrai − 1)·f⁽ˡ⁻¹⁾, et le
 facteur R²ₗ du mérite vaut toujours 1, ce qui supprime le mécanisme de robustesse de [S] vis-à-vis des niveaux mal corrélés.
 Mesure (`check_theory.py`) sur Forrester (Éq. 17, ρ vrai = 2, 10 BF / 6 HF) : profil de vraisemblance minimal en **ρ = 2,0**
-(NLL 1,61) contre NLL 10,59 en ρ = 1 ; RMSE du surrogate HF : code initial **4,36**, code corrigé avec ρ = 1 (défaut) **1,81**
+(NLL 1,61) contre NLL 10,59 en ρ = 1 ; RMSE du surrogate HF : code initial **4,36**, code corrigé avec ρ = 1 (option `estimate_rho=False`) **1,81**
 (gain dû à la normalisation et aux bornes seules), code corrigé avec `estimate_rho=True` **0,19** (ρ̂ = 1,96). Sur Hartmann 6D
 (20 BF / 10 HF, δ = 0,05) les trois variantes sont équivalentes (RMSE 0,45-0,47) : ρ̂ = 1,18 et la limite est le nombre de
-points. Voir §10 pour l'étude complète de la démarche « ρ fixé » et le choix du défaut.
+points. Voir §10 pour l'étude de la démarche « ρ fixé » et la décision finale (ρ toujours calculé, §10.4).
 
 **T2 — Facteur AEI absent.** L'Éq. 20 multiplie l'EI par (1 − σ_ε,L / √(σ̂²_L + σ²_ε,L)). Le code initial ne le contenait pas,
 alors que `legacy/legacy_non_nested/non_nested_mf_optimizer.py:188-219` l'implémentait. Son poids (`check_theory.py`) :
@@ -193,7 +197,7 @@ sur des sorties **non normalisées**, optimisées en **espace linéaire** avec u
 | Données | Code | Hyperparamètres en butée | Erreur d'échelle (y×10⁻³ / 10³) |
 |---|---|---|---|
 | Forrester (JSON `main`, 14 BF / 10 HF) | initial | niv. 1 : bruit bas · niv. 2 : **θ₂ haut**, bruit bas | **1,07 / 1,96** |
-| | corrigé (ρ = 1, défaut) | bruit bas seulement (données déterministes : attendu) | **1·10⁻⁶** |
+| | corrigé (ρ = 1, option) | bruit bas seulement (données déterministes : attendu) | **1·10⁻⁶** |
 | | corrigé (`estimate_rho=True`) | niv. 2 : θ₁ haut (résidu exactement linéaire, cf. ci-dessous) | **2·10⁻⁷** |
 | Hydrofoil (JSON `main`, 25 BF / 23 HF) | initial | niv. 2 : **l₁ haut, θ₁ bas, θ₂ bas**, bruit bas | **0,23 / 2,46** |
 | | corrigé | bruit bas seulement (données déterministes : attendu) | **2·10⁻⁵** |
@@ -325,39 +329,111 @@ avertissement en 1.15.3 et 1.18.1 (testé). À surveiller lors des prochaines ve
 
 ---
 
-## 9. Axes 6-7 — Optimisation numérique, performances, mémoire
+## 9. Axes 6-7 — Pourquoi le code est plus rapide, et mémoire
 
-Mesures (`profile_perf.py`, d = 6) :
+*Section réécrite à l'étape 2 (demande : « mieux expliquer ce qui a accéléré le code »). Mesures :
+`analysis/scripts/speedup_breakdown.py` (machine non chargée), figures `speedup_waterfall.html` et
+`speedup_mechanisms.html`.*
 
-| Opération | Initial | Corrigé | Gain |
+### 9.1 Vue d'ensemble : effet cumulé de chaque optimisation
+
+Protocole : 5 itérations EGO complètes (ajustement des 2 GP + recherche du point suivant + simulation + ajustement final) sur
+Hartmann 6D, 2 niveaux, 20 BF / 15 HF, même graine. On part du **code initial** (`legacy/legacy_mfego_initial`), puis du
+**code corrigé dont on désactive toutes les optimisations** par *monkeypatch* (covariance en double boucle, gradient par
+différences finies, prédiction point par point avec l'inverse explicite, mérite calculé point par point et niveau par niveau,
+évolution différentielle non vectorisée, pas de démarrage à chaud), et on les **réactive une à une** :
+
+| Étape | Temps (5 itérations) | Gain de l'étape | Gain cumulé |
 |---|---|---|---|
-| Matrice de covariance n = 100 | 30,9 ms | 0,32 ms | ×96 |
-| Matrice de covariance n = 400 | 493 ms | 9,0 ms | ×55 |
-| Ajustement d'un GP n = 20 | 4,07 s (2 781 matrices construites) | 0,03 s (96 matrices) | ×136 |
-| Ajustement d'un GP n = 40 | 18,9 s (3 561 matrices) | 0,05 s (103 matrices) | ×377 |
-| Ajustement d'un GP n = 80 | 39,7 s (1 941 matrices) | 0,10 s (103 matrices) | ×397 |
-| Itération EGO Hartmann 6D (fit 2 niveaux + recherche DE), 6 premières itérations | 4,12 s | 0,18 s | ×22 |
+| Code initial | 46,4 s | — | ×1 |
+| Code corrigé, toutes optimisations désactivées | 24,9 s | ×1,9 | ×1,9 |
+| + N1 matrice de covariance vectorisée | 6,1 s | ×4,1 | ×7,6 |
+| + N3 gradient analytique (espace log) | 4,3 s | ×1,4 | ×10,8 |
+| + N4 Cholesky, prédiction par lot | 4,5 s | ×1,0 | ×10,4 |
+| + N6 mérite et évolution différentielle vectorisés | 0,81 s | ×5,5 | ×57 |
+| + N8 démarrage à chaud (= code corrigé) | **0,69 s** | ×1,2 | **×67** |
 
-(Mesures sur machine non chargée ; une première série, faite pendant que l'étude de ρ occupait tous les cœurs, donnait des gains
-plus faibles mais du même ordre.) Avec le code corrigé, une itération EGO reste à 0,25 s en moyenne sur 40 itérations
-(n passe de 30 à 70 points).
+Deux leviers dominent : **N1** (le calcul de la vraisemblance est ~4× plus rapide) et **N6** (la recherche du point suivant
+devient ~5× plus rapide). L'ordre de la cascade compte : un mécanisme ne gagne que s'il porte sur une partie encore coûteuse
+(N4 n'a pas d'effet visible tant que le mérite est appelé point par point, mais il est indispensable à N6).
 
-Causes et correctifs : double boucle Python (N1 → vectorisation) ; gradient par différences finies, d + 3 évaluations de NLL
-supplémentaires par itération L-BFGS-B et paramètres sur 7 ordres de grandeur (N2 → log, N3 → gradient analytique
-[RW] Éq. 5.9, vérifié par `check_grad`, dérivées du noyau SE reprises du sandbox, cellule 17) ; `scipy.linalg.solve` générique sur
-un facteur triangulaire et inverse explicite (N4 → `cho_solve`, α précalculé, moyenne en O(n)) ; L² prédictions par évaluation
-du mérite et DE évaluant un point à la fois (N6 → une prédiction vectorisée pour tous les niveaux et toute la population DE) ;
-pénalité 1e10 qui rend l'objectif discontinu (N5 → jitter progressif) ; redémarrages toujours aléatoires (N8 → le premier repart
-des hyperparamètres précédents).
+### 9.2 Mécanisme par mécanisme
 
-**Mémoire.** Aucune fuite : la mémoire tracée (`tracemalloc`) oscille entre 0,05 et 0,43 Mo sur 40 itérations sans tendance
-croissante (pic 0,82 Mo) ; les figures matplotlib sont fermées (`plt.close`), aucun cache global. La croissance attendue en O(n²)
-(facteur de Cholesky par niveau) est négligeable aux tailles visées. Effet de bord corrigé : `logging.basicConfig` à l'import
-(R3) — un script utilisateur appelant `basicConfig(filename=…)` sans `force=True` voyait sa configuration ignorée.
+**(a) Formulation mieux posée (N2 paramétrisation log, N7 normalisation, N5 jitter) — 46,4 → 24,9 s, avant toute
+« optimisation de vitesse ».**
+*Avant* : L-BFGS-B en espace linéaire, sur des paramètres couvrant 7 ordres de grandeur (σ²_ε ∈ [10⁻⁸ ; 10⁻⁵],
+θ₁ ∈ [10⁻³ ; 50]) et des sorties non normalisées ; gradient par différences finies à pas absolu ≈ 10⁻⁸ ; échec de Cholesky →
+renvoi d'une valeur 10¹⁰ (objectif discontinu). L'optimiseur multiplie les itérations et les recherches linéaires.
+*Après* : log-paramètres, sorties normalisées, jitter progressif. Mesure (M2, un GP, n = 35, d = 6) : le code initial construit
+**4 511 matrices de covariance** par ajustement ; le code corrigé, *même avec les différences finies*, n'en construit que
+**1 872**. Ce gain n'est pas une optimisation de code mais une optimisation numérique mieux posée.
+
+**(b) N1 — matrice de covariance vectorisée (×4,1 dans la cascade ; ×56 à ×109 isolément).**
+*Avant* (`kernels.py` initial) :
+```python
+for i in range(n):
+    for j in range(i, n):
+        val = cov_fct(x[i], x[j], theta_l)   # n(n+1)/2 appels Python, ~4 petites opérations numpy chacun
+        covariance_matrix[i, j] = val
+        covariance_matrix[j, i] = val
+```
+*Après* :
+```python
+sum_dist = np.sum(pairwise_sq_diff(x) / (2.0 * (l ** 2)), axis=2)   # une opération sur un tableau (n, n, d)
+covariance_matrix = t1 * np.exp(-sum_dist) + t2
+```
+Pourquoi : le coût de la double boucle est dominé par l'appel Python et la création de petits tableaux (quelques µs par
+paire), pas par l'arithmétique. Mesure M1 (d = 6) : n = 100 : 35,7 ms → 0,33 ms (**×109**) ; n = 400 : 475 ms → 8,5 ms
+(**×56**). Comme la vraisemblance reconstruit K à chaque évaluation, et qu'il y en a des centaines par ajustement, c'est le
+premier levier (×4,1 sur 5 itérations).
+
+**(c) N3 — gradient analytique (×1,4 dans la cascade ; ×10 en nombre de factorisations).**
+*Avant* : `minimize(objective_nll, ..., method='L-BFGS-B')` **sans `jac`** : SciPy estime le gradient par différences finies,
+soit **p + 1 évaluations de la NLL par gradient** (p = d + 3 = 9 en 6D), donc ~10 factorisations de Cholesky par itération.
+*Après* : `negative_log_likelihood(..., with_grad=True)` renvoie aussi
+∂NLL/∂log θⱼ = ½ tr((K⁻¹ − ααᵀ) ∂K/∂log θⱼ) ([RW] Éq. 5.9) ; les dérivées du noyau SE sont calculées d'un coup
+(`get_log_params_gradients`). Une seule Cholesky par itération, plus une inverse et d + 2 produits terme à terme.
+Mesure M2 : **1 872 → 189 matrices** par ajustement, 0,27 s → 0,074 s (×3,7). Le gradient est vérifié par `check_grad`
+(erreur relative < 10⁻⁴), y compris avec ρ profilé (théorème de l'enveloppe).
+
+**(d) N4 — Cholesky partagée, α précalculé, prédiction par lot (×12 isolément, effet combiné avec N6).**
+*Avant* : `k_inv = solve(L.T, solve(L, I))` (inverse explicite, deux solves *génériques* en O(n³)), puis pour **chaque
+point** `k_vec.T @ k_inv @ y_train` (O(n²)) et `k_vec.T @ k_inv @ k_vec`.
+*Après* : α = K⁻¹y calculé une fois (`cho_solve`), moyenne = kᵀα (O(n) par point), variance par `solve_triangular` sur
+toute une matrice de points (`predict_batch`). Mesure M3 : 2 500 prédictions 62 ms → 5,2 ms (**×12**), et plus d'inverse
+explicite (meilleure stabilité numérique).
+
+**(e) N6 — mérite et évolution différentielle vectorisés (×5,5 dans la cascade ; ×79 isolément).**
+*Avant* : la DE appelle la fonction objectif **un candidat à la fois** (population 10 × d = 60, ~51 générations → ~3 000
+appels Python par recherche) ; pour chaque candidat, `evaluate_merit(x, l)` est appelé pour l = 1..L, et chacun appelle
+`model.predict(x)`, qui prédit **tous** les niveaux : **L² prédictions de GP par candidat**.
+*Après* : `differential_evolution(..., vectorized=True)` passe **toute la population** à `evaluate_merits_batch`, qui fait
+**une** prédiction vectorisée pour tous les points et tous les niveaux. Mesure M4 (60 points × 2 niveaux) : 29,6 ms →
+0,37 ms (**×79**). Une fois l'ajustement accéléré (N1-N3), la recherche du point suivant devenait le poste dominant : c'est le
+deuxième levier (×5,5).
+
+**(f) N8 — démarrage à chaud (×1,2).** Le premier des 3 redémarrages repart des hyperparamètres de l'itération précédente
+(et de ceux chargés par `load_state`) : d'une itération EGO à la suivante les données changent d'un point, l'optimum change
+peu, l'optimiseur converge en moins d'itérations.
+
+### 9.3 Situation par rapport aux bibliothèques existantes
+
+Dans le benchmark (`benchmarks/hartmann_benchmark.ipynb`, §19, 5 graines, un thread par processus), l'ajustement d'un modèle
+multi-fidélité mfego (0,19-0,52 s) est ~7 à 12× plus rapide que BoTorch MF-GP (2,3-3,6 s) et ~35 à 60× plus rapide que SMT MFK
+(12-18 s) ; scikit-learn (mono-fidélité) prend 1,1-1,4 s. Une itération NN-MF-EGO coûte ~0,38 s, contre ~0,85 s pour BoTorch
+qLogEI (mono-fidélité) et ~19 s pour BoTorch MF-KG.
+
+### 9.4 Mémoire
+
+Aucune fuite : la mémoire tracée (`tracemalloc`, `profile_perf.py`) oscille entre 0,05 et 0,43 Mo sur 40 itérations, sans
+tendance croissante (pic 0,82 Mo) ; les figures matplotlib sont fermées (`plt.close`), aucun cache global. La croissance
+attendue en O(n²) (facteur de Cholesky par niveau) est négligeable aux tailles visées. Effet de bord corrigé :
+`logging.basicConfig` à l'import (R3) — un script utilisateur appelant `basicConfig(filename=…)` sans `force=True` voyait sa
+configuration ignorée.
 
 ---
 
-## 10. Étude de la démarche « ρ fixé »
+## 10. Étude de ρ : démarche « ρ fixé », sensibilité et décision
 
 ### 10.1 Raisonnement
 
@@ -373,7 +449,7 @@ croissante (pic 0,82 Mo) ; les figures matplotlib sont fermées (`plt.close`), a
 3. **Démarche implémentée** (T1/T1b) : ρ est **profilé** — pour θ fixé, ρ̂(θ) = FᵀK⁻¹y / FᵀK⁻¹F ([LG] Éq. 4.10, cas non imbriqué
    B.1.2, H = f̂⁽ˡ⁻¹⁾(X⁽ˡ⁾)) est injecté dans la vraisemblance de [S] Éq. 15 : même optimum qu'une estimation jointe, une dimension
    de moins ; le gradient reste exact (théorème de l'enveloppe). Le **mode hybride** garde ρ = `rho_init` tant que le niveau a
-   moins de `min_points_rho` points (défaut d + 4 = nombre d'hyperparamètres de δ + 1). L'option `estimate_rho=False` reproduit
+   moins de `min_points_rho` points (option ; d + 4 = nombre d'hyperparamètres de δ + 1 était la valeur étudiée). L'option `estimate_rho=False` reproduit
    exactement l'ancien comportement.
 
 ### 10.2 Protocole (`analysis/scripts/rho_study.py`, 5 graines, calcul parallèle)
@@ -412,15 +488,26 @@ variantes : limite des données en 6D, pas du traitement de ρ.
 
 Sur Forrester, ρ = 1 a demandé une évaluation HF de plus (coût médian 123 contre 114).
 
-### 10.4 Décision
+### 10.4 Décision (révisée à l'étape 2 : ρ toujours calculé)
 
-Règle fixée **avant** l'étude (plan) : l'estimation devient le défaut si elle améliore au moins la moitié des cas sans en dégrader
-aucun (seuil 10 %, deux erreurs toutes deux sous 10⁻³·|f*| étant considérées égales). Bilan : 2 cas améliorés (Hartmann δ = 0 et
-0,05), **1 dégradé** (Hartmann δ = 0,1), 5 neutres → **`estimate_rho=False` reste le défaut** (comportement initial), et
-`estimate_rho=True` est une option documentée, **recommandée quand les niveaux n'ont pas la même échelle et que le niveau
-estimé dispose d'au moins ~10 points** (c'est le cas de `main.py`, Forrester, où ρ vrai = 2). Interprétation du cas dégradé : à
-δ = 0,1 le niveau 1 est le plus mal corrélé (corrélation 0,66) et ρ̂ est estimé sur 10-15 points HF/intermédiaires : il est
-bruité, et le ρ = 1 fixe agit comme une régularisation — c'est exactement l'argument de la démarche « ρ fixé ».
+*Première décision (étape 1)* : une règle fixée avant l'étude (« l'estimation devient le défaut si elle améliore au moins la
+moitié des cas sans en dégrader aucun ») avait conduit, avec 2 cas améliorés et 1 dégradé, à garder ρ = 1 par défaut.
+
+*Correction (étape 2, demande de l'utilisateur)* : c'était une **incompréhension de la théorie de ma part**. Dans la formulation
+récursive, ρ₍ₗ₋₁₎ n'est pas un réglage optionnel : c'est **un paramètre du modèle du niveau l, pour tout l ≥ 2 — niveau 2
+compris** — qui apparaît dans la vraisemblance (Sacher Éq. 15, arguments (ρ₍ₗ₋₁₎, θ₍ₗ₎, σ²₍ₗ₎)), est ré-estimé à chaque
+itération (Algorithme 1) et a une estimation en forme fermée (Le Gratiet Éq. 4.10). Seul le niveau 1 n'a pas de ρ (Y⁽⁰⁾ = 0).
+Fixer ρ = 1 n'est donc pas « la méthode avec un réglage par défaut », c'est **un autre modèle** (correction additive). Le
+défaut est désormais **`estimate_rho=True` sans repli** (`min_points_rho=None`) : ρ est calculé à chaque ajustement et à
+tous les niveaux, dès le premier ajustement (`[FIX-T1c]`, test `test_rho_is_computed_by_default_at_every_level`).
+`min_points_rho=k` (mode hybride) et `estimate_rho=False` restent disponibles comme options.
+
+L'étude ci-dessus est conservée comme **étude de sensibilité** : elle documente le comportement de ρ̂ avec très peu de points
+(Forrester : ρ̂ = 0,60 avec 4 points HF, ρ̂ fiable ≈ 2 à partir d'environ 10 points) et le cas δ = 0,1 où le niveau 1 est mal
+corrélé (corrélation 0,66). Effet mesuré du changement sur `main.py` (Forrester, DOE 10 BF / 4 HF, 10 itérations) : ρ̂ = 2,009 en
+fin de run ; meilleure observation HF −6,0164 pour un coût de 123 (contre −6,0207 et 114 avec le mode hybride, qui gardait
+ρ = 1 tant que le niveau HF avait moins de 5 points) : avec 4 points HF, les premières estimations de ρ sont imprécises, ce qui
+coûte une évaluation HF supplémentaire sur ce cas.
 
 ### 10.5 Point d'attention découvert : choix des niveaux
 
@@ -463,11 +550,10 @@ Format : **ID — quoi** · *où* · **origine** (défaut constaté ou référen
   `negative_log_likelihood` ; `MultifidelityModel.__init__/fit`* · **Origine** : `rho = 1.0` réécrit à chaque ajustement
   (initial `:130`) alors que [S] Éq. 15 / Algo 1 estime ρ₍ₗ₋₁₎ ; forme fermée ρ̂(θ) = FᵀK⁻¹y / FᵀK⁻¹F de [LG] Éq. 4.10 (GLS) avec
   H = F = f̂⁽ˡ⁻¹⁾(X⁽ˡ⁾) (cas non imbriqué [LG] B.1.2 = [S] Éq. 18), bornée par `rho_bounds = (-5, 5)` comme le legacy. Profiler ρ
-  donne le même optimum qu'une estimation jointe sans ajouter de dimension. Disponible par `estimate_rho=True` (défaut `False`
-  après l'étude du §10 ; activé dans `main.py`). · **Effet** : Forrester ρ̂ = 1,96-2,01 (vrai 2), RMSE du surrogate HF
-  4,36 (initial) → 1,81 (ρ = 1) → 0,19 (ρ estimé) ; R² du mérite informatif ; sur le protocole de [S] (Hartmann L = 3) : erreur de l'optimum divisée par 3,2 (δ = 0) et 1,9 (δ = 0,05), multipliée par 2 (δ = 0,1) → option, défaut inchangé (§10). `estimate_rho=False` reproduit exactement
+  donne le même optimum qu'une estimation jointe sans ajouter de dimension. **Défaut depuis l'étape 2** (`estimate_rho=True`, T1c, §10.4). · **Effet** : Forrester ρ̂ = 1,96-2,01 (vrai 2), RMSE du surrogate HF
+  4,36 (initial) → 1,81 (ρ = 1) → 0,19 (ρ estimé) ; R² du mérite informatif ; sur le protocole de [S] (Hartmann L = 3) : erreur de l'optimum divisée par 3,2 (δ = 0) et 1,9 (δ = 0,05), multipliée par 2 (δ = 0,1) → étude de sensibilité (§10) ; ρ calculé par défaut depuis l'étape 2. `estimate_rho=False` reproduit exactement
   l'ancien comportement.
-* **T1b — Mode hybride.** · *`MultifidelityModel(min_points_rho=None)` (défaut d + 4)* · **Origine** : remarque de
+* **T1b — Mode hybride (option).** · *`MultifidelityModel(min_points_rho=k)` (aucun repli par défaut depuis l'étape 2)* · **Origine** : remarque de
   l'utilisateur (ρ peut être fixé au départ) ; non-identifiabilité de ρ avec peu de points HF (sandbox cellule 48 : ρ̂ = 1,78 /
   3,85, vraisemblance figée ; mesuré : 4 points HF Forrester → ρ̂ = 0,60). · **Effet** : ρ = `rho_init` tant que n⁽ˡ⁾ < d + 4,
   estimé ensuite ; évite les ρ̂ aberrants de début de run.
@@ -611,8 +697,10 @@ puis effectué 3 évaluations HF aléatoires (repli d'origine conservé). `run(n
 
 ## 16. Limites restantes et recommandations
 
-* **Calibration à très petit n** : avec n⁽ˡ⁾ ≤ d + 3, le MLE sur-ajuste (intervalles trop étroits). Pistes : priors faibles sur les
-  hyperparamètres (MAP), ou LOO de [LG] comme diagnostic.
+* **Calibration à très petit n** : avec n⁽ˡ⁾ ≤ d + 3, le MLE sur-ajuste (intervalles trop étroits). **Confirmé par le benchmark
+  (§19)** : couverture à 95 % de 0,63-0,71 pour mfego MF contre 0,86-0,95 pour BoTorch MF-GP avec 10-20 points HF. Piste
+  prioritaire : priors faibles sur les longueurs de corrélation (MAP, comme les priors Gamma de BoTorch) et borne basse
+  relative du bruit ; le LOO de [LG] peut servir de diagnostic.
 * **Hartmann 6D** : avec 10-30 points HF le surrogate global reste médiocre (RMSE relatif ≈ 0,8-1,1 pour toutes les variantes) :
   c'est une limite des données (fonction presque plate avec des puits étroits en 6D), pas du code ; l'EGO se concentre de toute
   façon sur la zone de l'optimum.
@@ -644,5 +732,225 @@ Toutes dans `analysis/figures/` (ouvrir dans un navigateur ; plotly.js chargé d
 | `rho_study_accuracy.html` | Précision du surrogate selon le traitement de ρ |
 | `rho_study_ego_convergence.html` | Convergence NN-MF-EGO selon le traitement de ρ (protocole [S] §4.1) |
 | `env_import_checks.html` | Imports par interpréteur et version du code |
+| `speedup_waterfall.html` | (étape 2) Cascade : effet cumulé de chaque optimisation sur 5 itérations EGO |
+| `speedup_mechanisms.html` | (étape 2) Chaque mécanisme isolément (covariance, factorisations, prédiction, mérite) |
+
+Figures du benchmark (étape 2) : `benchmarks/figures/accuracy.html`, `benchmarks/figures/optimization.html` (et le notebook
+`benchmarks/hartmann_benchmark.ipynb`).
 
 Les exemples produisent aussi leurs figures interactives (`mfego/*.html`, `example/*/*.html`).
+
+---
+
+# Partie II — Étape 2 (07/10/2026)
+
+Demandes de l'utilisateur traitées dans cette étape, sur la même branche :
+
+1. **ρ doit toujours être calculé** (correction d'une incompréhension de la théorie) → §10.4 et T1c ;
+2. **logs horodatés à la manière de bdFoil, avec le temps total de calcul**, d'abord dans `mfego/main.py` → §18 ;
+3. **mieux expliquer ce qui a accéléré le code** → §9 réécrite ;
+4. **benchmark sur Hartmann contre des bibliothèques GP existantes**, dans un notebook → §19 ;
+5. **passerelle vers bdToolbox** pour optimiser des foils → §20.
+
+## 18. Logs horodatés, dossiers de run et temps de calcul (L1, L2)
+
+**Convention reprise de bdFoil** (`bdFoil/NonPlanarSolver/main.py:14-28`) : fichier `npllt_<MMDD_HHMMSS>.log` (heure de Paris,
+`datetime.now(ZoneInfo("Europe/Paris")).strftime("%m%d_%H%M%S")`), dossier créé avec `exist_ok=True`, format
+`' %(levelname)s - %(message)s'`, `force=True`, même horodatage pour les figures du run. bdFoil ne journalise **pas** le
+temps total et n'indique pas d'`encoding` (ses logs Windows contiennent des caractères cassés, par ex. `Cant [�]`).
+
+**Implémentation** (`mfego/src/run_utils.py`, nouveau) :
+
+* `create_run(base_dir, prefix)` : crée `base_dir/runs/<MMDD_HHMMSS>/` (suffixe `_1`, `_2`… si deux runs démarrent dans la
+  même seconde) et renvoie un `RunContext` (horodatage, dossier, chemin du log, `run.path("fichier")`) ;
+* `setup_logging(log_path)` : même format que bdFoil, `filemode='w'`, **`encoding='utf-8'`**, `force=True` ;
+* `RunTimer(name)` : bannière de 50 tirets et date/heure de début ; à la fin — **y compris si une exception est levée**
+  (elle est journalisée puis relancée) — date/heure de fin et **« Total computation time: X s (h:mm:ss) »** ;
+* `EGOOptimizer` (`[FIX-L2]`) mesure le temps passé en **ajustement du modèle**, en **recherche du point suivant** et en
+  **simulation**, et le temps moyen de simulation **par niveau** ; `summary()` les écrit dans le log (utile pour régler les
+  coûts relatifs des niveaux).
+
+**Application** : `mfego/main.py` (`[FIX-L1]`), les deux exemples (l'exemple Hartmann garde les réglages modifiés par
+l'utilisateur : L = 3, coûts 1/5/10, DOE 20/10/5) et le runner de la passerelle. Toutes les sorties d'un run (log,
+`ego_backup.json`, `surrogate.json`, figures PNG et HTML) sont dans son dossier ; plus rien n'est écrasé d'un run à l'autre.
+Exemple de fin de log (`mfego/runs/1007_161404/mfego_1007_161404.log`) :
+
+```
+ INFO - Optimization summary: {..., "rhos": [2.009...], "timings_s": {"model_fit": 0.65, "acquisition": 0.096, "simulation": 0.0}, ...}
+ INFO - Surrogate exported to ...\mfego\runs\1007_161404\surrogate.json
+ INFO - mfego - Forrester example (Eq. 17) finished on 07/10/2026 at 16:14:07
+ INFO - Total computation time: 2.67 s (0:00:02.7)
+```
+
+**Dépôt git** : `**/runs/` est ignoré ; les anciennes sorties écrites à côté des scripts (`mfego/*.json|log|png|html`,
+`example/*/*.json|…`) ne sont plus produites et sont retirées de l'index (elles restent dans l'historique, commit `5fb86e7`, et
+sur le disque) ; les `.pyc` de `mfego/src/__pycache__`, suivis par erreur malgré `.gitignore`, sont retirés de l'index.
+Tests : `tests/test_run_utils.py` (nom `mfego_\d{4}_\d{6}\.log`, dossiers distincts, UTF-8, temps total écrit même après une
+exception).
+
+## 19. Benchmark sur Hartmann 6D : mfego face à scikit-learn, SMT et BoTorch
+
+**Fichiers** : `benchmarks/hartmann_benchmark.ipynb` (notebook exécuté, sorties et conclusions incluses), `benchmarks/bench_lib.py`
+(problème, enveloppes des modèles, boucles d'optimisation, exécution parallèle), `benchmarks/figures/accuracy.html`,
+`benchmarks/figures/optimization.html`. **Environnement dédié** `.venv-benchmark` (`requirements-benchmark.txt`) : numpy
+2.5.3, scipy 1.18.1, scikit-learn 1.9.1, SMT 2.15.0, torch 2.14.1, BoTorch 0.18.1, GPyTorch 1.15.2, plotly 7.1.0 ; noyau
+Jupyter `mfego-benchmark` installé dans le venv.
+
+**Problème** : Hartmann 6D multi-fidélité de Sacher (Éq. 30-32), 2 niveaux : U₁ avec décalage δ = 0,05 (coût 1, corrélation
+0,82 avec la HF) et Hartmann (coût 10). Plans d'expériences non imbriqués (un LHS par niveau). 5 graines.
+
+**Concurrents** : scikit-learn `GaussianProcessRegressor` (RBF ARD + bruit, HF seule) ; SMT `KRG` (HF) et `MFK` (co-krigeage
+récursif de Le Gratiet, ρ par GLS : même théorie que mfego) ; BoTorch `SingleTaskGP` + `qLogExpectedImprovement`
+(mono-fidélité) et `SingleTaskMultiFidelityGP` + `qMultiFidelityKnowledgeGradient` avec un modèle de coût affine reproduisant
+exactement les coûts 1 / 10.
+
+### 19.1 Précision des surrogates (2 000 points de test ; n_BF = 2 n_HF)
+
+| n_HF | Modèle | RMSE / std(f) | NLPD | Couverture 95 % | Ajustement (s)* |
+|---|---|---|---|---|---|
+| 10 | BoTorch MF-GP | **0,98** | **0,48** | **0,95** | 3,4 |
+| 10 | mfego MF | 1,08 | 7,5 | 0,71 | **0,19** |
+| 10 | SMT MFK | 1,19 | 43 | 0,59 | 11,8 |
+| 10 | scikit-learn (SF) | 1,10 | 13 | 0,67 | 1,2 |
+| 20 | BoTorch MF-GP | **0,91** | **1,2** | **0,86** | 2,3 |
+| 20 | mfego MF | 0,99 | 11,0 | 0,63 | **0,27** |
+| 20 | SMT MFK | 1,00 | 5,0 | 0,71 | 15,1 |
+| 20 | scikit-learn (SF) | 1,08 | 189 | 0,64 | 1,1 |
+| 40 | BoTorch MF-GP | **0,83** | 1,17 | **0,88** | 3,6 |
+| 40 | mfego MF | 0,91 | 1,48 | 0,86 | **0,52** |
+| 40 | SMT MFK | 1,04 | 1,80 | 0,81 | 18,3 |
+| 40 | BoTorch SF | 0,90 | **1,15** | 0,86 | 3,2 |
+| 40 | scikit-learn (SF) | 1,03 | 2,75 | 0,78 | 1,4 |
+
+\* un thread par processus (ajustements en parallèle) : les temps absolus sont plus élevés qu'en exécution isolée, les rapports
+restent valables.
+
+**ρ̂ estimé** (mfego vs SMT MFK, mêmes données) : mfego 0,87 à 1,04 sur les 15 jeux (stable, cohérent avec une corrélation
+BF/HF de 0,82) ; SMT MFK de **−4,7 à +8,9** (erratique avec si peu de points HF). mfego profile ρ par GLS à chaque évaluation de
+la vraisemblance et renormalise à ρ̂ (§5) ; SMT estime un modèle de tendance plus riche, mal identifié ici.
+
+### 19.2 Optimisation à budget de coût égal (250, dont 120 de plan d'expériences initial)
+
+| Méthode | Erreur de la meilleure obs. HF (médiane) | Erreur de la recommandation, par graine | Médiane | Temps / itération |
+|---|---|---|---|---|
+| **mfego NN-MF-EGO** | **0,33** | 0,28 · 2,26 · 0,33 · 1,79 · 0,13 | **0,33** | 0,38 s |
+| BoTorch qLogEI (SF) | 1,22 | 1,47 · 1,81 · 0,40 · 1,72 · 0,53 | 1,47 | 0,85 s |
+| BoTorch MF-KG | 2,45 | 0,57 · 2,66 · 0,74 · 3,32 · 1,23 | 1,23 | 19 s |
+| mfego SF-EGO | 1,74 | 2,76 · 1,76 · 2,02 · 1,55 · 1,85 | 1,85 | 0,15 s |
+
+(« recommandation » : f(x̂) − f* avec x̂ le minimiseur de la moyenne prédite HF, obtenu par le même optimiseur pour toutes les
+méthodes.)
+
+### 19.3 Conclusions (honnêtes)
+
+1. **En optimisation multi-fidélité, mfego NN-MF-EGO obtient les meilleures médianes** (0,33 sur les deux mesures) et
+   s'approche de l'optimum sur 3 graines sur 5 ; sur 2 graines il reste dans un bassin local de Hartmann (moyenne 0,94-0,96).
+   À coût égal, il fait mieux que les deux méthodes mono-fidélité : le multi-fidélité est rentable sur ce problème.
+2. **BoTorch MF-KG** choisit la basse fidélité dans ≈ 90 % des itérations (comme mfego sur le protocole à 3 niveaux, §10.5),
+   recommande un bon point sur 2 graines, mais coûte **19 s par itération (≈ 50× mfego)**.
+3. **En mono-fidélité, BoTorch qLogEI fait mieux que mfego SF-EGO** (1,22 contre 1,74) : optimisation de l'acquisition par
+   multi-départs à gradient et priors sur les hyperparamètres.
+4. **Surrogates** : **BoTorch MF-GP est le plus précis et surtout le mieux calibré** ; mfego MF est le deuxième modèle
+   multi-fidélité (meilleur que SMT MFK, même théorie) mais **trop confiant avec peu de points** (couverture 0,63-0,71 pour
+   n_HF ≤ 20), conséquence du maximum de vraisemblance sans prior. Avec 40 points HF, l'écart de calibration se réduit
+   (0,86 contre 0,88).
+5. **Vitesse** : mfego est le plus rapide à l'ajustement (×3 à ×60 selon le concurrent) et par itération.
+
+**Piste d'amélioration principale issue du benchmark** : ajouter des priors faibles (estimation MAP) sur les longueurs de
+corrélation et une borne basse *relative* du bruit, à la manière de BoTorch, pour corriger la surconfiance de mfego à petit n
+(§16).
+
+## 20. Passerelle mfego ↔ bdToolbox pour l'optimisation de foils (P1)
+
+**Constat préalable** (exploration en lecture seule) : bdToolbox (`C:\Users\SIM\Outils - banulsdesign\bdToolbox`, Python 3.10,
+uv) contient bdSec (sections 2D, PARSEC), bdFoil (appendices 3D), bdRS (surfaces de réponse) et les exécutables
+(`soft/xfoil.exe`, `avl_3.40b.exe`). La copie à jour de bdFoil est celle de `C:\Users\SIM\Desktop\Code-Adri\bdFoil` (moteur
+« core » XFOIL/AVL propre, `NonPlanarSolver`) ; celle de `Outils` est plus ancienne. Aucune fonction ne faisait la
+correspondance entre un espace de conception normalisé et les paramètres physiques d'un foil : c'est le rôle de la passerelle.
+mfego a été vérifié dans les deux environnements Python 3.10 de bdToolbox (venv uv : 60 tests verts ; conda `bdToolbox` :
+numpy 1.23, scipy 1.14, NeuralFoil 0.2.3).
+
+**Architecture** (`pipelines/bdtoolbox_foil/`, schéma `charts/bdtoolbox_pipeline.svg`, documentation `pipelines/README.md`) :
+
+| Module | Rôle |
+|---|---|
+| `bridge.py` | localisation de bdFoil / bdToolbox / exécutables (configuration > `MFEGO_BDFOIL_ROOT`, `MFEGO_BDTOOLBOX_ROOT`, `BDFOIL_SOFT` > défauts), `sys.path`, imports paresseux (`bdFoil.Code.core`, `bdSec.Code.section`, NeuralFoil) avec messages explicites |
+| `config.py` | configuration JSON validée : variables (bornes physiques), paramétrisation, niveaux (solveur, coût, options), écoulement commun à tous les niveaux, objectif, contraintes, DOE / itérations / graine / options ρ |
+| `geometry.py` | [0,1]^d → paramètres physiques ; sections NACA 4 chiffres continues (espacement cosinus), Kulfan/CST (aerosandbox), **PARSEC via bdSec `SectionParsec`** ; épaisseur maximale ; écriture du `.xf` |
+| `solvers.py` | 2D : `NeuralFoilBackend` (polaire vectorisée, tout `model_size`), `XfoilCoreBackend` (**bdFoil core `run_polar`**, re-panelling, dossier de travail court) ; 3D (gabarits) : `NpLltBackend` (`NonPlanarLiftingLine`), `AvlCoreBackend` (`campaign.run_case`) |
+| `objectives.py` | C_d à C_l cible sur la branche monotone de C_l (même définition que `forces.monotone_branch`, mais **NaN hors branche** au lieu de borner silencieusement comme `forces.at_cl`) ; finesse maximale ; coefficient (3D) |
+| `simulator.py` | `BdToolboxFoilSimulator(BaseSimulator)` : contrat mfego (valeur, métriques JSON), **NaN en cas d'échec** (non-convergence XFOIL, C_l cible inatteignable, contrainte violée) → point en échec (R4) |
+| `run.py` | `python -m pipelines.bdtoolbox_foil.run --config …` : dossier de run horodaté (log + temps total + temps par niveau), DOE, NN-MF-EGO (ρ calculé), **vérification finale de l'optimum du surrogate au niveau le plus fidèle**, export, `results.json` (meilleur design en unités physiques), figures ; `--calibrate-costs N` mesure le temps par niveau |
+
+**Configurations fournies** (`pipelines/configs/`) : `section2d_naca_3levels.json` (NeuralFoil xxsmall → xxxlarge → XFOIL),
+`section2d_kulfan_neuralfoil.json`, `section2d_parsec_xfoil.json`, `foil3d_npllt_avl_template.json` (gabarit 3D).
+
+**Vérifications** : sur une même section NACA (3 % / 0,4 / 12 %), C_d à C_l = 0,5 : NeuralFoil xxsmall 0,01303, xxxlarge
+0,01305, XFOIL 0,01291 ; Kulfan et PARSEC (bdSec) évalués par NeuralFoil et XFOIL. Calibration des coûts (`--calibrate-costs 6`,
+environnement conda `bdToolbox`) : 0,009 s / 0,08 s / 1,8 s par polaire → **coûts relatifs 1 : 6 : 140** reportés dans la
+configuration.
+
+**Run réel** (`section2d_naca_3levels.json`, 3 variables, DOE 24/12/6, 60 itérations, environnement conda `bdToolbox`) :
+**43 s au total**, 59 / 35 / 8 points par niveau, ρ̂ = 1,005 et 1,000, aucun échec. Meilleur design XFOIL : **C_d = 0,011693**
+à C_l = 0,5 (cambrure 1,97 %, position 0,45, épaisseur 8 % = borne basse). L'optimum du surrogate, vérifié par XFOIL en fin
+de run : C_d = 0,011700 pour une prédiction de 0,011670 (**écart 0,26 %**). Avec 30 itérations seulement, le mérite n'avait
+choisi aucun point XFOIL (rapport de coûts 140, cf. §10.5) : la vérification finale (`verify_best`, activée par défaut) a été
+ajoutée pour cette raison.
+
+**Gabarits 3D** : signatures alignées sur `NonPlanarLiftingLine(...)`, `solve_lifting_line()`, `get_bdfoil_coefficients()` et
+`campaign.run_case(planform, polars, Attitude, Settings)` ; il reste à fournir une fonction de génération du planform à partir
+des variables (format CSV bdGeometry), par exemple adaptée de `foil_family_intensSY.py` (`arc_geometry`, `_build_arrays`) sans
+importer l'ancien `foil.py`, et un équilibrage sur une portance cible (recherche de racine sur le rake). bdToolbox et bdFoil ne
+sont jamais modifiés. Tests : `tests/test_pipeline_bdtoolbox.py` (17 tests : configurations, géométrie, objectifs, simulateur
+et run complet avec solveurs factices, gabarit 3D, et un test « slow » sur les vrais NeuralFoil et XFOIL).
+
+## 21. Journal des modifications de l'étape 2 (par catégorie)
+
+### Théorie
+* **T1c — ρ toujours calculé.** · *`MultifidelityModel.__init__/fit` (`estimate_rho=True`, `min_points_rho=None`), `main.py`* ·
+  **Origine** : demande de l'utilisateur, conforme à Sacher Éq. 15 / Algorithme 1 et Le Gratiet Éq. 4.10 (§10.4). ·
+  **Effet** : ρ₍ₗ₋₁₎ est estimé à chaque ajustement pour tous les niveaux l ≥ 2. Forrester `main.py` : ρ̂ = 2,009 (vrai 2) ;
+  hydrofoil : ρ̂ = 0,92 et meilleur C_d 0,0138986 (référence 0,0138978) ; avec très peu de points HF, ρ̂ est instable (étude §10).
+
+### Logs et temps (L)
+* **L1 — dossiers de run horodatés et log à la manière de bdFoil.** · *`src/run_utils.py` (nouveau), `mfego/main.py`, les deux
+  exemples, runner de la passerelle, `.gitignore`* · **Origine** : demande de l'utilisateur, convention de
+  `bdFoil/NonPlanarSolver/main.py`. · **Effet** : un dossier `runs/<MMDD_HHMMSS>/` par run, log UTF-8, temps total de calcul
+  écrit même en cas d'échec ; plus d'écrasement des sorties.
+* **L2 — temps par phase.** · *`EGOOptimizer.timings`, `simulation_times`, `summary()`* · **Origine** : demande « temps de
+  calcul » ; utile pour régler les coûts. · **Effet** : le résumé donne le temps d'ajustement, de recherche, de simulation et le
+  temps moyen par niveau.
+
+### Analyse et benchmark
+* **A1 — explication des gains de vitesse.** · *`analysis/scripts/speedup_breakdown.py`, §9* · **Effet** : cascade mesurée
+  (46,4 s → 0,69 s, ×67) et micro-benchmarks par mécanisme (×109 covariance, ×10 factorisations, ×12 prédiction, ×79 mérite).
+* **B1 — benchmark Hartmann.** · *`benchmarks/bench_lib.py`, `benchmarks/hartmann_benchmark.ipynb`, `requirements-benchmark.txt`,
+  `tests/test_benchmark_lib.py`* · **Effet** : comparaison reproductible avec scikit-learn, SMT et BoTorch (§19), dans un venv
+  dédié `.venv-benchmark` (noyau Jupyter `mfego-benchmark` installé *dans* le venv, aucun environnement existant modifié).
+
+### Passerelle
+* **P1 — passerelle bdToolbox.** · *`pipelines/` (nouveau), `charts/bdtoolbox_pipeline.mmd`, `tests/test_pipeline_bdtoolbox.py`* ·
+  **Effet** : optimisation multi-fidélité de sections 2D avec NeuralFoil et le XFOIL de bdFoil core, opérationnelle et testée ;
+  gabarits 3D (§20).
+
+### Tests
+* **94 tests pytest** au total (63 à l'étape 1 ; + `test_run_utils.py`, `test_pipeline_bdtoolbox.py`, `test_benchmark_lib.py`,
+  test de ρ par défaut). Résultats : Anaconda Python 3.13 : 92 réussis, 2 ignorés (SMT/BoTorch absents) ; `.venv-benchmark` :
+  90 réussis, 4 ignorés (NeuralFoil absent) ; venv uv de bdToolbox (Python 3.10, hors tests « slow ») : 88 réussis, 4 ignorés.
+  Un défaut d'isolation découvert à cette occasion a été corrigé : `bench_lib` modifiait le niveau du logger `src` à l'import,
+  ce qui masquait les messages INFO des autres tests.
+
+### Documentation et dépôt
+* **D3** — README (ρ, `runs/`, logs, benchmark, passerelle, structure), `pipelines/README.md`, diagrammes mis à jour
+  (`run_utils` dans `mfego_structure.mmd`, nouveau `bdtoolbox_pipeline.mmd`, point déjà évalué → point aléatoire dans
+  `mfego_ego_loop.mmd`).
+* **G1** — `.gitignore` (`**/runs/`, anciennes sorties, `.venv-benchmark/`), anciennes sorties et `.pyc` retirés de l'index.
+
+## 22. Exemples relancés à l'étape 2 (ρ calculé, dossiers de run)
+
+| Exemple | Réglages | Résultat | Temps total |
+|---|---|---|---|
+| Forrester `mfego/main.py` | 10 BF / 4 HF, 10 it., coûts 1/10 | meilleure obs. HF −6,0164 (optimum −6,0207), coût 123, ρ̂ = 2,009 | 2,7 s |
+| Hartmann `example/hartmann_6d` | **réglages de l'utilisateur** : L = 3, coûts 1/5/10, DOE 20/10/5, 30 it. | meilleure obs. HF −3,1949 (minimum global −3,3224 ; bassin du second minimum local ≈ −3,20) | 8,4 s |
+| Hydrofoil `example/hydrofoil_optim` | 6 BF / 2 HF, 40 it., coûts 1/1 | C_d = 0,0138986, à 8·10⁻⁷ de la référence 0,0138978 ; ρ̂ = 0,92 | 9,2 s |
+| Passerelle NACA 3 niveaux | DOE 24/12/6, 60 it., coûts 1/6/140 | C_d XFOIL = 0,011693 ; optimum vérifié 0,011700 (prédit 0,011670) | 43 s |

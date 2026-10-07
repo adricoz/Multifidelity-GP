@@ -12,7 +12,6 @@ with scikit-learn, SMT and BoTorch on the multi-fidelity Hartmann 6D problem of 
 The optional libraries (smt, botorch) are imported lazily: the mfego and scikit-learn parts work
 without them (see requirements-benchmark.txt for the dedicated environment).
 """
-import logging
 import sys
 import time
 from dataclasses import dataclass, field
@@ -34,7 +33,6 @@ from src.optimizer import EGOOptimizer  # noqa: E402
 from src.simulator import BaseSimulator  # noqa: E402
 from src.surrogate_models import MultifidelityModel  # noqa: E402
 
-logging.getLogger("src").setLevel(logging.WARNING)
 
 # 1/4 ---------------------------------------------------------------------------------------------
 # Multi-fidelity Hartmann 6D problem (Sacher et al. Eqs. 30-32)
