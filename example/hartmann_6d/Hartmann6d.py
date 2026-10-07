@@ -15,11 +15,13 @@ def Hartmann6D(x):
         Function value at the input point.
     """
     alpha = [1.0, 1.2, 3.0, 3.2]
+    # [FIX-E1] standard constants (Sacher et al. Eq. 30): A[3] was [17, 8, 0.05, 10, 14, 3.5]
+    # and P[0][3] was 1244, which moved the minimum to ~ -3.3975 (instead of -3.32237).
     A = [[10.0, 3.0, 17.0, 3.5, 1.7, 8.0],
          [0.05, 10.0, 17.0, 0.1, 8.0, 14.0],
          [3.0, 3.5, 1.7, 10.0, 17.0, 8.0],
-         [17.0, 8.0, 0.05, 10.0, 14.0, 3.5]]
-    P = [[1312, 1696, 5569, 1244, 8283, 5886],
+         [17.0, 8.0, 0.05, 10.0, 0.1, 14.0]]
+    P = [[1312, 1696, 5569, 124, 8283, 5886],
          [2329, 4135, 8307, 3736, 1004, 9991],
          [2348, 1451, 3522, 2883, 3047, 6650],
          [4047, 8828, 8732, 5743, 1091, 381]]
@@ -36,7 +38,8 @@ def Hartmann6D(x):
     # defining a multi-fidelity Hartmann approximation function
 def f_l(x, deg=6, k=1, delta=0.0):
     if deg not in [6]:
-        raise ValueError("deg must be either 2 or 6.")
+        # [FIX-E1] message consistent with the test (only the 6D function is implemented)
+        raise ValueError("deg must be 6 (only the 6D Hartmann function is implemented).")
 
     if k == np.inf or k is None:
         return Hartmann6D(x)

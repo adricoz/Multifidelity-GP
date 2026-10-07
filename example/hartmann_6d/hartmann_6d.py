@@ -24,6 +24,7 @@ from src.visualization import ModelVisualizer
 
 logging.basicConfig(
     filename='example/hartmann_6d/logfile.log',
+    filemode='w',  # [FIX-E3] one clean log per run
     level=logging.INFO,
     format=' %(levelname)s - %(message)s',
     force = True,
@@ -38,17 +39,18 @@ if __name__ == "__main__":
         A simple simulator for the Hartmann 6d function with multi-fidelity approximation.
         Subclass of BaseSimulator
         """
-        def evaluate(self, design_point: list, level: int) -> float:
+        def evaluate(self, design_point: list, level: int) -> tuple[float, dict]:
             """
             Evaluate the simulator at a given point and fidelity level.
             This is a placeholder implementation. Replace with actual simulation code.
             """
-            # Example: Eqs: (17) of the reference article.
+            # Example: Eqs: (30)-(32) of the reference article.
             # It should always deal with exections...
-            L = 2 # Number of fidelity levels
             try:
-               return evaluate_fidelity(design_point, level, L), \
-                   {"y": evaluate_fidelity(design_point, level, L)}
+               # [FIX-E1] a single evaluation (the function was evaluated twice) and the
+               # number of levels of the simulator (was hard-coded to 2 here)
+               y_value = evaluate_fidelity(design_point, level, self.num_levels)
+               return y_value, {"y": y_value}
 
             except (IndexError, TypeError, ValueError) as e:
                 logger.error( \
@@ -62,13 +64,14 @@ if __name__ == "__main__":
                (0.0, 1.0), (0.0, 1.0), (0.0, 1.0)] # 6D: Normalized
     costs = [1.0, 10.0]  # Example costs
     initial_points = [20, 10]  # Number of points for each fidelity level
+    SEED = 0  # [FIX-R1] reproducible run
 
     data = ExperimentData(bounds=bounds, costs=costs)
     simu = FunctionSimulator(num_levels=L)
-    model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel)
+    model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel, seed = SEED)
     acq = AcquisitionFunction(model=model, data=data)
     ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq, 
-                       save_state_path = "example/hartmann_6d/ego_backup.json")
+                       save_state_path = "example/hartmann_6d/ego_backup.json", seed = SEED)
 
     logger.info("Generating initial design...")
 
@@ -88,11 +91,13 @@ if __name__ == "__main__":
         data.y_dict[l] = np.array(y_values)
         data.metrics_dict[l] = metrics_list
 
-    logger.info("Initial best HF observation: %.4f", np.min(data.y_dict[L]))
+    logger.info("Initial best HF observation: %.4f", np.nanmin(data.y_dict[L]))
 
     # Launch
     _, _ = ego.run(n_iterations = 30)
-    logger.info("Final best HF observation: %.4f", np.min(data.y_dict[L]))
+    logger.info("Final best HF observation: %.4f", np.nanmin(data.y_dict[L]))
+    # [FIX-X1] self-contained surrogate file (reload with load_surrogate)
+    ego.export_surrogate("example/hartmann_6d/surrogate.json")
 
     # Visualize the results
     vizualizer = ModelVisualizer(num_levels=L, 
@@ -101,3 +106,8 @@ if __name__ == "__main__":
                                 save_path = "example/hartmann_6d/convergence_plot.png")
     vizualizer.plot_response_surface_2d(save_path = \
                                         "example/hartmann_6d/response_surface_2d.png")
+    # [FIX-X3] interactive (plotly) versions of the plots
+    vizualizer.plot_convergence_interactive(target = -3.32236801141551385541, \
+                                save_path = "example/hartmann_6d/convergence_plot.html")
+    vizualizer.plot_response_surface_2d_interactive(save_path = \
+                                        "example/hartmann_6d/response_surface_2d.html")

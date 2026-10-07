@@ -17,7 +17,7 @@ def foil_mid_fidelity(alpha, naca_string : str ="naca4412",
     - alpha: float
         Angle of attack in degrees.
     - naca_string: str
-        NACA airfoil designation (default is "naca6412").
+        NACA airfoil designation (default is "naca4412").
     - string_modelclass: str
         Model class for the neural network used in the simulation (default is "xxsmall").
     Returns:
@@ -75,6 +75,14 @@ def objective_function(airfoil_obj, target_cl, level, L):
     """
     Computes the drag coefficient for a given 
     airfoil at a specific angle of attack and fidelity level.
+
+    The angle of attack giving the target lift coefficient is always computed with the
+    highest NeuralFoil model ("xxxlarge"), for every level: all the levels are evaluated at
+    the same operating point (this is also what allows a single-fidelity test with L = 1).
+    The drag coefficient is then computed with the model of the requested level.
+
+    Returns:
+    - (cd, cl, alpha): cd is NaN if the computation failed ([FIX-E2]).
     """
     def erreur_cl(alpha_test):
         aero = nf.get_aero_from_airfoil(
@@ -90,7 +98,9 @@ def objective_function(airfoil_obj, target_cl, level, L):
     if L >= 1 and L <= len(modelclasses):
         #definition of the modelclass based on the fidelity level
         if level < L :
-            modelclass = modelclasses[int(level/L)*len(modelclasses)]
+            # [FIX-E2] level l -> l-th model (as in legacy/custom_fluid_functions.py):
+            # int(level/L)*len(modelclasses) was always 0 ("xxsmall") for every level < L
+            modelclass = modelclasses[level - 1]
         elif level == L:
             modelclass = modelclasses[-1]
         else:
@@ -120,14 +130,17 @@ def objective_function(airfoil_obj, target_cl, level, L):
         
         # filter for negative or NaN drag coefficients
         if np.isnan(cd) or cd <= 0:
-            print("Cd is NaN or negative. Returning a high penalty value.")
-            return 1e6, 0.0, alpha_perfect
+            # [FIX-E2/R4] NaN instead of a 1e6 penalty: the optimizer stores the point as a
+            # failed evaluation (excluded from the GP). A 1e6 value destroyed the surrogate.
+            print("Cd is NaN or negative. The evaluation is flagged as failed (NaN).")
+            return np.nan, np.nan, alpha_perfect
 
         return cd, cl, alpha_perfect
 
     except Exception as e:  # noqa: BLE001
         print(f"An error occurred during the aerodynamic computation: {e}")
-        return 1e6, 0.0, 0.0
+        # [FIX-E2/R4] failed evaluation (was a 1e6 penalty)
+        return np.nan, np.nan, np.nan
 
 def find_optimal_foil(alpha: float = 5.0) -> tuple[list, list, list]:
     """

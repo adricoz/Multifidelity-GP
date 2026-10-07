@@ -14,6 +14,8 @@ from src.visualization import ModelVisualizer
 
 logging.basicConfig(
     filename='logfile.log',
+    # [FIX-E3] one clean log per run (the default 'a' mode mixed several runs in one file)
+    filemode='w',
     level=logging.INFO,
     format=' %(levelname)s - %(message)s',
     force = True,
@@ -28,7 +30,7 @@ if __name__ == "__main__":
         A simple simulator that evaluates a quadratic function with noise.
         Subclass of BaseSimulator
         """
-        def evaluate(self, design_point: list, level: int) -> float:
+        def evaluate(self, design_point: list, level: int) -> tuple[float, dict]:
             """
             Evaluate the simulator at a given point and fidelity level.
             This is a placeholder implementation. Replace with actual simulation code.
@@ -36,17 +38,17 @@ if __name__ == "__main__":
             # Example: Eqs: (17) of the reference article.
             # It should always deal with exections...
             try:
+                # [FIX-E3] the level is checked first (a level <= 0 used to return None)
+                if not isinstance(level, (int, np.integer)):
+                    raise TypeError(f"Fidelity level must be an integer, got {type(level)}.")
+                if level < 1 or level > 2:
+                    raise ValueError(f"Invalid fidelity level: {level}. Must be 1 or 2.")
                 x = design_point[0]
                 f_1 = 0.5 *(6 * x - 2)**2 * np.sin(12 * x - 4) + 10 * (x - 1)
                 if level == 1:
                     return f_1, {"y": f_1}
-                if level == 2:
-                    f2 = 2 * f_1 - 20* (x -1)
-                    return f2, {"y": f2}
-                if level > 2:
-                    raise ValueError(f"Invalid fidelity level: {level}. Must be 1 or 2.")
-                if not isinstance(level, int):
-                    raise TypeError(f"Fidelity level must be an integer, got {type(level)}.")
+                f2 = 2 * f_1 - 20* (x -1)
+                return f2, {"y": f2}
 
             except (IndexError, TypeError, ValueError) as e:
                 logger.error( \
@@ -59,12 +61,13 @@ if __name__ == "__main__":
     bounds = [(0.0, 1.0)] # 1D: Normalized
     costs = [1.0, 10.0]  # Example costs
     initial_points = [10, 4]  # Number of points for each fidelity level
+    SEED = 0  # [FIX-R1] reproducible run
 
     data = ExperimentData(bounds=bounds, costs=costs)
     simu = FunctionSimulator(num_levels=L)
-    model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel)
+    model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel, seed = SEED)
     acq = AcquisitionFunction(model=model, data=data)
-    ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq)
+    ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq, seed = SEED)
 
     logger.info("Generating initial design...")
 
@@ -84,13 +87,18 @@ if __name__ == "__main__":
         data.y_dict[l] = np.array(y_values)
         data.metrics_dict[l] = metrics_list
 
-    logger.info("Initial best HF observation: %.4f", np.min(data.y_dict[L]))
+    logger.info("Initial best HF observation: %.4f", np.nanmin(data.y_dict[L]))
 
     # Launch
     _, _ = ego.run(n_iterations = 10)
-    logger.info("Final best HF observation: %.4f", np.min(data.y_dict[L]))
+    logger.info("Final best HF observation: %.4f", np.nanmin(data.y_dict[L]))
+    # [FIX-X1] self-contained surrogate file, reload with src.surrogate_models.load_surrogate
+    ego.export_surrogate("surrogate.json")
 
     # Visualize the results
     vizualizer = ModelVisualizer("ego_backup.json", num_levels=L)
     vizualizer.plot_convergence(target = -6.020740055767082786553)
     vizualizer.plot_response_1d()
+    # [FIX-X3] interactive (plotly) versions of the plots
+    vizualizer.plot_convergence_interactive(target = -6.020740055767082786553)
+    vizualizer.plot_response_1d_interactive()
