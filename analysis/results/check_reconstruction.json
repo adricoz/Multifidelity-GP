@@ -1,0 +1,40 @@
+{
+  "initial": {
+    "points_in_json": [
+      12,
+      6
+    ],
+    "points_used_by_the_trained_model": [
+      12,
+      5
+    ],
+    "max_abs_diff_rebuilt_vs_trained (rel. to std f)": 1.8922005564234425,
+    "rmse_rebuilt_vs_truth": 1.2102871564539066,
+    "rmse_trained_vs_truth": 2.19918850845682,
+    "scatter_2d": {
+      "n_points_plotted": 3,
+      "n_points": 9,
+      "plotted_x_equals_column_0": false,
+      "plotted_y_equals_column_1": false
+    }
+  },
+  "current": {
+    "points_in_json": [
+      10,
+      8
+    ],
+    "points_used_by_the_trained_model": [
+      10,
+      8
+    ],
+    "max_abs_diff_rebuilt_vs_trained (rel. to std f)": 0.0,
+    "rmse_rebuilt_vs_truth": 0.4934516621069635,
+    "rmse_trained_vs_truth": 0.4934516621069635,
+    "scatter_2d": {
+      "n_points_plotted": 9,
+      "n_points": 9,
+      "plotted_x_equals_column_0": true,
+      "plotted_y_equals_column_1": true
+    }
+  }
+}

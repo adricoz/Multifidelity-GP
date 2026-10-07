@@ -1,0 +1,258 @@
+{
+  "forrester (main JSON, 14 LF / 10 HF)": {
+    "initial": {
+      "levels": [
+        {
+          "values": {
+            "l_1": 0.18057239996527408,
+            "signal_variance": 45.31906332244593,
+            "bias_variance": 0.9833767123007596,
+            "noise": 1e-08
+          },
+          "active": [
+            "noise = lower bound"
+          ]
+        },
+        {
+          "values": {
+            "l_1": 0.1994275928893143,
+            "signal_variance": 44.9296739352136,
+            "bias_variance": 1.0,
+            "noise": 1e-08
+          },
+          "active": [
+            "bias_variance = upper bound",
+            "noise = lower bound"
+          ]
+        }
+      ],
+      "rhos": [
+        1.0
+      ],
+      "scale_equivariance_error": {
+        "0.001": 1.0712309599062269,
+        "1000.0": 1.9551904488658254
+      },
+      "rmse_rel": 0.0640527727250977,
+      "coverage_95": 0.796
+    },
+    "current": {
+      "levels": [
+        {
+          "values": {
+            "l_1": 0.18938252515101742,
+            "signal_variance": 3.011034360260554,
+            "bias_variance": 9.993582906352809e-05,
+            "noise": 9.999999999999982e-09
+          },
+          "active": [
+            "noise = lower bound"
+          ]
+        },
+        {
+          "values": {
+            "l_1": 0.19914457290532475,
+            "signal_variance": 2.67251259933595,
+            "bias_variance": 0.1683214973818011,
+            "noise": 9.999999999999982e-09
+          },
+          "active": [
+            "noise = lower bound"
+          ]
+        }
+      ],
+      "rhos": [
+        1.0
+      ],
+      "scale_equivariance_error": {
+        "0.001": 1.1469985850872324e-06,
+        "1000.0": 1.142172189907842e-06
+      },
+      "rmse_rel": 0.07307830521082306,
+      "coverage_95": 0.85
+    }
+  },
+  "hydrofoil (main JSON, 25 LF / 23 HF)": {
+    "initial": {
+      "levels": [
+        {
+          "values": {
+            "l_1": 4.917897617379008,
+            "l_2": 4.917898462977004,
+            "signal_variance": 0.020176606654645553,
+            "bias_variance": 0.008733956445538095,
+            "noise": 1e-08
+          },
+          "active": [
+            "noise = lower bound"
+          ]
+        },
+        {
+          "values": {
+            "l_1": 4.999999999328486,
+            "l_2": 1.4184186071484064,
+            "signal_variance": 0.001,
+            "bias_variance": 1e-06,
+            "noise": 1e-08
+          },
+          "active": [
+            "l_1 = upper bound",
+            "signal_variance = lower bound",
+            "bias_variance = lower bound",
+            "noise = lower bound"
+          ]
+        }
+      ],
+      "rhos": [
+        1.0
+      ],
+      "scale_equivariance_error": {
+        "0.001": 0.2256795995383228,
+        "1000.0": 2.4572699142817678
+      }
+    },
+    "current": {
+      "levels": [
+        {
+          "values": {
+            "l_1": 0.6154547973711704,
+            "l_2": 0.6640157982956452,
+            "signal_variance": 5.484212449633996,
+            "bias_variance": 0.00010036970894320427,
+            "noise": 9.999999999999982e-09
+          },
+          "active": [
+            "noise = lower bound"
+          ]
+        },
+        {
+          "values": {
+            "l_1": 0.14127167510782526,
+            "l_2": 0.3482176743293164,
+            "signal_variance": 2.2623890723687357,
+            "bias_variance": 9.981182382846887e-05,
+            "noise": 9.999999999999982e-09
+          },
+          "active": [
+            "noise = lower bound"
+          ]
+        }
+      ],
+      "rhos": [
+        1.0
+      ],
+      "scale_equivariance_error": {
+        "0.001": 3.974575696699746e-06,
+        "1000.0": 1.775889459832489e-05
+      }
+    }
+  },
+  "hartmann (20 LF / 15 HF, delta = 0.05)": {
+    "initial": {
+      "levels": [
+        {
+          "values": {
+            "l_1": 5.0,
+            "l_2": 5.0,
+            "l_3": 5.0,
+            "l_4": 5.0,
+            "l_5": 5.0,
+            "l_6": 5.0,
+            "signal_variance": 0.001,
+            "bias_variance": 1.0,
+            "noise": 1e-05
+          },
+          "active": [
+            "l_1 = upper bound",
+            "l_2 = upper bound",
+            "l_3 = upper bound",
+            "l_4 = upper bound",
+            "l_5 = upper bound",
+            "l_6 = upper bound",
+            "signal_variance = lower bound",
+            "bias_variance = upper bound",
+            "noise = upper bound"
+          ]
+        },
+        {
+          "values": {
+            "l_1": 3.217842913673933,
+            "l_2": 1.6717896217017936,
+            "l_3": 1.0636075649494492,
+            "l_4": 0.42632740749085596,
+            "l_5": 5.0,
+            "l_6": 5.0,
+            "signal_variance": 0.15664435301141852,
+            "bias_variance": 1.0,
+            "noise": 1e-08
+          },
+          "active": [
+            "l_5 = upper bound",
+            "l_6 = upper bound",
+            "bias_variance = upper bound",
+            "noise = lower bound"
+          ]
+        }
+      ],
+      "rhos": [
+        1.0
+      ],
+      "scale_equivariance_error": {
+        "0.001": 2.542429791235721,
+        "1000.0": 4.132780357242317
+      },
+      "rmse_rel": 1.087863357062827,
+      "coverage_95": 0.41
+    },
+    "current": {
+      "levels": [
+        {
+          "values": {
+            "l_1": 0.1762986364713133,
+            "l_2": 10.000000000000002,
+            "l_3": 0.6018054248735483,
+            "l_4": 10.000000000000002,
+            "l_5": 10.000000000000002,
+            "l_6": 0.21479664190449896,
+            "signal_variance": 1.2317166473444252,
+            "bias_variance": 9.700933289427217e-05,
+            "noise": 9.997278794834351e-07
+          },
+          "active": [
+            "l_2 = upper bound",
+            "l_4 = upper bound",
+            "l_5 = upper bound"
+          ]
+        },
+        {
+          "values": {
+            "l_1": 10.000000000000002,
+            "l_2": 10.000000000000002,
+            "l_3": 0.22716155204841185,
+            "l_4": 0.1807077980397638,
+            "l_5": 10.000000000000002,
+            "l_6": 10.000000000000002,
+            "signal_variance": 1.0182203012237614,
+            "bias_variance": 9.948305215662462e-05,
+            "noise": 9.997600531719375e-07
+          },
+          "active": [
+            "l_1 = upper bound",
+            "l_2 = upper bound",
+            "l_5 = upper bound",
+            "l_6 = upper bound"
+          ]
+        }
+      ],
+      "rhos": [
+        1.0
+      ],
+      "scale_equivariance_error": {
+        "0.001": 1.1573812145924495e-13,
+        "1000.0": 1.419953649157289e-13
+      },
+      "rmse_rel": 1.0961283637901924,
+      "coverage_95": 0.376
+    }
+  }
+}

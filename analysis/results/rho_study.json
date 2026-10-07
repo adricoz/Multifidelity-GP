@@ -1,0 +1,1383 @@
+{
+  "accuracy_summary": {
+    "forrester | n_hf=3 | fixed rho = 1": {
+      "rmse_rel": 0.6066767949768653,
+      "nlpd": 11.901859847929842,
+      "coverage": 0.554,
+      "rho": 1.0
+    },
+    "forrester | n_hf=3 | profiled rho": {
+      "rmse_rel": 0.6888019556777314,
+      "nlpd": 20.726602488034906,
+      "coverage": 0.506,
+      "rho": 0.7500220355295961
+    },
+    "forrester | n_hf=3 | hybrid (d + 4)": {
+      "rmse_rel": 0.6066767949768653,
+      "nlpd": 11.901859847929842,
+      "coverage": 0.554,
+      "rho": 1.0
+    },
+    "forrester | n_hf=4 | fixed rho = 1": {
+      "rmse_rel": 0.6628248590968695,
+      "nlpd": 33.6563827144153,
+      "coverage": 0.5665,
+      "rho": 1.0
+    },
+    "forrester | n_hf=4 | profiled rho": {
+      "rmse_rel": 0.5715035533632703,
+      "nlpd": 20.613103982748385,
+      "coverage": 0.603,
+      "rho": 1.0263143669024999
+    },
+    "forrester | n_hf=4 | hybrid (d + 4)": {
+      "rmse_rel": 0.6628248590968695,
+      "nlpd": 33.6563827144153,
+      "coverage": 0.5665,
+      "rho": 1.0
+    },
+    "forrester | n_hf=5 | fixed rho = 1": {
+      "rmse_rel": 0.31286249868806476,
+      "nlpd": 1.665013874142797,
+      "coverage": 0.8789999999999999,
+      "rho": 1.0
+    },
+    "forrester | n_hf=5 | profiled rho": {
+      "rmse_rel": 0.3837007384412733,
+      "nlpd": 2.219615551449641,
+      "coverage": 0.774,
+      "rho": 1.2209000641093568
+    },
+    "forrester | n_hf=5 | hybrid (d + 4)": {
+      "rmse_rel": 0.3837007384412733,
+      "nlpd": 2.219615551449641,
+      "coverage": 0.774,
+      "rho": 1.2209000641093568
+    },
+    "forrester | n_hf=6 | fixed rho = 1": {
+      "rmse_rel": 0.26032475317089254,
+      "nlpd": 1.0452287644261786,
+      "coverage": 0.917,
+      "rho": 1.0
+    },
+    "forrester | n_hf=6 | profiled rho": {
+      "rmse_rel": 0.13301164322472067,
+      "nlpd": 7.285569143632676,
+      "coverage": 0.7645000000000001,
+      "rho": 1.751575463569727
+    },
+    "forrester | n_hf=6 | hybrid (d + 4)": {
+      "rmse_rel": 0.13301164322472067,
+      "nlpd": 7.285569143632676,
+      "coverage": 0.7645000000000001,
+      "rho": 1.751575463569727
+    },
+    "forrester | n_hf=8 | fixed rho = 1": {
+      "rmse_rel": 0.07898502888885159,
+      "nlpd": -0.982432887500746,
+      "coverage": 0.9720000000000001,
+      "rho": 1.0
+    },
+    "forrester | n_hf=8 | profiled rho": {
+      "rmse_rel": 0.14439314476188847,
+      "nlpd": 1.6628511968150144,
+      "coverage": 0.9265000000000001,
+      "rho": 1.7788728322967333
+    },
+    "forrester | n_hf=8 | hybrid (d + 4)": {
+      "rmse_rel": 0.14439314476188847,
+      "nlpd": 1.6628511968150144,
+      "coverage": 0.9265000000000001,
+      "rho": 1.7788728322967333
+    },
+    "forrester | n_hf=10 | fixed rho = 1": {
+      "rmse_rel": 0.05532479205899475,
+      "nlpd": -0.9615932511224532,
+      "coverage": 0.9359999999999999,
+      "rho": 1.0
+    },
+    "forrester | n_hf=10 | profiled rho": {
+      "rmse_rel": 0.04059409297496605,
+      "nlpd": -0.8574805725465818,
+      "coverage": 0.915,
+      "rho": 1.9813493101936015
+    },
+    "forrester | n_hf=10 | hybrid (d + 4)": {
+      "rmse_rel": 0.04059409297496605,
+      "nlpd": -0.8574805725465818,
+      "coverage": 0.915,
+      "rho": 1.9813493101936015
+    },
+    "hartmann2 delta=0.0 | n_hf=6 | fixed rho = 1": {
+      "rmse_rel": 1.063609298737111,
+      "nlpd": 56.61847673357651,
+      "coverage": 0.4779,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.0 | n_hf=6 | profiled rho": {
+      "rmse_rel": 1.0635617976361178,
+      "nlpd": 57.59397824657191,
+      "coverage": 0.47700000000000004,
+      "rho": 1.003397734005869
+    },
+    "hartmann2 delta=0.0 | n_hf=6 | hybrid (d + 4)": {
+      "rmse_rel": 1.063609298737111,
+      "nlpd": 56.61847673357651,
+      "coverage": 0.4779,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.0 | n_hf=8 | fixed rho = 1": {
+      "rmse_rel": 1.0919157962064772,
+      "nlpd": 50.636262574291536,
+      "coverage": 0.5635,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.0 | n_hf=8 | profiled rho": {
+      "rmse_rel": 1.0937200052083815,
+      "nlpd": 51.2854817293293,
+      "coverage": 0.5426,
+      "rho": 0.9744147685605498
+    },
+    "hartmann2 delta=0.0 | n_hf=8 | hybrid (d + 4)": {
+      "rmse_rel": 1.0919157962064772,
+      "nlpd": 50.636262574291536,
+      "coverage": 0.5635,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.0 | n_hf=10 | fixed rho = 1": {
+      "rmse_rel": 1.3482935489081924,
+      "nlpd": 29.695047659956543,
+      "coverage": 0.6712999999999999,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.0 | n_hf=10 | profiled rho": {
+      "rmse_rel": 1.3682031362113625,
+      "nlpd": 32.79482648490228,
+      "coverage": 0.6396,
+      "rho": 1.038276372883035
+    },
+    "hartmann2 delta=0.0 | n_hf=10 | hybrid (d + 4)": {
+      "rmse_rel": 1.3682031362113625,
+      "nlpd": 32.79482648490228,
+      "coverage": 0.6396,
+      "rho": 1.038276372883035
+    },
+    "hartmann2 delta=0.0 | n_hf=15 | fixed rho = 1": {
+      "rmse_rel": 1.0024360897032127,
+      "nlpd": 12.000021597274607,
+      "coverage": 0.7126,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.0 | n_hf=15 | profiled rho": {
+      "rmse_rel": 1.0305041711977934,
+      "nlpd": 19.843844853526484,
+      "coverage": 0.6321999999999999,
+      "rho": 0.9688713531529103
+    },
+    "hartmann2 delta=0.0 | n_hf=15 | hybrid (d + 4)": {
+      "rmse_rel": 1.0305041711977934,
+      "nlpd": 19.843844853526484,
+      "coverage": 0.6321999999999999,
+      "rho": 0.9688713531529103
+    },
+    "hartmann2 delta=0.0 | n_hf=20 | fixed rho = 1": {
+      "rmse_rel": 1.1087931455262046,
+      "nlpd": 5.776693045629724,
+      "coverage": 0.7445999999999999,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.0 | n_hf=20 | profiled rho": {
+      "rmse_rel": 1.0811630223626925,
+      "nlpd": 3.24664125533585,
+      "coverage": 0.7872,
+      "rho": 0.9938310602633773
+    },
+    "hartmann2 delta=0.0 | n_hf=20 | hybrid (d + 4)": {
+      "rmse_rel": 1.0811630223626925,
+      "nlpd": 3.24664125533585,
+      "coverage": 0.7872,
+      "rho": 0.9938310602633773
+    },
+    "hartmann2 delta=0.0 | n_hf=30 | fixed rho = 1": {
+      "rmse_rel": 1.1138639761619689,
+      "nlpd": 1.7572095748245105,
+      "coverage": 0.8452999999999999,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.0 | n_hf=30 | profiled rho": {
+      "rmse_rel": 1.0872183895062209,
+      "nlpd": 1.6946038242504013,
+      "coverage": 0.8513999999999999,
+      "rho": 0.9835353876139072
+    },
+    "hartmann2 delta=0.0 | n_hf=30 | hybrid (d + 4)": {
+      "rmse_rel": 1.0872183895062209,
+      "nlpd": 1.6946038242504013,
+      "coverage": 0.8513999999999999,
+      "rho": 0.9835353876139072
+    },
+    "hartmann2 delta=0.05 | n_hf=6 | fixed rho = 1": {
+      "rmse_rel": 1.0593596243928263,
+      "nlpd": 140.74838667455361,
+      "coverage": 0.44350000000000006,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.05 | n_hf=6 | profiled rho": {
+      "rmse_rel": 1.0589432216629286,
+      "nlpd": 141.12575964584934,
+      "coverage": 0.4414999999999999,
+      "rho": 1.0047093004959202
+    },
+    "hartmann2 delta=0.05 | n_hf=6 | hybrid (d + 4)": {
+      "rmse_rel": 1.0593596243928263,
+      "nlpd": 140.74838667455361,
+      "coverage": 0.44350000000000006,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.05 | n_hf=8 | fixed rho = 1": {
+      "rmse_rel": 1.0845839742310488,
+      "nlpd": 67.52760246462954,
+      "coverage": 0.5513,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.05 | n_hf=8 | profiled rho": {
+      "rmse_rel": 1.0825897341077622,
+      "nlpd": 68.88165287335565,
+      "coverage": 0.5469999999999999,
+      "rho": 0.9793636463474588
+    },
+    "hartmann2 delta=0.05 | n_hf=8 | hybrid (d + 4)": {
+      "rmse_rel": 1.0845839742310488,
+      "nlpd": 67.52760246462954,
+      "coverage": 0.5513,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.05 | n_hf=10 | fixed rho = 1": {
+      "rmse_rel": 1.3702547268861252,
+      "nlpd": 35.379621497135375,
+      "coverage": 0.6383,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.05 | n_hf=10 | profiled rho": {
+      "rmse_rel": 1.3800264637214619,
+      "nlpd": 37.862844181830845,
+      "coverage": 0.6235999999999999,
+      "rho": 1.0407000309834953
+    },
+    "hartmann2 delta=0.05 | n_hf=10 | hybrid (d + 4)": {
+      "rmse_rel": 1.3800264637214619,
+      "nlpd": 37.862844181830845,
+      "coverage": 0.6235999999999999,
+      "rho": 1.0407000309834953
+    },
+    "hartmann2 delta=0.05 | n_hf=15 | fixed rho = 1": {
+      "rmse_rel": 1.0386336975748027,
+      "nlpd": 22.253779653938597,
+      "coverage": 0.6151,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.05 | n_hf=15 | profiled rho": {
+      "rmse_rel": 1.0395239776718495,
+      "nlpd": 22.738555750268926,
+      "coverage": 0.6062,
+      "rho": 0.9615771587389561
+    },
+    "hartmann2 delta=0.05 | n_hf=15 | hybrid (d + 4)": {
+      "rmse_rel": 1.0395239776718495,
+      "nlpd": 22.738555750268926,
+      "coverage": 0.6062,
+      "rho": 0.9615771587389561
+    },
+    "hartmann2 delta=0.05 | n_hf=20 | fixed rho = 1": {
+      "rmse_rel": 1.1009965601753828,
+      "nlpd": 3.3055584016360244,
+      "coverage": 0.7833,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.05 | n_hf=20 | profiled rho": {
+      "rmse_rel": 1.1054099796634964,
+      "nlpd": 3.4465305447207206,
+      "coverage": 0.7799000000000001,
+      "rho": 0.9925715340166947
+    },
+    "hartmann2 delta=0.05 | n_hf=20 | hybrid (d + 4)": {
+      "rmse_rel": 1.1054099796634964,
+      "nlpd": 3.4465305447207206,
+      "coverage": 0.7799000000000001,
+      "rho": 0.9925715340166947
+    },
+    "hartmann2 delta=0.05 | n_hf=30 | fixed rho = 1": {
+      "rmse_rel": 1.0950812692457355,
+      "nlpd": 1.6725868942084887,
+      "coverage": 0.8498000000000001,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.05 | n_hf=30 | profiled rho": {
+      "rmse_rel": 1.0680462039819352,
+      "nlpd": 1.5500593341381648,
+      "coverage": 0.8565000000000002,
+      "rho": 0.9708879149384557
+    },
+    "hartmann2 delta=0.05 | n_hf=30 | hybrid (d + 4)": {
+      "rmse_rel": 1.0680462039819352,
+      "nlpd": 1.5500593341381648,
+      "coverage": 0.8565000000000002,
+      "rho": 0.9708879149384557
+    },
+    "hartmann2 delta=0.1 | n_hf=6 | fixed rho = 1": {
+      "rmse_rel": 1.053581415809814,
+      "nlpd": 106.59577889523507,
+      "coverage": 0.45119999999999993,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.1 | n_hf=6 | profiled rho": {
+      "rmse_rel": 1.0535240875177376,
+      "nlpd": 114.01590648579342,
+      "coverage": 0.44589999999999996,
+      "rho": 1.0040569182204648
+    },
+    "hartmann2 delta=0.1 | n_hf=6 | hybrid (d + 4)": {
+      "rmse_rel": 1.053581415809814,
+      "nlpd": 106.59577889523507,
+      "coverage": 0.45119999999999993,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.1 | n_hf=8 | fixed rho = 1": {
+      "rmse_rel": 1.089531345440844,
+      "nlpd": 42.878172502822515,
+      "coverage": 0.5539,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.1 | n_hf=8 | profiled rho": {
+      "rmse_rel": 1.0892677961141297,
+      "nlpd": 44.86284711603399,
+      "coverage": 0.5461,
+      "rho": 0.9762619151247731
+    },
+    "hartmann2 delta=0.1 | n_hf=8 | hybrid (d + 4)": {
+      "rmse_rel": 1.089531345440844,
+      "nlpd": 42.878172502822515,
+      "coverage": 0.5539,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.1 | n_hf=10 | fixed rho = 1": {
+      "rmse_rel": 1.3305549949393076,
+      "nlpd": 33.74398680297798,
+      "coverage": 0.677,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.1 | n_hf=10 | profiled rho": {
+      "rmse_rel": 1.3364422899643076,
+      "nlpd": 35.9732366301677,
+      "coverage": 0.6723999999999999,
+      "rho": 1.0301403667238516
+    },
+    "hartmann2 delta=0.1 | n_hf=10 | hybrid (d + 4)": {
+      "rmse_rel": 1.3364422899643076,
+      "nlpd": 35.9732366301677,
+      "coverage": 0.6723999999999999,
+      "rho": 1.0301403667238516
+    },
+    "hartmann2 delta=0.1 | n_hf=15 | fixed rho = 1": {
+      "rmse_rel": 1.0198164835184043,
+      "nlpd": 11.152414582224505,
+      "coverage": 0.6789999999999999,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.1 | n_hf=15 | profiled rho": {
+      "rmse_rel": 1.0328014930074843,
+      "nlpd": 21.49034816804948,
+      "coverage": 0.6229000000000001,
+      "rho": 0.9594917041520665
+    },
+    "hartmann2 delta=0.1 | n_hf=15 | hybrid (d + 4)": {
+      "rmse_rel": 1.0328014930074843,
+      "nlpd": 21.49034816804948,
+      "coverage": 0.6229000000000001,
+      "rho": 0.9594917041520665
+    },
+    "hartmann2 delta=0.1 | n_hf=20 | fixed rho = 1": {
+      "rmse_rel": 1.1212111559977995,
+      "nlpd": 6.4927187322833975,
+      "coverage": 0.7614000000000001,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.1 | n_hf=20 | profiled rho": {
+      "rmse_rel": 1.1010129891668476,
+      "nlpd": 3.2622360183505896,
+      "coverage": 0.7815999999999999,
+      "rho": 0.9935624468743214
+    },
+    "hartmann2 delta=0.1 | n_hf=20 | hybrid (d + 4)": {
+      "rmse_rel": 1.1010129891668476,
+      "nlpd": 3.2622360183505896,
+      "coverage": 0.7815999999999999,
+      "rho": 0.9935624468743214
+    },
+    "hartmann2 delta=0.1 | n_hf=30 | fixed rho = 1": {
+      "rmse_rel": 1.096933230969395,
+      "nlpd": 1.7178203074122158,
+      "coverage": 0.8480000000000001,
+      "rho": 1.0
+    },
+    "hartmann2 delta=0.1 | n_hf=30 | profiled rho": {
+      "rmse_rel": 1.0920564367457275,
+      "nlpd": 1.7204827604613222,
+      "coverage": 0.8481,
+      "rho": 0.9837693215288097
+    },
+    "hartmann2 delta=0.1 | n_hf=30 | hybrid (d + 4)": {
+      "rmse_rel": 1.0920564367457275,
+      "nlpd": 1.7204827604613222,
+      "coverage": 0.8481,
+      "rho": 0.9837693215288097
+    }
+  },
+  "decision": {
+    "verdicts": {
+      "forrester": {
+        "median_final_error": {
+          "fixed rho = 1": 1.0852600722088823e-05,
+          "profiled rho": 4.295750558824807e-06,
+          "hybrid (d + 4)": 3.556674565974305e-05
+        },
+        "hybrid/fixed": 3.2772553135670996,
+        "verdict": "neutral (both converged)"
+      },
+      "hartmann3 delta=0.0": {
+        "median_final_error": {
+          "fixed rho = 1": 0.03990199422448937,
+          "profiled rho": 0.012444770758210488,
+          "hybrid (d + 4)": 0.012444770758210488
+        },
+        "hybrid/fixed": 0.31188342840420685,
+        "verdict": "improves"
+      },
+      "hartmann3 delta=0.05": {
+        "median_final_error": {
+          "fixed rho = 1": 0.4676549346172272,
+          "profiled rho": 0.2425156999290521,
+          "hybrid (d + 4)": 0.2425156999290521
+        },
+        "hybrid/fixed": 0.5185782977528746,
+        "verdict": "improves"
+      },
+      "hartmann3 delta=0.1": {
+        "median_final_error": {
+          "fixed rho = 1": 0.598989266330757,
+          "profiled rho": 1.1927868069834657,
+          "hybrid (d + 4)": 1.1927868069834657
+        },
+        "hybrid/fixed": 1.9913325230169105,
+        "verdict": "degrades"
+      },
+      "accuracy forrester": {
+        "hybrid/fixed rmse (mean over n_hf)": 1.0498689969627113,
+        "verdict": "neutral"
+      },
+      "accuracy hartmann2 delta=0.0": {
+        "hybrid/fixed rmse (mean over n_hf)": 0.9984362382621855,
+        "verdict": "neutral"
+      },
+      "accuracy hartmann2 delta=0.05": {
+        "hybrid/fixed rmse (mean over n_hf)": 0.9978848893705278,
+        "verdict": "neutral"
+      },
+      "accuracy hartmann2 delta=0.1": {
+        "hybrid/fixed rmse (mean over n_hf)": 0.9991161571032349,
+        "verdict": "neutral"
+      }
+    },
+    "n_improves": 2,
+    "n_degrades": 1,
+    "n_cases": 8,
+    "default": "estimate_rho=False (fixed rho = 1)"
+  },
+  "ego_final": {
+    "forrester | fixed rho = 1 | seed 0": {
+      "cost": 123.0,
+      "surrogate_error": 1.0852600722088823e-05,
+      "observed_error": 9.368156863054367e-05,
+      "rho": [
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        3,
+        7,
+        0
+      ]
+    },
+    "forrester | fixed rho = 1 | seed 1": {
+      "cost": 123.0,
+      "surrogate_error": 2.4904802698344497e-05,
+      "observed_error": 2.4904802698344497e-05,
+      "rho": [
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        3,
+        7,
+        0
+      ]
+    },
+    "forrester | fixed rho = 1 | seed 2": {
+      "cost": 123.0,
+      "surrogate_error": 8.744916355496457e-06,
+      "observed_error": 8.744916355496457e-06,
+      "rho": [
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        3,
+        7,
+        0
+      ]
+    },
+    "forrester | fixed rho = 1 | seed 3": {
+      "cost": 114.0,
+      "surrogate_error": 2.9057316677238987e-06,
+      "observed_error": 0.0009410094351176568,
+      "rho": [
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        4,
+        6,
+        0
+      ]
+    },
+    "forrester | fixed rho = 1 | seed 4": {
+      "cost": 114.0,
+      "surrogate_error": 1.6266245369322974e-05,
+      "observed_error": 1.6266245369322974e-05,
+      "rho": [
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        4,
+        6,
+        0
+      ]
+    },
+    "forrester | profiled rho | seed 0": {
+      "cost": 96.0,
+      "surrogate_error": 2.602084800074067e-06,
+      "observed_error": 2.602084800074067e-06,
+      "rho": [
+        1.9591814052845562
+      ],
+      "levels_chosen": [
+        0,
+        6,
+        4,
+        0
+      ]
+    },
+    "forrester | profiled rho | seed 1": {
+      "cost": 114.0,
+      "surrogate_error": 2.2935062510498483e-05,
+      "observed_error": 2.2935062510498483e-05,
+      "rho": [
+        1.9910151337158823
+      ],
+      "levels_chosen": [
+        0,
+        4,
+        6,
+        0
+      ]
+    },
+    "forrester | profiled rho | seed 2": {
+      "cost": 123.0,
+      "surrogate_error": 1.0853835341606555e-07,
+      "observed_error": 1.0853835341606555e-07,
+      "rho": [
+        1.9954121361046557
+      ],
+      "levels_chosen": [
+        0,
+        3,
+        7,
+        0
+      ]
+    },
+    "forrester | profiled rho | seed 3": {
+      "cost": 114.0,
+      "surrogate_error": 4.295750558824807e-06,
+      "observed_error": 4.295750558824807e-06,
+      "rho": [
+        1.9909380620873491
+      ],
+      "levels_chosen": [
+        0,
+        4,
+        6,
+        0
+      ]
+    },
+    "forrester | profiled rho | seed 4": {
+      "cost": 114.0,
+      "surrogate_error": 2.6758617897471026e-05,
+      "observed_error": 2.6758617897471026e-05,
+      "rho": [
+        2.0006829155179187
+      ],
+      "levels_chosen": [
+        0,
+        4,
+        6,
+        0
+      ]
+    },
+    "forrester | hybrid (d + 4) | seed 0": {
+      "cost": 105.0,
+      "surrogate_error": 9.63349693385851e-05,
+      "observed_error": 9.368156863054367e-05,
+      "rho": [
+        2.000584820629472
+      ],
+      "levels_chosen": [
+        0,
+        5,
+        5,
+        0
+      ]
+    },
+    "forrester | hybrid (d + 4) | seed 1": {
+      "cost": 113.0,
+      "surrogate_error": 8.270113246489075e-05,
+      "observed_error": 8.270113246489075e-05,
+      "rho": [
+        2.0187846606885445
+      ],
+      "levels_chosen": [
+        1,
+        3,
+        6,
+        0
+      ]
+    },
+    "forrester | hybrid (d + 4) | seed 2": {
+      "cost": 114.0,
+      "surrogate_error": 2.436927629378971e-05,
+      "observed_error": 2.436927629378971e-05,
+      "rho": [
+        1.9919578233887028
+      ],
+      "levels_chosen": [
+        0,
+        4,
+        6,
+        0
+      ]
+    },
+    "forrester | hybrid (d + 4) | seed 3": {
+      "cost": 114.0,
+      "surrogate_error": 1.0129842031858516e-07,
+      "observed_error": 1.0129842031858516e-07,
+      "rho": [
+        2.0105499464678167
+      ],
+      "levels_chosen": [
+        0,
+        4,
+        6,
+        0
+      ]
+    },
+    "forrester | hybrid (d + 4) | seed 4": {
+      "cost": 114.0,
+      "surrogate_error": 3.556674565974305e-05,
+      "observed_error": 3.556674565974305e-05,
+      "rho": [
+        2.0006820866331703
+      ],
+      "levels_chosen": [
+        0,
+        4,
+        6,
+        0
+      ]
+    },
+    "hartmann3 delta=0.0 | fixed rho = 1 | seed 0": {
+      "cost": 12214.0,
+      "surrogate_error": 0.13960198255523437,
+      "observed_error": 2.903123092753589,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        94,
+        6,
+        0
+      ]
+    },
+    "hartmann3 delta=0.0 | fixed rho = 1 | seed 1": {
+      "cost": 13015.0,
+      "surrogate_error": 0.03990199422448937,
+      "observed_error": 0.22756605862379642,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        95,
+        4,
+        1
+      ]
+    },
+    "hartmann3 delta=0.0 | fixed rho = 1 | seed 2": {
+      "cost": 13609.0,
+      "surrogate_error": 0.004619206593451164,
+      "observed_error": 0.011880877499265363,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        89,
+        10,
+        1
+      ]
+    },
+    "hartmann3 delta=0.0 | fixed rho = 1 | seed 3": {
+      "cost": 13312.0,
+      "surrogate_error": 0.0077778631704181755,
+      "observed_error": 0.008100218040160811,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        92,
+        7,
+        1
+      ]
+    },
+    "hartmann3 delta=0.0 | fixed rho = 1 | seed 4": {
+      "cost": 12610.0,
+      "surrogate_error": 0.15256903345223582,
+      "observed_error": 2.289852663801619,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        90,
+        10,
+        0
+      ]
+    },
+    "hartmann3 delta=0.0 | profiled rho | seed 0": {
+      "cost": 14311.0,
+      "surrogate_error": 0.18405035448816598,
+      "observed_error": 0.13330803016515747,
+      "rho": [
+        1.9189827936263344,
+        1.1927704489105462
+      ],
+      "levels_chosen": [
+        0,
+        91,
+        7,
+        2
+      ]
+    },
+    "hartmann3 delta=0.0 | profiled rho | seed 1": {
+      "cost": 11620.0,
+      "surrogate_error": 0.00859307012988264,
+      "observed_error": 2.482890125172657,
+      "rho": [
+        0.9931836927156683,
+        1.896779158651977
+      ],
+      "levels_chosen": [
+        0,
+        100,
+        0,
+        0
+      ]
+    },
+    "hartmann3 delta=0.0 | profiled rho | seed 2": {
+      "cost": 12115.0,
+      "surrogate_error": 0.13065049908107085,
+      "observed_error": 2.4937246808433944,
+      "rho": [
+        0.8635624166546455,
+        1.35651199348465
+      ],
+      "levels_chosen": [
+        0,
+        95,
+        5,
+        0
+      ]
+    },
+    "hartmann3 delta=0.0 | profiled rho | seed 3": {
+      "cost": 12610.0,
+      "surrogate_error": 0.0023458580039963373,
+      "observed_error": 2.167647038770034,
+      "rho": [
+        1.7242250887882806,
+        1.7699782180707178
+      ],
+      "levels_chosen": [
+        0,
+        90,
+        10,
+        0
+      ]
+    },
+    "hartmann3 delta=0.0 | profiled rho | seed 4": {
+      "cost": 12016.0,
+      "surrogate_error": 0.012444770758210488,
+      "observed_error": 2.289852663801619,
+      "rho": [
+        0.859842724529266,
+        1.912002318470804
+      ],
+      "levels_chosen": [
+        0,
+        96,
+        4,
+        0
+      ]
+    },
+    "hartmann3 delta=0.0 | hybrid (d + 4) | seed 0": {
+      "cost": 14311.0,
+      "surrogate_error": 0.18405035448816598,
+      "observed_error": 0.13330803016515747,
+      "rho": [
+        1.9189827936263344,
+        1.1927704489105462
+      ],
+      "levels_chosen": [
+        0,
+        91,
+        7,
+        2
+      ]
+    },
+    "hartmann3 delta=0.0 | hybrid (d + 4) | seed 1": {
+      "cost": 11620.0,
+      "surrogate_error": 0.00859307012988264,
+      "observed_error": 2.482890125172657,
+      "rho": [
+        0.9931836927156683,
+        1.896779158651977
+      ],
+      "levels_chosen": [
+        0,
+        100,
+        0,
+        0
+      ]
+    },
+    "hartmann3 delta=0.0 | hybrid (d + 4) | seed 2": {
+      "cost": 12115.0,
+      "surrogate_error": 0.13065049908107085,
+      "observed_error": 2.4937246808433944,
+      "rho": [
+        0.8635624166546455,
+        1.35651199348465
+      ],
+      "levels_chosen": [
+        0,
+        95,
+        5,
+        0
+      ]
+    },
+    "hartmann3 delta=0.0 | hybrid (d + 4) | seed 3": {
+      "cost": 12610.0,
+      "surrogate_error": 0.0023458580039963373,
+      "observed_error": 2.167647038770034,
+      "rho": [
+        1.7242250887882806,
+        1.7699782180707178
+      ],
+      "levels_chosen": [
+        0,
+        90,
+        10,
+        0
+      ]
+    },
+    "hartmann3 delta=0.0 | hybrid (d + 4) | seed 4": {
+      "cost": 12016.0,
+      "surrogate_error": 0.012444770758210488,
+      "observed_error": 2.289852663801619,
+      "rho": [
+        0.859842724529266,
+        1.912002318470804
+      ],
+      "levels_chosen": [
+        0,
+        96,
+        4,
+        0
+      ]
+    },
+    "hartmann3 delta=0.05 | fixed rho = 1 | seed 0": {
+      "cost": 12916.0,
+      "surrogate_error": 0.4676549346172272,
+      "observed_error": 0.4321553136968812,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        96,
+        3,
+        1
+      ]
+    },
+    "hartmann3 delta=0.05 | fixed rho = 1 | seed 1": {
+      "cost": 11620.0,
+      "surrogate_error": 0.3176026956995939,
+      "observed_error": 2.482890125172657,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        100,
+        0,
+        0
+      ]
+    },
+    "hartmann3 delta=0.05 | fixed rho = 1 | seed 2": {
+      "cost": 13411.0,
+      "surrogate_error": 0.27697031399501393,
+      "observed_error": 0.27697031399501393,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        91,
+        8,
+        1
+      ]
+    },
+    "hartmann3 delta=0.05 | fixed rho = 1 | seed 3": {
+      "cost": 11620.0,
+      "surrogate_error": 1.433595561727296,
+      "observed_error": 2.167647038770034,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        100,
+        0,
+        0
+      ]
+    },
+    "hartmann3 delta=0.05 | fixed rho = 1 | seed 4": {
+      "cost": 12016.0,
+      "surrogate_error": 2.055854584645326,
+      "observed_error": 2.289852663801619,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        96,
+        4,
+        0
+      ]
+    },
+    "hartmann3 delta=0.05 | profiled rho | seed 0": {
+      "cost": 13114.0,
+      "surrogate_error": 0.3268764120457366,
+      "observed_error": 0.4160385767886772,
+      "rho": [
+        0.9511996712880835,
+        1.1147123358580104
+      ],
+      "levels_chosen": [
+        0,
+        94,
+        5,
+        1
+      ]
+    },
+    "hartmann3 delta=0.05 | profiled rho | seed 1": {
+      "cost": 11620.0,
+      "surrogate_error": 0.2373100577819085,
+      "observed_error": 2.482890125172657,
+      "rho": [
+        0.9931560337791834,
+        2.016410421579038
+      ],
+      "levels_chosen": [
+        0,
+        100,
+        0,
+        0
+      ]
+    },
+    "hartmann3 delta=0.05 | profiled rho | seed 2": {
+      "cost": 13015.0,
+      "surrogate_error": 0.2425156999290521,
+      "observed_error": 0.24439769884591023,
+      "rho": [
+        0.9478033769889476,
+        1.0356307969928058
+      ],
+      "levels_chosen": [
+        0,
+        95,
+        4,
+        1
+      ]
+    },
+    "hartmann3 delta=0.05 | profiled rho | seed 3": {
+      "cost": 12016.0,
+      "surrogate_error": 0.7686275015439503,
+      "observed_error": 2.167647038770034,
+      "rho": [
+        0.08043702911362076,
+        1.9699321286409406
+      ],
+      "levels_chosen": [
+        0,
+        96,
+        4,
+        0
+      ]
+    },
+    "hartmann3 delta=0.05 | profiled rho | seed 4": {
+      "cost": 12016.0,
+      "surrogate_error": 0.2036120982365084,
+      "observed_error": 2.289852663801619,
+      "rho": [
+        2.389139064422739,
+        1.2579052695895314
+      ],
+      "levels_chosen": [
+        0,
+        96,
+        4,
+        0
+      ]
+    },
+    "hartmann3 delta=0.05 | hybrid (d + 4) | seed 0": {
+      "cost": 13114.0,
+      "surrogate_error": 0.3268764120457366,
+      "observed_error": 0.4160385767886772,
+      "rho": [
+        0.9511996712880835,
+        1.1147123358580104
+      ],
+      "levels_chosen": [
+        0,
+        94,
+        5,
+        1
+      ]
+    },
+    "hartmann3 delta=0.05 | hybrid (d + 4) | seed 1": {
+      "cost": 11620.0,
+      "surrogate_error": 0.2373100577819085,
+      "observed_error": 2.482890125172657,
+      "rho": [
+        0.9931560337791834,
+        2.016410421579038
+      ],
+      "levels_chosen": [
+        0,
+        100,
+        0,
+        0
+      ]
+    },
+    "hartmann3 delta=0.05 | hybrid (d + 4) | seed 2": {
+      "cost": 13015.0,
+      "surrogate_error": 0.2425156999290521,
+      "observed_error": 0.24439769884591023,
+      "rho": [
+        0.9478033769889476,
+        1.0356307969928058
+      ],
+      "levels_chosen": [
+        0,
+        95,
+        4,
+        1
+      ]
+    },
+    "hartmann3 delta=0.05 | hybrid (d + 4) | seed 3": {
+      "cost": 12016.0,
+      "surrogate_error": 0.7686275015439503,
+      "observed_error": 2.167647038770034,
+      "rho": [
+        0.08043702911362076,
+        1.9699321286409406
+      ],
+      "levels_chosen": [
+        0,
+        96,
+        4,
+        0
+      ]
+    },
+    "hartmann3 delta=0.05 | hybrid (d + 4) | seed 4": {
+      "cost": 12016.0,
+      "surrogate_error": 0.2036120982365084,
+      "observed_error": 2.289852663801619,
+      "rho": [
+        2.389139064422739,
+        1.2579052695895314
+      ],
+      "levels_chosen": [
+        0,
+        96,
+        4,
+        0
+      ]
+    },
+    "hartmann3 delta=0.1 | fixed rho = 1 | seed 0": {
+      "cost": 11818.0,
+      "surrogate_error": 0.598989266330757,
+      "observed_error": 2.903123092753589,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        98,
+        2,
+        0
+      ]
+    },
+    "hartmann3 delta=0.1 | fixed rho = 1 | seed 1": {
+      "cost": 13618.0,
+      "surrogate_error": 1.0551478541037236,
+      "observed_error": 1.123455654073637,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        98,
+        0,
+        2
+      ]
+    },
+    "hartmann3 delta=0.1 | fixed rho = 1 | seed 2": {
+      "cost": 12916.0,
+      "surrogate_error": 0.9886808925875803,
+      "observed_error": 1.2392915080101505,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        96,
+        3,
+        1
+      ]
+    },
+    "hartmann3 delta=0.1 | fixed rho = 1 | seed 3": {
+      "cost": 15796.0,
+      "surrogate_error": 0.1522448454614267,
+      "observed_error": 0.04760230047493419,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        76,
+        22,
+        2
+      ]
+    },
+    "hartmann3 delta=0.1 | fixed rho = 1 | seed 4": {
+      "cost": 18397.0,
+      "surrogate_error": 0.23653811391507862,
+      "observed_error": 0.21855543444940118,
+      "rho": [
+        1.0,
+        1.0
+      ],
+      "levels_chosen": [
+        0,
+        77,
+        18,
+        5
+      ]
+    },
+    "hartmann3 delta=0.1 | profiled rho | seed 0": {
+      "cost": 12115.0,
+      "surrogate_error": 0.7186894720971355,
+      "observed_error": 2.903123092753589,
+      "rho": [
+        0.9171136106950526,
+        1.150340361627022
+      ],
+      "levels_chosen": [
+        0,
+        95,
+        5,
+        0
+      ]
+    },
+    "hartmann3 delta=0.1 | profiled rho | seed 1": {
+      "cost": 12511.0,
+      "surrogate_error": 0.8699298084595841,
+      "observed_error": 2.482890125172657,
+      "rho": [
+        0.7321823362726849,
+        2.2285272103539344
+      ],
+      "levels_chosen": [
+        0,
+        91,
+        9,
+        0
+      ]
+    },
+    "hartmann3 delta=0.1 | profiled rho | seed 2": {
+      "cost": 11818.0,
+      "surrogate_error": 1.1986832038737751,
+      "observed_error": 2.4937246808433944,
+      "rho": [
+        1.0456015584958696,
+        1.0904831148305498
+      ],
+      "levels_chosen": [
+        0,
+        98,
+        2,
+        0
+      ]
+    },
+    "hartmann3 delta=0.1 | profiled rho | seed 3": {
+      "cost": 12817.0,
+      "surrogate_error": 1.1927868069834657,
+      "observed_error": 1.1927868069834657,
+      "rho": [
+        1.4791789328367118,
+        0.9337701261723589
+      ],
+      "levels_chosen": [
+        0,
+        97,
+        2,
+        1
+      ]
+    },
+    "hartmann3 delta=0.1 | profiled rho | seed 4": {
+      "cost": 11818.0,
+      "surrogate_error": 1.4414804257726221,
+      "observed_error": 2.289852663801619,
+      "rho": [
+        1.3386714473527406,
+        1.2623272937773822
+      ],
+      "levels_chosen": [
+        0,
+        98,
+        2,
+        0
+      ]
+    },
+    "hartmann3 delta=0.1 | hybrid (d + 4) | seed 0": {
+      "cost": 12115.0,
+      "surrogate_error": 0.7186894720971355,
+      "observed_error": 2.903123092753589,
+      "rho": [
+        0.9171136106950526,
+        1.150340361627022
+      ],
+      "levels_chosen": [
+        0,
+        95,
+        5,
+        0
+      ]
+    },
+    "hartmann3 delta=0.1 | hybrid (d + 4) | seed 1": {
+      "cost": 12511.0,
+      "surrogate_error": 0.8699298084595841,
+      "observed_error": 2.482890125172657,
+      "rho": [
+        0.7321823362726849,
+        2.2285272103539344
+      ],
+      "levels_chosen": [
+        0,
+        91,
+        9,
+        0
+      ]
+    },
+    "hartmann3 delta=0.1 | hybrid (d + 4) | seed 2": {
+      "cost": 11818.0,
+      "surrogate_error": 1.1986832038737751,
+      "observed_error": 2.4937246808433944,
+      "rho": [
+        1.0456015584958696,
+        1.0904831148305498
+      ],
+      "levels_chosen": [
+        0,
+        98,
+        2,
+        0
+      ]
+    },
+    "hartmann3 delta=0.1 | hybrid (d + 4) | seed 3": {
+      "cost": 12817.0,
+      "surrogate_error": 1.1927868069834657,
+      "observed_error": 1.1927868069834657,
+      "rho": [
+        1.4791789328367118,
+        0.9337701261723589
+      ],
+      "levels_chosen": [
+        0,
+        97,
+        2,
+        1
+      ]
+    },
+    "hartmann3 delta=0.1 | hybrid (d + 4) | seed 4": {
+      "cost": 11818.0,
+      "surrogate_error": 1.4414804257726221,
+      "observed_error": 2.289852663801619,
+      "rho": [
+        1.3386714473527406,
+        1.2623272937773822
+      ],
+      "levels_chosen": [
+        0,
+        98,
+        2,
+        0
+      ]
+    }
+  }
+}
