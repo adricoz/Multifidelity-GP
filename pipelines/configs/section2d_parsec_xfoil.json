@@ -1,0 +1,26 @@
+{
+    "name": "parsec_cd_at_cl05",
+    "description": "Minimum drag at CL = 0.5 of a PARSEC section (bdSec SectionParsec, 11 parameters: 4 optimized, 7 fixed). Levels: NeuralFoil xxxlarge, XFOIL (bdFoil core).",
+    "kind": "section2d",
+    "parametrization": {
+        "type": "parsec",
+        "n_points": 161,
+        "fixed": {"rle": 0.012, "Zxxup": -0.6, "Zxxlo": 0.6, "Zte": 0.0, "DZte": 0.0,
+                  "alte": -5.0, "bete": 10.0}
+    },
+    "variables": [
+        {"name": "Xup", "lower": 0.25, "upper": 0.50},
+        {"name": "Zup", "lower": 0.04, "upper": 0.09},
+        {"name": "Xlo", "lower": 0.25, "upper": 0.50},
+        {"name": "Zlo", "lower": -0.06, "upper": -0.02}
+    ],
+    "flow": {"re": 500000.0, "n_crit": 1.0, "xtr": [0.1, 0.1], "alpha": [-4.0, 10.0, 0.5]},
+    "levels": [
+        {"solver": "neuralfoil", "cost": 1.0, "options": {"model_size": "xxxlarge"}},
+        {"solver": "xfoil", "cost": 20.0, "options": {"npane": 250, "niter": 100}}
+    ],
+    "objective": {"type": "cd_at_cl", "cl_target": 0.5},
+    "constraints": {"min_thickness": 0.08},
+    "optimization": {"doe": [24, 8], "iterations": 25, "seed": 0, "estimate_rho": true},
+    "paths": {}
+}

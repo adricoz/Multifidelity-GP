@@ -1,0 +1,23 @@
+{
+    "name": "kulfan_cd_at_cl04",
+    "description": "Minimum drag at CL = 0.4 of a Kulfan (CST) section with 3 + 3 weights (aerosandbox KulfanAirfoil, evaluated directly from its Kulfan parameters by NeuralFoil). Levels: NeuralFoil xsmall, NeuralFoil xxxlarge.",
+    "kind": "section2d",
+    "parametrization": {"type": "kulfan", "n_points": 161, "fixed": {"leading_edge_weight": 0.0, "TE_thickness": 0.0}},
+    "variables": [
+        {"name": "upper_0", "lower": 0.10, "upper": 0.35},
+        {"name": "upper_1", "lower": 0.10, "upper": 0.40},
+        {"name": "upper_2", "lower": 0.10, "upper": 0.40},
+        {"name": "lower_0", "lower": -0.30, "upper": -0.05},
+        {"name": "lower_1", "lower": -0.30, "upper": 0.05},
+        {"name": "lower_2", "lower": -0.30, "upper": 0.05}
+    ],
+    "flow": {"re": 1000000.0, "n_crit": 1.0, "xtr": [0.1, 0.1], "alpha": [-4.0, 10.0, 0.25]},
+    "levels": [
+        {"solver": "neuralfoil", "cost": 1.0, "options": {"model_size": "xsmall"}},
+        {"solver": "neuralfoil", "cost": 3.0, "options": {"model_size": "xxxlarge"}}
+    ],
+    "objective": {"type": "cd_at_cl", "cl_target": 0.4},
+    "constraints": {"min_thickness": 0.09},
+    "optimization": {"doe": [40, 15], "iterations": 40, "seed": 0, "estimate_rho": true},
+    "paths": {}
+}
