@@ -1,96 +1,126 @@
----
-query: writ something on the arows to make it clearer
-references:
-  - "File: /c:/Users/SIM/AppData/Local/Temp/.temp-repair/Untitled-1-repaired.new"
-generationTime: 2026-09-21T09:33:40.521Z
----
+%% Structure of the mfego framework (generated from the code of mfego/src after the review
+%% of branch fix/analyse-theorique-mfego). Render with: npx -y @mermaid-js/mermaid-cli -i mfego_structure.mmd -o mfego_structure.svg
 classDiagram
-    direction TB
+    direction LR
 
-    class Main {
-        +run()
+    class ExperimentData {
+        +bounds : list[tuple]
+        +costs : list[float]
+        +x_dict / y_dict / metrics_dict
+        +generate_initial_design(points_per_level, seed)
+        +add_observation(level, x, y, metrics)
+        +get_training_data(level) (x, y) without failed points
+        +is_already_evaluated(level, x)
+        +best_observation(level)
+        +n_failed(level)
     }
 
-    class DataManager {
-        -low_fidelity_data
-        -high_fidelity_data
-        +load_data()
-        +add_sample()
-        +get_training_data()
-        +save_backup()
+    class BaseSimulator {
+        <<abstract>>
+        +num_levels : int
+        +evaluate(design_point, level)* (y, metrics)
     }
 
-    class Simulator {
-        <<interface>>
-        +evaluate(x)
-    }
-
-    class LowFidelitySimulator {
-        +evaluate(x)
-    }
-
-    class HighFidelitySimulator {
-        +evaluate(x)
+    class FunctionSimulator {
+        user simulator (main.py, examples)
+        +evaluate(design_point, level)
     }
 
     class Kernel {
-        <<interface>>
-        +compute(x1, x2)
+        +lengthscale / signal_variance / bias_variance
+        +get_params() / set_params(theta)
+        +get_covariance_matrix(x)*
+        +get_cross_variance_vector(x, x_train)*
+        +get_cross_covariance_matrix(x_new, x_train)
+        +get_log_params_gradients(x)
+    }
+
+    class SquaredExponentialKernel {
+        C(x,x') = t1 exp(-sum (x-x')^2 / 2l^2) + t2  (Eq. 2)
     }
 
     class GaussianProcess {
-        -kernel
-        -training_data
-        +fit(X, y)
-        +predict(X)
-        +update(X, y)
+        +kernel : Kernel
+        +noise, y_mean, y_std, rho
+        +fit(x, y, f_prev, rho_init, estimate_rho) rho
+        +negative_log_likelihood(log_params, ...) (Eqs. 15-16)
+        +condition(x, y)
+        +predict(x) / predict_batch(x) (Eqs. 4-5)
+        +get_noise_variance()
+        +to_dict()
     }
 
-    class MultiFidelityGP {
-        -low_model
-        -high_model
-        +fit()
-        +predict(x)
-        +update()
+    class MultifidelityModel {
+        +num_levels : int
+        +gps : list[GaussianProcess]
+        +rhos : list[float]
+        +estimate_rho / rho_init / rho_bounds / min_points_rho
+        +fit(ExperimentData) (Eqs. 15, 18)
+        +predict(x) / predict_batch(x, level) (Eqs. 11-12)
+        +to_dict() / from_dict(state)
     }
 
     class AcquisitionFunction {
-        <<interface>>
-        +evaluate(model, x)
+        +model : MultifidelityModel
+        +data : ExperimentData
+        +x_best / f_best (Eq. 19)
+        +update()
+        +evaluate_merits_batch(x) (Eqs. 20-24)
+        +evaluate_merits(x) / evaluate_merit(x, level)
     }
 
-    class Optimizer {
-        -model
-        -acquisition
-        +optimize()
-        +select_next_point()
+    class EGOOptimizer {
+        +data / model / simulator / acquisition
+        +cost_history / best_y_history
+        +ask() (x, level, merit)
+        +tell(x, level, y, metrics)
+        +run(n_iterations, stop_on_convergence)
+        +save_state(path) / load_state(path)
+        +timings (fit / search / simulation)
+        +export_surrogate(path)
+        +summary()
     }
 
-    class Visualizer {
-        +plot_convergence()
-        +plot_response()
-        +save_figures()
+    class run_utils {
+        <<module>>
+        +create_run(base_dir, prefix) RunContext
+        +setup_logging(log_path)
+        +RunTimer(name) total computation time
     }
 
-    Main --> DataManager : manages data
-    Main --> LowFidelitySimulator : creates model
-    Main --> HighFidelitySimulator : creates model
-    Main --> MultiFidelityGP : builds surrogate
-    Main --> Optimizer : starts EGO
-    Main --> Visualizer : generates plots
+    class NumpyEncoder {
+        JSON encoder for numpy types
+    }
 
-    Simulator <|.. LowFidelitySimulator : implements
-    Simulator <|.. HighFidelitySimulator : implements
+    class ModelVisualizer {
+        +state : dict
+        +model : MultifidelityModel
+        +bounds : list[tuple]
+        +plot_convergence() PNG
+        +plot_response_1d() PNG
+        +plot_response_surface_2d() PNG
+        +plot_convergence_interactive() HTML
+        +plot_response_1d_interactive() HTML
+        +plot_response_surface_2d_interactive() HTML
+    }
 
-    GaussianProcess --> Kernel : evaluates covariance
-    GaussianProcess <|-- MultiFidelityGP : extends
+    class load_surrogate {
+        <<function>>
+        load_surrogate(path) MultifidelityModel
+    }
 
-    MultiFidelityGP --> DataManager : reads samples
-    MultiFidelityGP *-- GaussianProcess : combines models
-
-    Optimizer --> MultiFidelityGP : requests predictions
-    Optimizer --> AcquisitionFunction : scores candidates
-    Optimizer --> Simulator : evaluates points
-
-    Simulator --> DataManager : stores results
-    Visualizer --> DataManager : reads history
+    BaseSimulator <|-- FunctionSimulator : implements evaluate
+    Kernel <|-- SquaredExponentialKernel : implements
+    GaussianProcess o-- Kernel : covariance
+    MultifidelityModel *-- "L" GaussianProcess : one discrepancy GP per level
+    MultifidelityModel ..> ExperimentData : reads valid training data
+    AcquisitionFunction --> MultifidelityModel : vectorized predictions
+    AcquisitionFunction --> ExperimentData : training points and costs
+    EGOOptimizer --> MultifidelityModel : fit()
+    EGOOptimizer --> AcquisitionFunction : update() + maximize merit (DE)
+    EGOOptimizer --> BaseSimulator : evaluate(x, level)
+    EGOOptimizer --> ExperimentData : add_observation()
+    EGOOptimizer ..> NumpyEncoder : JSON state / export
+    ModelVisualizer ..> MultifidelityModel : from_dict(state["surrogate"])
+    load_surrogate ..> MultifidelityModel : from_dict
+    run_utils ..> EGOOptimizer : runs/MMDD_HHMMSS/ outputs and log

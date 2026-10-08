@@ -1,0 +1,24 @@
+# Dedicated environment of the benchmark notebook (benchmarks/hartmann_benchmark.ipynb).
+# Create it from the repository root (Python 3.13 tested):
+#   python -m venv .venv-benchmark
+#   .venv-benchmark\Scripts\python -m pip install -r requirements-benchmark.txt
+# then select the ".venv-benchmark" interpreter / kernel in VS Code or Jupyter.
+
+# mfego core
+numpy>=1.24
+scipy>=1.9
+matplotlib>=3.5
+plotly>=5.0
+pandas>=2.0
+
+# Gaussian-process libraries compared with mfego
+scikit-learn>=1.5     # single-fidelity GaussianProcessRegressor
+smt>=2.6              # KRG (single fidelity) and MFK (recursive co-kriging, Le Gratiet)
+botorch>=0.12         # SingleTaskGP / SingleTaskMultiFidelityGP, qLogEI, multi-fidelity KG (pulls torch)
+
+# Notebook execution
+jupyter
+ipykernel
+nbconvert
+nbclient
+pytest>=7.0

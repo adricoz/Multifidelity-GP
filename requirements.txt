@@ -1,0 +1,17 @@
+# Tested with Python 3.13 (Anaconda) -- core framework also imports with Python 3.14.
+# Minimum Python version: 3.10 (required by scipy >= 1.15, neuralfoil 0.3.x, aerosandbox 4.2).
+
+# Core mathematical engine
+numpy>=1.24          # tested: 2.4.6 (Python 3.13), 2.5.2 (Python 3.14)
+scipy>=1.9           # tested: 1.15.3 / 1.18.1 (qmc LatinHypercube, L-BFGS-B, vectorized DE)
+
+# Visualization
+matplotlib>=3.5      # tested: 3.11.2 (static PNG plots)
+plotly>=5.0          # tested: 5.24.1 (interactive HTML plots, optional for the core)
+
+# Unit tests
+pytest>=7.0          # tested: 8.3.4
+
+# Hydrofoil example only (optional)
+neuralfoil>=0.2.0    # tested: 0.3.3 (n_crit / xtr_upper / xtr_lower and "xxxlarge" since 0.2.0)
+aerosandbox>=4.2.3   # tested: 4.2.10

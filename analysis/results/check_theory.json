@@ -1,0 +1,108 @@
+{
+  "surrogate_accuracy": {
+    "forrester_10LF_4HF": {
+      "initial": {
+        "rho": [
+          1.0
+        ],
+        "rmse": 4.294939019815063,
+        "rmse_relative_to_std": 0.9577185882871597,
+        "coverage_95": 1.0
+      },
+      "current": {
+        "rho": [
+          1.0
+        ],
+        "rmse": 2.249053721396241,
+        "rmse_relative_to_std": 0.5015113241655149,
+        "coverage_95": 0.26932668329177056
+      },
+      "current_estimate_rho": {
+        "rho": [
+          1.0
+        ],
+        "rmse": 2.249053721396241,
+        "rmse_relative_to_std": 0.5015113241655149,
+        "coverage_95": 0.26932668329177056
+      }
+    },
+    "forrester_10LF_6HF": {
+      "initial": {
+        "rho": [
+          1.0
+        ],
+        "rmse": 4.355357546638371,
+        "rmse_relative_to_std": 0.9711911768265192,
+        "coverage_95": 0.9476309226932669
+      },
+      "current": {
+        "rho": [
+          1.0
+        ],
+        "rmse": 1.809813861159304,
+        "rmse_relative_to_std": 0.4035662364879529,
+        "coverage_95": 0.49625935162094764
+      },
+      "current_estimate_rho": {
+        "rho": [
+          1.963551557523015
+        ],
+        "rmse": 0.1862854880769752,
+        "rmse_relative_to_std": 0.041539373163707316,
+        "coverage_95": 0.7306733167082294
+      }
+    },
+    "hartmann_20LF_10HF_delta0.05": {
+      "initial": {
+        "rho": [
+          1.0
+        ],
+        "rmse": 0.4667399235331645,
+        "rmse_relative_to_std": 1.204448391092531,
+        "coverage_95": 0.4155
+      },
+      "current": {
+        "rho": [
+          1.0
+        ],
+        "rmse": 0.45152146567460594,
+        "rmse_relative_to_std": 1.165176312235647,
+        "coverage_95": 0.413
+      },
+      "current_estimate_rho": {
+        "rho": [
+          1.1772156551736568
+        ],
+        "rmse": 0.4572354673775249,
+        "rmse_relative_to_std": 1.179921612157032,
+        "coverage_95": 0.38
+      }
+    }
+  },
+  "rho_profile_likelihood": {
+    "rho_grid_argmin": 2.0,
+    "rho_profiled": 1.963551557523015,
+    "nll_at_rho_1": 10.590519114572412,
+    "nll_min": 1.6114087888485544
+  },
+  "variance_reduction_aei": {
+    "relative_error_at_noise_ratio_1e-06": 1.0000010000287557e-06,
+    "relative_error_at_noise_ratio_0.001": 0.0010016790414629397,
+    "relative_error_at_noise_ratio_0.01": 0.010105893866016945,
+    "relative_error_at_noise_ratio_0.1": 0.10922154278531486,
+    "relative_error_at_noise_ratio_1": 1.6692695945087588,
+    "aei_factor_at_noise_ratio_1e-06": 0.9990000009999985,
+    "aei_factor_at_noise_ratio_0.001": 0.9684035240083158,
+    "aei_factor_at_noise_ratio_0.01": 0.9009700279163989,
+    "aei_factor_at_noise_ratio_0.1": 0.7113129282575822,
+    "aei_factor_at_noise_ratio_1": 0.42268834918056064
+  },
+  "f_best": {
+    "min_observed_hf (initial f_best)": -0.4580364192468096,
+    "effective_best f_hat_L(x_best) (Eq. 19)": -0.9045780476296912,
+    "x_best": [
+      0.13477007372990896
+    ],
+    "true_minimum": -6.020740055767083
+  }
+}

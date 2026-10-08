@@ -18,37 +18,40 @@ from src.acquisition import AcquisitionFunction
 from src.data_management import ExperimentData
 from src.kernels import SquaredExponentialKernel
 from src.optimizer import EGOOptimizer
+from src.run_utils import RunTimer, create_run, setup_logging
 from src.simulator import BaseSimulator
 from src.surrogate_models import MultifidelityModel
 from src.visualization import ModelVisualizer
 
-logging.basicConfig(
-    filename='example/hartmann_6d/logfile.log',
-    level=logging.INFO,
-    format=' %(levelname)s - %(message)s',
-    force = True,
-    )
+# [FIX-L1] the logging is configured in the __main__ block, in a timestamped run directory
+# (bdFoil convention: runs/<MMDD_HHMMSS>/hartmann_6d_<MMDD_HHMMSS>.log, Paris time)
+HERE = os.path.dirname(os.path.abspath(__file__))
 logger = logging.getLogger(__name__)
 
 
 if __name__ == "__main__":
+    # [FIX-L1] one directory per run (log, ego_backup.json, surrogate.json, figures)
+    run = create_run(HERE, prefix="hartmann_6d")
+    setup_logging(run.log_path)
+
     # Define a simple simulator for demonstration purposes
     class FunctionSimulator(BaseSimulator):
         """
         A simple simulator for the Hartmann 6d function with multi-fidelity approximation.
         Subclass of BaseSimulator
         """
-        def evaluate(self, design_point: list, level: int) -> float:
+        def evaluate(self, design_point: list, level: int) -> tuple[float, dict]:
             """
             Evaluate the simulator at a given point and fidelity level.
             This is a placeholder implementation. Replace with actual simulation code.
             """
-            # Example: Eqs: (17) of the reference article.
+            # Example: Eqs: (30)-(32) of the reference article.
             # It should always deal with exections...
-            L = 2 # Number of fidelity levels
             try:
-               return evaluate_fidelity(design_point, level, L), \
-                   {"y": evaluate_fidelity(design_point, level, L)}
+               # [FIX-E1] a single evaluation (the function was evaluated twice) and the
+               # number of levels of the simulator (was hard-coded to 2 here)
+               y_value = evaluate_fidelity(design_point, level, self.num_levels)
+               return y_value, {"y": y_value}
 
             except (IndexError, TypeError, ValueError) as e:
                 logger.error( \
@@ -57,47 +60,58 @@ if __name__ == "__main__":
                 return np.nan, {}  # Return NaN to indicate an error in evaluation
 
     # Define bounds for the design variables
-    L = 2  # Number of fidelity levels
+    L = 3  # Number of fidelity levels
     bounds = [(0.0, 1.0), (0.0, 1.0), (0.0, 1.0), \
                (0.0, 1.0), (0.0, 1.0), (0.0, 1.0)] # 6D: Normalized
-    costs = [1.0, 10.0]  # Example costs
-    initial_points = [20, 10]  # Number of points for each fidelity level
+    costs = [1.0, 5.0, 10.0]  # Example costs
+    initial_points = [20, 10, 5]  # Number of points for each fidelity level
+    SEED = 0  # [FIX-R1] reproducible run
 
-    data = ExperimentData(bounds=bounds, costs=costs)
-    simu = FunctionSimulator(num_levels=L)
-    model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel)
-    acq = AcquisitionFunction(model=model, data=data)
-    ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq, 
-                       save_state_path = "example/hartmann_6d/ego_backup.json")
+    # [FIX-L1] start banner and total computation time written at the end of the log
+    with RunTimer("mfego - Hartmann 6D example"):
+        logger.info("Run directory: %s", run.run_dir)
+        data = ExperimentData(bounds=bounds, costs=costs)
+        simu = FunctionSimulator(num_levels=L)
+        model = MultifidelityModel(l=L, estimate_rho=True, kernel_class = SquaredExponentialKernel, seed = SEED)
+        acq = AcquisitionFunction(model=model, data=data)
+        ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq,
+                           save_state_path = run.path("ego_backup.json"), seed = SEED)
 
-    logger.info("Generating initial design...")
+        logger.info("Generating initial design...")
 
-    data.generate_initial_design(points_per_level=initial_points)
-    for l in range(1, L + 1):
-        y_values = []
-        metrics_list = []
+        data.generate_initial_design(points_per_level=initial_points)
+        for l in range(1, L + 1):
+            y_values = []
+            metrics_list = []
 
-        logger.info("Level %s design points: %s", l, data.x_dict[l])
+            logger.info("Level %s design points: %s", l, data.x_dict[l])
 
-        for x in data.x_dict[l]:
-            y_opt, metrics = simu.evaluate(x, level=l)
+            for x in data.x_dict[l]:
+                y_opt, metrics = simu.evaluate(x, level=l)
 
-            y_values.append(y_opt)
-            metrics_list.append(metrics)
+                y_values.append(y_opt)
+                metrics_list.append(metrics)
 
-        data.y_dict[l] = np.array(y_values)
-        data.metrics_dict[l] = metrics_list
+            data.y_dict[l] = np.array(y_values)
+            data.metrics_dict[l] = metrics_list
 
-    logger.info("Initial best HF observation: %.4f", np.min(data.y_dict[L]))
+        logger.info("Initial best HF observation: %.4f", np.nanmin(data.y_dict[L]))
 
-    # Launch
-    _, _ = ego.run(n_iterations = 30)
-    logger.info("Final best HF observation: %.4f", np.min(data.y_dict[L]))
+        # Launch
+        _, _ = ego.run(n_iterations = 30)
+        logger.info("Final best HF observation: %.4f", np.nanmin(data.y_dict[L]))
+        # [FIX-X1] self-contained surrogate file (reload with load_surrogate)
+        ego.export_surrogate(run.path("surrogate.json"))
 
-    # Visualize the results
-    vizualizer = ModelVisualizer(num_levels=L, 
-                                 json_filepath = "example/hartmann_6d/ego_backup.json")
-    vizualizer.plot_convergence(target = -3.32236801141551385541, \
-                                save_path = "example/hartmann_6d/convergence_plot.png")
-    vizualizer.plot_response_surface_2d(save_path = \
-                                        "example/hartmann_6d/response_surface_2d.png")
+        # Visualize the results
+        vizualizer = ModelVisualizer(num_levels=L, 
+                                     json_filepath = run.path("ego_backup.json"))
+        vizualizer.plot_convergence(target = -3.32236801141551385541, \
+                                    save_path = run.path("convergence_plot.png"))
+        vizualizer.plot_response_surface_2d(save_path = \
+                                            run.path("response_surface_2d.png"))
+        # [FIX-X3] interactive (plotly) versions of the plots
+        vizualizer.plot_convergence_interactive(target = -3.32236801141551385541, \
+                                    save_path = run.path("convergence_plot.html"))
+        vizualizer.plot_response_surface_2d_interactive(save_path = \
+                                            run.path("response_surface_2d.html"))

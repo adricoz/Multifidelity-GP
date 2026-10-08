@@ -1,0 +1,52 @@
+{
+  "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+  "interpreters": {
+    "3.14": "C:\\Users\\SIM\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+    "3.13": "C:\\ProgramData\\anaconda3\\python.exe"
+  },
+  "imports": {
+    "python 3.14 / current": "OK",
+    "python 3.14 / initial": "ModuleNotFoundError: No module named 'traitlets'",
+    "python 3.13 / current": "OK",
+    "python 3.13 / initial": "TypeError: <class 'traitlets.traitlets.Tuple'> is not a generic class"
+  },
+  "packages": {
+    "numpy": {
+      "version": "2.4.6",
+      "requires_python": ">=3.11"
+    },
+    "scipy": {
+      "version": "1.15.3",
+      "requires_python": ">=3.10"
+    },
+    "matplotlib": {
+      "version": "3.11.2",
+      "requires_python": ">=3.11"
+    },
+    "plotly": {
+      "version": "5.24.1",
+      "requires_python": ">=3.8"
+    },
+    "pytest": {
+      "version": "8.3.4",
+      "requires_python": ">=3.8"
+    },
+    "traitlets": {
+      "version": "5.14.3",
+      "requires_python": ">=3.8"
+    },
+    "neuralfoil": {
+      "version": "0.3.3",
+      "requires_python": ">=3.10"
+    },
+    "aerosandbox": {
+      "version": "4.2.10",
+      "requires_python": ">=3.10"
+    }
+  },
+  "signatures": {
+    "scipy.stats.qmc.LatinHypercube": "(d: int | numpy.integer, *, scramble: bool = True, strength: int = 1, optimization: Optional[Literal['random-cd', 'lloyd']] = None, rng: int | numpy.integer | numpy.random._generator.Generator | numpy.random.mtrand.RandomState | None = None) -> None",
+    "scipy.optimize.differential_evolution": "(func, bounds, args=(), strategy='best1bin', maxiter=1000, popsize=15, tol=0.01, mutation=(0.5, 1), recombination=0.7, rng=None, callback=None, disp=False, polish=True, init='latinhypercube', atol=0, updating='immediate', workers=1, constraints=(), x0=None, *, integrality=None, vectorized=False)",
+    "neuralfoil.get_aero_from_airfoil": "(airfoil: aerosandbox.geometry.airfoil.airfoil.Airfoil | aerosandbox.geometry.airfoil.kulfan_airfoil.KulfanAirfoil, alpha: float | numpy.ndarray, Re: float | numpy.ndarray, n_crit: float | numpy.ndarray = 9.0, xtr_upper: float | numpy.ndarray = 1.0, xtr_lower: float | numpy.ndarray = 1.0, model_size: str = 'xlarge') -> dict[str, float | numpy.ndarray]"
+  }
+}
