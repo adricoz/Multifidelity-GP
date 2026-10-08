@@ -14,7 +14,7 @@
         {"solver": "neuralfoil", "cost": 6.0, "options": {"model_size": "xxxlarge"}},
         {"solver": "xfoil", "cost": 140.0, "options": {"npane": 250, "niter": 100, "timeout": 120}}
     ],
-    "objective": {"type": "cd_at_cl", "cl_target": 0.5},
+    "objective": {"type": "cd_at_cl", "cl_target": 1.0},
     "constraints": {"min_thickness": 0.08},
     "optimization": {"doe": [24, 12, 6], "iterations": 60, "seed": 0, "estimate_rho": true, "verify_best": true},
     "paths": {}

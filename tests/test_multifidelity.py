@@ -111,10 +111,21 @@ def test_failed_points_are_excluded_from_training(forrester_data):
     assert np.all(np.isfinite(model.predict_batch(X_TEST)[0]))
 
 
-def test_to_dict_from_dict_round_trip(forrester_data):
+@pytest.mark.parametrize("use_map", [False, True])
+def test_to_dict_from_dict_round_trip(forrester_data, use_map):
     """[FIX-X1] the exported state rebuilds exactly the same model (no re-training)."""
-    model = fitted_model(forrester_data)
+    model = fitted_model(forrester_data, use_map=use_map)
     clone = MultifidelityModel.from_dict(model.to_dict())
     for a, b in zip(model.predict_batch(X_TEST), clone.predict_batch(X_TEST)):
         np.testing.assert_allclose(a, b, rtol=1e-10, atol=1e-12)
     assert clone.rhos == model.rhos
+    assert clone.use_map == use_map and all(gp.use_map == use_map for gp in clone.gps)
+
+
+def test_map_keeps_the_surrogate_accurate(forrester_data):
+    """[MAP] the lengthscale prior keeps rho and the accuracy of the maximum likelihood fit
+    on Forrester (lengthscales close to the prior mode)."""
+    model = fitted_model(forrester_data, use_map=True)
+    assert all(gp.use_map for gp in model.gps)
+    assert model.rhos[0] == pytest.approx(2.0, abs=0.1)
+    assert rmse(model) < 2.0 * rmse(fitted_model(forrester_data)) + 1e-2

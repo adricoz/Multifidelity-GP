@@ -26,6 +26,11 @@ NOISE_BOUNDS = (1e-8, 1e-2)
 JITTERS = (0.0, 1e-10, 1e-8, 1e-6)
 # value returned by the NLL when the covariance matrix cannot be factorized
 NLL_FAILURE = 1e10
+# [MAP] (alpha, beta) of the InvGamma prior on each lengthscale (MAP estimation, use_map=True).
+# Like LENGTHSCALE_BOUNDS, it assumes inputs in [0, 1]: mode beta / (alpha + 1) = 0.5, mean 1.
+# The light left tail strongly penalizes small lengthscales (overfitting, ill-conditioned K),
+# the heavy right tail lets an irrelevant dimension go to large lengthscales.
+LENGTHSCALE_PRIOR = (3.0, 2.0)
 
 
 def safe_cholesky(matrix: np.ndarray) -> tuple[np.ndarray, float]:
@@ -55,7 +60,7 @@ class GaussianProcess:
     Core of the Gaussian Process. This class handles
       the fitting and prediction of the GP model.
     """
-    def __init__(self, kernel: Kernel, seed: int = None):
+    def __init__(self, kernel: Kernel, seed: int = None, use_map: bool = False):
         self.x_train = None
         self.y_train = None
         self.kernel = kernel
@@ -71,6 +76,9 @@ class GaussianProcess:
         self.rho = None
         # [FIX-R1] local seeded random generator for the restarts (was the global np.random)
         self.rng = np.random.default_rng(seed)
+        # [MAP] True: MAP estimation of the hyperparameters (InvGamma prior on the lengthscales,
+        # see LENGTHSCALE_PRIOR) instead of the maximum likelihood
+        self.use_map = use_map
 
     def fit(self, x_train, y_train, n_restarts=3, f_prev: np.ndarray = None,
             rho_init: float = 1.0, estimate_rho: bool = False,
@@ -114,7 +122,7 @@ class GaussianProcess:
             for init_guess in self._initial_guesses(d, restarts, log_bounds):
 
                 res = minimize(self.negative_log_likelihood, init_guess,
-                               args=rho_args + (self._kernel_has_gradients(),),
+                               args=rho_args + (self._kernel_has_gradients(), self.use_map),
                                jac=self._kernel_has_gradients(),
                                bounds=log_bounds, method='L-BFGS-B')
                 if res.fun < best_nll:
@@ -150,11 +158,13 @@ class GaussianProcess:
                                 f_n: np.ndarray = None, rho_init: float = 1.0,
                                 estimate_rho: bool = False,
                                 rho_bounds: tuple[float, float] = (-5.0, 5.0),
-                                with_grad: bool = False):
+                                with_grad: bool = False, use_map: bool = False):
         """
         Negative log-likelihood (Eqs. 15-16 of the reference article) of the normalized
         residual y_n - rho * f_n, as a function of the LOG of [l_1..l_d, t1, t2, noise].
         [FIX-N2] log-space parameters, [FIX-N3] returns (nll, gradient) if with_grad.
+        [MAP] if use_map, adds -log p(l_m) of the InvGamma(alpha, beta) prior on each lengthscale
+        (LENGTHSCALE_PRIOR, constant terms dropped): negative log-posterior, MAP in l-space.
         (Was a closure inside fit(); it is a method now so that it can be unit-tested.)
         Side effect: sets the kernel parameters and the noise.
         """
@@ -183,17 +193,29 @@ class GaussianProcess:
 
         # Eqs. (15), (16) from the reference article
         nll = data_fit + 0.5 * log_det + 0.5 * n * np.log(2 * np.pi)
+
+        # [MAP] -log p(l) = (alpha + 1) log(l) + beta / l + const, for the d lengthscales only
+        # (params[d:] are t1, t2 and the noise, without prior)
+        d = self.x_train.shape[1]
+        prior_alpha, prior_beta = LENGTHSCALE_PRIOR
+        if use_map:
+            nll += np.sum((prior_alpha + 1.0) * log_params[:d] + prior_beta / params[:d])
         if not with_grad:
             #must be float for scipy
             return float(nll)
 
         # [FIX-N3] analytical gradient (GPML Eq. 5.9): 0.5 * tr((K^-1 - a a^T) dK/dlog(t)).
-        # By the envelope theorem, d(rho_hat)/dtheta is not needed (dNLL/drho = 0 at rho_hat).
+        # By the envelope theorem, d(rho_hat)/dtheta is not needed (dNLL/drho = 0 at rho_hat);
+        # this still holds with the prior, which does not depend on rho.
         w_mat = cho_solve((l_chol, True), np.eye(n)) - np.outer(alpha, alpha)
         grad = [0.5 * np.sum(w_mat * d_k)
                 for d_k in self.kernel.get_log_params_gradients(self.x_train)]
         grad.append(0.5 * self.noise * np.trace(w_mat))
-        return float(nll), np.array(grad)
+        grad = np.array(grad)
+        if use_map:
+            # [MAP] d(-log p(l)) / dlog(l) = (alpha + 1) - beta / l
+            grad[:d] += (prior_alpha + 1.0) - prior_beta / params[:d]
+        return float(nll), grad
 
     def _normalize(self, y_obs: np.ndarray, f_prev: np.ndarray,
                    rho_ref: float) -> tuple[np.ndarray, np.ndarray]:
@@ -323,12 +345,16 @@ class MultifidelityModel:
     """
     def __init__(self, l, kernel_class: Kernel, estimate_rho: bool = True,
                  rho_init: float = 1.0, rho_bounds: tuple[float, float] = (-5.0, 5.0),
-                 min_points_rho: int = None, n_restarts: int = 3, seed: int = None):
+                 min_points_rho: int = None, n_restarts: int = 3, seed: int = None,
+                 use_map: bool = False):
         self.num_levels = l
         self.kernel_class = kernel_class
+        # [MAP] MAP estimation (lengthscale prior) of the hyperparameters of every level
+        self.use_map = use_map
         # List to hold GaussianProcess instances for each fidelity level
         # [FIX-R1] each GP gets its own seed (reproducible restarts)
-        self.gps = [GaussianProcess(kernel_class(), seed=None if seed is None else seed + i)
+        self.gps = [GaussianProcess(kernel_class(), seed=None if seed is None else seed + i,
+                                    use_map=use_map)
                     for i in range(l)]
         # Initialize correlation coefficients between levels
         # (level 1 has no rho since Y(0) = 0, Sacher Eq. 9: rhos[l-2] links level l-1 to l)
@@ -456,6 +482,7 @@ class MultifidelityModel:
             "rho_init": self.rho_init,
             "rho_bounds": list(self.rho_bounds),
             "min_points_rho": self.min_points_rho,
+            "use_map": self.use_map,
             "fit_sizes": [len(self.train_data[l][1]) for l in range(1, self.num_levels + 1)],
             "levels": levels,
         }
@@ -471,7 +498,8 @@ class MultifidelityModel:
                     estimate_rho=state.get("estimate_rho", False),
                     rho_init=state.get("rho_init", 1.0),
                     rho_bounds=tuple(state.get("rho_bounds", (-5.0, 5.0))),
-                    min_points_rho=state.get("min_points_rho"))
+                    min_points_rho=state.get("min_points_rho"),
+                    use_map=state.get("use_map", False))
         model.rhos = [float(r) for r in state.get("rhos", [1.0] * (model.num_levels - 1))]
 
         for l in range(1, model.num_levels + 1):

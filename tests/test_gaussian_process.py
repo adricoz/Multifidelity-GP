@@ -3,10 +3,11 @@ import numpy as np
 import pytest
 from conftest import forrester_lf
 from scipy.optimize import check_grad
-from scipy.stats import multivariate_normal
+from scipy.special import gammaln
+from scipy.stats import invgamma, multivariate_normal
 from src.kernels import SquaredExponentialKernel
-from src.surrogate_models import (BIAS_VARIANCE_BOUNDS, LENGTHSCALE_BOUNDS, NOISE_BOUNDS,
-                                  SIGNAL_VARIANCE_BOUNDS, GaussianProcess)
+from src.surrogate_models import (BIAS_VARIANCE_BOUNDS, LENGTHSCALE_BOUNDS, LENGTHSCALE_PRIOR,
+                                  NOISE_BOUNDS, SIGNAL_VARIANCE_BOUNDS, GaussianProcess)
 
 
 @pytest.fixture
@@ -36,9 +37,28 @@ def test_nll_matches_multivariate_normal(data_3d):
     assert nll == pytest.approx(-multivariate_normal.logpdf(y_n, cov=cov), rel=1e-10)
 
 
+def test_map_adds_invgamma_prior_on_lengthscales_only(data_3d):
+    """[MAP] use_map adds -log InvGamma(l_m) (up to a constant) on l_1..l_d, not on t1, t2, noise.
+    """
+    x, y, _ = data_3d
+    gp = GaussianProcess(SquaredExponentialKernel())
+    gp.x_train = x
+    y_n, _ = gp._normalize(y, None, 1.0)
+    alpha, beta = LENGTHSCALE_PRIOR
+    constant = 3 * (alpha * np.log(beta) - gammaln(alpha))
+    for params in ([0.4, 0.6, 0.9, 1.3, 0.01, 1e-4], [0.4, 0.6, 0.9, 50.0, 1e-6, 1e-8]):
+        log_params = np.log(params)
+        prior = (gp.negative_log_likelihood(log_params, y_n, use_map=True)
+                 - gp.negative_log_likelihood(log_params, y_n))
+        expected = -np.sum(invgamma.logpdf(params[:3], a=alpha, scale=beta)) + constant
+        assert prior == pytest.approx(expected, rel=1e-9)
+
+
+@pytest.mark.parametrize("use_map", [False, True])
 @pytest.mark.parametrize("estimate_rho", [False, True])
-def test_analytical_gradient_matches_finite_differences(data_3d, estimate_rho):
-    """[FIX-N3] analytical gradient (log-space, profiled rho) vs scipy check_grad."""
+def test_analytical_gradient_matches_finite_differences(data_3d, estimate_rho, use_map):
+    """[FIX-N3] analytical gradient (log-space, profiled rho, [MAP] with or without the prior)
+    vs scipy check_grad."""
     x, y, f_prev = data_3d
     gp = GaussianProcess(SquaredExponentialKernel())
     gp.x_train = x
@@ -46,10 +66,10 @@ def test_analytical_gradient_matches_finite_differences(data_3d, estimate_rho):
     args = (y_n, f_n, 1.0, estimate_rho, (-5.0, 5.0))
 
     def func(p):
-        return gp.negative_log_likelihood(p, *args, with_grad=False)
+        return gp.negative_log_likelihood(p, *args, with_grad=False, use_map=use_map)
 
     def grad(p):
-        return gp.negative_log_likelihood(p, *args, with_grad=True)[1]
+        return gp.negative_log_likelihood(p, *args, with_grad=True, use_map=use_map)[1]
 
     for params in ([0.4, 0.6, 0.9, 1.3, 0.01, 1e-3], [1.5, 0.2, 2.0, 0.4, 1e-5, 1e-6]):
         log_params = np.log(params)

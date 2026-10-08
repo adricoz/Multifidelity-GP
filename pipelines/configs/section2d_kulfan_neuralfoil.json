@@ -14,10 +14,11 @@
     "flow": {"re": 1000000.0, "n_crit": 1.0, "xtr": [0.1, 0.1], "alpha": [-4.0, 10.0, 0.25]},
     "levels": [
         {"solver": "neuralfoil", "cost": 1.0, "options": {"model_size": "xsmall"}},
-        {"solver": "neuralfoil", "cost": 3.0, "options": {"model_size": "xxxlarge"}}
+        {"solver": "neuralfoil", "cost": 3.0, "options": {"model_size": "xxxlarge"}},
+        {"solver": "xfoil", "cost": 140.0, "options": {"npane": 250, "niter": 100, "timeout": 120}}
     ],
     "objective": {"type": "cd_at_cl", "cl_target": 0.4},
     "constraints": {"min_thickness": 0.09},
-    "optimization": {"doe": [40, 15], "iterations": 40, "seed": 0, "estimate_rho": true},
+    "optimization": {"doe": [40, 15, 6], "iterations": 40, "seed": 0, "estimate_rho": true},
     "paths": {}
 }

@@ -81,6 +81,10 @@ class AcquisitionFunction:
                 0.0, (r2_lp * delta_sigma2_lp) / np.maximum(sigma2_hat_l, 1e-12))
             #AEI = EI * cost_ratio * information_ratio
             merits[:, candidate_level - 1] = aei * cost_ratio * information_ratio
+            # small test to see how the algo explores when aei is set to 1
+            # this modification could be added to make a preliminary version of an
+            # exploratory algorithm
+            #merits[:, candidate_level - 1] = 1.0 * cost_ratio * information_ratio
         return merits
 
     def evaluate_merits(self, x: np.ndarray) -> list[float]:

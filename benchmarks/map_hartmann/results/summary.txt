@@ -1,0 +1,73 @@
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], n_HF: [5, 10, 20, 40], problem: {'ks': (1, inf), 'delta': 0.05, 'costs': (1.0, 10.0)}, MF DOE [20, 10], SF DOE [12]
+
+=== Surrogate accuracy on 2000 test points (mean over seeds; NLPD median and mean) ===
+                                rmse_rel  nlpd_median  nlpd_mean  coverage_95  fit_time_s
+n_hf model                                                                               
+5    BoTorch MF-GP (MF)            1.319        0.732      0.788        0.987       1.825
+     BoTorch SingleTaskGP (SF)     1.058        1.972      4.669        0.837       0.381
+     mfego MF (MAP)                1.067        2.309      4.408        0.836       0.044
+     mfego MF (MLE)                1.276       33.218    156.057        0.403       0.137
+     mfego SF (MAP)                1.078        2.442      4.917        0.824       0.020
+     mfego SF (MLE)                1.231       20.547    287.850        0.487       0.050
+10   BoTorch MF-GP (MF)            0.995        0.496      0.523        0.951       2.662
+     BoTorch SingleTaskGP (SF)     1.080        0.945      1.889        0.838       0.567
+     mfego MF (MAP)                0.964        0.728      1.046        0.903       0.056
+     mfego MF (MLE)                1.190        5.449     15.998        0.636       0.146
+     mfego SF (MAP)                0.976        0.701      1.029        0.904       0.019
+     mfego SF (MLE)                1.170        7.367     16.113        0.655       0.050
+20   BoTorch MF-GP (MF)            0.915        1.235      1.446        0.860       3.576
+     BoTorch SingleTaskGP (SF)     0.988        3.162      3.790        0.756       0.566
+     mfego MF (MAP)                0.900        1.063      1.551        0.851       0.097
+     mfego MF (MLE)                1.061       12.748     18.626        0.604       0.175
+     mfego SF (MAP)                0.924        1.096      1.551        0.849       0.028
+     mfego SF (MLE)                1.024        5.273     11.975        0.700       0.067
+40   BoTorch MF-GP (MF)            0.836        0.813      0.995        0.872       4.332
+     BoTorch SingleTaskGP (SF)     0.954        1.149      1.186        0.845       0.587
+     mfego MF (MAP)                0.796        0.533      0.645        0.895       0.217
+     mfego MF (MLE)                0.975        1.235      1.576        0.833       0.306
+     mfego SF (MAP)                0.833        0.578      0.676        0.892       0.052
+     mfego SF (MLE)                1.062        1.552      2.213        0.806       0.090
+
+=== MAP better than MLE (same DOE, number of seeds) ===
+     MF RMSE MF NLPD SF RMSE SF NLPD
+n_hf                                
+5       9/10   10/10    9/10   10/10
+10      9/10   10/10    8/10   10/10
+20     10/10   10/10   10/10    9/10
+40     10/10   10/10   10/10    9/10
+
+=== mfego HF-level lengthscales (prior InvGamma(3.0, 2.0), mode 0.5; bounds (0.01, 10.0)): median, share at the bounds ===
+                     ls_median  at_lower_bound  at_upper_bound
+n_hf model                                                    
+5    mfego MF (MAP)      0.491           0.000           0.000
+     mfego MF (MLE)      9.537           0.000           0.700
+     mfego SF (MAP)      0.492           0.000           0.000
+     mfego SF (MLE)      8.754           0.000           0.650
+10   mfego MF (MAP)      0.471           0.000           0.000
+     mfego MF (MLE)      7.785           0.000           0.600
+     mfego SF (MAP)      0.469           0.000           0.000
+     mfego SF (MLE)      5.922           0.167           0.450
+20   mfego MF (MAP)      0.465           0.000           0.000
+     mfego MF (MLE)      5.926           0.000           0.500
+     mfego SF (MAP)      0.480           0.000           0.000
+     mfego SF (MLE)      4.817           0.100           0.417
+40   mfego MF (MAP)      0.440           0.000           0.000
+     mfego MF (MLE)      1.031           0.050           0.183
+     mfego SF (MAP)      0.440           0.000           0.000
+     mfego SF (MLE)      1.058           0.050           0.217
+
+=== Optimization of Hartmann 6D at equal budget (250), f - f* ===
+                      final cost        best HF error         recommendation error         iterations       LF share         time / iteration (s)        
+                          median   mean        median    mean               median    mean     median  mean   median    mean               median    mean
+method                                                                                                                                                   
+BoTorch qLogEI (SF)        250.0  250.0        0.6248  0.9775               0.7058  1.0045       13.0  13.0   0.0000  0.0000               0.7321  0.7404
+mfego NN-MF-EGO (MAP)      251.0  252.4        0.2182  0.4978               0.2138  0.4642       14.0  15.4   0.0714  0.1315               0.2105  0.2148
+mfego NN-MF-EGO (MLE)      251.5  252.3        0.3266  0.8234               0.3015  0.9234       36.0  31.5   0.7031  0.5270               0.3139  0.3066
+mfego SF-EGO (MAP)         250.0  250.0        0.3638  0.5121               0.3715  0.4936       13.0  13.0   0.0000  0.0000               0.1735  0.1683
+mfego SF-EGO (MLE)         250.0  250.0        1.5324  1.3336               1.6547  1.4792       13.0  13.0   0.0000  0.0000               0.1862  0.1744
+
+=== MAP better than MLE (same DOE, number of seeds) ===
+NN-MF-EGO: best HF error           9/10
+NN-MF-EGO: recommendation error    9/10
+SF-EGO: best HF error              9/10
+SF-EGO: recommendation error       9/10

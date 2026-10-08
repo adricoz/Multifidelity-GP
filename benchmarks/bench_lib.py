@@ -117,11 +117,14 @@ class Surrogate:
 
 
 class MfegoSurrogate(Surrogate):
-    """mfego MultifidelityModel (rho computed at every level by default)."""
-    def __init__(self, multi_fidelity: bool = True, seed: int = 0, **model_kwargs):
+    """mfego MultifidelityModel (rho computed at every level by default). model_class may be a
+    subclass of MultifidelityModel (e.g. other hyperparameter priors), model_kwargs go to it."""
+    def __init__(self, multi_fidelity: bool = True, seed: int = 0,
+                 model_class: type = MultifidelityModel, **model_kwargs):
         self.multi_fidelity = multi_fidelity
         self.name = "mfego " + ("MF" if multi_fidelity else "SF")
         self.seed = seed
+        self.model_class = model_class
         self.model_kwargs = model_kwargs
         self.model = None
 
@@ -132,8 +135,8 @@ class MfegoSurrogate(Surrogate):
         for level, (x, y) in enumerate(datasets, start=1):
             data.x_dict[level], data.y_dict[level] = np.asarray(x), np.asarray(y, dtype=float)
             data.metrics_dict[level] = [{} for _ in y]
-        self.model = MultifidelityModel(len(datasets), SquaredExponentialKernel, seed=self.seed,
-                                        **self.model_kwargs)
+        self.model = self.model_class(len(datasets), SquaredExponentialKernel, seed=self.seed,
+                                      **self.model_kwargs)
         self.model.fit(data)
         return self
 
@@ -314,8 +317,11 @@ class History:
 
 
 def run_mfego(problem: HartmannMF, datasets: list, budget: float, seed: int = 0,
-              multi_fidelity: bool = True) -> History:
-    """mfego NN-MF-EGO (all the levels) or SF-EGO (highest level only) until the budget."""
+              multi_fidelity: bool = True, model_class: type = MultifidelityModel,
+              **model_kwargs) -> History:
+    """mfego NN-MF-EGO (all the levels) or SF-EGO (highest level only) until the budget.
+    model_kwargs are passed to model_class (MultifidelityModel or a subclass, e.g. use_map=True).
+    """
     datasets = datasets if multi_fidelity else datasets[-1:]
     costs = list(problem.costs) if multi_fidelity else [problem.costs[-1]]
     levels = list(range(1, problem.num_levels + 1)) if multi_fidelity else [problem.num_levels]
@@ -328,7 +334,7 @@ def run_mfego(problem: HartmannMF, datasets: list, budget: float, seed: int = 0,
         def evaluate(self, design_point, level):
             return float(problem(np.atleast_2d(design_point), levels[level - 1])[0]), {}
 
-    model = MultifidelityModel(len(datasets), SquaredExponentialKernel, seed=seed)
+    model = model_class(len(datasets), SquaredExponentialKernel, seed=seed, **model_kwargs)
     acq = AcquisitionFunction(model, data)
     ego = EGOOptimizer(data, model, Simulator(len(datasets)), acq, seed=seed,
                        save_state_path=str(Path(_tmp_dir()) / f"mfego_{seed}.json"))
