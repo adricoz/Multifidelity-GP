@@ -13,6 +13,7 @@ legacy foil.py); bdSec as `bdSec.Code.section` (bdToolbox root on sys.path).
 import importlib
 import logging
 import os
+import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -106,3 +107,35 @@ def np_llt_solver(paths: BridgePaths):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
     return _import("np_llt_solver", "Check bdFoil/NonPlanarSolver (numba, neuralfoil).")
+
+
+def _git_head(folder: Path) -> str:
+    """Branch and commit of a git clone ("" if not available)."""
+    try:
+        out = subprocess.run(["git", "-C", str(folder), "log", "-1", "--format=%h %cs"],
+                             capture_output=True, text=True, timeout=10, check=False)
+        branch = subprocess.run(["git", "-C", str(folder), "branch", "--show-current"],
+                                capture_output=True, text=True, timeout=10, check=False)
+        return f"{branch.stdout.strip()} {out.stdout.strip()}".strip()
+    except (OSError, subprocess.SubprocessError):
+        return ""
+
+
+def environment_report(paths: BridgePaths) -> dict:
+    """
+    Versions and locations a result depends on (stored with the results: e.g. NeuralFoil
+    0.2.3 and 0.3.x do not give the same polars): Python, numpy, scipy, NeuralFoil,
+    aerosandbox, numba, the bdFoil clone (branch, commit) and the executables.
+    """
+    report = {"python": sys.version.split()[0], "executable": sys.executable}
+    for name in ("numpy", "scipy", "neuralfoil", "aerosandbox", "numba"):
+        try:
+            report[name] = getattr(importlib.import_module(name), "__version__", "?")
+        except ImportError:
+            report[name] = None
+    report.update({
+        "bdfoil_root": str(paths.bdfoil_root), "bdfoil_git": _git_head(paths.bdfoil_root),
+        "soft_dir": str(paths.soft_dir),
+        "xfoil_exe": (paths.soft_dir / "xfoil.exe").is_file(),
+        "avl_exe": (paths.soft_dir / "avl_3.40b.exe").is_file()})
+    return report

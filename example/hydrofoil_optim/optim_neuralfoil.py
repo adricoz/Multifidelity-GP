@@ -84,13 +84,13 @@ def objective_function(airfoil_obj, target_cl, level, L):
     Returns:
     - (cd, cl, alpha): cd is NaN if the computation failed ([FIX-E2]).
     """
-    def erreur_cl(alpha_test):
+    def cl_error(alpha_test):
         aero = nf.get_aero_from_airfoil(
             airfoil=airfoil_obj, alpha=alpha_test, Re=5e5,
             model_size="xxxlarge", n_crit=1, xtr_upper=0.1, xtr_lower=0.1
         )
-        cl_actuel = float(np.squeeze(aero["CL"]))
-        return cl_actuel - target_cl
+        cl_current = float(np.squeeze(aero["CL"]))
+        return cl_current - target_cl
 
 
     modelclasses = ["xxsmall","xsmall","small","medium","large","xlarge","xxlarge","xxxlarge"]
@@ -110,7 +110,7 @@ def objective_function(airfoil_obj, target_cl, level, L):
             )
 
     try:
-        result = root_scalar(erreur_cl, bracket=[-5.0, 15.0], method='brentq')
+        result = root_scalar(cl_error, bracket=[-5.0, 15.0], method='brentq')
         alpha_perfect = result.root
 
         # NeuralFoil with personalized object!

@@ -30,7 +30,30 @@ NLL_FAILURE = 1e10
 # Like LENGTHSCALE_BOUNDS, it assumes inputs in [0, 1]: mode beta / (alpha + 1) = 0.5, mean 1.
 # The light left tail strongly penalizes small lengthscales (overfitting, ill-conditioned K),
 # the heavy right tail lets an irrelevant dimension go to large lengthscales.
+# Default value only: every GaussianProcess / MultifidelityModel can use its own prior
+# (argument lengthscale_prior, see benchmarks/map_hartmann/RAPPORT_MAP.md for the choice).
 LENGTHSCALE_PRIOR = (3.0, 2.0)
+# [MAP] relative margin used to flag a hyperparameter sitting at a search bound (diagnostics)
+BOUND_FLAG_MARGIN = 1.05
+
+
+def check_lengthscale_prior(prior) -> tuple[float, float]:
+    """
+    [MAP] Validates an InvGamma(alpha, beta) lengthscale prior.
+
+    Args:
+    - prior: (alpha, beta) pair with alpha > 0 and beta > 0, or None (module default).
+    Returns:
+    - (alpha, beta) as floats.
+    Raises:
+    - ValueError for an invalid prior.
+    """
+    if prior is None:
+        return tuple(float(v) for v in LENGTHSCALE_PRIOR)
+    values = tuple(float(v) for v in np.asarray(prior, dtype=float).reshape(-1))
+    if len(values) != 2 or not all(np.isfinite(v) and v > 0.0 for v in values):
+        raise ValueError(f"lengthscale_prior must be a pair (alpha > 0, beta > 0), got {prior!r}")
+    return values
 
 
 def safe_cholesky(matrix: np.ndarray) -> tuple[np.ndarray, float]:
@@ -60,7 +83,8 @@ class GaussianProcess:
     Core of the Gaussian Process. This class handles
       the fitting and prediction of the GP model.
     """
-    def __init__(self, kernel: Kernel, seed: int = None, use_map: bool = False):
+    def __init__(self, kernel: Kernel, seed: int = None, use_map: bool = False,
+                 lengthscale_prior: tuple[float, float] = None):
         self.x_train = None
         self.y_train = None
         self.kernel = kernel
@@ -78,7 +102,9 @@ class GaussianProcess:
         self.rng = np.random.default_rng(seed)
         # [MAP] True: MAP estimation of the hyperparameters (InvGamma prior on the lengthscales,
         # see LENGTHSCALE_PRIOR) instead of the maximum likelihood
-        self.use_map = use_map
+        self.use_map = bool(use_map)
+        # [MAP] (alpha, beta) of the InvGamma prior of this GP (None -> LENGTHSCALE_PRIOR)
+        self.lengthscale_prior = check_lengthscale_prior(lengthscale_prior)
 
     def fit(self, x_train, y_train, n_restarts=3, f_prev: np.ndarray = None,
             rho_init: float = 1.0, estimate_rho: bool = False,
@@ -164,7 +190,7 @@ class GaussianProcess:
         residual y_n - rho * f_n, as a function of the LOG of [l_1..l_d, t1, t2, noise].
         [FIX-N2] log-space parameters, [FIX-N3] returns (nll, gradient) if with_grad.
         [MAP] if use_map, adds -log p(l_m) of the InvGamma(alpha, beta) prior on each lengthscale
-        (LENGTHSCALE_PRIOR, constant terms dropped): negative log-posterior, MAP in l-space.
+        (self.lengthscale_prior, constant terms dropped): negative log-posterior, MAP in l-space.
         (Was a closure inside fit(); it is a method now so that it can be unit-tested.)
         Side effect: sets the kernel parameters and the noise.
         """
@@ -197,7 +223,7 @@ class GaussianProcess:
         # [MAP] -log p(l) = (alpha + 1) log(l) + beta / l + const, for the d lengthscales only
         # (params[d:] are t1, t2 and the noise, without prior)
         d = self.x_train.shape[1]
-        prior_alpha, prior_beta = LENGTHSCALE_PRIOR
+        prior_alpha, prior_beta = self.lengthscale_prior
         if use_map:
             nll += np.sum((prior_alpha + 1.0) * log_params[:d] + prior_beta / params[:d])
         if not with_grad:
@@ -335,6 +361,39 @@ class GaussianProcess:
             "rho": None if self.rho is None else float(self.rho),
         }
 
+    def diagnostics(self) -> dict:
+        """
+        [MAP] Fitted hyperparameters of the GP and the ones sitting at a search bound (a
+        lengthscale at its upper bound usually means an inactive input, at its lower bound an
+        overfitted / white-noise model; a noise at its upper bound means the bound is too tight).
+
+        Returns:
+        - dict with the estimator, the lengthscales, t1, t2, the noise (normalized and raw),
+          rho, n and the lists of lengthscale indices at the lower / upper bound.
+        """
+        if self.kernel.lengthscale is None:
+            return {"estimator": "MAP" if self.use_map else "MLE", "fitted": False}
+        lengthscales = np.asarray(self.kernel.lengthscale, dtype=float)
+        lo, hi = LENGTHSCALE_BOUNDS
+        return {
+            "fitted": True,
+            "estimator": (f"MAP InvGamma{tuple(self.lengthscale_prior)}" if self.use_map
+                          else "MLE"),
+            "n_train": 0 if self.x_train is None else int(len(self.x_train)),
+            "lengthscales": lengthscales.tolist(),
+            "signal_variance": float(self.kernel.signal_variance),
+            "bias_variance": float(self.kernel.bias_variance),
+            "noise_normalized": float(self.noise),
+            "noise_variance": self.get_noise_variance(),
+            "y_std": float(self.y_std),
+            "rho": None if self.rho is None else float(self.rho),
+            "lengthscales_at_lower_bound": np.flatnonzero(
+                lengthscales <= lo * BOUND_FLAG_MARGIN).tolist(),
+            "lengthscales_at_upper_bound": np.flatnonzero(
+                lengthscales >= hi / BOUND_FLAG_MARGIN).tolist(),
+            "noise_at_upper_bound": bool(self.noise >= NOISE_BOUNDS[1] / BOUND_FLAG_MARGIN),
+        }
+
 # [FIX-X1] registry used to rebuild a model from a JSON file
 KERNELS = {"SquaredExponentialKernel": SquaredExponentialKernel}
 
@@ -346,15 +405,19 @@ class MultifidelityModel:
     def __init__(self, l, kernel_class: Kernel, estimate_rho: bool = True,
                  rho_init: float = 1.0, rho_bounds: tuple[float, float] = (-5.0, 5.0),
                  min_points_rho: int = None, n_restarts: int = 3, seed: int = None,
-                 use_map: bool = False):
+                 use_map: bool = False, lengthscale_prior=None):
         self.num_levels = l
         self.kernel_class = kernel_class
         # [MAP] MAP estimation (lengthscale prior) of the hyperparameters of every level
-        self.use_map = use_map
+        self.use_map = bool(use_map)
+        # [MAP] InvGamma(alpha, beta) prior of each level: None (LENGTHSCALE_PRIOR), one
+        # (alpha, beta) pair for every level, or a list of l pairs (one per level)
+        self.lengthscale_priors = self._priors_per_level(lengthscale_prior, l)
         # List to hold GaussianProcess instances for each fidelity level
         # [FIX-R1] each GP gets its own seed (reproducible restarts)
         self.gps = [GaussianProcess(kernel_class(), seed=None if seed is None else seed + i,
-                                    use_map=use_map)
+                                    use_map=use_map,
+                                    lengthscale_prior=self.lengthscale_priors[i])
                     for i in range(l)]
         # Initialize correlation coefficients between levels
         # (level 1 has no rho since Y(0) = 0, Sacher Eq. 9: rhos[l-2] links level l-1 to l)
@@ -372,10 +435,43 @@ class MultifidelityModel:
         # [FIX-X1] data actually used by the last fit (exact export / reloading)
         self.train_data = {}
 
+    @staticmethod
+    def _priors_per_level(lengthscale_prior, num_levels: int) -> list[tuple[float, float]]:
+        """
+        [MAP] One validated (alpha, beta) pair per level from None, a single pair or a list of
+        num_levels pairs.
+        """
+        if lengthscale_prior is None:
+            return [check_lengthscale_prior(None)] * num_levels
+        array = np.asarray(lengthscale_prior, dtype=float)
+        if array.shape == (2,):
+            return [check_lengthscale_prior(array)] * num_levels
+        if array.shape == (num_levels, 2):
+            return [check_lengthscale_prior(pair) for pair in array]
+        raise ValueError(f"lengthscale_prior must be None, one (alpha, beta) pair or "
+                         f"{num_levels} pairs, got {lengthscale_prior!r}")
+
+    def estimator_label(self) -> str:
+        """[MAP] Readable description of the hyperparameter estimation (for the logs)."""
+        if not self.use_map:
+            return "MLE"
+        priors = sorted(set(self.lengthscale_priors))
+        if len(priors) == 1:
+            return f"MAP, InvGamma{priors[0]} lengthscale prior"
+        return "MAP, InvGamma lengthscale priors per level " + str(self.lengthscale_priors)
+
     def fit(self, experiment_data: ExperimentData) -> None:
         """
         Fit one Gaussian process to each fidelity level in the data.
         """
+        logger.debug("Fitting the multifidelity model (%s).", self.estimator_label())
+        if self.use_map:
+            x_all = np.vstack([experiment_data.get_training_data(l)[0]
+                               for l in range(1, self.num_levels + 1)])
+            if x_all.size and (x_all.min() < -1e-9 or x_all.max() > 1.0 + 1e-9):
+                logger.warning("MAP lengthscale prior defined for inputs in [0, 1], but the "
+                               "inputs span [%.3g, %.3g]: normalize them.", x_all.min(),
+                               x_all.max())
         for l in range(1, self.num_levels + 1):
             # [FIX-R4] failed evaluations (NaN) are excluded from the training data
             x_l, y_l = experiment_data.get_training_data(l)
@@ -400,6 +496,20 @@ class MultifidelityModel:
             logger.info("GP level %s trained (n=%d). Noise: %.3e | rho: %s", l, len(y_l),
                         self.gps[l - 1].get_noise_variance(),
                         "-" if l == 1 else f"{self.rhos[l - 2]:.4f}")
+            # [MAP] hyperparameters at a search bound (see GaussianProcess.diagnostics)
+            diag = self.gps[l - 1].diagnostics()
+            if diag["lengthscales_at_lower_bound"] or diag["noise_at_upper_bound"]:
+                logger.warning("GP level %s (%s): lengthscales %s at the lower bound, noise at "
+                               "the upper bound: %s (possible degenerate fit).", l,
+                               diag["estimator"], diag["lengthscales_at_lower_bound"],
+                               diag["noise_at_upper_bound"])
+
+    def diagnostics(self) -> list[dict]:
+        """
+        [MAP] GaussianProcess.diagnostics() of every level (fitted hyperparameters, rho and
+        the values at a search bound), e.g. to store them in results.json.
+        """
+        return [{"level": l + 1, **gp.diagnostics()} for l, gp in enumerate(self.gps)]
 
     def is_fitted(self) -> bool:
         """[FIX-X1] True if every GP of the model has been fitted (or rebuilt)."""
@@ -483,7 +593,8 @@ class MultifidelityModel:
             "rho_bounds": list(self.rho_bounds),
             "min_points_rho": self.min_points_rho,
             "use_map": self.use_map,
-            "fit_sizes": [len(self.train_data[l][1]) for l in range(1, self.num_levels + 1)],
+            "lengthscale_prior": [list(p) for p in self.lengthscale_priors],
+            "fit_sizes":[len(self.train_data[l][1]) for l in range(1, self.num_levels + 1)],
             "levels": levels,
         }
 
@@ -499,7 +610,9 @@ class MultifidelityModel:
                     rho_init=state.get("rho_init", 1.0),
                     rho_bounds=tuple(state.get("rho_bounds", (-5.0, 5.0))),
                     min_points_rho=state.get("min_points_rho"),
-                    use_map=state.get("use_map", False))
+                    use_map=state.get("use_map", False),
+                    # [MAP] files written before the configurable prior: module default
+                    lengthscale_prior=state.get("lengthscale_prior"))
         model.rhos = [float(r) for r in state.get("rhos", [1.0] * (model.num_levels - 1))]
 
         for l in range(1, model.num_levels + 1):

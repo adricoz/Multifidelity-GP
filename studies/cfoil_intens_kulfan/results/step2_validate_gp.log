@@ -1,0 +1,22 @@
+16:38:37 INFO step2: L3 only       MLE           RMSE/spread 0.434  NLPD -6.506  coverage 0.65
+16:38:39 INFO step2: L3 only       MAP IG(3, 2)  RMSE/spread 0.410  NLPD -7.461  coverage 0.95
+16:38:41 INFO step2: L3 only       MAP IG(3, 1)  RMSE/spread 0.435  NLPD -7.427  coverage 0.98
+16:38:42 INFO step2: L3 only       MAP IG(3, 4)  RMSE/spread 0.395  NLPD -7.324  coverage 0.91
+16:38:49 INFO step2: L1 + L3       MLE           RMSE/spread 0.217  NLPD -8.528  coverage 0.86
+16:38:53 INFO step2: L1 + L3       MAP IG(3, 2)  RMSE/spread 0.335  NLPD -8.002  coverage 0.91
+16:38:57 INFO step2: L1 + L3       MAP IG(3, 1)  RMSE/spread 0.332  NLPD -7.983  coverage 0.93
+16:39:01 INFO step2: L1 + L3       MAP IG(3, 4)  RMSE/spread 0.347  NLPD -7.950  coverage 0.91
+16:39:06 INFO step2: L2 + L3       MLE           RMSE/spread 0.218  NLPD -8.416  coverage 0.95
+16:39:10 INFO step2: L2 + L3       MAP IG(3, 2)  RMSE/spread 0.242  NLPD -8.219  coverage 0.93
+16:39:13 INFO step2: L2 + L3       MAP IG(3, 1)  RMSE/spread 0.245  NLPD -8.184  coverage 0.93
+16:39:17 INFO step2: L2 + L3       MAP IG(3, 4)  RMSE/spread 0.243  NLPD -8.182  coverage 0.93
+16:39:26 INFO step2: L1 + L2 + L3  MLE           RMSE/spread 0.218  NLPD -8.416  coverage 0.95
+16:39:32 INFO step2: L1 + L2 + L3  MAP IG(3, 2)  RMSE/spread 0.242  NLPD -8.219  coverage 0.93
+16:39:38 INFO step2: L1 + L2 + L3  MAP IG(3, 1)  RMSE/spread 0.245  NLPD -8.184  coverage 0.93
+16:39:45 INFO step2: L1 + L2 + L3  MAP IG(3, 4)  RMSE/spread 0.243  NLPD -8.183  coverage 0.93
+16:39:45 INFO step2: large-n L1 (150 points) MLE           RMSE/spread 0.071 NLPD -8.438 coverage 0.86 lengthscales [0.557, 3.376, 10.0, 4.141, 2.583, 1.592, 0.916]
+16:39:46 INFO step2: large-n L1 (150 points) MAP IG(3, 2)  RMSE/spread 0.073 NLPD -8.445 coverage 0.86 lengthscales [0.526, 2.936, 8.648, 3.598, 2.262, 1.477, 0.856]
+16:39:47 INFO step2: large-n L1 (150 points) MAP IG(3, 1)  RMSE/spread 0.073 NLPD -8.461 coverage 0.86 lengthscales [0.514, 2.846, 8.274, 3.512, 2.192, 1.45, 0.839]
+16:39:47 INFO step2: large-n L1 (150 points) MAP IG(3, 4)  RMSE/spread 0.074 NLPD -8.398 coverage 0.86 lengthscales [0.555, 3.098, 10.0, 3.717, 2.407, 1.529, 0.902]
+16:39:56 INFO step2: Chosen estimator: {'estimator': 'MAP IG(3, 2)', 'use_map': True, 'lengthscale_prior': [3.0, 2.0], 'best_map': 'MAP IG(3, 2)', 'mean_nlpd_mle_minus_map': -0.19658290061149788, 'wilcoxon_p_mle_better': 0.004651370792316811, 'mle_robust_large_n': True, 'small_n_median_nlpd': {'MLE': -0.8025123466181433, 'MAP IG(3, 2)': -7.743583231154915}, 'reason': 'MLE better on the full step 1 data (p = 0.005) but worse with few L3 points (median NLPD -0.80 vs -7.74 for MAP IG(3, 2), <= 15 L3 points, the regime of the optimization): MAP IG(3, 2) kept'}
+16:39:57 INFO step2: Step 2 done in 1.4 min

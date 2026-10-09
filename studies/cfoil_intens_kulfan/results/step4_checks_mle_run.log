@@ -1,0 +1,5 @@
+16:43:45 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.67219 at level 3
+16:43:57 INFO step4: L3 check, effective best of the surrogate (Eq. 19): measured 0.02436810064851768, predicted 0.02422 +- 0.00003 (evaluated by step 4)
+16:44:04 INFO step4: L3 check, minimum of the L3 surrogate mean (Sobol sample): measured 0.024420248634354155, predicted 0.02426 +- 0.00003 (evaluated by step 4)
+16:44:09 INFO step4: L3 check, best L1 section: measured 0.02436810064851768, predicted 0.02422 +- 0.00003 (evaluated by step 4)
+16:44:23 INFO step4: L3 check, best L2 section: measured 0.024433064407507962, predicted 0.02438 +- 0.00003 (evaluated by step 4)

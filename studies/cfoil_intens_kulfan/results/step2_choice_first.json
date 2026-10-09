@@ -1,0 +1,10 @@
+{
+  "estimator": "MLE",
+  "use_map": false,
+  "lengthscale_prior": null,
+  "best_map": "MAP IG(3, 2)",
+  "mean_nlpd_mle_minus_map": -0.19658290061149788,
+  "wilcoxon_p_mle_better": 0.004651370792316811,
+  "mle_robust_large_n": true,
+  "reason": "MLE significantly better than MAP IG(3, 2) (Wilcoxon p = 0.005) and robust in the large-n check"
+}

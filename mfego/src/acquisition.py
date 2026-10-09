@@ -1,5 +1,5 @@
 """
-This module essnetialy implements the merit function for the EGO algo.
+This module essentially implements the merit function for the EGO algorithm.
 """
 import numpy as np  # noqa: I001
 from scipy.stats import norm
@@ -11,9 +11,14 @@ class AcquisitionFunction:
     """
     Class for the acquisition/merit function Eq.20 and 24 of the reference article.
     """
-    def __init__(self, model: MultifidelityModel, data: ExperimentData):
+    def __init__(self, model: MultifidelityModel, data: ExperimentData, feasibility=None):
         self.model = model
         self.data = data
+        # [KC] optional known-constraint function: feasibility(x) with x of shape (m, d) returns
+        # a boolean array (m,), True where the point satisfies the cheap a priori constraints
+        # (e.g. geometric constraints of a section). Infeasible points get a zero merit, so the
+        # search of the next point never proposes them (None: every point is feasible).
+        self.feasibility = feasibility
         # [FIX-T3] effective best solution (Eq. 19), updated after each fit by update()
         self.x_best = None
         self.f_best = None
@@ -81,10 +86,10 @@ class AcquisitionFunction:
                 0.0, (r2_lp * delta_sigma2_lp) / np.maximum(sigma2_hat_l, 1e-12))
             #AEI = EI * cost_ratio * information_ratio
             merits[:, candidate_level - 1] = aei * cost_ratio * information_ratio
-            # small test to see how the algo explores when aei is set to 1
-            # this modification could be added to make a preliminary version of an
-            # exploratory algorithm
-            #merits[:, candidate_level - 1] = 1.0 * cost_ratio * information_ratio
+        if self.feasibility is not None:
+            # [KC] known constraints: zero merit outside the feasible domain
+            feasible = np.asarray(self.feasibility(np.atleast_2d(x)), dtype=bool).reshape(-1)
+            merits[~feasible, :] = 0.0
         return merits
 
     def evaluate_merits(self, x: np.ndarray) -> list[float]:

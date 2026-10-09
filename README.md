@@ -76,7 +76,7 @@ The program is entirely Object-Oriented (OOP). This isolates the mathematical pu
 
     Acts as the single source of truth for your Design of Experiments (DoE). It safely handles the training data
 
-    * `generate_initial_design(points_per_level, seed=42)`: Generates independent Latin Hypercube Samples (LHS) for each fidelity level
+    * `generate_initial_design(points_per_level, seed=42, feasibility=None, oversampling=20)`: Generates independent Latin Hypercube Samples (LHS) for each fidelity level (with a known-constraint function: feasible candidates of an oversampled LHS, greedy maximin selection)
     * `is_already_evaluated(level, x)`: Checks if a spatial coordinate x is already present at that level (to avoid duplicated points, which make the covariance matrix singular).
     * `add_observation(level, x_new, y_new, metrics)`: Safely appends new evaluations to the internal dictionaries. A failed evaluation (NaN/inf) is stored as NaN: it is kept (it will not be proposed again, its cost is counted) but it is excluded from the GP training (`get_training_data(level)`).
 
@@ -90,14 +90,14 @@ The program is entirely Object-Oriented (OOP). This isolates the mathematical pu
 
     Handles the non-nested recursive approximation. Relies on the `GaussianProcess` class from which it makes a list of for each level of fidelity.
 
-    * `MultifidelityModel(l, kernel_class, estimate_rho=True, rho_init=1.0, rho_bounds=(-5, 5), min_points_rho=None, seed=None)`.
-    * `MultifidelityModel.fit(data)`: Sequentially optimizes, level by level, the hyper-parameters ($\theta$, $\sigma_\epsilon$) of the discrepancy GPs by maximizing the log-marginal likelihood (Eqs. 15-16, MLE - no Leave-One-Out). The outputs are normalized and the hyper-parameters are optimized in log-space with an analytical gradient. The correlation coefficient $\rho_{(l-1)}$ is a parameter of the likelihood of **every** level $l \geq 2$, level 2 included (Sacher Eq. 15, Algorithm 1): by default (`estimate_rho=True`) it is **computed at every fit**, profiled out of the likelihood with its closed form (Le Gratiet Eq. 4.10). Options: `min_points_rho=k` keeps $\rho$ = `rho_init` while a level has fewer than $k$ points (hybrid mode), `estimate_rho=False` always uses `rho_init` (additive model). The behaviour with very few points is studied in `analysis/scripts/rho_study.py` (report, Sec. 10).
+    * `MultifidelityModel(l, kernel_class, estimate_rho=True, rho_init=1.0, rho_bounds=(-5, 5), min_points_rho=None, n_restarts=3, seed=None, use_map=False, lengthscale_prior=None)`.
+    * `MultifidelityModel.fit(data)`: Sequentially optimizes, level by level, the hyper-parameters ($\theta$, $\sigma_\epsilon$) of the discrepancy GPs by maximizing the log-marginal likelihood (Eqs. 15-16, MLE - no Leave-One-Out), or, with `use_map=True`, the log-posterior with an InvGamma($\alpha$, $\beta$) prior on each lengthscale (MAP: `(alpha + 1) ln l + beta / l` is added to the negative log-likelihood, inputs in [0, 1]). The prior is `lengthscale_prior=(alpha, beta)` (one pair, or one pair per level; default `LENGTHSCALE_PRIOR = (3, 2)`, mode 0.5), saved with the model (`to_dict` / `from_dict`). MAP is recommended: the MLE fit degenerates to a white-noise model once a level has about 80 points, and overfits with few points (`benchmarks/map_hartmann/RAPPORT_MAP.md`); the foil pipeline uses MAP by default. `diagnostics()` returns the fitted hyperparameters of every level and flags the values sitting at a search bound (also logged as a warning after each fit). The outputs are normalized and the hyper-parameters are optimized in log-space with an analytical gradient. The correlation coefficient $\rho_{(l-1)}$ is a parameter of the likelihood of **every** level $l \geq 2$, level 2 included (Sacher Eq. 15, Algorithm 1): by default (`estimate_rho=True`) it is **computed at every fit**, profiled out of the likelihood with its closed form (Le Gratiet Eq. 4.10). Options: `min_points_rho=k` keeps $\rho$ = `rho_init` while a level has fewer than $k$ points (hybrid mode), `estimate_rho=False` always uses `rho_init` (additive model). The behaviour with very few points is studied in `analysis/scripts/rho_study.py` (report, Sec. 10).
     * `MultifidelityModel.predict(x_new)` / `predict_batch(X, level=None)`: Returns the mean $\hat{f}(x)$ and variance $\hat{\sigma}^2(x)$ using the Le Gratiet recursive formulation (Eqs. 11-12), at the highest level or at any intermediate level. The covariance matrices are factorized once with a Cholesky decomposition (no explicit inverse).
     * `Kernel.get_cross_variance_vector(x, X)` / `get_cross_covariance_matrix(X_new, X)`: Optimized, vectorized spatial distance computation (squared exponential kernel of Eq. 2).
 
 4. **EGOOptimizer (The Controller)**
 
-    Implements an Ask-and-Tell architecture, making it suitable for both fast analytical functions and long CFD computations. It also relies on a separate class `AcquisitionFunction` corresponding to essentially the Merit function (Eq. 24: augmented expected improvement (Eq. 20) computed with the effective best solution (Eq. 19), cost ratio and variance reduction ratio).
+    Implements an Ask-and-Tell architecture, making it suitable for both fast analytical functions and long CFD computations. Known (cheap, a priori) constraints, e.g. the geometric constraints of a section, are handled with an optional `feasibility(x) -> bool array` function: `AcquisitionFunction(model, data, feasibility=...)` gives a zero merit to infeasible points, the random fallbacks of the optimizer draw feasible points, and `ExperimentData.generate_initial_design(..., feasibility=...)` builds a feasible, space-filling initial design (otherwise infeasible points are proposed again and again, since failed evaluations are excluded from the GP). It also relies on a separate class `AcquisitionFunction` corresponding to essentially the Merit function (Eq. 24: augmented expected improvement (Eq. 20) computed with the effective best solution (Eq. 19), cost ratio and variance reduction ratio).
 
     * `ask()`: Fits the model and maximizes the merit function (Eq. 24) to return the optimal next `x`, level and merit value, without blocking the code.
     * `tell(x, level, y, metrics)`: Ingests the result from an external solver and updates the dataset.
@@ -240,7 +240,8 @@ simu = FunctionSimulator(num_levels=L)
 We need to create a model instance of the `MultifidelityModel` class which requires a `Kernel` for the covariance computation. Kernel is an abstract class with a child class `SquaredExponentialKernel` already implemented which is exactly what is presented in the reference article (Eq. 2). The model also works with a single fidelity level (`l=1`), which is then a plain GP.
 
 ```python
-model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel, seed = 0)  # rho computed (Eq. 15)
+model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel, seed = 0,
+                           use_map = True)  # rho computed (Eq. 15), MAP hyperparameters
 ```
 
 The foundations of the optimizer are almost complete. We still need to create an instance of the `AcquisitionFunction` which is nothing else than the Merit function (Eq. 24).

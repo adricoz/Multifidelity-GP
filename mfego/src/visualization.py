@@ -1,7 +1,7 @@
 """
-Module de visualisation pour le framework MF-EGO.
-Permet de recharger un modèle depuis un fichier JSON et de tracer les surfaces de réponse
-et la convergence sans ré-entraîner les Processus Gaussiens.
+Visualization module of the MF-EGO framework.
+Reloads a trained model from a JSON file and plots the response surfaces and the convergence
+without re-training the Gaussian Processes.
 """
 import json
 
@@ -41,7 +41,7 @@ class ModelVisualizer:
         """
         Reconstruct the MultifidelityModel and its GP components in memory.
         This method injects the hyperparameters (including the noise) and recalculates
-        the inverse matrices without calling .fit()[cite: 18].
+        the inverse matrices without calling .fit().
         [FIX-X3] Uses the exact snapshot of the trained model ("surrogate" entry, same code
         as load_surrogate) so that the plots show the model that was actually trained. The
         previous reconstruction (data + hyperparameters of the previous fit) is kept for old
@@ -63,7 +63,7 @@ class ModelVisualizer:
             x_train, y_train_raw = x_train[valid], y_train_raw[valid]
             model.train_data[l + 1] = (x_train, y_train_raw)
 
-            # Inject gemoetrical hyperparams
+            # Inject the kernel hyperparameters
             gp_params = np.array(self.state["gp_params"][l])
             model.gps[l].kernel.set_params(gp_params)
             model.gps[l].noise = self.state.get("noises", [1e-6] * self.num_levels)[l]

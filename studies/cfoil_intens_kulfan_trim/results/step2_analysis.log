@@ -1,0 +1,15 @@
+18:09:06 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.71526 at level 1
+18:09:11 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.67219 at level 2
+18:09:17 INFO step2: candidate 'best AVL section of the run' = 'effective best of the surrogate'
+18:09:32 INFO step2: effective best of the surrogate: AVL 0.024287729992792266 (predicted 0.02429 +- 0.00001), NPLLT 0.026584693074802473
+18:09:42 INFO step2: minimum of the AVL surrogate mean: AVL 0.024340719424975076 (predicted 0.02434 +- 0.00002), NPLLT 0.026643401954341086
+18:09:52 INFO step2: best NPLLT section of the run: AVL 0.02438464260595361 (predicted 0.02438 +- 0.00006), NPLLT 0.026512311712767227
+18:10:02 INFO step2: previous trim run 1009_172637, best AVL section: AVL 0.024265330773407433 (predicted 0.02432 +- 0.00005), NPLLT 0.026572527352248618
+18:10:12 INFO step2: first study optimum (MAP run, CD*): AVL 0.024311891316685607 (predicted 0.02434 +- 0.00004), NPLLT 0.026560910190534345
+18:10:22 INFO step2: first study optimum (MLE run, CD*): AVL 0.024281626718823418 (predicted 0.02432 +- 0.00003), NPLLT 0.02660379124031259
+18:10:31 INFO step2: Optimum (previous trim run 1009_172637, best AVL section): AVL CD 0.02427 vs baseline 0.02454 (-1.10 %)
+18:10:32 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.71526 at level 2
+18:10:37 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.67219 at level 3
+18:11:01 INFO step2: Leave-one-out on 19 AVL points: RMSE/spread 0.217, NLPD -8.296, coverage 0.95; Spearman NPLLT surrogate vs AVL 0.96
+18:11:01 INFO step2: Run statistics: {'n_evaluations': 127, 'trim': {'NPLLT': {'n': 108, 'solves': {'1': 5, '2': 103}, 'n_interpolated': 23, 'max_abs_residual': 8.79237255820625e-05, 'max_abs_residual_last_solve': 0.00048814841621812257, 'yaw_min': 3.8283353413955585, 'yaw_max': 4.0615919087324555}, 'AVL': {'n': 19, 'solves': {'2': 19}, 'n_interpolated': 3, 'max_abs_residual': 5.1797614262520364e-05, 'max_abs_residual_last_solve': 0.0002616489673480718, 'yaw_min': 3.5201404723402083, 'yaw_max': 4.279907021810145}}, 'timing': {'NPLLT': {'doe_s': 13.879245000014635, 'loop_s': 14.274756099992373, 'verification_s': 0.0, 'mean_s': 0.2606851953704353}, 'AVL': {'doe_s': 157.25409470000886, 'loop_s': 36.88840809999965, 'verification_s': 11.940083999998024, 'mean_s': 10.846451936842449}}, 'verifications': [{'run_index': 77, 'measured': 0.02430457077158862, 'predicted': 0.024304778830386568, 'error_percent': -0.0008560406963551459}], 'best_avl_run_index': 120, 'last_avl_run_index': 120, 'avl_chosen_by_merit': [112, 120], 'root_correction_avl': {'mean_percent_of_cd': 0.24470467068165994, 'min_percent': 0.19237431884423342, 'max_percent': 0.27962706046978364}}
+18:11:04 INFO step2: Analysis written: C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim\results\analysis.json, C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim\figures\index.html

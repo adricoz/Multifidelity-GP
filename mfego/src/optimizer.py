@@ -124,6 +124,22 @@ class EGOOptimizer:
             self.current_total_cost = self.cost_history[-1]
             self._doe_cost_counted = True
 
+    def _random_point(self, max_tries: int = 1000) -> np.ndarray:
+        """
+        [KC] Uniform random point of the design domain (seeded generator). If the acquisition
+        has a known-constraint function, points are drawn until a feasible one is found
+        (rejection sampling, at most max_tries draws; the last draw is returned otherwise).
+        """
+        feasibility = getattr(self.acquisition, "feasibility", None)
+        lows = np.array([b[0] for b in self.data.bounds], dtype=float)
+        highs = np.array([b[1] for b in self.data.bounds], dtype=float)
+        for _ in range(max(1, max_tries)):
+            x = self.rng.uniform(lows, highs)
+            if feasibility is None or bool(np.asarray(feasibility(x[None, :])).reshape(-1)[0]):
+                return x
+        logger.warning("No feasible random point found in %d draws.", max_tries)
+        return x
+
     def _find_next_point(self) -> tuple[np.ndarray, int, float]:
         """Find the next point to evaluate by maximizing the acquisition function."""
         def objective_wrapper(x: np.ndarray) -> float:
@@ -220,8 +236,8 @@ class EGOOptimizer:
                 else:
                     logger.warning("Warning: Merit is 0. Random selection triggered.")
                     # [FIX-R1] seeded generator (was the global np.random)
-                    x_next = np.array([self.rng.uniform(b[0], b[1])
-                                       for b in self.data.bounds])
+                    # [KC] restricted to the feasible domain of the known constraints
+                    x_next = self._random_point()
 
             logger.info(
                 "\nNext selected point to evaluate: %s | Level: %d | Merit: %f",
@@ -241,7 +257,7 @@ class EGOOptimizer:
                     np.round(x_next, 4),
                     l_next,
                 )
-                x_next = np.array([self.rng.uniform(b[0], b[1]) for b in self.data.bounds])
+                x_next = self._random_point()
 
             # [FIX-L2] simulation time (total and per level)
             start = time.perf_counter()
