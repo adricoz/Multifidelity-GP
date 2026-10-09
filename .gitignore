@@ -25,3 +25,9 @@ example/*/*.html
 
 # benchmark environment (requirements-benchmark.txt)
 .venv-benchmark/
+
+# XFOIL polar cache of the studies (bdFoil core content-addressed cache, safe to delete)
+studies/*/results/polar_cache/
+# solver work files kept by the study scripts for inspection
+studies/*/results/step0_avl/
+studies/*/results/*_files/

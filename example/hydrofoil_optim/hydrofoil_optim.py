@@ -81,13 +81,17 @@ if __name__ == "__main__":
     costs = [1.0, 1.0][:L]  # Example costs
     initial_points = [6, 2] if L == 2 else [8]  # Number of points for each fidelity level
     SEED = 0  # [FIX-R1] reproducible run
+    # [MAP] MAP estimation of the GP hyperparameters (InvGamma prior on the lengthscales,
+    # see README.md and benchmarks/map_hartmann/RAPPORT_MAP.md); False = maximum likelihood
+    USE_MAP = True
 
     # [FIX-L1] start banner and total computation time written at the end of the log
     with RunTimer("mfego - hydrofoil example (NeuralFoil)"):
         logger.info("Run directory: %s", run.run_dir)
         data = ExperimentData(bounds=bounds, costs=costs)
         simu = FunctionSimulator(num_levels=L)
-        model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel, seed = SEED)
+        model = MultifidelityModel(l=L, kernel_class = SquaredExponentialKernel, seed = SEED,
+                                   use_map = USE_MAP)
         acq = AcquisitionFunction(model=model, data=data)
         ego = EGOOptimizer(data=data, model=model, simulator=simu, acquisition=acq, 
                            save_state_path = run.path("ego_backup.json"), seed = SEED)

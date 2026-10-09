@@ -1,6 +1,6 @@
 {
     "name": "kulfan_cd_at_cl04",
-    "description": "Minimum drag at CL = 0.4 of a Kulfan (CST) section with 3 + 3 weights (aerosandbox KulfanAirfoil, evaluated directly from its Kulfan parameters by NeuralFoil). Levels: NeuralFoil xsmall, NeuralFoil xxxlarge.",
+    "description": "Minimum drag at CL = 0.4 of a Kulfan (CST) section with 3 + 3 weights (aerosandbox KulfanAirfoil; NeuralFoil receives its Kulfan parameters raised exactly to 8 weights per side by degree elevation). Levels: NeuralFoil xsmall, NeuralFoil xxxlarge, XFOIL (bdFoil core). GP hyperparameters: MAP, InvGamma(3, 2) lengthscale prior.",
     "kind": "section2d",
     "parametrization": {"type": "kulfan", "n_points": 161, "fixed": {"leading_edge_weight": 0.0, "TE_thickness": 0.0}},
     "variables": [
@@ -19,6 +19,7 @@
     ],
     "objective": {"type": "cd_at_cl", "cl_target": 0.4},
     "constraints": {"min_thickness": 0.09},
-    "optimization": {"doe": [40, 15, 6], "iterations": 40, "seed": 0, "estimate_rho": true},
+    "optimization": {"doe": [40, 15, 6], "iterations": 40, "seed": 0, "estimate_rho": true,
+                     "use_map": true, "lengthscale_prior": [3.0, 2.0]},
     "paths": {}
 }

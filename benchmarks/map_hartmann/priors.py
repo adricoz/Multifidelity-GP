@@ -100,5 +100,10 @@ class PriorMultifidelityModel(MultifidelityModel):
     """MultifidelityModel whose GPs (every level) use the lengthscale prior `prior`."""
     def __init__(self, l, kernel_class, prior: tuple = None, seed: int = None, **kwargs):
         super().__init__(l, kernel_class, seed=seed, **kwargs)
+        self.prior = prior
         self.gps = [PriorGP(kernel_class(), seed=None if seed is None else seed + i, prior=prior)
                     for i in range(l)]
+
+    def estimator_label(self) -> str:
+        """The prior of this benchmark model (the core label would say MLE)."""
+        return "MLE" if self.prior is None else f"MAP, lengthscale prior {self.prior}"

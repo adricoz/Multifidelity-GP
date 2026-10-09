@@ -1,0 +1,44 @@
+{
+    "name": "foil3d_cfoil_kulfan",
+    "description": "Intens SY C-foil (single circular arc, R 9.8 m, wetted arc 3.25 m, chord 0.70 m, fixed area): optimization of its ONE constant Kulfan section (4+4 weights, thickness/camber form, 7 free variables) for the minimum 3D drag at equal lift (CD* = Cdprofile + Cdi (CL_ref / CL)^2, CL_ref = lift of the baseline section MC2_60_6101_1 at the same level) at a fixed attitude (heel 5 + trunk cant 3.28 deg, rake 0.5 deg, yaw 4 deg, sink 0), hull = wall (symmetry plane z = 0). Equality constraint CL2d(alpha = 0 deg) = 0.45 (NeuralFoil xxlarge, camber offset delta solved). Re 5e6, n_crit 1, xtr 0.1. Levels: NPLLT x NeuralFoil xxsmall, NPLLT x NeuralFoil xxlarge, AVL x XFOIL (bdFoil core).",
+    "kind": "foil3d",
+    "planform": {"type": "cfoil_arc", "radius": 9.8, "span": 3.25, "chord": 0.70,
+                 "taper": 1.0, "root_twist": 0.0, "tip_twist": 0.0, "cant_geom": 0.0,
+                 "tip_side": -1, "ori_y": 0.0, "ori_z": 0.0, "n_stations": 41, "kind": "FOIL"},
+    "attitude": {"heel": 5.0, "trunk_cant": 3.28, "rake": 0.5, "yaw": 4.0, "sink": 0.0},
+    "image": "wall",
+    "parametrization": {
+        "type": "kulfan", "form": "thickness_camber", "n_points": 121,
+        "fixed": {"leading_edge_weight": 0.0, "TE_thickness": 0.00197, "s_0": 0.0}
+    },
+    "variables": [
+        {"name": "t_0", "lower": 0.26, "upper": 0.50},
+        {"name": "t_1", "lower": 0.19, "upper": 0.56},
+        {"name": "t_2", "lower": 0.08, "upper": 0.24},
+        {"name": "t_3", "lower": 0.10, "upper": 0.31},
+        {"name": "s_1", "lower": -0.10, "upper": 0.10},
+        {"name": "s_2", "lower": -0.10, "upper": 0.10},
+        {"name": "s_3", "lower": -0.10, "upper": 0.10}
+    ],
+    "section_constraint": {"cl2d_target": 0.45, "alpha_deg": 0.0, "reference_model": "xxlarge",
+                           "delta_bounds": [-0.3, 0.6], "tolerance": 1e-5, "n_grid": 25},
+    "constraints": {"min_thickness": 0.1225},
+    "flow": {"re": 5000000.0, "n_crit": 1.0, "xtr": [0.1, 0.1], "alpha": [-6.0, 12.0, 0.5]},
+    "levels": [
+        {"solver": "npllt", "cost": 1.0,
+         "options": {"neuralfoil_model": "xxsmall", "nodes_count": 100}},
+        {"solver": "npllt", "cost": 1.5,
+         "options": {"neuralfoil_model": "xxlarge", "nodes_count": 100}},
+        {"solver": "avl", "cost": 30.0,
+         "options": {"npane": 250, "niter": 100, "polar_timeout": 300, "timeout": 120,
+                     "settings": {}}}
+    ],
+    "objective": {"type": "cd3d",
+                  "equal_lift_reference": {"t_0": 0.332208, "t_1": 0.376276, "t_2": 0.161338,
+                                           "t_3": 0.209012, "s_1": 0.0, "s_2": 0.0, "s_3": 0.0}},
+    "optimization": {"doe": [70, 35, 14], "iterations": 80, "seed": 0, "estimate_rho": true,
+                     "use_map": true, "lengthscale_prior": [3.0, 2.0], "n_restarts": 3,
+                     "verify_best": true, "stop_on_convergence": false,
+                     "known_constraints": true},
+    "paths": {"polar_cache": "../runs/polar_cache"}
+}

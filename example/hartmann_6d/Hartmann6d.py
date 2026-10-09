@@ -78,7 +78,7 @@ def evaluate_fidelity(x, level, L):
     """
     # security, verifies that the security level exists 
     if not (1 <= level <= L):
-        raise ValueError(f"Erreur : Le niveau {level} n'est pas défini. Il doit être entre 1 et {L}.")
+        raise ValueError(f"Level {level} is not defined: it must be between 1 and {L}.")
     
     # High fidelity case, true Hartmann function
     if level == L:

@@ -21,6 +21,7 @@
     ],
     "objective": {"type": "cd_at_cl", "cl_target": 0.5},
     "constraints": {"min_thickness": 0.08},
-    "optimization": {"doe": [24, 8], "iterations": 25, "seed": 0, "estimate_rho": true},
+    "optimization": {"doe": [24, 8], "iterations": 25, "seed": 0, "estimate_rho": true,
+                     "use_map": true, "lengthscale_prior": [3.0, 2.0]},
     "paths": {}
 }

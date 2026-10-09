@@ -1,0 +1,21 @@
+15:45:35 INFO step0: [PASS] executables: {'soft_dir': 'C:\\Users\\SIM\\Outils - banulsdesign\\bdToolbox\\soft', 'xfoil_exe': True, 'avl_exe': True}
+15:45:35 INFO step0: [PASS] neuralfoil installed: NeuralFoil 0.2.3, aerosandbox 4.2.4, numba 0.56.4, Python 3.10.14
+15:45:36 INFO step0: [PASS] arc vs bdFoil CFoil_Arc_T1: max station distance 0.00e+00 m, characteristics 0.00e+00
+15:45:36 INFO step0: [PASS] reference values (Sref, Cref, Bref): Sref 2.27497 m2 (c L = 2.27500), Cref 0.7000 m, Bref 3.24999 m (arc length 3.25)
+15:45:36 INFO step0: [PASS] positioned geometry (lower bearing at the origin, foil below z = 0): root (0.00e+00, 0.00e+00, 0.00e+00), depth 3.0805 m, 82 resampled stations
+15:45:36 INFO step0: [PASS] incidence sign (vertical root: Ainc ~ +yaw): Ainc root 4.030 deg, tip 3.786 deg for yaw 4.0 deg, cant 8.28 deg, rake 0.5 deg
+15:45:43 INFO step0: [PASS] AVL file read back (Xle Yle Zle Chord Ainc, AVL axes): 82 sections, max deviation 5.0e-05 (4 decimals written), IZsym 1 (wall)
+15:45:44 INFO step0: [PASS] CST thickness vs aerosandbox (1000 designs): max deviation 8.3e-17
+15:45:44 INFO step0: [PASS] degree elevation 4 -> 8 weights is exact: max coordinate deviation 1.1e-16
+15:45:44 INFO step0: [PASS] baseline fit of the current section: MC2_60_6101_1.xf: max t/c 0.1225, fit error 0.0044 c (4 weights), scale 1.0075
+15:45:44 INFO step0: [PASS] equal-lift reference of the configuration = baseline fit: max difference 4.7e-07 (rounded values in the config)
+15:45:44 INFO step0: [PASS] feasible fraction of the design box: 64.1 % of random designs meet {'min_thickness': 0.1225}
+15:45:44 INFO step0: [PASS] CL2d projection of the baseline: delta 0.10814, CL2d 0.450000 (target 0.45, xxlarge), 7 NeuralFoil calls, 0.13 s
+15:45:47 INFO step0: [PASS] CL2d projection of 20 random designs: delta in [0.0476, 0.1717], 0.135 s each
+15:45:48 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.71304 at level 1
+15:45:48 INFO step0: [PASS] baseline at L1 npllt (xxsmall): objective 0.02650 (CD 0.02650: Cdi 0.01806, profile 0.00844), CL 0.7130 (Cy -0.6816, Cz 0.2093), CL2d(0) seen 0.4546, 0.35 s
+15:45:48 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.71526 at level 2
+15:45:48 INFO step0: [PASS] baseline at L2 npllt (xxlarge): objective 0.02666 (CD 0.02666: Cdi 0.01812, profile 0.00854), CL 0.7153 (Cy -0.6838, Cz 0.2098), CL2d(0) seen 0.4500, 0.15 s
+15:45:58 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.67219 at level 3
+15:45:58 INFO step0: [PASS] baseline at L3 avl (XFOIL): objective 0.02454 (CD 0.02454: Cdi 0.01602, profile 0.00851), CL 0.6722 (Cy -0.6433, Cz 0.1950), CL2d(0) seen 0.4533, 9.89 s
+15:45:58 INFO step0: 17 checks, 0 failed. Results: C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan\results\step0_checks.json

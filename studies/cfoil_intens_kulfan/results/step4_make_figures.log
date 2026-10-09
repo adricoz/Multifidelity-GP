@@ -1,0 +1,7 @@
+16:44:35 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.67219 at level 3
+16:44:35 INFO step4: L3 check, effective best of the surrogate (Eq. 19): measured 0.024319051116886543, predicted 0.02432 +- 0.00001 (already evaluated by the run)
+16:44:46 INFO step4: L3 check, minimum of the L3 surrogate mean (Sobol sample): measured 0.024392056629978266, predicted 0.02435 +- 0.00009 (evaluated by step 4)
+16:44:57 INFO step4: L3 check, best L1 section: measured 0.024418681644588547, predicted 0.02446 +- 0.00013 (evaluated by step 4)
+16:45:04 INFO step4: L3 check, best L2 section: measured 0.024425312698494846, predicted 0.02435 +- 0.00012 (evaluated by step 4)
+16:45:07 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.71526 at level 2
+16:45:17 INFO step4: Baseline L3 CD 0.02454, optimum 0.02432 (0.9 %). Index: C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan\figures\index.html

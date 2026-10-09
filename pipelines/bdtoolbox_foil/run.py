@@ -33,7 +33,9 @@ from src.run_utils import RunTimer, create_run, setup_logging  # noqa: E402
 from src.surrogate_models import MultifidelityModel  # noqa: E402
 from src.visualization import ModelVisualizer  # noqa: E402
 
+from . import bridge  # noqa: E402
 from .config import load_config  # noqa: E402
+from .constraints import feasibility_function  # noqa: E402
 from .geometry import to_physical  # noqa: E402
 from .simulator import BdToolboxFoilSimulator  # noqa: E402
 
@@ -41,9 +43,17 @@ logger = logging.getLogger(__name__)
 
 
 def calibrate_costs(simulator, problem, n_points: int, seed: int = 0) -> list:
-    """Mean wall time of each level on n_points random designs (to set the costs)."""
+    """Mean wall time of each level on n_points random (feasible) designs (to set the costs)."""
     rng = np.random.default_rng(seed)
-    points = rng.random((n_points, problem.dim))
+    points = rng.random((20 * n_points, problem.dim))
+    feasibility = feasibility_function(problem) \
+        if problem.optimization.get("known_constraints", True) else None
+    if feasibility is not None:
+        points = points[feasibility(points)]
+    points = points[:n_points]
+    if not len(points):
+        raise ValueError("calibrate_costs: no feasible random design (check the constraints)")
+    n_points = len(points)
     times = []
     for level in range(1, len(problem.levels) + 1):
         start = time.perf_counter()
@@ -58,23 +68,57 @@ def calibrate_costs(simulator, problem, n_points: int, seed: int = 0) -> list:
     return times
 
 
+def verify_optimum(problem, simulator, data, model, acq, ego, run) -> bool:
+    """
+    Evaluates the optimum of the surrogate (effective best solution, Eq. 19) at the highest
+    level if it was not (the merit may favour the cheap levels), adds it to the data and
+    re-fits the model. Returns True if an evaluation was made. The verification points carry
+    the metric "verification": True.
+    """
+    top = len(problem.levels)
+    if acq.x_best is None or data.is_already_evaluated(top, acq.x_best):
+        return False
+    logger.info("Verification of the surrogate optimum at level %d: %s", top,
+                to_physical(acq.x_best, problem.variables))
+    x_best, prediction = np.array(acq.x_best, dtype=float), acq.f_best
+    y_verify, metrics_verify = simulator.evaluate(x_best, top)
+    metrics_verify["verification"] = True
+    metrics_verify["surrogate_prediction"] = prediction
+    ego.tell(x_best, top, y_verify, metrics_verify)
+    logger.info("    -> verified objective: %s (surrogate prediction %.6g)", y_verify, prediction)
+    model.fit(data)
+    acq.update()
+    ego.save_state(run.path("ego_backup.json"))
+    return True
+
+
 def run_optimization(problem, run, simulator=None) -> dict:
     """DOE, NN-MF-EGO loop, export and figures; returns the results dict."""
     opt = problem.optimization
     simulator = simulator or BdToolboxFoilSimulator(problem)
     num_levels = len(problem.levels)
     data = ExperimentData(bounds=[(0.0, 1.0)] * problem.dim, costs=problem.costs)
+    # [MAP] MAP estimation of the hyperparameters (InvGamma lengthscale prior) unless
+    # "use_map": false; the inputs are in [0, 1]^d, the domain the prior is defined for
     model = MultifidelityModel(num_levels, SquaredExponentialKernel, seed=opt["seed"],
                                estimate_rho=opt.get("estimate_rho", True),
-                               min_points_rho=opt.get("min_points_rho"))
-    acq = AcquisitionFunction(model=model, data=data)
+                               min_points_rho=opt.get("min_points_rho"),
+                               n_restarts=int(opt.get("n_restarts", 3)),
+                               use_map=bool(opt.get("use_map", True)),
+                               lengthscale_prior=opt.get("lengthscale_prior"))
+    # [KC] known geometric constraints: feasible DOE, zero merit outside the feasible domain
+    feasibility = feasibility_function(problem) if opt.get("known_constraints", True) else None
+    acq = AcquisitionFunction(model=model, data=data, feasibility=feasibility)
     ego = EGOOptimizer(data=data, model=model, simulator=simulator, acquisition=acq,
                        save_state_path=run.path("ego_backup.json"), seed=opt["seed"])
 
     logger.info("Problem %s: %d variables %s, levels %s, costs %s", problem.name, problem.dim,
                 [v.name for v in problem.variables], [lv.solver for lv in problem.levels],
                 problem.costs)
-    data.generate_initial_design(points_per_level=opt["doe"], seed=opt["seed"])
+    logger.info("GP hyperparameters: %s | known constraints: %s", model.estimator_label(),
+                "on" if feasibility is not None else "off")
+    data.generate_initial_design(points_per_level=opt["doe"], seed=opt["seed"],
+                                 feasibility=feasibility)
     for level in range(1, num_levels + 1):
         results = [simulator.evaluate(x, level) for x in data.x_dict[level]]
         data.y_dict[level] = np.array([r[0] for r in results], dtype=float)
@@ -82,21 +126,28 @@ def run_optimization(problem, run, simulator=None) -> dict:
         logger.info("DOE level %d: %d points, %d failed", level, len(results),
                     data.n_failed(level))
 
-    ego.run(n_iterations=int(opt["iterations"]),
-            stop_on_convergence=bool(opt.get("stop_on_convergence", False)))
-    # final verification: the optimum of the surrogate (effective best solution, Eq. 19) is
-    # evaluated at the highest level if it was not (the merit may favour the cheap levels)
-    if opt.get("verify_best", True) and acq.x_best is not None \
-       and not data.is_already_evaluated(num_levels, acq.x_best):
-        logger.info("Verification of the surrogate optimum at level %d: %s", num_levels,
-                    to_physical(acq.x_best, problem.variables))
-        y_verify, metrics_verify = simulator.evaluate(acq.x_best, num_levels)
-        ego.tell(acq.x_best, num_levels, y_verify, metrics_verify)
-        logger.info("    -> verified objective: %s (surrogate prediction %.6g)", y_verify,
-                    acq.f_best)
-        model.fit(data)
-        acq.update()
-        ego.save_state(run.path("ego_backup.json"))
+    # optimization loop, in chunks of "verify_every" iterations when set: after each chunk the
+    # optimum of the surrogate is evaluated at the highest level (with a large cost ratio the
+    # merit function seldom chooses the expensive level by itself)
+    iterations, every = int(opt["iterations"]), opt.get("verify_every")
+    chunks = [iterations] if not every else \
+        [int(every)] * (iterations // int(every)) + ([iterations % int(every)]
+                                                    if iterations % int(every) else [])
+    for k, n_iterations in enumerate(chunks, start=1):
+        if len(chunks) > 1:
+            logger.info("=== Optimization chunk %d/%d (%d iterations) ===", k, len(chunks),
+                        n_iterations)
+        n_before = sum(len(data.y_dict.get(level, [])) for level in data.y_dict)
+        ego.run(n_iterations=n_iterations,
+                stop_on_convergence=bool(opt.get("stop_on_convergence", False)))
+        stopped = sum(len(data.y_dict.get(level, [])) for level in data.y_dict) \
+            - n_before < n_iterations
+        # final verification (verify_best) or periodic one (verify_every)
+        if (k < len(chunks) and not stopped) or opt.get("verify_best", True):
+            verify_optimum(problem, simulator, data, model, acq, ego, run)
+        if stopped:
+            logger.info("Stopping criterion met in chunk %d: end of the loop", k)
+            break
     ego.export_surrogate(run.path("surrogate.json"))
 
     x_best, y_best = data.best_observation(num_levels)
@@ -106,7 +157,9 @@ def run_optimization(problem, run, simulator=None) -> dict:
                "best_design_normalized": None if x_best is None else x_best.tolist(),
                "best_design_physical": None if x_best is None
                                        else to_physical(x_best, problem.variables),
-               "best_metrics": level_metrics[i_best], "summary": ego.summary(log=False)}
+               "best_metrics": level_metrics[i_best], "summary": ego.summary(log=False),
+               "gp": {"estimator": model.estimator_label(), "diagnostics": model.diagnostics()},
+               "environment": bridge.environment_report(simulator.paths)}
     with open(run.path("results.json"), "w", encoding="utf-8") as f:
         json.dump(results, f, indent=4, cls=NumpyEncoder)
     logger.info("Best design (level %d): objective %.6g, %s", num_levels, y_best,

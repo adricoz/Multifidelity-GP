@@ -1,6 +1,6 @@
 {
-    "name": "naca4_cd_at_cl05",
-    "description": "Minimum drag of a continuous NACA 4-digit section at CL = 0.5 (Re = 5e5, n_crit = 1, forced transition at 10 % chord). Levels: NeuralFoil xxsmall, NeuralFoil xxxlarge, XFOIL (bdFoil core); costs measured with --calibrate-costs (1 : 6.2 : 142).",
+    "name": "naca4_cd_at_cl10",
+    "description": "Minimum drag of a continuous NACA 4-digit section at CL = 1.0 (cl_target changed from 0.5 to 1.0 in commit 6c36944; Re = 5e5, n_crit = 1, forced transition at 10 % chord). Levels: NeuralFoil xxsmall, NeuralFoil xxxlarge, XFOIL (bdFoil core); costs measured with --calibrate-costs (1 : 6.2 : 142).",
     "kind": "section2d",
     "parametrization": {"type": "naca4", "n_points": 161, "fixed": {}},
     "variables": [
@@ -16,6 +16,7 @@
     ],
     "objective": {"type": "cd_at_cl", "cl_target": 1.0},
     "constraints": {"min_thickness": 0.08},
-    "optimization": {"doe": [24, 12, 6], "iterations": 60, "seed": 0, "estimate_rho": true, "verify_best": true},
+    "optimization": {"doe": [24, 12, 6], "iterations": 60, "seed": 0, "estimate_rho": true, "verify_best": true,
+                     "use_map": true, "lengthscale_prior": [3.0, 2.0]},
     "paths": {}
 }

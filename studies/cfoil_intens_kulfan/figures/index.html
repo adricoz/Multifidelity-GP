@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C-foil section study</title>
+<style>
+:root { --surface:#fcfcfb; --page:#f9f9f7; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781;
+        --line:rgba(11,11,11,0.10); --accent:#2a78d6; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --surface:#1a1a19;
+  --page:#0d0d0d; --ink:#ffffff; --ink2:#c3c2b7; --line:rgba(255,255,255,0.10);
+  --accent:#3987e5; } }
+:root[data-theme="dark"] { --surface:#1a1a19; --page:#0d0d0d; --ink:#ffffff; --ink2:#c3c2b7;
+  --line:rgba(255,255,255,0.10); --accent:#3987e5; }
+body { margin:0; background:var(--page); color:var(--ink);
+       font-family:system-ui,-apple-system,"Segoe UI",sans-serif; }
+main { max-width:1100px; margin:0 auto; padding:24px 16px 48px; }
+h1 { font-size:22px; margin:0 0 4px; } p.sub { color:var(--ink2); margin:0 0 20px; }
+.tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px;
+         margin-bottom:24px; }
+.tile { background:var(--surface); border:1px solid var(--line); border-radius:8px;
+        padding:12px 14px; }
+.label { color:var(--ink2); font-size:13px; } .value { font-size:20px; font-weight:600;
+        margin-top:4px; }
+section { background:var(--surface); border:1px solid var(--line); border-radius:8px;
+          padding:4px 18px 10px; margin-bottom:14px; }
+h2 { font-size:16px; } li { margin:6px 0; } a { color:var(--accent); }
+</style></head><body><main>
+<h1>Intens SY C-foil: multi-fidelity optimization of the section</h1>
+<p class="sub">3 levels: NPLLT x NeuralFoil xxsmall, NPLLT x NeuralFoil xxlarge, AVL x XFOIL.
+Minimum 3D drag at equal lift (CD*), fixed attitude, CL2d(0 deg) = 0.45. See GUIDE_PIPELINE.md and RAPPORT.md.</p>
+<div class="tiles"><div class="tile"><div class="label">Baseline CD* (L3)</div><div class="value">0.02454</div></div><div class="tile"><div class="label">Optimum CD* (L3)</div><div class="value">0.02432</div></div><div class="tile"><div class="label">Drag reduction</div><div class="value">0.9 %</div></div><div class="tile"><div class="label">Evaluations L1 / L2 / L3</div><div class="value">99 / 85 / 15</div></div><div class="tile"><div class="label">GP estimator</div><div class="value">MAP, InvGamma(3.0, 2.0) lengthscale prior</div></div><div class="tile"><div class="label">Hold-out RMSE / spread</div><div class="value">33 %</div></div></div><section><h2>Step 0 - set-up</h2><ul><li><a href="step0_geometry_3d.html">Positioned C-foil, bdFoil frame, wall image</a></li><li><a href="step0_baseline_section.html">Current section, Kulfan fit, projected baseline</a></li></ul></section><section><h2>Step 1 - solver calibration</h2><ul><li><a href="step1_level_agreement.html">Same sections at the 3 levels: correlations, ranking (CD*)</a></li><li><a href="step1_level_agreement_raw_cd.html">The same with the raw CD: the levels disagree</a></li><li><a href="step1_lift_per_level.html">Why: the 3D lift of the same sections at each level</a></li><li><a href="step1_drag_breakdown.html">Induced vs profile drag per level</a></li><li><a href="step1_cl2d_per_level.html">The CL2d(0) = 0.45 constraint seen by each level</a></li><li><a href="step1_costs.html">Cost of one evaluation per level</a></li><li><a href="step1_spanwise_loading.html">Spanwise loading of the baseline, NPLLT vs AVL</a></li><li><a href="step1_mesh_convergence.html">Mesh convergence (NPLLT nodes, AVL vortices)</a></li></ul></section><section><h2>Step 2 - GP calibration</h2><ul><li><a href="step2_gp_scores.html">MLE vs MAP, single vs multi-fidelity: leave-one-out scores</a></li><li><a href="step2_leave_one_out.html">Leave-one-out predictions of the chosen GP</a></li><li><a href="step2_lengthscales.html">Fitted lengthscales per variable and level</a></li><li><a href="step2_learning_curve.html">Accuracy vs number of expensive points</a></li></ul></section><section><h2>Step 4 - optimization</h2><ul><li><a href="step4_convergence.html">Convergence and level chosen at each evaluation</a></li><li><a href="step4_sections.html">Baseline vs optimized sections</a></li><li><a href="step4_designs_parallel.html">Every evaluated section (parallel coordinates)</a></li><li><a href="step4_gp_slices_1d.html">Response surface along each variable</a></li><li><a href="step4_gp_slices_2d.html">Response surface over pairs of variables</a></li><li><a href="step4_lift_check.html">3D lift of every section (fixed attitude)</a></li><li><a href="step4_spanwise_optimum.html">Spanwise loading, baseline vs optimum</a></li><li><a href="step4_geometry_3d.html">3D view with the optimized section</a></li><li><a href="step4_holdout.html">Independent check of the response surface</a></li></ul></section></main></body></html>

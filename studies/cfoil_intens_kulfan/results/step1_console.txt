@@ -1,0 +1,117 @@
+15:46:07 INFO step1: Common design: baseline + 48 feasible sections, 3 levels each
+15:46:07 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.71304 at level 1
+15:46:07 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.71526 at level 2
+15:46:17 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.67219 at level 3
+15:46:17 INFO step1: baseline design 1/1: CD [0.026497, 0.02666, 0.024536]
+15:46:22 INFO step1: lhs design 1/48: CD [0.026489, 0.026898, 0.02472]
+15:46:28 INFO step1: lhs design 2/48: CD [0.026681, 0.02663, 0.024397]
+15:46:33 INFO step1: lhs design 3/48: CD [0.027403, 0.027396, 0.025362]
+15:46:38 INFO step1: lhs design 4/48: CD [0.027138, 0.027306, 0.025018]
+15:46:43 INFO step1: lhs design 5/48: CD [0.027195, 0.026898, 0.024905]
+15:46:48 INFO step1: lhs design 6/48: CD [0.026924, 0.026841, 0.024658]
+15:46:53 INFO step1: lhs design 7/48: CD [0.026612, 0.027121, 0.02493]
+15:46:59 INFO step1: lhs design 8/48: CD [0.026765, 0.027186, 0.025029]
+15:46:59 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 18 control points (min 0.13).
+15:46:59 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 100 control points (min 0.04).
+15:47:09 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 3, point [0.0018 0.9582 0.2696 0.011  0.1354 0.7904 0.0654]): AVL x XFOIL failed: XFOIL polar(s) failed:
+sec_f4a96a4cb0: XFOIL gave no converged point for sec_f4a96a4cb0 (npane 250: 0/37; npane 260: 0/37; npane 265: 0/37); stdout tail: '  136  2   RLX: 0.031\r\n       a = -4.500      CL =-15.5148\r\n      Cm =  3.8743     CD =  0.00626   =>   CDf =  0.04692    CDp = -0.04065\r\n\r\n Side 1 forced transition at x/c =  0.1000   16\r\n Side 2  free  transition at x/c =  0.0012    6\r\n\r\n 105   rms: 0.3923E+01   max: -.3130E+01   U at  136  2   RLX: 0.032\r\n       a = -4.500      CL =-14.7327\r\n      Cm =  3.6702     CD =  0.00628   =>   CDf =  0.04496    CDp = -0.03868\r\n VISCAL:  Convergence failed\r\n\r\n Sequence halted since previous  4 points did not converge\r\n Last-converged  alpha =   0.000    CL =   0.00000\r\n\r\n.OPERva   c>  \r\n XFOIL   c>  '
+15:47:09 INFO step1: lhs design 9/48: CD [0.028766, 0.027609, None]
+15:47:14 INFO step1: lhs design 10/48: CD [0.0264, 0.027347, 0.024887]
+15:47:19 INFO step1: lhs design 11/48: CD [0.026463, 0.027022, 0.024839]
+15:47:24 INFO step1: lhs design 12/48: CD [0.02703, 0.027283, 0.025124]
+15:47:30 INFO step1: lhs design 13/48: CD [0.026811, 0.027051, 0.024712]
+15:47:35 INFO step1: lhs design 14/48: CD [0.026819, 0.02771, 0.025383]
+15:47:35 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 1 control points (min 0.40).
+15:47:40 INFO step1: lhs design 15/48: CD [0.027021, 0.026838, 0.024755]
+15:47:45 INFO step1: lhs design 16/48: CD [0.026694, 0.026811, 0.024534]
+15:47:50 INFO step1: lhs design 17/48: CD [0.026755, 0.027489, 0.025158]
+15:47:55 INFO step1: lhs design 18/48: CD [0.026529, 0.02684, 0.024572]
+15:47:55 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 9 control points (min 0.32).
+15:48:00 INFO step1: lhs design 19/48: CD [0.027554, 0.02762, 0.025674]
+15:48:00 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 100 control points (min 0.01).
+15:48:01 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+15:48:01 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 100 control points (min 0.01).
+15:48:12 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 3, point [0.008  0.8452 0.0385 0.8481 0.3849 0.1609 0.0297]): AVL x XFOIL failed: XFOIL polar(s) failed:
+sec_fd0a4efc17: XFOIL gave no converged point for sec_fd0a4efc17 (npane 250: 0/37; npane 260: 0/37; npane 265: 0/37); stdout tail: '  143  2   RLX: 0.004\r\n       a = -4.500      CL =********\r\n      Cm = 30.2191     CD =  0.00608   =>   CDf =  0.27251    CDp = -0.26643\r\n\r\n Side 1 forced transition at x/c =  0.1000   17\r\n Side 2  free  transition at x/c =  0.0004   18\r\n\r\n 105   rms: 0.1288E+02   max: -.1011E+02   U at  143  2   RLX: 0.004\r\n       a = -4.500      CL =********\r\n      Cm = 29.9896     CD =  0.00608   =>   CDf =  0.27065    CDp = -0.26457\r\n VISCAL:  Convergence failed\r\n\r\n Sequence halted since previous  4 points did not converge\r\n Last-converged  alpha =   0.000    CL =   0.00000\r\n\r\n.OPERva   c>  \r\n XFOIL   c>  '
+15:48:12 INFO step1: lhs design 20/48: CD [0.029978, 0.028866, None]
+15:48:17 INFO step1: lhs design 21/48: CD [0.026452, 0.02766, 0.025288]
+15:48:23 INFO step1: lhs design 22/48: CD [0.026806, 0.026935, 0.024834]
+15:48:28 INFO step1: lhs design 23/48: CD [0.026872, 0.027734, 0.02541]
+15:48:33 INFO step1: lhs design 24/48: CD [0.026436, 0.027171, 0.024931]
+15:48:33 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 9 control points (min 0.30).
+15:48:33 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 98 control points (min 0.11).
+15:48:47 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 3, point [0.2329 0.9862 0.0579 0.0695 0.2673 0.0181 0.29  ]): AVL x XFOIL failed: XFOIL polar(s) failed:
+sec_417b85fe9e: sec_417b85fe9e: polar end gap: 8/37 alphas converged, missing -6, -5.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12 (npane 250: 0/37; npane 260: 8/37; npane 265: 0/37)
+15:48:47 INFO step1: lhs design 25/48: CD [0.027856, 0.027415, None]
+15:48:52 INFO step1: lhs design 26/48: CD [0.027229, 0.027702, 0.025456]
+15:48:58 INFO step1: lhs design 27/48: CD [0.026951, 0.027029, 0.024934]
+15:49:03 INFO step1: lhs design 28/48: CD [0.026077, 0.026745, 0.024547]
+15:49:08 INFO step1: lhs design 29/48: CD [0.02712, 0.02718, 0.02506]
+15:49:13 INFO step1: lhs design 30/48: CD [0.026879, 0.026825, 0.02478]
+15:49:18 INFO step1: lhs design 31/48: CD [0.026608, 0.026942, 0.024633]
+15:49:23 INFO step1: lhs design 32/48: CD [0.026551, 0.027337, 0.024947]
+15:49:23 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 14 control points (min 0.22).
+15:49:23 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 100 control points (min 0.06).
+15:49:33 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 3, point [0.2817 0.9761 0.8637 0.7552 0.1621 0.1455 0.0685]): AVL x XFOIL failed: XFOIL polar(s) failed:
+sec_0d3348417f: XFOIL gave no converged point for sec_0d3348417f (npane 250: 0/37; npane 260: 0/37; npane 265: 0/37); stdout tail: '  136  2   RLX: 0.009\r\n       a = -4.500      CL =-51.8917\r\n      Cm = 12.9959     CD =  0.00589   =>   CDf =  0.12870    CDp = -0.12282\r\n\r\n Side 1 forced transition at x/c =  0.1000   17\r\n Side 2  free  transition at x/c =  0.0009   10\r\n\r\n 105   rms: 0.8031E+01   max: -.6396E+01   U at  136  2   RLX: 0.010\r\n       a = -4.500      CL =-51.0262\r\n      Cm = 12.7747     CD =  0.00589   =>   CDf =  0.12682    CDp = -0.12093\r\n VISCAL:  Convergence failed\r\n\r\n Sequence halted since previous  4 points did not converge\r\n Last-converged  alpha =   0.000    CL =   0.00000\r\n\r\n.OPERva   c>  \r\n XFOIL   c>  '
+15:49:33 INFO step1: lhs design 33/48: CD [0.028099, 0.0283, None]
+15:49:33 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 5 control points (min 0.32).
+15:49:34 WARNING np_llt_solver: No convergence after 200 iterations (max |R| = 1.23e-03 at control point 1, 0 clamped angles, last step factor 0.0156, 0.28 s). A lifting line meeting a wall (surface_type=0) or the ysym plane at an angle has a kink singularity at its root: use a small cut-off, e.g. core_radius=0.005.
+15:49:34 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 99 control points (min 0.09).
+15:49:34 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 2, point [0.1166 0.6455 0.9003 0.8031 0.8915 0.0244 0.1435]): NPLLT did not converge (max residual 1.23e-03, 200 iterations)
+15:49:43 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 3, point [0.1166 0.6455 0.9003 0.8031 0.8915 0.0244 0.1435]): AVL x XFOIL failed: XFOIL polar(s) failed:
+sec_6ca77a3fc6: XFOIL gave no converged point for sec_6ca77a3fc6 (npane 250: 0/37; npane 260: 0/37; npane 265: 0/37); stdout tail: '  138  2   RLX: 0.000\r\n       a = -4.500      CL =********\r\n      Cm =********     CD =  0.00446   =>   CDf = 40.71006    CDp =-40.70560\r\n\r\n Side 1 forced transition at x/c =  0.1000   15\r\n Side 2  free  transition at x/c =  0.0012    8\r\n\r\n 105   rms: 0.2092E+03   max: -.1697E+03   U at  138  2   RLX: 0.000\r\n       a = -4.500      CL =********\r\n      Cm =********     CD =  0.00446   =>   CDf = 40.70865    CDp =-40.70419\r\n VISCAL:  Convergence failed\r\n\r\n Sequence halted since previous  4 points did not converge\r\n Last-converged  alpha =   0.000    CL =   0.00000\r\n\r\n.OPERva   c>  \r\n XFOIL   c>  '
+15:49:43 INFO step1: lhs design 34/48: CD [0.027756, None, None]
+15:49:43 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 8 control points (min 0.30).
+15:49:59 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 3, point [0.0757 0.8126 0.8871 0.2003 0.8373 0.7538 0.0653]): AVL x XFOIL failed: XFOIL polar(s) failed:
+sec_d46abec616: sec_d46abec616: polar end gap: 2/37 alphas converged, missing -5, -4.5, -4, -3.5, -3, -2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12 (npane 250: 0/37; npane 260: 0/37; npane 265: 2/37)
+15:49:59 INFO step1: lhs design 35/48: CD [0.027557, 0.027555, None]
+15:50:04 INFO step1: lhs design 36/48: CD [0.026691, 0.026958, 0.024892]
+15:50:09 INFO step1: lhs design 37/48: CD [0.026731, 0.027412, 0.025086]
+15:50:14 INFO step1: lhs design 38/48: CD [0.026331, 0.026862, 0.024638]
+15:50:19 INFO step1: lhs design 39/48: CD [0.026392, 0.026717, 0.02448]
+15:50:24 INFO step1: lhs design 40/48: CD [0.026376, 0.026778, 0.024547]
+15:50:29 INFO step1: lhs design 41/48: CD [0.027132, 0.026949, 0.024852]
+15:50:35 INFO step1: lhs design 42/48: CD [0.026916, 0.027063, 0.024872]
+15:50:40 INFO step1: lhs design 43/48: CD [0.026374, 0.02684, 0.024478]
+15:50:45 INFO step1: lhs design 44/48: CD [0.02691, 0.027286, 0.025107]
+15:50:50 INFO step1: lhs design 45/48: CD [0.026873, 0.027168, 0.025112]
+15:50:55 INFO step1: lhs design 46/48: CD [0.026859, 0.026794, 0.024664]
+15:51:00 INFO step1: lhs design 47/48: CD [0.026742, 0.026986, 0.024914]
+15:51:05 INFO step1: lhs design 48/48: CD [0.026998, 0.027234, 0.024982]
+15:51:06 INFO step1: Recommendation: L1: 1.2x cheaper than L2, Spearman with L3 0.556 -> questionable
+15:51:06 INFO step1: Recommendation: L2: 28.9x cheaper than L3, Spearman with L3 0.925 -> keep
+15:51:06 INFO step1: L1-L3 (equal lift): {'pearson': 0.6134, 'spearman': 0.556, 'kendall': 0.3865, 'top10_overlap': 0.25, 'slope': 0.5859, 'intercept': 0.0092, 'residual_std': 0.0002, 'mean_offset': -0.0019, 'std_low': 0.0003, 'std_high': 0.0003}
+15:51:06 INFO step1: L1-L3 (raw CD):     {'pearson': 0.1306, 'spearman': 0.1114, 'kendall': 0.0875, 'top10_overlap': 0.0, 'slope': 0.3588, 'intercept': 0.0153, 'residual_std': 0.001, 'mean_offset': -0.0019, 'std_low': 0.0004, 'std_high': 0.001}
+15:51:06 INFO step1: L2-L3 (equal lift): {'pearson': 0.9259, 'spearman': 0.9248, 'kendall': 0.7674, 'top10_overlap': 0.5, 'slope': 0.8981, 'intercept': 0.0006, 'residual_std': 0.0001, 'mean_offset': -0.0022, 'std_low': 0.0003, 'std_high': 0.0003}
+15:51:06 INFO step1: L2-L3 (raw CD):     {'pearson': -0.2203, 'spearman': -0.2116, 'kendall': -0.1163, 'top10_overlap': 0.0, 'slope': -0.5572, 'intercept': 0.04, 'residual_std': 0.001, 'mean_offset': -0.0023, 'std_low': 0.0004, 'std_high': 0.001}
+15:51:06 INFO step1: L1-L2 (equal lift): {'pearson': 0.398, 'spearman': 0.378, 'kendall': 0.2647, 'top10_overlap': 0.25, 'slope': 0.392, 'intercept': 0.0166, 'residual_std': 0.0003, 'mean_offset': 0.0003, 'std_low': 0.0003, 'std_high': 0.0003}
+15:51:06 INFO step1: L1-L2 (raw CD):     {'pearson': 0.488, 'spearman': 0.5041, 'kendall': 0.3621, 'top10_overlap': 0.25, 'slope': 0.5301, 'intercept': 0.013, 'residual_std': 0.0003, 'mean_offset': 0.0004, 'std_low': 0.0004, 'std_high': 0.0004}
+15:51:06 INFO step1: Costs: {1: 0.177, 2: 0.206, 3: 5.968}
+15:51:06 INFO step1: Failures per level: {1: 0, 2: 1, 3: 6}
+15:53:14 INFO step1: Noise L1: {'perturbation_std': 1.0785353074763586e-06, 'n_designs': 6, 'output_std': 0.0006621563226801508, 'noise_variance_ratio': 2.65306367410123e-06}
+15:53:14 INFO step1: Noise L2: {'perturbation_std': 8.612642550706146e-07, 'n_designs': 6, 'output_std': 0.0004292391016501438, 'noise_variance_ratio': 4.026004831332201e-06}
+15:53:14 INFO step1: Noise L3: {'perturbation_std': 1.8714191579379233e-06, 'n_designs': 6, 'output_std': 0.0002957423025471837, 'noise_variance_ratio': 4.004195217046511e-05}
+15:53:19 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [0].
+15:53:19 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [0].
+15:53:19 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+15:53:20 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+15:53:20 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [0].
+15:53:38 INFO step1: mesh {'level': 1, 'nodes': 25, 'CD': 0.026466, 'objective': 0.026505, 'Cdi': 0.01803, 'Cdprofile': 0.008437, 'time_s': 0.034052}
+15:53:38 INFO step1: mesh {'level': 2, 'nodes': 25, 'CD': 0.026632, 'objective': 0.026673, 'Cdi': 0.018092, 'Cdprofile': 0.00854, 'time_s': 0.065586}
+15:53:38 INFO step1: mesh {'level': 1, 'nodes': 50, 'CD': 0.026495, 'objective': 0.026474, 'Cdi': 0.018061, 'Cdprofile': 0.008434, 'time_s': 0.045321}
+15:53:38 INFO step1: mesh {'level': 2, 'nodes': 50, 'CD': 0.026661, 'objective': 0.026642, 'Cdi': 0.018123, 'Cdprofile': 0.008538, 'time_s': 0.066147}
+15:53:38 INFO step1: mesh {'level': 1, 'nodes': 100, 'CD': 0.026497, 'objective': 0.026497, 'Cdi': 0.018062, 'Cdprofile': 0.008435, 'time_s': 0.049597}
+15:53:38 INFO step1: mesh {'level': 2, 'nodes': 100, 'CD': 0.02666, 'objective': 0.02666, 'Cdi': 0.018122, 'Cdprofile': 0.008538, 'time_s': 0.070016}
+15:53:38 INFO step1: mesh {'level': 1, 'nodes': 200, 'CD': 0.026483, 'objective': 0.026511, 'Cdi': 0.018039, 'Cdprofile': 0.008444, 'time_s': 0.062526}
+15:53:38 INFO step1: mesh {'level': 2, 'nodes': 200, 'CD': 0.026644, 'objective': 0.026673, 'Cdi': 0.018098, 'Cdprofile': 0.008546, 'time_s': 0.088468}
+15:53:38 INFO step1: mesh {'level': 1, 'nodes': 400, 'CD': 0.026534, 'objective': 0.026607, 'Cdi': 0.018076, 'Cdprofile': 0.008459, 'time_s': 0.117378}
+15:53:38 INFO step1: mesh {'level': 2, 'nodes': 400, 'CD': 0.026715, 'objective': 0.026804, 'Cdi': 0.018141, 'Cdprofile': 0.008575, 'time_s': 0.174467}
+15:53:38 INFO step1: mesh {'core_radius': 0.0, 'CD': 0.028317, 'objective': 0.029681, 'Cdi': 0.019807, 'Cdprofile': 0.00851, 'error': None}
+15:53:38 INFO step1: mesh {'core_radius': 0.002, 'CD': 0.026652, 'objective': 0.026745, 'Cdi': 0.018105, 'Cdprofile': 0.008547, 'error': None}
+15:53:38 INFO step1: mesh {'core_radius': 0.005, 'CD': 0.02666, 'objective': 0.02666, 'Cdi': 0.018122, 'Cdprofile': 0.008538, 'error': None}
+15:53:38 INFO step1: mesh {'core_radius': 0.01, 'CD': 0.026624, 'objective': 0.026519, 'Cdi': 0.018085, 'Cdprofile': 0.008539, 'error': None}
+15:53:38 INFO step1: mesh {'core_radius': 0.02, 'CD': 0.026576, 'objective': 0.026321, 'Cdi': 0.018035, 'Cdprofile': 0.008541, 'error': None}
+15:53:38 INFO step1: mesh {'nspan': 100, 'CD': 0.024536, 'objective': 0.024533, 'Cdi': 0.016022, 'Cdprofile': 0.008514, 'time_s': 2.489009}
+15:53:38 INFO step1: mesh {'nspan': 205, 'CD': 0.024536, 'objective': 0.024536, 'Cdi': 0.016022, 'Cdprofile': 0.008514, 'time_s': 4.933142}
+15:53:38 INFO step1: mesh {'nspan': 300, 'CD': 0.024536, 'objective': 0.024539, 'Cdi': 0.016022, 'Cdprofile': 0.008515, 'time_s': 10.203625}
