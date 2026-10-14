@@ -1,0 +1,36 @@
+<html>
+<head><meta charset="utf-8" /></head>
+<body>
+    <div>                        <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>                <div id="a09fbcb4-a855-46a9-aaa3-051c4594c876" class="plotly-graph-div" style="height:520px; width:100%;"></div>            <script type="text/javascript">                                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("a09fbcb4-a855-46a9-aaa3-051c4594c876")) {                    Plotly.newPlot(                        "a09fbcb4-a855-46a9-aaa3-051c4594c876",                        [{"error_y":{"array":[0.00013750617262765378,0.00016299723977359753,0.0001472374270295806,0.00018960116772243123,0.00012610258972300188,7.705017783299651e-05,0.00011019886473027864,0.00012215976861993652,0.00010499383930673634,0.00011463150538916592],"color":"rgba(27,175,122,0.5)","thickness":1,"type":"data","width":0},"hovertemplate":"AVL CD %{x:.5f}\u003cbr\u003epredicted %{y:.5f}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#1baf7a","line":{"color":["#fcfcfb","#fcfcfb","#fcfcfb","#fcfcfb","#fcfcfb","#0b0b0b","#0b0b0b","#fcfcfb","#0b0b0b","#fcfcfb"],"width":2},"size":[8,8,8,8,8,13,13,8,13,8],"symbol":"diamond"},"mode":"markers","name":"AVL point predicted without itself","x":[0.02573694619283289,0.02570672483118629,0.025920008776913816,0.025937868312144004,0.02574549239409921,0.025632762134351478,0.025615148227862806,0.025741731728542487,0.025634657796011123,0.025653949027926462],"y":[0.02576680636719988,0.02572020577838122,0.02619231367533961,0.025920243103587787,0.025706625719403683,0.025719120294099555,0.025641370329682132,0.02551704367143038,0.02556204181684963,0.02556310337127443],"type":"scatter"},{"hoverinfo":"skip","line":{"color":"#898781","width":1},"mode":"lines","name":"perfect prediction","x":[0.02551704367143038,0.02619231367533961],"y":[0.02551704367143038,0.02619231367533961],"type":"scatter"}],                        {"template":{"data":{"scatter":[{"type":"scatter"}]}},"xaxis":{"title":{"text":"AVL drag at the baseline lift","font":{"color":"#52514e","size":12}},"tickfont":{"color":"#898781"},"showgrid":true,"gridcolor":"#e1e0d9","gridwidth":1,"showline":true,"linecolor":"#c3c2b7","zeroline":false,"ticks":"outside","tickcolor":"#c3c2b7"},"yaxis":{"title":{"text":"leave-one-out prediction +- 1.96 sigma","font":{"color":"#52514e","size":12}},"tickfont":{"color":"#898781"},"showgrid":true,"gridcolor":"#e1e0d9","gridwidth":1,"showline":true,"linecolor":"#c3c2b7","zeroline":false,"ticks":"outside","tickcolor":"#c3c2b7"},"title":{"font":{"size":18,"color":"#0b0b0b"},"subtitle":{"font":{"size":13,"color":"#52514e"},"text":"10 AVL points (ringed: verifications of the optimum): RMSE 113 % of their spread, 95 % coverage 70 %; Spearman NPLLT surrogate vs AVL 0.67."},"text":"Accuracy of the final surrogate on the AVL points (leave-one-out)","x":0.0,"xanchor":"left","y":0.9730769230769231,"yanchor":"top"},"font":{"family":"system-ui, -apple-system, Segoe UI, sans-serif","size":13,"color":"#0b0b0b"},"hoverlabel":{"font":{"family":"system-ui, -apple-system, Segoe UI, sans-serif"}},"legend":{"font":{"color":"#52514e"},"orientation":"h","x":0.0,"xanchor":"left","y":1.1533333333333333,"yanchor":"bottom","bgcolor":"rgba(0,0,0,0)"},"margin":{"l":80,"r":30,"t":150,"b":70},"height":520,"paper_bgcolor":"#fcfcfb","plot_bgcolor":"#fcfcfb","hovermode":"closest"},                        {"displaylogo": false, "responsive": true}                    ).then(function(){
+                            
+(function () {
+  if (!window.matchMedia || !window.matchMedia('(prefers-color-scheme: dark)').matches) return;
+  var MAP = {"#fcfcfb": "#1a1a19", "#f9f9f7": "#0d0d0d", "#0b0b0b": "#ffffff", "#52514e": "#c3c2b7", "#898781": "#898781", "#e1e0d9": "#2c2c2a", "#c3c2b7": "#383835", "#2a78d6": "#3987e5", "#eb6834": "#d95926", "#1baf7a": "#199e70", "#eda100": "#c98500", "#e87ba4": "#d55181"};
+  function hex2(v) { return ('0' + parseInt(v, 10).toString(16)).slice(-2); }
+  function swap(c) {
+    if (typeof c !== 'string') return c;
+    var s = c.trim().toLowerCase();
+    if (s[0] === '#') return MAP[s] || c;
+    var m = s.match(/^rgba?\(([^)]+)\)$/);
+    if (!m) return c;
+    var p = m[1].split(',').map(function (v) { return v.trim(); });
+    var d = MAP['#' + hex2(p[0]) + hex2(p[1]) + hex2(p[2])];
+    if (!d) return c;
+    var rgb = [1, 3, 5].map(function (i) { return parseInt(d.substr(i, 2), 16); });
+    return p.length > 3 ? 'rgba(' + rgb.join(',') + ',' + p[3] + ')' : 'rgb(' + rgb.join(',') + ')';
+  }
+  function deep(o) {
+    if (o === null || o === undefined || ArrayBuffer.isView(o)) return o;
+    if (Array.isArray(o)) return o.map(deep);
+    if (typeof o === 'object') { var r = {}; for (var k in o) r[k] = deep(o[k]); return r; }
+    return swap(o);
+  }
+  var gd = document.getElementById('a09fbcb4-a855-46a9-aaa3-051c4594c876');
+  document.body.style.background = MAP['#f9f9f7'];
+  Plotly.react(gd, gd.data.map(deep), deep(gd.layout));
+})();
+
+                        })                };                            </script>        </div>
+</body>
+</html>

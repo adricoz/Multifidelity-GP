@@ -1,0 +1,468 @@
+{
+  "run_dir": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\studies\\cfoil_intens_kulfan_trim_2\\runs\\1013_160754",
+  "baseline": {
+    "name": "NACA 4412",
+    "physical": {
+      "t_0": 0.346185,
+      "t_1": 0.299941,
+      "t_2": 0.278219,
+      "t_3": 0.289115,
+      "s_1": 0.097495,
+      "s_2": 0.055521,
+      "s_3": 0.104097
+    },
+    "x": [
+      0.4872833333333334,
+      0.2971378378378378,
+      0.7800999999999999,
+      0.11393749999999986,
+      0.78998,
+      0.6220840000000001,
+      0.816388
+    ]
+  },
+  "baseline_cd_avl": 0.025648051968996357,
+  "best_cd_avl": 0.025615148227862806,
+  "gain_percent": -0.12828943567848955,
+  "best_source": "best AVL section of the run",
+  "best_design_normalized": [
+    0.5413136889797621,
+    0.3462104313490683,
+    0.618602691173217,
+    0.24156662733877787,
+    0.4386684177042879,
+    0.19432119913639118,
+    0.5100767645215301
+  ],
+  "best_design_physical": {
+    "t_0": 0.36239410669392863,
+    "t_1": 0.31809785959915526,
+    "t_2": 0.24753451132291124,
+    "t_3": 0.2993253301871022,
+    "s_1": 0.009667104426071965,
+    "s_2": -0.05141970021590221,
+    "s_3": 0.02751919113038251
+  },
+  "measured": {
+    "baseline": {
+      "1": {
+        "value": 0.02666570813234221,
+        "CD": 0.026665708132342203,
+        "CL": 0.7103759594536356,
+        "Cy": -0.6791109097450535,
+        "Cz": 0.20842834748401945,
+        "Cdi": 0.017913292495051934,
+        "Cdprofile": 0.008752415637290276,
+        "trim_yaw": 4.0,
+        "trim_solves": 1,
+        "trim_residual": 0.0,
+        "trim_interpolated": false,
+        "delta": 0.036280017868028896,
+        "thickness": 0.12000012627300048,
+        "cl2d_check_min": 0.4500000207566173,
+        "error": null
+      },
+      "2": {
+        "value": 0.025648051968996357,
+        "CD": 0.025648051968996357,
+        "CL": 0.6907092124041782,
+        "Cy": -0.66095,
+        "Cz": 0.20056,
+        "Cdi": 0.0169773,
+        "Cdprofile": 0.008670751968996356,
+        "trim_yaw": 4.0,
+        "trim_solves": 1,
+        "trim_residual": 0.0,
+        "trim_interpolated": false,
+        "delta": 0.036280017868028896,
+        "thickness": 0.12000012627300048,
+        "cl2d_check_min": 0.4492,
+        "error": null
+      }
+    },
+    "effective best of the surrogate": {
+      "1": {
+        "value": 0.026528178514351054,
+        "CD": 0.02652817531594374,
+        "CL": 0.7103758959816182,
+        "Cy": -0.6791225022355296,
+        "Cz": 0.20839035618051038,
+        "Cdi": 0.017898212865480545,
+        "Cdprofile": 0.0086299624504632,
+        "trim_yaw": 3.9729547066795003,
+        "trim_solves": 3,
+        "trim_residual": -8.934989504509525e-08,
+        "trim_interpolated": false,
+        "delta": 0.1101644741669127,
+        "thickness": 0.12333837136577094,
+        "cl2d_check_min": 0.4500001116273531,
+        "error": null
+      },
+      "2": {
+        "value": 0.02561535881504033,
+        "CD": 0.025615570104509672,
+        "CL": 0.6907135210056338,
+        "Cy": -0.661,
+        "Cz": 0.20041,
+        "Cdi": 0.016936,
+        "Cdprofile": 0.008679570104509673,
+        "trim_yaw": 4.045114365473394,
+        "trim_solves": 3,
+        "trim_residual": 6.237938307813851e-06,
+        "trim_interpolated": false,
+        "delta": 0.1101644741669127,
+        "thickness": 0.12333837136577094,
+        "cl2d_check_min": 0.4506,
+        "error": null
+      },
+      "prediction": {
+        "mean": 0.0256151483143318,
+        "sd": 1.6735297988250156e-05
+      }
+    },
+    "minimum of the AVL surrogate mean": {
+      "1": {
+        "value": 0.026595566094064174,
+        "CD": 0.026595611326570845,
+        "CL": 0.710376856542235,
+        "Cy": -0.6791176863621703,
+        "Cz": 0.20840932412183516,
+        "Cdi": 0.017909126379626657,
+        "Cdprofile": 0.008686484946944205,
+        "trim_yaw": 3.992495533527762,
+        "trim_solves": 2,
+        "trim_residual": 1.2628363720180823e-06,
+        "trim_interpolated": false,
+        "delta": 0.1014638212734213,
+        "thickness": 0.12566103942645782,
+        "cl2d_check_min": 0.45000000007271035,
+        "error": null
+      },
+      "2": {
+        "value": NaN,
+        "CD": null,
+        "CL": null,
+        "Cy": null,
+        "Cz": null,
+        "Cdi": null,
+        "Cdprofile": null,
+        "trim_yaw": null,
+        "trim_solves": null,
+        "trim_residual": null,
+        "trim_interpolated": null,
+        "delta": 0.1014638212734213,
+        "thickness": 0.12566103942645782,
+        "cl2d_check_min": null,
+        "error": "trim on yaw: target CL 0.69071 out of reach within yaw bounds [3.9, 4.1]"
+      },
+      "prediction": {
+        "mean": 0.025623729670512088,
+        "sd": 6.320334487243519e-05
+      }
+    },
+    "best NPLLT section of the run": {
+      "1": {
+        "value": 0.026466923513936806,
+        "CD": 0.02646773434501499,
+        "CL": 0.7103920409617188,
+        "Cy": -0.6791276977928953,
+        "Cz": 0.2084284576354159,
+        "Cdi": 0.017909217882127938,
+        "Cdprofile": 0.008558516462887049,
+        "trim_yaw": 3.986998521502559,
+        "trim_solves": 2,
+        "trim_residual": 2.2638024090168207e-05,
+        "trim_interpolated": false,
+        "delta": 0.14224108895581447,
+        "thickness": 0.1251875027627606,
+        "cl2d_check_min": 0.4500000312619229,
+        "error": null
+      },
+      "2": {
+        "value": NaN,
+        "CD": null,
+        "CL": null,
+        "Cy": null,
+        "Cz": null,
+        "Cdi": null,
+        "Cdprofile": null,
+        "trim_yaw": null,
+        "trim_solves": null,
+        "trim_residual": null,
+        "trim_interpolated": null,
+        "delta": 0.14224108895581447,
+        "thickness": 0.1251875027627606,
+        "cl2d_check_min": null,
+        "error": "AVL x XFOIL failed: XFOIL polar(s) failed:\nsec_d99708d74a: sec_d99708d74a: polar end gap: 36/37 alphas converged, missing -6 (npane 250: 36/37; npane 260: 36/37; npane 265: 36/37)"
+      },
+      "prediction": {
+        "mean": 0.025706894083686392,
+        "sd": 4.7824734687763746e-05
+      }
+    },
+    "previous trim run 1012_173702, best AVL section": {
+      "1": {
+        "value": 0.026479078893792918,
+        "CD": 0.026480350621415433,
+        "CL": 0.7104011849708018,
+        "Cy": -0.6791370183032547,
+        "Cz": 0.20842925413214952,
+        "Cdi": 0.017907518888910602,
+        "Cdprofile": 0.00857283173250483,
+        "trim_yaw": 3.9821723883503872,
+        "trim_solves": 2,
+        "trim_residual": 3.5510094099493175e-05,
+        "trim_interpolated": false,
+        "delta": 0.1260275982237459,
+        "thickness": 0.12420330599183084,
+        "cl2d_check_min": 0.45000001597082007,
+        "error": null
+      },
+      "2": {
+        "value": 0.025637037239508595,
+        "CD": 0.025637063832775614,
+        "CL": 0.6907097545279058,
+        "Cy": -0.66099,
+        "Cz": 0.20043,
+        "Cdi": 0.016941,
+        "Cdprofile": 0.008696063832775611,
+        "trim_yaw": 3.993517780960109,
+        "trim_solves": 2,
+        "trim_residual": 7.848798277932855e-07,
+        "trim_interpolated": false,
+        "delta": 0.1260275982237459,
+        "thickness": 0.12420330599183084,
+        "cl2d_check_min": 0.451,
+        "error": null
+      },
+      "prediction": {
+        "mean": 0.025686570985790847,
+        "sd": 4.660911691721262e-05
+      }
+    },
+    "optimum": {
+      "1": {
+        "value": 0.026528178514351054,
+        "CD": 0.02652817531594374,
+        "CL": 0.7103758959816182,
+        "Cy": -0.6791225022355296,
+        "Cz": 0.20839035618051038,
+        "Cdi": 0.017898212865480545,
+        "Cdprofile": 0.0086299624504632,
+        "trim_yaw": 3.9729547066795003,
+        "trim_solves": 2,
+        "trim_residual": -8.934989504509525e-08,
+        "trim_interpolated": false,
+        "delta": 0.1101644741669127,
+        "thickness": 0.12333837136577094,
+        "cl2d_check_min": 0.4500001116273531,
+        "error": null
+      },
+      "2": {
+        "value": 0.02561535881504033,
+        "CD": 0.025615570104509672,
+        "CL": 0.6907135210056338,
+        "Cy": -0.661,
+        "Cz": 0.20041,
+        "Cdi": 0.016936,
+        "Cdprofile": 0.008679570104509673,
+        "trim_yaw": 4.045114365473394,
+        "trim_solves": 2,
+        "trim_residual": 6.237938307813851e-06,
+        "trim_interpolated": false,
+        "delta": 0.1101644741669127,
+        "thickness": 0.12333837136577094,
+        "cl2d_check_min": 0.4506,
+        "error": null
+      }
+    }
+  },
+  "leave_one_out": {
+    "n": 10,
+    "rmse": 0.00012214772088972906,
+    "rmse_relative": 1.1257196383477268,
+    "nlpd": -6.933841621379093,
+    "coverage95": 0.7,
+    "spearman_npllt_surrogate_vs_avl": 0.6727272727272726
+  },
+  "spearman_candidates_npllt_vs_avl": {
+    "candidates": null,
+    "candidates_and_baseline": 0.5,
+    "n_candidates": 2
+  },
+  "predictions_of_candidates": {
+    "effective best of the surrogate": {
+      "in_run_data": true,
+      "measured": 0.02561535881504033,
+      "predicted": 0.0256151483143318,
+      "sd": 1.6735297988250156e-05,
+      "z": 0.012578246809735528,
+      "error_percent": 0.0008217821187195888
+    },
+    "previous trim run 1012_173702, best AVL section": {
+      "in_run_data": false,
+      "measured": 0.025637037239508595,
+      "predicted": 0.025686570985790847,
+      "sd": 4.660911691721262e-05,
+      "z": -1.0627480106571061,
+      "error_percent": -0.19283907653401064
+    }
+  },
+  "run_statistics": {
+    "n_evaluations": 235,
+    "trim": {
+      "NPLLT": {
+        "n": 182,
+        "solves": {
+          "1": 6,
+          "2": 176
+        },
+        "n_interpolated": 31,
+        "max_abs_residual": 9.938553087305236e-05,
+        "max_abs_residual_last_solve": 0.0008281056392778881,
+        "yaw_min": 3.9160593554175747,
+        "yaw_max": 4.090673067129797
+      },
+      "AVL": {
+        "n": 10,
+        "solves": {
+          "2": 10
+        },
+        "n_interpolated": 0,
+        "max_abs_residual": 3.735871627816343e-05,
+        "max_abs_residual_last_solve": 3.735871627816343e-05,
+        "yaw_min": 3.905835973358161,
+        "yaw_max": 4.091511139279489
+      }
+    },
+    "timing": {
+      "NPLLT": {
+        "doe_s": 74.64465429999473,
+        "loop_s": 67.36732759999722,
+        "verification_s": 0.0,
+        "mean_s": 0.7396457390624581
+      },
+      "AVL": {
+        "doe_s": 488.18929229998685,
+        "loop_s": 138.9991641000015,
+        "verification_s": 69.68662670000049,
+        "mean_s": 16.206397281395088
+      }
+    },
+    "verifications": [
+      {
+        "run_index": 141,
+        "measured": 0.025632762134351478,
+        "predicted": 0.025563574203926617,
+        "error_percent": 0.2706504570641498
+      },
+      {
+        "run_index": 182,
+        "measured": 0.025615148227862806,
+        "predicted": 0.02561213100318546,
+        "error_percent": 0.011780451524989865
+      },
+      {
+        "run_index": 193,
+        "measured": NaN,
+        "predicted": 0.02559933771847018,
+        "error_percent": NaN
+      },
+      {
+        "run_index": 204,
+        "measured": NaN,
+        "predicted": 0.02553952082645804,
+        "error_percent": NaN
+      },
+      {
+        "run_index": 215,
+        "measured": 0.025634657796011123,
+        "predicted": 0.02556364046040259,
+        "error_percent": 0.27780603360674555
+      }
+    ],
+    "best_avl_run_index": 182,
+    "last_avl_run_index": 235,
+    "avl_chosen_by_merit": [
+      212,
+      218,
+      225,
+      227,
+      232,
+      233,
+      234,
+      235
+    ],
+    "root_correction_avl": {
+      "mean_percent_of_cd": 0.21320965622306484,
+      "min_percent": 0.17876385112071605,
+      "max_percent": 0.24039874610632614
+    }
+  },
+  "lift_residual_optimum": {
+    "1": -8.934989504509525e-08,
+    "2": 6.237938307813851e-06
+  },
+  "evaluations": {
+    "1": 192,
+    "2": 43
+  },
+  "verifications": 5,
+  "gp": {
+    "estimator": "MAP, InvGamma(3.0, 2.0) lengthscale prior",
+    "diagnostics": [
+      {
+        "level": 1,
+        "fitted": true,
+        "estimator": "MAP InvGamma(3.0, 2.0)",
+        "n_train": 182,
+        "lengthscales": [
+          0.2290093079989156,
+          0.9872055517944743,
+          2.0504660331197306,
+          3.4584204253764357,
+          0.8573666197088684,
+          0.9664160100428599,
+          0.4520171994664751
+        ],
+        "signal_variance": 2.170897543009794,
+        "bias_variance": 5.999509223291788,
+        "noise_normalized": 0.002184198702588262,
+        "noise_variance": 2.0602621415215272e-10,
+        "y_std": 0.0003071249994435061,
+        "rho": null,
+        "lengthscales_at_lower_bound": [],
+        "lengthscales_at_upper_bound": [],
+        "noise_at_upper_bound": false
+      },
+      {
+        "level": 2,
+        "fitted": true,
+        "estimator": "MAP InvGamma(3.0, 2.0)",
+        "n_train": 10,
+        "lengthscales": [
+          0.558876760950329,
+          0.5404417522923797,
+          0.6022251122447456,
+          0.5975710657776026,
+          0.4571692708310117,
+          0.3603416886190784,
+          0.4559987612635002
+        ],
+        "signal_variance": 1.4267154497616892,
+        "bias_variance": 9.867408002634984e-05,
+        "noise_normalized": 9.997386200224367e-07,
+        "noise_variance": 9.391832837618036e-15,
+        "y_std": 9.692413691381225e-05,
+        "rho": 1.0001710088046982,
+        "lengthscales_at_lower_bound": [],
+        "lengthscales_at_upper_bound": [],
+        "noise_at_upper_bound": false
+      }
+    ]
+  },
+  "costs": [
+    1.0,
+    34.95
+  ]
+}

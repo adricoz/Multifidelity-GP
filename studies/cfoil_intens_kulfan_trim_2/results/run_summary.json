@@ -1,0 +1,287 @@
+{
+  "run_dir": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\studies\\cfoil_intens_kulfan_trim_2\\runs\\1013_160754",
+  "cost_measurement": {
+    "seconds": {
+      "1": 0.7455626333333688,
+      "2": 26.058427566668495
+    },
+    "relative": {
+      "1": 1.0,
+      "2": 34.95135941854103
+    },
+    "n_sections": 3,
+    "solver_seconds": {
+      "1": [
+        0.29035640000074636,
+        0.4742206000009901,
+        0.28728919999775826
+      ],
+      "2": [
+        25.663487000001624
+      ]
+    },
+    "projection_seconds": [
+      0.4426545999995142,
+      0.3717614999986836,
+      0.37040560000241385
+    ]
+  },
+  "costs": [
+    1.0,
+    34.95
+  ],
+  "reference_lift": {
+    "1": 0.7103759594536356,
+    "2": 0.6907092124041782
+  },
+  "baseline": {
+    "name": "NACA 4412",
+    "physical": {
+      "t_0": 0.346185,
+      "t_1": 0.299941,
+      "t_2": 0.278219,
+      "t_3": 0.289115,
+      "s_1": 0.097495,
+      "s_2": 0.055521,
+      "s_3": 0.104097
+    },
+    "x": [
+      0.4872833333333334,
+      0.2971378378378378,
+      0.7800999999999999,
+      0.11393749999999986,
+      0.78998,
+      0.6220840000000001,
+      0.816388
+    ]
+  },
+  "feasible_share": {
+    "min_thickness": 0.68463134765625,
+    "Ixx": 0.63623046875,
+    "J": 0.61590576171875,
+    "thickness_0.90": 0.692626953125,
+    "thickness_0.95": 0.7891845703125,
+    "wiggliness": 0.3330078125,
+    "all": 0.12249755859375
+  },
+  "results": {
+    "problem": "cfoil_intens_kulfan_trim_2",
+    "best_objective": 0.025615148227862806,
+    "best_design_normalized": [
+      0.5413136889797621,
+      0.3462104313490683,
+      0.618602691173217,
+      0.24156662733877787,
+      0.4386684177042879,
+      0.19432119913639118,
+      0.5100767645215301
+    ],
+    "best_design_physical": {
+      "t_0": 0.36239410669392863,
+      "t_1": 0.31809785959915526,
+      "t_2": 0.24753451132291124,
+      "t_3": 0.2993253301871022,
+      "s_1": 0.009667104426071965,
+      "s_2": -0.05141970021590221,
+      "s_3": 0.02751919113038251
+    },
+    "best_metrics": {
+      "level": 2,
+      "solver": "avl",
+      "evaluation": 188,
+      "cl2d_reference": 0.4500000723735035,
+      "cl2d_reference_confidence": 0.9582821313454284,
+      "projection_calls": 0,
+      "section": "sec_0290ff07cd",
+      "thickness": 0.12333837136577094,
+      "leading_edge_weight": 0.0,
+      "TE_thickness": 0.00197,
+      "s_0": 0.0,
+      "t_0": 0.36239410669392863,
+      "t_1": 0.31809785959915526,
+      "t_2": 0.24753451132291124,
+      "t_3": 0.2993253301871022,
+      "s_1": 0.009667104426071965,
+      "s_2": -0.05141970021590221,
+      "s_3": 0.02751919113038251,
+      "delta": 0.1101644741669127,
+      "upper_0": 0.291361527513877,
+      "upper_1": 0.2788805083925623,
+      "upper_2": 0.1825120296124661,
+      "upper_3": 0.28734633039084634,
+      "lower_0": -0.07103257918005161,
+      "lower_1": -0.03921735120659296,
+      "lower_2": -0.06502248171044513,
+      "lower_3": -0.011978999796255912,
+      "time_geometry_s": 0.0013634999995701946,
+      "trim_yaw": 4.04505676189921,
+      "trim_solves": 2,
+      "trim_residual": 6.237938307813851e-06,
+      "trim_residual_last_solve": 6.237938307813851e-06,
+      "trim_slope": 0.08229050442780472,
+      "trim_interpolated": false,
+      "case_id": 0.0,
+      "Cant": 8.28,
+      "Rake": 0.5,
+      "Yaw": 4.04505676189921,
+      "Hvol": 0.0,
+      "Zsym": 1.0,
+      "Ysym": 0.0,
+      "Ref_Surf": 2.275,
+      "Ref_Cord": 0.7,
+      "Ref_Span": 3.25,
+      "Cx": -0.025615359514836997,
+      "Cy": -0.661,
+      "Cz": 0.20041,
+      "Cmx": -1.0184170831603985,
+      "Cmy": 0.083244,
+      "Cmz": 0.16961701420136965,
+      "Cl": 0.20239,
+      "Cd": 0.01693,
+      "Cdv": 0.0,
+      "Cdi": 0.0169358,
+      "Cl_trefftz": 0.20041,
+      "Cd_trefftz": 0.0169358,
+      "Cy_trefftz": 0.661,
+      "efficiency_trefftz": 1.9313234121350575,
+      "Cdvisc": 0.00873650818313329,
+      "Cpmin": -5.681,
+      "Cw": 0.0,
+      "Speed": null,
+      "cbar": 0.7,
+      "hbar": 1.5607258536585367,
+      "Fh": null,
+      "z_min": -3.0804775978725965,
+      "nspan": 205.0,
+      "Cdi_nearfield": 0.0169326,
+      "Cdprofile_core": 0.00873650818313329,
+      "Cx_core": -0.02567230818313329,
+      "Cdprofile": 0.008679559514836996,
+      "n_clamped": 0,
+      "n_clamped_total": 1,
+      "cl2d_check_min": 0.4506,
+      "cl2d_check_max": 0.4506,
+      "n_sections_checked": 1,
+      "xfoil_filled_points": 0,
+      "time_polar_s": 0.006995100000494858,
+      "time_avl_s": 4.790512699997635,
+      "CD": 0.025615359514836997,
+      "CL": 0.6907135210056338,
+      "CL_ref": 0.6907092124041782,
+      "CD_trimmed": 0.025615148227862806,
+      "time_s": 12.296641699998872,
+      "verification": true,
+      "surrogate_prediction": 0.02561213100318546
+    },
+    "summary": {
+      "best_observed_x": [
+        0.5413136889797621,
+        0.3462104313490683,
+        0.618602691173217,
+        0.24156662733877787,
+        0.4386684177042879,
+        0.19432119913639118,
+        0.5100767645215301
+      ],
+      "best_observed_y": 0.025615148227862806,
+      "surrogate_best_x": [
+        0.5413136889797621,
+        0.3462104313490683,
+        0.618602691173217,
+        0.24156662733877787,
+        0.4386684177042879,
+        0.19432119913639118,
+        0.5100767645215301
+      ],
+      "surrogate_best_f": 0.025615148314331683,
+      "total_cost": 1694.8500000000006,
+      "n_points_per_level": {
+        "1": 192,
+        "2": 43
+      },
+      "n_failed_per_level": {
+        "1": 10,
+        "2": 33
+      },
+      "rhos": [
+        1.0001710088046982
+      ],
+      "timings_s": {
+        "model_fit": 74.779,
+        "acquisition": 54.749,
+        "simulation": 206.378
+      },
+      "mean_simulation_time_per_level_s": {
+        "1": 0.7324,
+        "2": 17.375
+      }
+    },
+    "gp": {
+      "estimator": "MAP, InvGamma(3.0, 2.0) lengthscale prior",
+      "diagnostics": [
+        {
+          "level": 1,
+          "fitted": true,
+          "estimator": "MAP InvGamma(3.0, 2.0)",
+          "n_train": 182,
+          "lengthscales": [
+            0.2290093079989156,
+            0.9872055517944743,
+            2.0504660331197306,
+            3.4584204253764357,
+            0.8573666197088684,
+            0.9664160100428599,
+            0.4520171994664751
+          ],
+          "signal_variance": 2.170897543009794,
+          "bias_variance": 5.999509223291788,
+          "noise_normalized": 0.002184198702588262,
+          "noise_variance": 2.0602621415215272e-10,
+          "y_std": 0.0003071249994435061,
+          "rho": null,
+          "lengthscales_at_lower_bound": [],
+          "lengthscales_at_upper_bound": [],
+          "noise_at_upper_bound": false
+        },
+        {
+          "level": 2,
+          "fitted": true,
+          "estimator": "MAP InvGamma(3.0, 2.0)",
+          "n_train": 10,
+          "lengthscales": [
+            0.558876760950329,
+            0.5404417522923797,
+            0.6022251122447456,
+            0.5975710657776026,
+            0.4571692708310117,
+            0.3603416886190784,
+            0.4559987612635002
+          ],
+          "signal_variance": 1.4267154497616892,
+          "bias_variance": 9.867408002634984e-05,
+          "noise_normalized": 9.997386200224367e-07,
+          "noise_variance": 9.391832837618036e-15,
+          "y_std": 9.692413691381225e-05,
+          "rho": 1.0001710088046982,
+          "lengthscales_at_lower_bound": [],
+          "lengthscales_at_upper_bound": [],
+          "noise_at_upper_bound": false
+        }
+      ]
+    },
+    "environment": {
+      "python": "3.10.14",
+      "executable": "C:\\Users\\SIM\\.conda\\envs\\bdToolbox\\python.exe",
+      "numpy": "1.23.5",
+      "scipy": "1.14.0",
+      "neuralfoil": "0.2.3",
+      "aerosandbox": "4.2.4",
+      "numba": "0.56.4",
+      "bdfoil_root": "C:\\Users\\SIM\\Desktop\\Code-Adri\\bdFoil",
+      "bdfoil_git": "fix/npllt-review 7d944d1 2026-10-08",
+      "soft_dir": "C:\\Users\\SIM\\Outils - banulsdesign\\bdToolbox\\soft",
+      "xfoil_exe": true,
+      "avl_exe": true
+    }
+  }
+}

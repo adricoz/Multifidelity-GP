@@ -92,8 +92,18 @@ def verify_optimum(problem, simulator, data, model, acq, ego, run) -> bool:
     return True
 
 
-def run_optimization(problem, run, simulator=None) -> dict:
-    """DOE, NN-MF-EGO loop, export and figures; returns the results dict."""
+def run_optimization(problem, run, simulator=None, feasibility=None,
+                     doe_oversampling: int = 20) -> dict:
+    """
+    DOE, NN-MF-EGO loop, export and figures; returns the results dict.
+
+    Args:
+    - feasibility: known-constraint function of a study, points (m, d) -> bool array (m,),
+      replacing the thickness check of the configuration (constraints.py); None: that check
+      (when "known_constraints" is on).
+    - doe_oversampling: Latin hypercube candidates per initial point (raise it when the feasible
+      share of the design space is small).
+    """
     opt = problem.optimization
     simulator = simulator or BdToolboxFoilSimulator(problem)
     num_levels = len(problem.levels)
@@ -107,7 +117,8 @@ def run_optimization(problem, run, simulator=None) -> dict:
                                use_map=bool(opt.get("use_map", True)),
                                lengthscale_prior=opt.get("lengthscale_prior"))
     # [KC] known geometric constraints: feasible DOE, zero merit outside the feasible domain
-    feasibility = feasibility_function(problem) if opt.get("known_constraints", True) else None
+    if feasibility is None and opt.get("known_constraints", True):
+        feasibility = feasibility_function(problem)
     acq = AcquisitionFunction(model=model, data=data, feasibility=feasibility)
     ego = EGOOptimizer(data=data, model=model, simulator=simulator, acquisition=acq,
                        save_state_path=run.path("ego_backup.json"), seed=opt["seed"])
@@ -118,7 +129,7 @@ def run_optimization(problem, run, simulator=None) -> dict:
     logger.info("GP hyperparameters: %s | known constraints: %s", model.estimator_label(),
                 "on" if feasibility is not None else "off")
     data.generate_initial_design(points_per_level=opt["doe"], seed=opt["seed"],
-                                 feasibility=feasibility)
+                                 feasibility=feasibility, oversampling=doe_oversampling)
     for level in range(1, num_levels + 1):
         results = [simulator.evaluate(x, level) for x in data.x_dict[level]]
         data.y_dict[level] = np.array([r[0] for r in results], dtype=float)

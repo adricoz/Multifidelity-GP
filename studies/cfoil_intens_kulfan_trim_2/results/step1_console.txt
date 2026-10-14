@@ -1,0 +1,391 @@
+17:37:06 INFO step1: Baseline NACA 4412: {'t_0': 0.346185, 't_1': 0.299941, 't_2': 0.278219, 't_3': 0.289115, 's_1': 0.097495, 's_2': 0.055521, 's_3': 0.104097}
+17:37:06 INFO step1: Known constraints, feasible share of the design space: {'min_thickness': 0.685, 'Ixx': 0.636, 'J': 0.616, 'thickness_0.90': 0.693, 'thickness_0.95': 0.789, 'wiggliness': 0.333, 'all': 0.122} -> DOE oversampling 33
+17:37:06 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.71072 at level 1
+17:37:06 INFO step1: cost measurement, level 1: 0.34 s (CD 0.027108906279155003, 3 solves)
+17:37:11 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.69437 at level 2
+17:37:28 INFO step1: cost measurement, level 2: 17.02 s (CD 0.026164657479194723, 3 solves)
+17:37:29 INFO step1: cost measurement, level 1: 0.27 s (CD 0.027256292697197423, 2 solves)
+17:37:40 INFO step1: cost measurement, level 2: 11.83 s (CD 0.026451092523849997, 2 solves)
+17:37:40 INFO step1: Measured costs: {1: 0.3, 2: 14.57} s per evaluation -> relative costs [1.0, 48.22]
+17:37:40 INFO src.run_utils: --------------------------------------------------
+17:37:40 INFO src.run_utils: C-foil section optimization at the baseline lift - cfoil_intens_kulfan_trim_2 started on 12/10/2026 at 17:37:40
+17:37:40 INFO pipelines.bdtoolbox_foil.run: Problem cfoil_intens_kulfan_trim_2: 7 variables ['t_0', 't_1', 't_2', 't_3', 's_1', 's_2', 's_3'], levels ['npllt', 'avl'], costs [1.0, 48.22]
+17:37:40 INFO pipelines.bdtoolbox_foil.run: GP hyperparameters: MAP, InvGamma(3.0, 2.0) lengthscale prior | known constraints: on
+17:37:42 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+17:37:42 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 100 control points (min 0.01).
+17:37:42 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+17:37:42 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 100 control points (min 0.01).
+17:37:44 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 61 control points (min 0.14).
+17:37:44 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 63 control points (min 0.14).
+17:37:47 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 1 control points (min 0.40).
+17:37:47 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 1 control points (min 0.40).
+17:37:49 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 8 control points (min 0.34).
+17:37:49 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 8 control points (min 0.34).
+17:37:51 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 19 control points (min 0.29).
+17:37:51 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 19 control points (min 0.29).
+17:37:55 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 5 control points (min 0.29).
+17:37:55 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 5 control points (min 0.29).
+17:37:56 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+17:37:56 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 100 control points (min 0.02).
+17:37:57 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+17:37:57 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 100 control points (min 0.03).
+17:38:02 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 100 control points (min 0.09).
+17:38:02 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 100 control points (min 0.09).
+17:38:02 INFO pipelines.bdtoolbox_foil.run: DOE level 1: 80 points, 0 failed
+17:38:47 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 2, point [0.5438 0.4478 0.3365 0.7149 0.1568 0.113  0.1738]): AVL x XFOIL failed: XFOIL polar(s) failed:
+sec_9a72bda0b7: sec_9a72bda0b7: polar end gap: 5/37 alphas converged, missing -3.5, -3, -2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12 (npane 250: 3/37; npane 260: 0/37; npane 265: 5/37)
+17:38:59 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 1
+17:39:24 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 2, point [0.3282 0.521  0.921  0.9861 0.0331 0.0474 0.6529]): AVL x XFOIL failed: XFOIL polar(s) failed:
+sec_6ecc58383a: sec_6ecc58383a: polar end gap: 4/37 alphas converged, missing -4, -3.5, -3, -2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12 (npane 250: 1/37; npane 260: 0/37; npane 265: 4/37)
+17:39:35 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 7
+17:40:25 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 2, point [0.0886 0.615  0.9793 0.5346 0.5128 0.0879 0.1217]): AVL x XFOIL failed: XFOIL polar(s) failed:
+sec_14c3f8e14b: sec_14c3f8e14b: polar end gap: 13/37 alphas converged, missing 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12 (npane 250: 0/37; npane 260: 13/37; npane 265: 0/37)
+17:40:36 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 4
+17:41:10 INFO pipelines.bdtoolbox_foil.run: DOE level 2: 12 points, 3 failed
+17:41:10 INFO pipelines.bdtoolbox_foil.run: === Optimization chunk 1/5 (10 iterations) ===
+17:41:10 INFO src.optimizer: --- EGO Iteration 1/10 ---
+17:41:10 INFO src.surrogate_models: GP level 1 trained (n=80). Noise: 1.527e-13 | rho: -
+17:41:10 INFO src.surrogate_models: GP level 2 trained (n=9). Noise: 6.714e-15 | rho: 0.9998
+17:41:11 INFO src.optimizer: 
+Next selected point to evaluate: [0.6364 0.4522 0.062  0.6665 0.2756 0.334  0.1378] | Level: 1 | Merit: 0.006547
+17:41:11 INFO src.optimizer:     -> Evaluated value: 0.026680 at level 1
+17:41:11 INFO src.optimizer: --- EGO Iteration 2/10 ---
+17:41:11 INFO src.surrogate_models: GP level 1 trained (n=81). Noise: 1.537e-13 | rho: -
+17:41:11 INFO src.surrogate_models: GP level 2 trained (n=9). Noise: 7.078e-15 | rho: 0.9999
+17:41:12 INFO src.optimizer: 
+Next selected point to evaluate: [0.9983 0.146  0.0318 0.8506 0.6399 0.4211 0.6186] | Level: 1 | Merit: 0.001559
+17:41:12 INFO src.optimizer:     -> Evaluated value: 0.026772 at level 1
+17:41:12 INFO src.optimizer: --- EGO Iteration 3/10 ---
+17:41:12 INFO src.surrogate_models: GP level 1 trained (n=82). Noise: 1.536e-13 | rho: -
+17:41:12 INFO src.surrogate_models: GP level 2 trained (n=9). Noise: 7.062e-15 | rho: 0.9998
+17:41:13 INFO src.optimizer: 
+Next selected point to evaluate: [0.2287 0.4692 0.6609 0.9433 0.0088 0.3306 0.6611] | Level: 1 | Merit: 0.003672
+17:41:13 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 4 control points (min 0.38).
+17:41:13 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 4 control points (min 0.38).
+17:41:13 INFO src.optimizer:     -> Evaluated value: 0.027074 at level 1
+17:41:13 INFO src.optimizer: --- EGO Iteration 4/10 ---
+17:41:13 INFO src.surrogate_models: GP level 1 trained (n=83). Noise: 1.518e-13 | rho: -
+17:41:13 INFO src.surrogate_models: GP level 2 trained (n=9). Noise: 9.142e-15 | rho: 1.0001
+17:41:14 INFO src.optimizer: 
+Next selected point to evaluate: [9.971e-01 3.820e-02 3.651e-01 5.148e-01 5.160e-02 2.101e-01 4.000e-04] | Level: 1 | Merit: 0.002817
+17:41:14 INFO src.optimizer:     -> Evaluated value: 0.026756 at level 1
+17:41:14 INFO src.optimizer: --- EGO Iteration 5/10 ---
+17:41:14 INFO src.surrogate_models: GP level 1 trained (n=84). Noise: 3.619e-14 | rho: -
+17:41:14 INFO src.surrogate_models: GP level 2 trained (n=9). Noise: 8.457e-15 | rho: 1.0000
+17:41:15 INFO src.optimizer: 
+Next selected point to evaluate: [0.6385 0.272  0.6061 0.2605 0.4819 0.0493 0.3397] | Level: 1 | Merit: 0.001954
+17:41:15 INFO src.optimizer:     -> Evaluated value: 0.026629 at level 1
+17:41:15 INFO src.optimizer: --- EGO Iteration 6/10 ---
+17:41:15 INFO src.surrogate_models: GP level 1 trained (n=85). Noise: 3.651e-14 | rho: -
+17:41:15 INFO src.surrogate_models: GP level 2 trained (n=9). Noise: 8.537e-15 | rho: 1.0000
+17:41:16 INFO src.optimizer: 
+Next selected point to evaluate: [0.5393 0.439  0.3549 0.4773 0.1041 0.3452 0.3185] | Level: 1 | Merit: 0.000536
+17:41:16 INFO src.optimizer:     -> Evaluated value: 0.026663 at level 1
+17:41:16 INFO src.optimizer: --- EGO Iteration 7/10 ---
+17:41:16 INFO src.surrogate_models: GP level 1 trained (n=86). Noise: 3.671e-14 | rho: -
+17:41:16 INFO src.surrogate_models: GP level 2 trained (n=9). Noise: 8.788e-15 | rho: 1.0000
+17:41:17 INFO src.optimizer: 
+Next selected point to evaluate: [0.5693 0.3849 0.4456 0.4023 0.2769 0.5462 0.1611] | Level: 1 | Merit: 0.000390
+17:41:17 INFO src.optimizer:     -> Evaluated value: 0.026721 at level 1
+17:41:17 INFO src.optimizer: --- EGO Iteration 8/10 ---
+17:41:17 INFO src.surrogate_models: GP level 1 trained (n=87). Noise: 3.674e-14 | rho: -
+17:41:17 INFO src.surrogate_models: GP level 2 trained (n=9). Noise: 8.681e-15 | rho: 1.0000
+17:41:18 INFO src.optimizer: 
+Next selected point to evaluate: [0.5857 0.441  0.1737 0.5798 0.505  0.2418 0.2239] | Level: 1 | Merit: 0.000598
+17:41:18 INFO src.optimizer:     -> Evaluated value: 0.026692 at level 1
+17:41:18 INFO src.optimizer: --- EGO Iteration 9/10 ---
+17:41:18 INFO src.surrogate_models: GP level 1 trained (n=88). Noise: 3.685e-14 | rho: -
+17:41:18 INFO src.surrogate_models: GP level 2 trained (n=9). Noise: 8.420e-15 | rho: 0.9999
+17:41:19 INFO src.optimizer: 
+Next selected point to evaluate: [0.4707 0.2898 0.9685 0.044  0.5028 0.1251 0.5491] | Level: 1 | Merit: 0.000701
+17:41:19 INFO src.optimizer:     -> Evaluated value: 0.026610 at level 1
+17:41:19 INFO src.optimizer: --- EGO Iteration 10/10 ---
+17:41:19 INFO src.surrogate_models: GP level 1 trained (n=89). Noise: 3.713e-14 | rho: -
+17:41:19 INFO src.surrogate_models: GP level 2 trained (n=9). Noise: 8.561e-15 | rho: 1.0000
+17:41:20 INFO src.optimizer: 
+Next selected point to evaluate: [0.7092 0.3716 0.062  0.675  0.2462 0.019  0.3077] | Level: 1 | Merit: 0.000278
+17:41:20 INFO src.optimizer:     -> Evaluated value: 0.026648 at level 1
+17:41:20 INFO src.surrogate_models: GP level 1 trained (n=90). Noise: 3.730e-14 | rho: -
+17:41:20 INFO src.surrogate_models: GP level 2 trained (n=9). Noise: 8.821e-15 | rho: 1.0000
+17:41:20 INFO src.optimizer: Optimization summary: {"best_observed_x": [0.8613068220256375, 0.1040210225392434, 0.9078615867880375, 0.859058432564122, 0.8739952625694823, 0.7947619392502877, 0.7218443462255918], "best_observed_y": 0.026066977567263554, "surrogate_best_x": [0.6385277223127503, 0.27195599146592164, 0.6061481073851415, 0.2604690965584078, 0.4818689340133871, 0.04928292996592393, 0.33965409534412977], "surrogate_best_f": 0.025763381562089117, "total_cost": 668.64, "n_points_per_level": {"1": 90, "2": 12}, "n_failed_per_level": {"1": 0, "2": 3}, "rhos": [1.0000223034437208], "timings_s": {"model_fit": 1.588, "acquisition": 5.585, "simulation": 2.59}, "mean_simulation_time_per_level_s": {"1": 0.259}}
+17:41:20 INFO pipelines.bdtoolbox_foil.run: Verification of the surrogate optimum at level 2: {'t_0': 0.3915583166938251, 't_1': 0.290623716842391, 't_2': 0.2451681404031769, 't_3': 0.30083752772467265, 's_1': 0.02046723350334677, 's_2': -0.08767926750851902, 's_3': -0.015086476163967563}
+17:41:31 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 6.5
+17:41:40 INFO pipelines.bdtoolbox_foil.run:     -> verified objective: 0.0258493993895737 (surrogate prediction 0.0257634)
+17:41:40 INFO src.surrogate_models: GP level 1 trained (n=90). Noise: 3.730e-14 | rho: -
+17:41:40 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.396e-15 | rho: 1.0002
+17:41:40 INFO pipelines.bdtoolbox_foil.run: === Optimization chunk 2/5 (10 iterations) ===
+17:41:40 INFO src.optimizer: --- EGO Iteration 1/10 ---
+17:41:41 INFO src.surrogate_models: GP level 1 trained (n=90). Noise: 3.730e-14 | rho: -
+17:41:41 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.396e-15 | rho: 1.0002
+17:41:41 INFO src.optimizer: 
+Next selected point to evaluate: [0.8801 0.131  0.4412 0.4254 0.7186 0.4231 0.6578] | Level: 1 | Merit: 0.000769
+17:41:41 INFO src.optimizer:     -> Evaluated value: 0.026731 at level 1
+17:41:41 INFO src.optimizer: --- EGO Iteration 2/10 ---
+17:41:42 INFO src.surrogate_models: GP level 1 trained (n=91). Noise: 3.726e-14 | rho: -
+17:41:42 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.719e-15 | rho: 1.0002
+17:41:42 INFO src.optimizer: 
+Next selected point to evaluate: [0.9122 0.2507 0.006  0.7464 0.3359 0.1368 0.4792] | Level: 1 | Merit: 0.000592
+17:41:42 INFO src.optimizer:     -> Evaluated value: 0.026719 at level 1
+17:41:42 INFO src.optimizer: --- EGO Iteration 3/10 ---
+17:41:43 INFO src.surrogate_models: GP level 1 trained (n=92). Noise: 3.724e-14 | rho: -
+17:41:43 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.615e-15 | rho: 1.0002
+17:41:43 INFO src.optimizer: 
+Next selected point to evaluate: [0.9966 0.0376 0.3599 0.5568 0.4163 0.0108 0.082 ] | Level: 1 | Merit: 0.000734
+17:41:43 INFO src.optimizer:     -> Evaluated value: 0.026798 at level 1
+17:41:43 INFO src.optimizer: --- EGO Iteration 4/10 ---
+17:41:43 INFO src.surrogate_models: GP level 1 trained (n=93). Noise: 3.707e-14 | rho: -
+17:41:43 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.662e-15 | rho: 1.0002
+17:41:44 INFO src.optimizer: 
+Next selected point to evaluate: [0.8179 0.1797 0.0244 0.7532 0.9976 0.9583 0.7471] | Level: 1 | Merit: 0.000785
+17:41:44 INFO src.optimizer:     -> Evaluated value: 0.026788 at level 1
+17:41:44 INFO src.optimizer: --- EGO Iteration 5/10 ---
+17:41:44 INFO src.surrogate_models: GP level 1 trained (n=94). Noise: 3.692e-14 | rho: -
+17:41:44 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.639e-15 | rho: 1.0002
+17:41:45 INFO src.optimizer: 
+Next selected point to evaluate: [0.4295 0.277  0.9974 0.969  0.5457 0.223  0.6211] | Level: 1 | Merit: 0.000810
+17:41:45 INFO src.optimizer:     -> Evaluated value: 0.026760 at level 1
+17:41:45 INFO src.optimizer: --- EGO Iteration 6/10 ---
+17:41:45 INFO src.surrogate_models: GP level 1 trained (n=95). Noise: 3.681e-14 | rho: -
+17:41:45 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 9.006e-15 | rho: 1.0002
+17:41:46 INFO src.optimizer: 
+Next selected point to evaluate: [0.9084 0.2351 0.014  0.7517 0.3147 0.6039 0.6194] | Level: 1 | Merit: 0.000449
+17:41:46 INFO src.optimizer:     -> Evaluated value: 0.026811 at level 1
+17:41:46 INFO src.optimizer: --- EGO Iteration 7/10 ---
+17:41:46 INFO src.surrogate_models: GP level 1 trained (n=96). Noise: 3.662e-14 | rho: -
+17:41:46 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 9.231e-15 | rho: 1.0002
+17:41:47 INFO src.optimizer: 
+Next selected point to evaluate: [0.4229 0.3019 0.9848 0.0748 0.1598 0.5925 0.4185] | Level: 1 | Merit: 0.000810
+17:41:47 INFO src.optimizer:     -> Evaluated value: 0.026796 at level 1
+17:41:47 INFO src.optimizer: --- EGO Iteration 8/10 ---
+17:41:47 INFO src.surrogate_models: GP level 1 trained (n=97). Noise: 3.645e-14 | rho: -
+17:41:47 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.373e-15 | rho: 1.0002
+17:41:47 INFO src.optimizer: 
+Next selected point to evaluate: [0.5649 0.4753 0.1705 0.5667 0.2704 0.1502 0.4017] | Level: 1 | Merit: 0.000423
+17:41:48 INFO src.optimizer:     -> Evaluated value: 0.026596 at level 1
+17:41:48 INFO src.optimizer: --- EGO Iteration 9/10 ---
+17:41:48 INFO src.surrogate_models: GP level 1 trained (n=98). Noise: 3.667e-14 | rho: -
+17:41:48 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.237e-15 | rho: 1.0001
+17:41:48 INFO src.optimizer: 
+Next selected point to evaluate: [0.5889 0.3094 0.6627 0.2046 0.3852 0.1987 0.4317] | Level: 1 | Merit: 0.000634
+17:41:49 INFO src.optimizer:     -> Evaluated value: 0.026641 at level 1
+17:41:49 INFO src.optimizer: --- EGO Iteration 10/10 ---
+17:41:49 INFO src.surrogate_models: GP level 1 trained (n=99). Noise: 3.679e-14 | rho: -
+17:41:49 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 1.078e-14 | rho: 1.0003
+17:41:49 INFO src.optimizer: 
+Next selected point to evaluate: [0.675  0.5522 0.1587 0.5724 0.2271 0.264  0.3516] | Level: 1 | Merit: 0.000277
+17:41:49 INFO src.optimizer:     -> Evaluated value: 0.026748 at level 1
+17:41:50 INFO src.surrogate_models: GP level 1 trained (n=100). Noise: 3.671e-14 | rho: -
+17:41:50 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.728e-15 | rho: 1.0001
+17:41:50 INFO src.optimizer: Optimization summary: {"best_observed_x": [0.6385277223127503, 0.27195599146592164, 0.6061481073851415, 0.2604690965584078, 0.4818689340133871, 0.04928292996592393, 0.33965409534412977], "best_observed_y": 0.0258493993895737, "surrogate_best_x": [0.6385277223127503, 0.27195599146592164, 0.6061481073851415, 0.2604690965584078, 0.4818689340133871, 0.04928292996592393, 0.33965409534412977], "surrogate_best_f": 0.0258493992766393, "total_cost": 726.86, "n_points_per_level": {"1": 100, "2": 13}, "n_failed_per_level": {"1": 0, "2": 3}, "rhos": [1.0001287175647318], "timings_s": {"model_fit": 3.505, "acquisition": 9.868, "simulation": 5.114}, "mean_simulation_time_per_level_s": {"1": 0.2557}}
+17:41:50 INFO pipelines.bdtoolbox_foil.run: === Optimization chunk 3/5 (10 iterations) ===
+17:41:50 INFO src.optimizer: --- EGO Iteration 1/10 ---
+17:41:50 INFO src.surrogate_models: GP level 1 trained (n=100). Noise: 3.671e-14 | rho: -
+17:41:50 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.728e-15 | rho: 1.0001
+17:41:50 INFO src.optimizer: 
+Next selected point to evaluate: [0.7798 0.1549 0.4749 0.6175 0.6216 0.9112 0.3674] | Level: 1 | Merit: 0.000469
+17:41:51 INFO src.optimizer:     -> Evaluated value: 0.026906 at level 1
+17:41:51 INFO src.optimizer: --- EGO Iteration 2/10 ---
+17:41:51 INFO src.surrogate_models: GP level 1 trained (n=101). Noise: 3.645e-14 | rho: -
+17:41:51 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.750e-15 | rho: 1.0002
+17:41:51 INFO src.optimizer: 
+Next selected point to evaluate: [0.4874 0.2925 0.9765 0.0789 0.9921 0.9026 0.9963] | Level: 1 | Merit: 0.000873
+17:41:52 INFO src.optimizer:     -> Evaluated value: 0.027021 at level 1
+17:41:52 INFO src.optimizer: --- EGO Iteration 3/10 ---
+17:41:52 INFO src.surrogate_models: GP level 1 trained (n=102). Noise: 3.699e-10 | rho: -
+17:41:52 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 9.140e-15 | rho: 1.0003
+17:41:53 INFO src.optimizer: 
+Next selected point to evaluate: [0.5643 0.4459 0.1537 0.9641 0.495  0.4998 0.1901] | Level: 1 | Merit: 0.000302
+17:41:53 INFO src.optimizer:     -> Evaluated value: 0.026771 at level 1
+17:41:53 INFO src.optimizer: --- EGO Iteration 4/10 ---
+17:41:53 INFO src.surrogate_models: GP level 1 trained (n=103). Noise: 3.060e-10 | rho: -
+17:41:53 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 9.724e-15 | rho: 1.0003
+17:41:53 INFO src.optimizer: 
+Next selected point to evaluate: [0.9237 0.0016 0.7958 0.1571 0.1834 0.332  0.1706] | Level: 1 | Merit: 0.000390
+17:41:54 INFO src.optimizer:     -> Evaluated value: 0.026768 at level 1
+17:41:54 INFO src.optimizer: --- EGO Iteration 5/10 ---
+17:41:54 INFO src.surrogate_models: GP level 1 trained (n=104). Noise: 2.938e-10 | rho: -
+17:41:54 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 9.849e-15 | rho: 1.0003
+17:41:54 INFO src.optimizer: 
+Next selected point to evaluate: [0.8171 0.2716 0.0083 0.7484 0.0344 0.1482 0.0094] | Level: 1 | Merit: 0.000503
+17:41:55 INFO src.optimizer:     -> Evaluated value: 0.026799 at level 1
+17:41:55 INFO src.optimizer: --- EGO Iteration 6/10 ---
+17:41:55 INFO src.surrogate_models: GP level 1 trained (n=105). Noise: 3.139e-10 | rho: -
+17:41:55 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 9.798e-15 | rho: 1.0003
+17:41:55 INFO src.optimizer: 
+Next selected point to evaluate: [0.4575 0.4672 0.36   0.5286 0.3124 0.1017 0.4765] | Level: 1 | Merit: 0.000345
+17:41:56 INFO src.optimizer:     -> Evaluated value: 0.026546 at level 1
+17:41:56 INFO src.optimizer: --- EGO Iteration 7/10 ---
+17:41:56 INFO src.surrogate_models: GP level 1 trained (n=106). Noise: 1.110e-10 | rho: -
+17:41:56 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 1.064e-14 | rho: 1.0004
+17:41:56 INFO src.optimizer: 
+Next selected point to evaluate: [0.4774 0.4446 0.2687 0.9902 0.0875 0.0569 0.4208] | Level: 1 | Merit: 0.000195
+17:41:56 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 6 control points (min 0.34).
+17:41:57 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 6 control points (min 0.34).
+17:41:57 INFO src.optimizer:     -> Evaluated value: 0.026872 at level 1
+17:41:57 INFO src.optimizer: --- EGO Iteration 8/10 ---
+17:41:57 INFO src.surrogate_models: GP level 1 trained (n=107). Noise: 6.868e-10 | rho: -
+17:41:57 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.288e-15 | rho: 1.0002
+17:41:58 INFO src.optimizer: 
+Next selected point to evaluate: [0.3896 0.5612 0.4939 0.3139 0.3167 0.2217 0.7134] | Level: 1 | Merit: 0.000252
+17:41:58 INFO src.optimizer:     -> Evaluated value: 0.026627 at level 1
+17:41:58 INFO src.optimizer: --- EGO Iteration 9/10 ---
+17:41:58 INFO src.surrogate_models: GP level 1 trained (n=108). Noise: 6.559e-10 | rho: -
+17:41:58 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.217e-15 | rho: 1.0002
+17:41:59 INFO src.optimizer: 
+Next selected point to evaluate: [0.9803 0.1848 0.0246 0.7455 0.2461 0.4292 0.158 ] | Level: 1 | Merit: 0.000119
+17:41:59 INFO src.optimizer:     -> Evaluated value: 0.026766 at level 1
+17:41:59 INFO src.optimizer: --- EGO Iteration 10/10 ---
+17:41:59 INFO src.surrogate_models: GP level 1 trained (n=109). Noise: 6.546e-10 | rho: -
+17:41:59 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.030e-15 | rho: 1.0002
+17:42:00 INFO src.optimizer: 
+Next selected point to evaluate: [0.5727 0.2333 0.7875 0.9872 0.3366 0.5681 0.2444] | Level: 1 | Merit: 0.000079
+17:42:00 INFO src.optimizer:     -> Evaluated value: 0.026862 at level 1
+17:42:00 INFO src.surrogate_models: GP level 1 trained (n=110). Noise: 7.281e-10 | rho: -
+17:42:00 INFO src.surrogate_models: GP level 2 trained (n=10). Noise: 8.004e-15 | rho: 1.0002
+17:42:00 INFO src.optimizer: Optimization summary: {"best_observed_x": [0.6385277223127503, 0.27195599146592164, 0.6061481073851415, 0.2604690965584078, 0.4818689340133871, 0.04928292996592393, 0.33965409534412977], "best_observed_y": 0.0258493993895737, "surrogate_best_x": [0.5648528261862568, 0.47525090057745273, 0.1705434850677947, 0.5666592080561637, 0.27041348034959956, 0.15023747101010698, 0.40170499694655315], "surrogate_best_f": 0.025789655419617294, "total_cost": 736.86, "n_points_per_level": {"1": 110, "2": 13}, "n_failed_per_level": {"1": 0, "2": 3}, "rhos": [1.000181052912943], "timings_s": {"model_fit": 6.326, "acquisition": 14.669, "simulation": 7.65}, "mean_simulation_time_per_level_s": {"1": 0.255}}
+17:42:00 INFO pipelines.bdtoolbox_foil.run: Verification of the surrogate optimum at level 2: {'t_0': 0.36945584785587704, 't_1': 0.3658428332136575, 't_2': 0.162403262162881, 't_3': 0.3253327366444931, 's_1': -0.03239662991260012, 's_2': -0.06244063224747326, 's_3': 0.00042624923663828196}
+17:42:19 INFO pipelines.bdtoolbox_foil.run:     -> verified objective: 0.025846731018049608 (surrogate prediction 0.0257897)
+17:42:19 INFO src.surrogate_models: GP level 1 trained (n=110). Noise: 7.281e-10 | rho: -
+17:42:19 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.168e-15 | rho: 1.0001
+17:42:19 INFO pipelines.bdtoolbox_foil.run: === Optimization chunk 4/5 (10 iterations) ===
+17:42:19 INFO src.optimizer: --- EGO Iteration 1/10 ---
+17:42:19 INFO src.surrogate_models: GP level 1 trained (n=110). Noise: 7.281e-10 | rho: -
+17:42:19 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.168e-15 | rho: 1.0001
+17:42:20 INFO src.optimizer: 
+Next selected point to evaluate: [0.8657 0.0699 0.7054 0.215  0.3509 0.0181 0.3434] | Level: 1 | Merit: 0.000374
+17:42:20 INFO src.optimizer:     -> Evaluated value: 0.026702 at level 1
+17:42:20 INFO src.optimizer: --- EGO Iteration 2/10 ---
+17:42:20 INFO src.surrogate_models: GP level 1 trained (n=111). Noise: 6.993e-10 | rho: -
+17:42:20 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.146e-15 | rho: 1.0001
+17:42:21 INFO src.optimizer: 
+Next selected point to evaluate: [0.914  0.0346 0.67   0.3058 0.6954 0.5559 0.5199] | Level: 1 | Merit: 0.000210
+17:42:21 INFO src.optimizer:     -> Evaluated value: 0.026806 at level 1
+17:42:21 INFO src.optimizer: --- EGO Iteration 3/10 ---
+17:42:21 INFO src.surrogate_models: GP level 1 trained (n=112). Noise: 6.592e-10 | rho: -
+17:42:21 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.061e-15 | rho: 1.0001
+17:42:22 INFO src.optimizer: 
+Next selected point to evaluate: [0.464  0.3922 0.6643 0.2218 0.2789 0.011  0.6126] | Level: 1 | Merit: 0.000349
+17:42:22 INFO src.optimizer:     -> Evaluated value: 0.026586 at level 1
+17:42:22 INFO src.optimizer: --- EGO Iteration 4/10 ---
+17:42:22 INFO src.surrogate_models: GP level 1 trained (n=113). Noise: 5.952e-10 | rho: -
+17:42:22 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.057e-15 | rho: 1.0001
+17:42:23 INFO src.optimizer: 
+Next selected point to evaluate: [0.7726 0.1042 0.6605 0.5165 0.8426 0.6247 0.8514] | Level: 1 | Merit: 0.000191
+17:42:23 INFO src.optimizer:     -> Evaluated value: 0.026787 at level 1
+17:42:23 INFO src.optimizer: --- EGO Iteration 5/10 ---
+17:42:23 INFO src.surrogate_models: GP level 1 trained (n=114). Noise: 5.632e-10 | rho: -
+17:42:23 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.060e-15 | rho: 1.0001
+17:42:24 INFO src.optimizer: 
+Next selected point to evaluate: [0.4109 0.556  0.3164 0.5005 0.3873 0.2606 0.4879] | Level: 1 | Merit: 0.000177
+17:42:24 INFO src.optimizer:     -> Evaluated value: 0.026574 at level 1
+17:42:24 INFO src.optimizer: --- EGO Iteration 6/10 ---
+17:42:24 INFO src.surrogate_models: GP level 1 trained (n=115). Noise: 4.122e-10 | rho: -
+17:42:25 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 7.780e-15 | rho: 1.0001
+17:42:25 INFO src.optimizer: 
+Next selected point to evaluate: [0.8502 0.0603 0.6286 0.9563 0.7872 0.522  0.5513] | Level: 1 | Merit: 0.000169
+17:42:25 INFO src.optimizer:     -> Evaluated value: 0.026854 at level 1
+17:42:25 INFO src.optimizer: --- EGO Iteration 7/10 ---
+17:42:26 INFO src.surrogate_models: GP level 1 trained (n=116). Noise: 4.040e-10 | rho: -
+17:42:26 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 7.786e-15 | rho: 1.0001
+17:42:26 INFO src.optimizer: 
+Next selected point to evaluate: [0.7919 0.0801 0.8568 0.0956 0.4505 0.1323 0.174 ] | Level: 1 | Merit: 0.000114
+17:42:26 INFO src.optimizer:     -> Evaluated value: 0.026715 at level 1
+17:42:26 INFO src.optimizer: --- EGO Iteration 8/10 ---
+17:42:27 INFO src.surrogate_models: GP level 1 trained (n=117). Noise: 4.882e-10 | rho: -
+17:42:27 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.203e-15 | rho: 1.0001
+17:42:27 INFO src.optimizer: 
+Next selected point to evaluate: [0.3564 0.4733 0.6716 0.31   0.4683 0.2635 0.5354] | Level: 1 | Merit: 0.000130
+17:42:28 INFO src.optimizer:     -> Evaluated value: 0.026594 at level 1
+17:42:28 INFO src.optimizer: --- EGO Iteration 9/10 ---
+17:42:28 INFO src.surrogate_models: GP level 1 trained (n=118). Noise: 4.110e-10 | rho: -
+17:42:28 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.130e-15 | rho: 1.0001
+17:42:29 INFO src.optimizer: 
+Next selected point to evaluate: [0.999  0.0189 0.3261 0.5286 0.04   0.0167 0.1972] | Level: 1 | Merit: 0.000221
+17:42:29 INFO src.optimizer:     -> Evaluated value: 0.026735 at level 1
+17:42:29 INFO src.optimizer: --- EGO Iteration 10/10 ---
+17:42:30 INFO src.surrogate_models: GP level 1 trained (n=119). Noise: 3.986e-10 | rho: -
+17:42:30 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.113e-15 | rho: 1.0001
+17:42:30 INFO src.optimizer: 
+Next selected point to evaluate: [0.8081 0.036  0.857  0.8449 0.4906 0.1431 0.2665] | Level: 1 | Merit: 0.000144
+17:42:30 INFO src.optimizer:     -> Evaluated value: 0.026794 at level 1
+17:42:31 INFO src.surrogate_models: GP level 1 trained (n=120). Noise: 3.930e-10 | rho: -
+17:42:31 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.068e-15 | rho: 1.0001
+17:42:31 INFO src.optimizer: Optimization summary: {"best_observed_x": [0.5648528261862568, 0.47525090057745273, 0.1705434850677947, 0.5666592080561637, 0.27041348034959956, 0.15023747101010698, 0.40170499694655315], "best_observed_y": 0.025846731018049608, "surrogate_best_x": [0.5648528261862568, 0.47525090057745273, 0.1705434850677947, 0.5666592080561637, 0.27041348034959956, 0.15023747101010698, 0.40170499694655315], "surrogate_best_f": 0.025846730948597896, "total_cost": 795.08, "n_points_per_level": {"1": 120, "2": 14}, "n_failed_per_level": {"1": 0, "2": 3}, "rhos": [1.0000783232152481], "timings_s": {"model_fit": 10.143, "acquisition": 19.352, "simulation": 10.174}, "mean_simulation_time_per_level_s": {"1": 0.2543}}
+17:42:31 INFO pipelines.bdtoolbox_foil.run: === Optimization chunk 5/5 (10 iterations) ===
+17:42:31 INFO src.optimizer: --- EGO Iteration 1/10 ---
+17:42:31 INFO src.surrogate_models: GP level 1 trained (n=120). Noise: 3.930e-10 | rho: -
+17:42:31 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.068e-15 | rho: 1.0001
+17:42:31 INFO src.optimizer: 
+Next selected point to evaluate: [0.7607 0.3072 0.0635 0.6943 0.4332 0.0235 0.0353] | Level: 1 | Merit: 0.000112
+17:42:32 INFO src.optimizer:     -> Evaluated value: 0.026766 at level 1
+17:42:32 INFO src.optimizer: --- EGO Iteration 2/10 ---
+17:42:32 INFO src.surrogate_models: GP level 1 trained (n=121). Noise: 3.664e-10 | rho: -
+17:42:32 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.003e-15 | rho: 1.0001
+17:42:33 INFO src.optimizer: 
+Next selected point to evaluate: [0.9908 0.0013 0.6748 0.3396 0.4354 0.2249 0.4186] | Level: 1 | Merit: 0.000123
+17:42:33 INFO src.optimizer:     -> Evaluated value: 0.026779 at level 1
+17:42:33 INFO src.optimizer: --- EGO Iteration 3/10 ---
+17:42:33 INFO src.surrogate_models: GP level 1 trained (n=122). Noise: 3.311e-10 | rho: -
+17:42:33 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 7.971e-15 | rho: 1.0000
+17:42:34 INFO src.optimizer: 
+Next selected point to evaluate: [0.7623 0.194  0.5927 0.281  0.3358 0.4151 0.0643] | Level: 1 | Merit: 0.000102
+17:42:34 INFO src.optimizer:     -> Evaluated value: 0.026751 at level 1
+17:42:34 INFO src.optimizer: --- EGO Iteration 4/10 ---
+17:42:35 INFO src.surrogate_models: GP level 1 trained (n=123). Noise: 2.933e-10 | rho: -
+17:42:35 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.045e-15 | rho: 1.0000
+17:42:35 INFO src.optimizer: 
+Next selected point to evaluate: [0.9989 0.0319 0.5109 0.4728 0.3924 0.4145 0.1432] | Level: 1 | Merit: 0.000118
+17:42:35 INFO src.optimizer:     -> Evaluated value: 0.026825 at level 1
+17:42:35 INFO src.optimizer: --- EGO Iteration 5/10 ---
+17:42:36 INFO src.surrogate_models: GP level 1 trained (n=124). Noise: 3.177e-10 | rho: -
+17:42:36 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.136e-15 | rho: 1.0000
+17:42:36 INFO src.optimizer: 
+Next selected point to evaluate: [0.3697 0.3898 0.9023 0.0751 0.4346 0.1005 0.6245] | Level: 1 | Merit: 0.000295
+17:42:36 INFO src.optimizer:     -> Evaluated value: 0.026562 at level 1
+17:42:36 INFO src.optimizer: --- EGO Iteration 6/10 ---
+17:42:37 INFO src.surrogate_models: GP level 1 trained (n=125). Noise: 2.745e-10 | rho: -
+17:42:37 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.367e-15 | rho: 1.0001
+17:42:37 INFO src.optimizer: 
+Next selected point to evaluate: [0.8558 0.1421 0.4417 0.4141 0.1924 0.1352 0.154 ] | Level: 1 | Merit: 0.000091
+17:42:38 INFO src.optimizer:     -> Evaluated value: 0.026710 at level 1
+17:42:38 INFO src.optimizer: --- EGO Iteration 7/10 ---
+17:42:38 INFO src.surrogate_models: GP level 1 trained (n=126). Noise: 1.390e-10 | rho: -
+17:42:38 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 8.250e-15 | rho: 1.0000
+17:42:38 INFO src.optimizer: 
+Next selected point to evaluate: [0.4702 0.3352 0.8861 0.076  0.4362 0.1467 0.646 ] | Level: 1 | Merit: 0.000079
+17:42:39 INFO src.optimizer:     -> Evaluated value: 0.026633 at level 1
+17:42:39 INFO src.optimizer: --- EGO Iteration 8/10 ---
+17:42:39 INFO src.surrogate_models: GP level 1 trained (n=127). Noise: 1.891e-11 | rho: -
+17:42:39 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 7.922e-15 | rho: 0.9999
+17:42:40 INFO src.optimizer: 
+Next selected point to evaluate: [0.9235 0.1891 0.0035 0.8769 0.6623 0.8017 0.4864] | Level: 1 | Merit: 0.000103
+17:42:40 INFO src.optimizer:     -> Evaluated value: 0.026834 at level 1
+17:42:40 INFO src.optimizer: --- EGO Iteration 9/10 ---
+17:42:40 INFO src.surrogate_models: GP level 1 trained (n=128). Noise: 6.115e-11 | rho: -
+17:42:40 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 7.887e-15 | rho: 1.0000
+17:42:41 INFO src.optimizer: 
+Next selected point to evaluate: [0.8395 0.0376 0.9909 0.162  0.6222 0.4531 0.6288] | Level: 1 | Merit: 0.000092
+17:42:41 INFO src.optimizer:     -> Evaluated value: 0.026813 at level 1
+17:42:41 INFO src.optimizer: --- EGO Iteration 10/10 ---
+17:42:41 INFO src.surrogate_models: GP level 1 trained (n=129). Noise: 6.660e-11 | rho: -
+17:42:41 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 7.910e-15 | rho: 1.0000
+17:42:42 INFO src.optimizer: 
+Next selected point to evaluate: [0.6159 0.3345 0.4019 0.4248 0.5999 0.7202 0.0172] | Level: 1 | Merit: 0.000083
+17:42:42 INFO src.optimizer:     -> Evaluated value: 0.026938 at level 1
+17:42:43 INFO src.surrogate_models: GP level 1 trained (n=130). Noise: 4.974e-11 | rho: -
+17:42:43 INFO src.surrogate_models: GP level 2 trained (n=11). Noise: 7.511e-15 | rho: 1.0001
+17:42:43 INFO src.optimizer: Optimization summary: {"best_observed_x": [0.5648528261862568, 0.47525090057745273, 0.1705434850677947, 0.5666592080561637, 0.27041348034959956, 0.15023747101010698, 0.40170499694655315], "best_observed_y": 0.025846731018049608, "surrogate_best_x": [0.4574562016528147, 0.4671847281825817, 0.3600162591990853, 0.5286185246792888, 0.3124085354105177, 0.10169089129085496, 0.4764673627158534], "surrogate_best_f": 0.025819214772209977, "total_cost": 805.08, "n_points_per_level": {"1": 130, "2": 14}, "n_failed_per_level": {"1": 0, "2": 3}, "rhos": [1.0000705141691562], "timings_s": {"model_fit": 13.977, "acquisition": 24.379, "simulation": 12.692}, "mean_simulation_time_per_level_s": {"1": 0.2538}}
+17:42:43 INFO pipelines.bdtoolbox_foil.run: Verification of the surrogate optimum at level 2: {'t_0': 0.33723686049584445, 't_1': 0.36285834942755524, 't_2': 0.1984030892478262, 't_3': 0.3222894819743431, 's_1': -0.021897866147370576, 's_2': -0.07457727717728627, 's_3': 0.01911684067896334}
+17:42:59 INFO pipelines.bdtoolbox_foil.run:     -> verified objective: 0.025822994791295087 (surrogate prediction 0.0258192)
+17:42:59 INFO src.surrogate_models: GP level 1 trained (n=130). Noise: 4.974e-11 | rho: -
+17:42:59 INFO src.surrogate_models: GP level 2 trained (n=12). Noise: 7.862e-15 | rho: 0.9996
+17:42:59 INFO src.optimizer: Surrogate exported to C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\runs\1012_173702\surrogate.json
+17:42:59 INFO pipelines.bdtoolbox_foil.run: Best design (level 2): objective 0.025823, {'t_0': 0.33723686049584445, 't_1': 0.36285834942755524, 't_2': 0.1984030892478262, 't_3': 0.3222894819743431, 's_1': -0.021897866147370576, 's_2': -0.07457727717728627, 's_3': 0.01911684067896334}
+Convergence graph saved as : C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\runs\1012_173702\convergence_plot.png
+Interactive convergence graph saved as : C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\runs\1012_173702\convergence_plot.html
+Response surface saved as : C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\runs\1012_173702\response_surface_2d.png
+Interactive response surface saved as : C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\runs\1012_173702\response_surface_2d.html
+17:43:01 INFO src.run_utils: C-foil section optimization at the baseline lift - cfoil_intens_kulfan_trim_2 finished on 12/10/2026 at 17:43:01
+17:43:01 INFO src.run_utils: Total computation time: 320.56 s (0:05:21)
+17:43:01 INFO src.run_utils: --------------------------------------------------
+Run directory: C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\runs\1012_173702

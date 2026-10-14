@@ -1,0 +1,22 @@
+17:45:52 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.71072 at level 1
+17:45:57 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.69437 at level 2
+17:46:03 INFO step2: candidate 'best NPLLT section of the run' = 'effective best of the surrogate'
+17:46:03 INFO step2: candidate 'best AVL section of the run' = 'effective best of the surrogate'
+17:46:17 INFO step2: effective best of the surrogate: AVL 0.025822790026879483 (predicted 0.02582 +- 0.00001), NPLLT 0.02654629821482726
+17:46:28 INFO step2: minimum of the AVL surrogate mean: AVL 0.025844855937163444 (predicted 0.02589 +- 0.00006), NPLLT 0.026817076136893835
+17:46:37 INFO step2: Optimum (effective best of the surrogate): AVL CD 0.02582 vs baseline 0.02583 (-0.03 %)
+17:46:41 INFO step2: Leave-one-out on 12 AVL points: RMSE/spread 0.279, NLPD -8.029, coverage 0.92; Spearman NPLLT surrogate vs AVL 0.95
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\step2_analysis.py:168: FutureWarning: Downcasting object dtype arrays on .fillna, .ffill, .bfill is deprecated and will change in a future version. Call result.infer_objects(copy=False) instead. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+  interpolated = sub["trim_interpolated"].fillna(False).astype(bool) \
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\step2_analysis.py:168: FutureWarning: Downcasting object dtype arrays on .fillna, .ffill, .bfill is deprecated and will change in a future version. Call result.infer_objects(copy=False) instead. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+  interpolated = sub["trim_interpolated"].fillna(False).astype(bool) \
+17:46:41 INFO step2: Run statistics: {'n_evaluations': 145, 'trim': {'NPLLT': {'n': 130, 'solves': {'1': 3, '2': 127}, 'n_interpolated': 21, 'max_abs_residual': 9.765639069909291e-05, 'max_abs_residual_last_solve': 0.0009142318075063518, 'yaw_min': 3.9326014563629177, 'yaw_max': 4.11977374402033}, 'AVL': {'n': 12, 'solves': {'2': 12}, 'n_interpolated': 3, 'max_abs_residual': 8.066549454504862e-05, 'max_abs_residual_last_solve': 0.0004877969110608758, 'yaw_min': 3.551026114056385, 'yaw_max': 4.627552991033474}}, 'timing': {'NPLLT': {'doe_s': 21.977154299987887, 'loop_s': 12.686679800008278, 'verification_s': 0.0, 'mean_s': 0.2666448776922782}, 'AVL': {'doe_s': 187.5404013000043, 'loop_s': 0.0, 'verification_s': 54.48048689999996, 'mean_s': 16.134725880000286}}, 'verifications': [{'run_index': 103, 'measured': 0.0258493993895737, 'predicted': 0.025763381562089117, 'error_percent': 0.33387630919986466}, {'run_index': 124, 'measured': 0.025846731018049608, 'predicted': 0.025789655419617294, 'error_percent': 0.22131198538193295}, {'run_index': 145, 'measured': 0.025822994791295087, 'predicted': 0.025819214772209977, 'error_percent': 0.014640333249711696}], 'best_avl_run_index': 145, 'last_avl_run_index': 145, 'avl_chosen_by_merit': [], 'root_correction_avl': {'mean_percent_of_cd': 0.21117768201679676, 'min_percent': 0.10681695990448525, 'max_percent': 0.34018843604125537}}
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\step2_analysis.py:271: FutureWarning:
+
+Downcasting object dtype arrays on .fillna, .ffill, .bfill is deprecated and will change in a future version. Call result.infer_objects(copy=False) instead. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\step2_analysis.py:271: FutureWarning:
+
+Downcasting object dtype arrays on .fillna, .ffill, .bfill is deprecated and will change in a future version. Call result.infer_objects(copy=False) instead. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+
+17:46:45 INFO step2: Analysis written: C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\results\analysis.json, C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\figures\index.html
