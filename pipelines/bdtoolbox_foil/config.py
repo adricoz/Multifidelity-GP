@@ -45,7 +45,18 @@ TRIM_KEYS = ("variable", "bounds", "tolerance", "max_iterations", "initial_slope
 OPTIMIZATION_DEFAULTS = {"iterations": 20, "seed": 0, "estimate_rho": True,
                          "min_points_rho": None, "use_map": True, "lengthscale_prior": (3.0, 2.0),
                          "n_restarts": 3, "verify_best": True, "stop_on_convergence": False,
-                         "known_constraints": True, "verify_every": None}
+                         "known_constraints": True, "verify_every": None,
+                         # [V2] priors overrides ({group: [family, a, b] or null}, see
+                         # src.surrogate_models.DEFAULT_PRIORS), centred rho, GP kernel.
+                         # Defaults = mfego v1 behaviour (no prior on rho without centring): the
+                         # v2 options improve the surrogate but not NN-MF-EGO
+                         # (benchmarks/surrogate_v2/RAPPORT_V2.md: with the corrected rho, the
+                         # merit function over-weights the low fidelity)
+                         "priors": None, "rho_centering": False,
+                         "kernel": "squared_exponential"}
+# [V2] values of optimization.kernel -> kernel class name in mfego (src.kernels)
+KERNEL_NAMES = {"squared_exponential": "SquaredExponentialKernel", "matern52": "Matern52Kernel"}
+PRIOR_GROUP_NAMES = ("lengthscale", "signal_variance", "bias_variance", "noise", "rho")
 PATH_KEYS = ("bdfoil_root", "bdtoolbox_root", "soft_dir", "polar_cache")
 CONSTRAINT_KEYS = ("min_thickness", "max_thickness")
 SECTION_CONSTRAINT_KEYS = ("cl2d_target", "alpha_deg", "reference_model", "delta_bounds",
@@ -271,6 +282,17 @@ def from_dict(raw: dict) -> FoilProblem:
         raise ValueError("configuration: optimization.doe needs one size per level")
     optimization["lengthscale_prior"] = _check_prior(optimization["lengthscale_prior"],
                                                      len(levels))
+    if optimization["kernel"] not in KERNEL_NAMES:
+        raise ValueError(f"configuration: optimization.kernel must be in {sorted(KERNEL_NAMES)}, "
+                         f"got {optimization['kernel']!r}")
+    if not isinstance(optimization["rho_centering"], bool):
+        raise ValueError("configuration: optimization.rho_centering must be true or false")
+    priors = optimization["priors"]
+    if priors is not None:
+        if not isinstance(priors, dict):
+            raise ValueError("configuration: optimization.priors must be null or a dict "
+                             "{group: [family, a, b] or null}")
+        _check_keys(priors, PRIOR_GROUP_NAMES, "optimization.priors")
     every = optimization.get("verify_every")
     if every is not None and (isinstance(every, bool) or not isinstance(every, int)
                               or every < 1):

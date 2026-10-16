@@ -27,14 +27,13 @@ if str(ROOT / "mfego") not in sys.path:
 # pylint: disable=wrong-import-position,import-error
 from src.acquisition import AcquisitionFunction  # noqa: E402
 from src.data_management import ExperimentData  # noqa: E402
-from src.kernels import SquaredExponentialKernel  # noqa: E402
 from src.optimizer import EGOOptimizer, NumpyEncoder  # noqa: E402
 from src.run_utils import RunTimer, create_run, setup_logging  # noqa: E402
-from src.surrogate_models import MultifidelityModel  # noqa: E402
+from src.surrogate_models import KERNELS, MultifidelityModel  # noqa: E402
 from src.visualization import ModelVisualizer  # noqa: E402
 
 from . import bridge  # noqa: E402
-from .config import load_config  # noqa: E402
+from .config import KERNEL_NAMES, load_config  # noqa: E402
 from .constraints import feasibility_function  # noqa: E402
 from .geometry import to_physical  # noqa: E402
 from .simulator import BdToolboxFoilSimulator  # noqa: E402
@@ -110,12 +109,17 @@ def run_optimization(problem, run, simulator=None, feasibility=None,
     data = ExperimentData(bounds=[(0.0, 1.0)] * problem.dim, costs=problem.costs)
     # [MAP] MAP estimation of the hyperparameters (InvGamma lengthscale prior) unless
     # "use_map": false; the inputs are in [0, 1]^d, the domain the prior is defined for
-    model = MultifidelityModel(num_levels, SquaredExponentialKernel, seed=opt["seed"],
+    # [V2] kernel, priors overrides (values checked by src.surrogate_models.check_priors) and
+    # centred rho of the configuration
+    kernel_class = KERNELS[KERNEL_NAMES[opt.get("kernel", "squared_exponential")]]
+    model = MultifidelityModel(num_levels, kernel_class, seed=opt["seed"],
                                estimate_rho=opt.get("estimate_rho", True),
                                min_points_rho=opt.get("min_points_rho"),
                                n_restarts=int(opt.get("n_restarts", 3)),
                                use_map=bool(opt.get("use_map", True)),
-                               lengthscale_prior=opt.get("lengthscale_prior"))
+                               lengthscale_prior=opt.get("lengthscale_prior"),
+                               priors=opt.get("priors"),
+                               rho_centering=bool(opt.get("rho_centering", False)))
     # [KC] known geometric constraints: feasible DOE, zero merit outside the feasible domain
     if feasibility is None and opt.get("known_constraints", True):
         feasibility = feasibility_function(problem)

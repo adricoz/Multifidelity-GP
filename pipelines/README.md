@@ -112,6 +112,16 @@ when the merit function only explored the cheap levels.
     likelihood, which overfits with few points and degenerates with many (`benchmarks/map_hartmann/RAPPORT_MAP.md`).
   * `estimate_rho` (default true): ρ computed at every level (Sacher Eq. 15); `min_points_rho`, `n_restarts`,
     `verify_best`, `stop_on_convergence`, `known_constraints`.
+  * mfego v2 options (`benchmarks/surrogate_v2/RAPPORT_V2.md`): `kernel` (`"squared_exponential"` or `"matern52"`),
+    `rho_centering`, `priors` (dict of overrides of `DEFAULT_PRIORS`, e.g. `{"noise": ["lognormal", -9.2, 2.0]}`;
+    null = `DEFAULT_PRIORS`; groups `lengthscale`, `signal_variance`, `bias_variance`, `noise`, `rho`; the default
+    prior on `rho` only applies with `rho_centering: true`; `"rho": ["lognormal", 1, 1]` learns rho > 0 with the other
+    hyperparameters as in mfego v3, `benchmarks/surrogate_v3/RAPPORT_V3.md`: use it with `rho_centering: true`, since
+    without centring rho is still pulled towards 1; the pipeline has no `rho_bounds` key, so the learned rho stays in
+    [0.001, 5], not in the [0.001, 50] of v3). **The defaults keep the mfego v1 behaviour**
+    (`"squared_exponential"`, `false`, `null`): the v2 options give better surrogates on nested designs, but with the
+    corrected rho the merit function of NN-MF-EGO over-weights the low fidelity (worse optimization of Hartmann 6D).
+    v2 surrogate: `"kernel": "matern52", "rho_centering": true, "priors": null`.
 
 Example configurations: `section2d_naca_3levels.json`, `section2d_kulfan_neuralfoil.json`, `section2d_parsec_xfoil.json`,
 `foil3d_cfoil_kulfan_3levels.json` (3D, see below).
