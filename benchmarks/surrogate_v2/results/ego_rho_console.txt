@@ -1,0 +1,9 @@
+                               best HF error  recommendation error  LF share  final rho
+variant                                                                                
+Matern only (v1 rho)                   0.312                 0.290     0.071      0.282
+centred rho + prior only (SE)          0.335                 0.379     0.896      2.184
+v1                                     0.259                 0.249     0.071      0.272
+v2                                     0.317                 0.291     0.860      2.414
+v2 better than v1 (recommendation): 1/10
+Matern only (v1 rho) better than v1 (recommendation): 4/10
+centred rho + prior only (SE) better than v1 (recommendation): 2/10

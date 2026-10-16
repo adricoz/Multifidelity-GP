@@ -1,0 +1,15 @@
+1. Few high-fidelity points (MAP, priors on all the hyperparameters)
+   design [11, 4], seed 0: rho = 1.895, 95 % coverage = 0.117
+   design [11, 4], seed 1: rho = 1.894, 95 % coverage = 0.130
+   design [11, 4], seed 2: rho = 0.903, 95 % coverage = 0.152
+   design [11, 4], seed 3: rho = 0.859, 95 % coverage = 0.032
+   design [11, 4], seed 4: rho = 1.918, 95 % coverage = 0.234
+   design [11, 5], seed 0: rho = 1.998, 95 % coverage = 0.935
+   design [11, 5], seed 1: rho = 1.998, 95 % coverage = 0.925
+   design [11, 5], seed 2: rho = 1.998, 95 % coverage = 0.905
+   design [11, 5], seed 3: rho = 1.997, 95 % coverage = 0.898
+   design [11, 5], seed 4: rho = 1.998, 95 % coverage = 0.895
+2. Noisy low fidelity (std 0.5), noise-free high fidelity, nested 30 / 12
+   seed 0: rho = 1.725 (true 2) | fitted noise variance: LF 0.101 (true 0.25), level 2 0.080 (true 0, rho^2 x LF noise = 0.74) | max error at the HF points 0.166
+   seed 1: rho = 0.031 (true 2) | fitted noise variance: LF 0.168 (true 0.25), level 2 0.000 (true 0, rho^2 x LF noise = 0.00) | max error at the HF points 0.003
+   seed 2: rho = 0.113 (true 2) | fitted noise variance: LF 0.197 (true 0.25), level 2 0.000 (true 0, rho^2 x LF noise = 0.00) | max error at the HF points 0.004

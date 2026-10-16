@@ -1,0 +1,356 @@
+GP level 1 (MLE): lengthscales [0, 1, 2, 3, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [3] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 1, 3, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 1, 2, 3] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [2, 3] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [2] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 1] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [1, 2, 3, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [2, 4] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 2 (MLE): lengthscales [1, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [1, 2, 3, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 1, 2, 3, 4] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 1, 2, 3, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [1, 3, 4] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+=== Accuracy on 2000 test points (n_LF = 2 n_HF): medians over the seeds ===
+                                         rmse_rel     nlpd  coverage_95  fit_time_s
+n_hf model                                                                         
+5    BoTorch MF-GP (MF)                     1.237    0.732        0.986       2.890
+     BoTorch SingleTaskGP (SF)              1.017    1.972        0.857       0.400
+     SMT MFK (MF)                           1.172  175.862        0.234       7.178
+     mfego MF (MAP-all)                     1.007    2.358        0.839       0.065
+     mfego MF (MAP-all, l IG(3, 1))         1.021    1.497        0.872       0.062
+     mfego MF (MAP-all, no noise prior)     1.007    2.358        0.839       0.064
+     mfego MF (MAP-all, no t1 prior)        1.007    2.308        0.843       0.065
+     mfego MF (MAP-all, no t2 prior)        1.007    2.359        0.839       0.110
+     mfego MF (MAP-all, noise 1e-3)         1.007    2.358        0.839       0.068
+     mfego MF (MAP-all, noise 1e-6)         1.007    2.358        0.839       0.072
+     mfego MF (MAP-all, t1 sigma 0.5)       1.008    2.421        0.834       0.069
+     mfego MF (MAP-all, t1 sigma 2)         1.007    2.324        0.842       0.067
+     mfego MF (MAP-l)                       1.007    2.309        0.843       0.046
+     mfego MF (MLE)                         1.078   33.218        0.438       0.143
+     mfego SF (MAP-all)                     1.018    2.492        0.833       0.029
+     mfego SF (MAP-l)                       1.018    2.442        0.838       0.017
+     mfego SF (MLE)                         1.090   20.547        0.568       0.053
+     scikit-learn GP (SF)                   1.103   99.851        0.441       1.408
+10   BoTorch MF-GP (MF)                     0.974    0.496        0.952       3.536
+     BoTorch SingleTaskGP (SF)              0.988    0.945        0.849       0.556
+     SMT MFK (MF)                           1.238   18.049        0.478       7.907
+     mfego MF (MAP-all)                     0.949    0.740        0.892       0.087
+     mfego MF (MAP-all, l IG(3, 1))         0.966    0.620        0.918       0.086
+     mfego MF (MAP-all, no noise prior)     0.949    0.740        0.892       0.078
+     mfego MF (MAP-all, no t1 prior)        0.950    0.728        0.896       0.083
+     mfego MF (MAP-all, no t2 prior)        0.949    0.740        0.892       0.091
+     mfego MF (MAP-all, noise 1e-3)         0.949    0.740        0.892       0.081
+     mfego MF (MAP-all, noise 1e-6)         0.949    0.740        0.892       0.090
+     mfego MF (MAP-all, t1 sigma 0.5)       0.949    0.759        0.888       0.087
+     mfego MF (MAP-all, t1 sigma 2)         0.949    0.732        0.893       0.083
+     mfego MF (MAP-l)                       0.950    0.728        0.896       0.059
+     mfego MF (MLE)                         1.097    5.449        0.660       0.152
+     mfego SF (MAP-all)                     0.956    0.725        0.901       0.034
+     mfego SF (MAP-l)                       0.956    0.701        0.903       0.022
+     mfego SF (MLE)                         1.045    7.367        0.633       0.049
+     scikit-learn GP (SF)                   1.056   15.616        0.672       1.495
+20   BoTorch MF-GP (MF)                     0.908    1.235        0.859       4.757
+     BoTorch SingleTaskGP (SF)              0.993    3.162        0.756       0.491
+     SMT MFK (MF)                           1.042    7.596        0.656       8.729
+     mfego MF (MAP-all)                     0.919    1.081        0.867       0.141
+     mfego MF (MAP-all, l IG(3, 1))         0.931    0.779        0.886       0.133
+     mfego MF (MAP-all, no noise prior)     0.919    1.081        0.867       0.126
+     mfego MF (MAP-all, no t1 prior)        0.919    1.063        0.868       0.128
+     mfego MF (MAP-all, no t2 prior)        0.919    1.081        0.867       0.127
+     mfego MF (MAP-all, noise 1e-3)         0.919    1.081        0.867       0.128
+     mfego MF (MAP-all, noise 1e-6)         0.919    1.081        0.867       0.133
+     mfego MF (MAP-all, t1 sigma 0.5)       0.919    1.115        0.865       0.135
+     mfego MF (MAP-all, t1 sigma 2)         0.919    1.068        0.867       0.130
+     mfego MF (MAP-l)                       0.919    1.063        0.868       0.095
+     mfego MF (MLE)                         1.034   12.748        0.620       0.185
+     mfego SF (MAP-all)                     0.939    1.105        0.863       0.046
+     mfego SF (MAP-l)                       0.939    1.096        0.863       0.032
+     mfego SF (MLE)                         1.010    5.273        0.694       0.069
+     scikit-learn GP (SF)                   1.047    3.847        0.771       0.111
+40   BoTorch MF-GP (MF)                     0.818    0.813        0.866       4.229
+     BoTorch SingleTaskGP (SF)              0.901    1.149        0.850       0.500
+     SMT MFK (MF)                           1.016    1.273        0.808       4.093
+     mfego MF (MAP-all)                     0.776    0.534        0.890       0.320
+     mfego MF (MAP-all, l IG(3, 1))         0.739    0.318        0.935       0.304
+     mfego MF (MAP-all, no noise prior)     0.776    0.534        0.887       0.293
+     mfego MF (MAP-all, no t1 prior)        0.775    0.533        0.890       0.311
+     mfego MF (MAP-all, no t2 prior)        0.776    0.534        0.887       0.297
+     mfego MF (MAP-all, noise 1e-3)         0.776    0.534        0.890       0.318
+     mfego MF (MAP-all, noise 1e-6)         0.776    0.534        0.890       0.317
+     mfego MF (MAP-all, t1 sigma 0.5)       0.778    0.539        0.887       0.323
+     mfego MF (MAP-all, t1 sigma 2)         0.776    0.533        0.890       0.317
+     mfego MF (MAP-l)                       0.775    0.533        0.888       0.233
+     mfego MF (MLE)                         0.932    1.235        0.834       0.321
+     mfego SF (MAP-all)                     0.809    0.578        0.884       0.075
+     mfego SF (MAP-l)                       0.809    0.578        0.884       0.053
+     mfego SF (MLE)                         1.033    1.552        0.798       0.091
+     scikit-learn GP (SF)                   1.020    1.459        0.813       0.223
+
+=== MF: seeds where MAP-all is better (same DOE) ===
+     MF MAP-all < MLE (rmse_rel) MF MAP-all < MLE (nlpd) MF MAP-all < MAP-l (rmse_rel) MF MAP-all < MAP-l (nlpd)
+n_hf                                                                                                            
+5                           9/10                   10/10                          3/10                      4/10
+10                          9/10                   10/10                          6/10                      3/10
+20                         10/10                   10/10                          4/10                      3/10
+40                         10/10                   10/10                          8/10                      7/10
+
+=== SF: seeds where MAP-all is better (same DOE) ===
+     SF MAP-all < MLE (rmse_rel) SF MAP-all < MLE (nlpd) SF MAP-all < MAP-l (rmse_rel) SF MAP-all < MAP-l (nlpd)
+n_hf                                                                                                            
+5                           9/10                   10/10                          4/10                      4/10
+10                          8/10                   10/10                          8/10                      3/10
+20                         10/10                    9/10                          6/10                      3/10
+40                         10/10                    9/10                          5/10                      7/10
+
+=== HF level: share of hyperparameters at a search bound ===
+                                         lengthscales low  lengthscales high  signal_variance low  signal_variance high  bias_variance low  bias_variance high  noise low  noise high
+n_hf model                                                                                                                                                                           
+5    mfego MF (MAP-all)                              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, l IG(3, 1))                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, no noise prior)              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, no t1 prior)                 0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, no t2 prior)                 0.00               0.00                  0.0                   0.0                1.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, noise 1e-3)                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, noise 1e-6)                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, t1 sigma 0.5)                0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, t1 sigma 2)                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-l)                                0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MLE)                                  0.00               0.70                  0.0                   0.0                0.5                 0.0        0.1         0.0
+     mfego SF (MAP-all)                              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego SF (MAP-l)                                0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego SF (MLE)                                  0.00               0.65                  0.0                   0.0                0.3                 0.0        0.0         0.0
+10   mfego MF (MAP-all)                              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, l IG(3, 1))                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, no noise prior)              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, no t1 prior)                 0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, no t2 prior)                 0.00               0.00                  0.0                   0.0                0.3                 0.0        0.0         0.0
+     mfego MF (MAP-all, noise 1e-3)                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, noise 1e-6)                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, t1 sigma 0.5)                0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, t1 sigma 2)                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-l)                                0.00               0.00                  0.0                   0.0                0.1                 0.0        0.0         0.0
+     mfego MF (MLE)                                  0.00               0.60                  0.0                   0.0                0.4                 0.0        0.1         0.0
+     mfego SF (MAP-all)                              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego SF (MAP-l)                                0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego SF (MLE)                                  0.17               0.45                  0.0                   0.0                0.2                 0.0        0.0         0.0
+20   mfego MF (MAP-all)                              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, l IG(3, 1))                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, no noise prior)              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, no t1 prior)                 0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, no t2 prior)                 0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, noise 1e-3)                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, noise 1e-6)                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, t1 sigma 0.5)                0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, t1 sigma 2)                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-l)                                0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MLE)                                  0.00               0.50                  0.0                   0.0                0.4                 0.0        0.3         0.0
+     mfego SF (MAP-all)                              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego SF (MAP-l)                                0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego SF (MLE)                                  0.10               0.42                  0.0                   0.0                0.2                 0.0        0.1         0.0
+40   mfego MF (MAP-all)                              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, l IG(3, 1))                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, no noise prior)              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, no t1 prior)                 0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, no t2 prior)                 0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, noise 1e-3)                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, noise 1e-6)                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, t1 sigma 0.5)                0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-all, t1 sigma 2)                  0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego MF (MAP-l)                                0.00               0.00                  0.0                   0.0                0.2                 0.0        0.0         0.0
+     mfego MF (MLE)                                  0.05               0.18                  0.0                   0.0                0.3                 0.0        0.2         0.0
+     mfego SF (MAP-all)                              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego SF (MAP-l)                                0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego SF (MLE)                                  0.05               0.22                  0.0                   0.0                0.2                 0.0        0.1         0.0
+ 720 fits in 36 s
+
+GP level 1 (MLE): lengthscales [0, 3, 4] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 1, 2, 3, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [3, 4] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 1, 3, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 1, 2, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 3] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [4] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [1, 3] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [3] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [1] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [2] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [3, 4] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [1, 3] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [1] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+=== Many HF points, single fidelity: medians over the seeds ===
+                                rmse_rel   nlpd  coverage_95  fit_time_s
+n_hf model                                                              
+80   BoTorch SingleTaskGP (SF)     0.646  0.225        0.907       4.945
+     mfego SF (MAP-all)            0.661  0.213        0.916       0.572
+     mfego SF (MAP-l)              0.657  0.212        0.917       0.338
+     mfego SF (MLE)                0.958  0.492        0.916       0.260
+     scikit-learn GP (SF)          0.958  0.696        0.900       2.379
+160  BoTorch SingleTaskGP (SF)     0.521 -0.161        0.931       2.240
+     mfego SF (MAP-all)            0.513 -0.203        0.930       5.335
+     mfego SF (MAP-l)              0.502 -0.224        0.932       4.043
+     mfego SF (MLE)                1.000  0.491        0.942       3.336
+     scikit-learn GP (SF)          0.553 -0.095        0.921       9.078
+300  BoTorch SingleTaskGP (SF)     0.371 -0.492        0.937       2.692
+     mfego SF (MAP-all)            0.365 -0.496        0.935      25.499
+     mfego SF (MAP-l)              0.359 -0.506        0.934      25.563
+     mfego SF (MLE)                1.000  0.504        0.933      18.192
+     scikit-learn GP (SF)          0.371 -0.491        0.933      17.263
+
+=== SF: seeds where MAP-all is better (same DOE) ===
+     SF MAP-all < MLE (rmse_rel) SF MAP-all < MLE (nlpd) SF MAP-all < MAP-l (rmse_rel) SF MAP-all < MAP-l (nlpd)
+n_hf                                                                                                            
+80                          9/10                    9/10                          2/10                      3/10
+160                        10/10                   10/10                          3/10                      3/10
+300                        10/10                   10/10                          2/10                      1/10
+
+=== HF level: share of hyperparameters at a search bound ===
+                         lengthscales low  lengthscales high  signal_variance low  signal_variance high  bias_variance low  bias_variance high  noise low  noise high
+n_hf model                                                                                                                                                           
+80   mfego SF (MAP-all)              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego SF (MAP-l)                0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego SF (MLE)                  0.32               0.03                  0.0                   0.0                0.3                 0.0        0.0         0.0
+160  mfego SF (MAP-all)              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego SF (MAP-l)                0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego SF (MLE)                  0.25               0.00                  0.0                   0.0                0.7                 0.0        0.0         0.0
+300  mfego SF (MAP-all)              0.00               0.00                  0.0                   0.0                0.0                 0.0        0.0         0.0
+     mfego SF (MAP-l)                0.00               0.00                  0.0                   0.0                0.0                 0.0        0.1         0.1
+     mfego SF (MLE)                  0.17               0.00                  0.0                   0.0                1.0                 0.0        0.1         0.0
+ 150 fits in 59 s
+
+GP level 1 (MLE): lengthscales [0, 1, 2, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 1, 2, 3, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 1, 2, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MLE): lengthscales [0, 1, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 1, 3, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 2 (MLE): lengthscales [0, 1, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MLE): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MLE): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MLE): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MLE): lengthscales [1, 4] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MLE): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MLE): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MLE): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MLE): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MLE): lengthscales [3, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance lognormal(1, 1); bias_variance lognormal(-4.61, 2); noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 1, 2, 3, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 1, 2, 3, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 1, 2, 3, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 2, 3, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance lognormal(1, 1); bias_variance lognormal(-4.61, 2); noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MLE): lengthscales [4] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance lognormal(1, 1); bias_variance lognormal(-4.61, 2); noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 2, 3] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [2, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [0, 2, 3] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [2, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [2, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance lognormal(1, 1); bias_variance lognormal(-4.61, 2); noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MLE): lengthscales [2, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [1, 3, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [1, 3, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [1, 2, 3, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [1, 3, 4, 5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance lognormal(1, 1); bias_variance lognormal(-4.61, 2); noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MLE): lengthscales [5] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [3] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 1 (MLE): lengthscales [3] at the lower bound, noise at the upper bound: False (possible degenerate fit).
+GP level 2 (MAP (lengthscale invgamma(3, 2); signal_variance lognormal(1, 1); bias_variance lognormal(-4.61, 2); noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MLE): lengthscales [5] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+GP level 1 (MAP (lengthscale invgamma(3, 2); signal_variance none; bias_variance none; noise none)): lengthscales [] at the lower bound, noise at the upper bound: True (possible degenerate fit).
+=== Optimization of Hartmann 6D at equal budget (250), f - f* ===
+                                          best HF error        recommendation error        iterations       LF share        time / iteration (s)       
+                                                 median   mean               median   mean     median  mean   median   mean               median   mean
+method                                                                                                                                                 
+BoTorch qLogEI (SF)                               0.625  0.977                0.706  1.005       13.0  13.0    0.000  0.000                0.632  0.642
+mfego NN-MF-EGO (MAP-all)                         0.259  0.591                0.249  0.486       14.0  15.5    0.071  0.135                0.214  0.219
+mfego NN-MF-EGO (MAP-all, l IG(3, 1))             0.155  0.286                0.162  0.273       18.5  17.8    0.271  0.234                0.229  0.228
+mfego NN-MF-EGO (MAP-all, no noise prior)         0.374  0.671                0.276  0.644       14.0  14.9    0.071  0.106                0.211  0.213
+mfego NN-MF-EGO (MAP-all, no t1 prior)            0.237  0.468                0.204  0.446       14.0  16.1    0.071  0.159                0.219  0.218
+mfego NN-MF-EGO (MAP-all, no t2 prior)            0.250  0.516                0.235  0.450       14.0  15.5    0.071  0.135                0.230  0.238
+mfego NN-MF-EGO (MAP-all, noise 1e-3)             0.309  0.570                0.271  0.533       13.0  15.7    0.000  0.133                0.220  0.221
+mfego NN-MF-EGO (MAP-all, noise 1e-6)             0.325  0.622                0.299  0.541       14.5  15.9    0.102  0.160                0.222  0.225
+mfego NN-MF-EGO (MAP-all, t1 sigma 0.5)           0.332  0.593                0.278  0.571       13.0  15.7    0.000  0.137                0.222  0.221
+mfego NN-MF-EGO (MAP-all, t1 sigma 2)             0.304  0.569                0.279  0.566       15.5  16.5    0.160  0.186                0.226  0.225
+mfego NN-MF-EGO (MAP-l)                           0.218  0.498                0.214  0.464       14.0  15.4    0.071  0.131                0.208  0.214
+mfego NN-MF-EGO (MLE)                             0.327  0.823                0.301  0.923       36.0  31.5    0.703  0.527                0.380  0.359
+mfego SF-EGO (MAP-all)                            0.433  0.635                0.585  0.700       13.0  13.0    0.000  0.000                0.153  0.152
+mfego SF-EGO (MAP-l)                              0.364  0.512                0.371  0.494       13.0  13.0    0.000  0.000                0.165  0.162
+mfego SF-EGO (MLE)                                1.532  1.334                1.655  1.479       13.0  13.0    0.000  0.000                0.182  0.171
+
+=== Paired wins (same DOE) ===
+NN-MF-EGO: MAP-all < MLE (recommendation)       8/10
+NN-MF-EGO: MAP-all < MAP-l (recommendation)     5/10
+SF-EGO: MAP-all < MLE (recommendation)         10/10
+SF-EGO: MAP-all < MAP-l (recommendation)        2/10
+ 150 runs in 50 s

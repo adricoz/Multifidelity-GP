@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>C-foil trim study</title>
+<style>
+:root { --surface:#fcfcfb; --page:#f9f9f7; --ink:#0b0b0b; --ink2:#52514e;
+        --line:rgba(11,11,11,0.10); --accent:#2a78d6; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --surface:#1a1a19;
+  --page:#0d0d0d; --ink:#ffffff; --ink2:#c3c2b7; --line:rgba(255,255,255,0.10);
+  --accent:#3987e5; } }
+:root[data-theme="dark"] { --surface:#1a1a19; --page:#0d0d0d; --ink:#ffffff; --ink2:#c3c2b7;
+  --line:rgba(255,255,255,0.10); --accent:#3987e5; }
+body { margin:0; background:var(--page); color:var(--ink);
+       font-family:system-ui,-apple-system,"Segoe UI",sans-serif; }
+main { max-width:1100px; margin:0 auto; padding:24px 16px 48px; }
+h1 { font-size:22px; margin:0 0 4px; } p.sub { color:var(--ink2); margin:0 0 20px; }
+.tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px;
+         margin-bottom:24px; }
+.tile { background:var(--surface); border:1px solid var(--line); border-radius:8px;
+        padding:12px 14px; }
+.label { color:var(--ink2); font-size:13px; }
+.value { font-size:20px; font-weight:600; margin-top:4px; }
+section { background:var(--surface); border:1px solid var(--line); border-radius:8px;
+          padding:4px 18px 10px; }
+li { margin:6px 0; } a { color:var(--accent); }
+</style></head><body><main>
+<h1>Intens SY C-foil: section optimization at the reference lift</h1>
+<p class="sub">3 levels (NPLLT x NeuralFoil xxxlarge, NPLLT x XFOIL, AVL x XFOIL), yaw trimmed to
+the lift of the reference foil (MC2_60_6101_1 + camber) within +-5 % of 4 deg, no 2D lift constraint,
+section constraints (t/c, Ixx, trailing-edge thickness, leading-edge weights, wiggliness,
+NeuralFoil confidence).</p>
+<div class="tiles"><div class="tile"><div class="label">Reference CD (AVL)</div><div class="value">0.02454</div></div><div class="tile"><div class="label">Optimum CD (AVL)</div><div class="value">0.02449</div></div><div class="tile"><div class="label">Drag change AVL / NPLLT-XF / NPLLT-NF</div><div class="value">-0.19 % / -0.18 % / +0.22 %</div></div><div class="tile"><div class="label">Optimum yaw AVL</div><div class="value">4.122 deg</div></div><div class="tile"><div class="label">Evaluations L1 / L2 / L3</div><div class="value">258 / 88 / 73</div></div><div class="tile"><div class="label">LOO RMSE / spread (AVL)</div><div class="value">25 %</div></div></div><section><ul><li><a href="step2_convergence.html">Convergence and level of every evaluation</a></li><li><a href="step2_comparison.html">Reference, optimum and other candidate sections</a></li><li><a href="step2_levels.html">The three levels on the same sections</a></li><li><a href="step2_sections.html">Section shapes, leading and trailing edges, thickness and camber</a></li><li><a href="step2_constraints.html">Margin of the optimum to each known constraint</a></li><li><a href="step2_trim.html">The trim: yaw needed by every section, yaw band</a></li><li><a href="step2_xfoil.html">Failures and XFOIL convergence during the run</a></li><li><a href="step2_spanwise.html">Spanwise loading, reference vs optimum</a></li><li><a href="step2_leave_one_out.html">Accuracy of the surrogate (leave-one-out on AVL)</a></li><li><a href="step2_gp_slices_1d.html">Response surface along each variable</a></li><li><a href="step2_gp_slices_2d.html">Response surface over pairs of variables</a></li><li><a href="step2_designs_parallel.html">Every evaluated section (parallel coordinates)</a></li><li><a href="step0_constraints.html">Set-up: known constraints and feasible sections</a></li><li><a href="step0_xfoil.html">Set-up: XFOIL robustness of the settings</a></li><li><a href="step0_trim.html">Set-up: yaw needed by a few sections at the three levels</a></li></ul></section></main></body></html>

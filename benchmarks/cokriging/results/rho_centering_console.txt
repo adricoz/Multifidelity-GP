@@ -1,0 +1,31 @@
+                                                                rho  rmse_rel   nlpd  coverage_95  z_std
+problem  n_hf model                                                                                     
+airfoil  5    GPy/emukit AR1 (MAP)                            0.802     0.375  3.364        0.952  0.941
+              mfego CoKriging (MAP)                           0.994     0.394  3.458        0.887  1.245
+              mfego CoKriging (MAP, centred rho)              0.903     0.386  3.531        0.853  1.424
+              mfego CoKriging (MAP, centred rho, bounds 50)   0.903     0.386  3.531        0.853  1.424
+         10   GPy/emukit AR1 (MAP)                            0.813     0.251  3.067        0.895  1.325
+              mfego CoKriging (MAP)                           0.977     0.320  3.425        0.852  1.405
+              mfego CoKriging (MAP, centred rho)              0.847     0.295  3.389        0.836  1.549
+              mfego CoKriging (MAP, centred rho, bounds 50)   0.847     0.295  3.389        0.836  1.549
+         20   GPy/emukit AR1 (MAP)                            0.638     0.208  3.195        0.845  1.608
+              mfego CoKriging (MAP)                           0.945     0.257  3.176        0.897  1.248
+              mfego CoKriging (MAP, centred rho)              0.757     0.226  3.029        0.879  1.373
+              mfego CoKriging (MAP, centred rho, bounds 50)   0.757     0.226  3.029        0.879  1.373
+hartmann 10   GPy/emukit AR1 (MAP)                           10.968     0.952  1.240        0.852  1.966
+              mfego CoKriging (MAP)                           0.974     0.951  2.880        0.821  2.665
+              mfego CoKriging (MAP, centred rho)              5.000     0.860  1.047        0.867  1.854
+              mfego CoKriging (MAP, centred rho, bounds 50)  23.051     1.387  1.086        0.911  1.127
+         20   GPy/emukit AR1 (MAP)                            6.402     0.986  1.313        0.851  1.740
+              mfego CoKriging (MAP)                           0.977     0.845  1.368        0.862  2.011
+              mfego CoKriging (MAP, centred rho)              5.000     0.838  0.785        0.860  1.697
+              mfego CoKriging (MAP, centred rho, bounds 50)   6.376     0.948  1.041        0.868  1.573
+         40   GPy/emukit AR1 (MAP)                            7.414     0.758  0.241        0.914  1.254
+              mfego CoKriging (MAP)                           0.964     0.756  0.595        0.871  1.641
+              mfego CoKriging (MAP, centred rho)              5.000     0.668  0.218        0.911  1.285
+              mfego CoKriging (MAP, centred rho, bounds 50)   8.451     0.744  0.204        0.923  1.143
+mfego CoKriging (MAP, centred rho) better than the current mfego (rmse_rel): {"airfoil n_HF=5": "8/10", "airfoil n_HF=10": "7/10", "airfoil n_HF=20": "9/10", "hartmann n_HF=10": "8/10", "hartmann n_HF=20": "7/10", "hartmann n_HF=40": "9/10"}
+mfego CoKriging (MAP, centred rho) better than the current mfego (nlpd): {"airfoil n_HF=5": "5/10", "airfoil n_HF=10": "5/10", "airfoil n_HF=20": "8/10", "hartmann n_HF=10": "9/10", "hartmann n_HF=20": "6/10", "hartmann n_HF=40": "9/10"}
+mfego CoKriging (MAP, centred rho, bounds 50) better than the current mfego (rmse_rel): {"airfoil n_HF=5": "8/10", "airfoil n_HF=10": "7/10", "airfoil n_HF=20": "9/10", "hartmann n_HF=10": "3/10", "hartmann n_HF=20": "3/10", "hartmann n_HF=40": "6/10"}
+mfego CoKriging (MAP, centred rho, bounds 50) better than the current mfego (nlpd): {"airfoil n_HF=5": "5/10", "airfoil n_HF=10": "5/10", "airfoil n_HF=20": "8/10", "hartmann n_HF=10": "8/10", "hartmann n_HF=20": "5/10", "hartmann n_HF=40": "8/10"}
+share of the centred rho at the bound |rho| = 5: {('airfoil', 5): 0.0, ('airfoil', 10): 0.0, ('airfoil', 20): 0.0, ('hartmann', 10): 1.0, ('hartmann', 20): 0.8, ('hartmann', 40): 0.9}

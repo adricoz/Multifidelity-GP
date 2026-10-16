@@ -6,7 +6,8 @@ available, cm / cpmin) of a section; the objective is computed from the polar (o
 * NeuralFoilBackend: NeuralFoil (model_size xxsmall ... xxxlarge), vectorized over the alpha grid.
 * XfoilCoreBackend: bdFoil core XFOIL engine (run_polar with re-panelling, PolarSpec).
 3D (a fixed planform CSV + one section file -> bdFoil coefficients, see planform.py):
-* NpLltBackend: bdFoil/NonPlanarSolver NonPlanarLiftingLine with NeuralFoil polars.
+* NpLltBackend: bdFoil/NonPlanarSolver NonPlanarLiftingLine with NeuralFoil polars, or XFOIL
+  polars (option polar_source "xfoil": same PolarSpec and polar cache as the AVL level).
 * AvlCoreBackend: bdFoil core campaign.run_case (AVL) with XFOIL polars (core polar cache).
 
 The flow conditions shared by every level ("flow" entry of the configuration: re, n_crit, xtr,
@@ -21,6 +22,7 @@ import tempfile
 import time
 from dataclasses import dataclass
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 
@@ -135,11 +137,72 @@ def _check_image(image: str) -> dict:
     return IMAGES[image]
 
 
+def xfoil_spec(core, flow: dict, npane: int = 250, niter: int = 100):
+    """
+    XFOIL settings of the 3D levels with XFOIL polars (AVL x XFOIL, NPLLT x XFOIL): the flow of
+    the configuration (re, n_crit, xtr, alpha = [start, stop, step]; default range down to
+    -6 deg so that the polar covers the low cl of the tip strips). The polar cache key is the
+    sha256 of the section file and this spec: two levels with the same spec share the polars
+    (the second one reads the polar computed by the first one).
+    """
+    start, stop, step = flow.get("alpha", (-6.0, 12.0, 0.5))
+    return core.xfoil.PolarSpec(
+        re=float(flow["re"]), ncrit=float(flow.get("n_crit", 1.0)),
+        xtr=tuple(float(v) for v in flow.get("xtr", (0.1, 0.1))),
+        alpha=(float(start), float(stop), float(step)), npane=int(npane), niter=int(niter))
+
+
+# name of the private XFOIL polar method of NonPlanarLiftingLine (self.__xfoil_polar, called by
+# its polar pre-computation): replaced below, so that the bdFoil clone is left untouched
+_NPLLT_XFOIL_POLAR = "_NonPlanarLiftingLine__xfoil_polar"
+
+
+def _xfoil_lifting_line(module, core, spec, settings: dict):
+    """
+    NonPlanarLiftingLine whose XFOIL polars use the PolarSpec of the configuration (re, n_crit,
+    xtr, alpha, npane, niter) and the polar cache of the study. The original method of bdFoil
+    builds its spec from re and alpha only (n_crit, xtr, npane and niter would silently take the
+    core defaults, niter 100 among them) and writes in the default cache of the bdFoil clone
+    (bdFoil/tmp). settings: {"cache_dir", "timeout"}, read at every call (a caller may point
+    the cache elsewhere, e.g. to time the polar computation). The returned polar arrays and the
+    confidence (0 on the points XFOIL did not converge, filled by the core interpolation) are
+    those of the original method. A set-up mismatch raises RuntimeError (it stops the run: it
+    is not a failed evaluation).
+    """
+    base = module.NonPlanarLiftingLine
+    if not hasattr(base, _NPLLT_XFOIL_POLAR):
+        raise RuntimeError(f"np_llt_solver.NonPlanarLiftingLine has no {_NPLLT_XFOIL_POLAR} "
+                           "method any more (bdFoil changed): NPLLT x XFOIL cannot be set up")
+
+    def xfoil_polar(self, section, reynolds: float, alpha_deg: np.ndarray):
+        if abs(float(reynolds) - spec.re) > 1e-9 * spec.re:
+            raise RuntimeError(f"NPLLT x XFOIL: polar Reynolds {reynolds:.6g} differs from the "
+                               f"flow Reynolds {spec.re:.6g} (local_reynolds must be False)")
+        start = time.perf_counter()
+        polar = core.xfoil.get_polars(SimpleNamespace(sections=(section,)), spec,
+                                      cache_dir=settings["cache_dir"], nproc=1,
+                                      timeout=settings["timeout"]).polar(section)
+        alpha = np.asarray(polar.alpha, dtype=float)
+        if alpha_deg[0] < alpha[0] - 1e-9 or alpha_deg[-1] > alpha[-1] + 1e-9:
+            raise RuntimeError("NPLLT x XFOIL: the polar table is wider than the XFOIL polar")
+        self.xfoil_filled_points = getattr(self, "xfoil_filled_points", 0) \
+            + int(np.sum(polar.filled))
+        self.time_polar_s = getattr(self, "time_polar_s", 0.0) + time.perf_counter() - start
+        return (np.interp(alpha_deg, alpha, polar.cl), np.interp(alpha_deg, alpha, polar.cd),
+                np.interp(alpha_deg, alpha, polar.cm),
+                np.interp(alpha_deg, alpha, (~np.asarray(polar.filled)).astype(float)))
+
+    return type("XfoilPolarLiftingLine", (base,), {_NPLLT_XFOIL_POLAR: xfoil_polar})
+
+
 class NpLltBackend:
     """
     3D level: bdFoil non-planar lifting line (bdFoil/NonPlanarSolver, Phillips & Snyder 2000)
     with NeuralFoil section polars of the model of the level (options: neuralfoil_model,
-    nodes_count, core_radius, spacing and any other NonPlanarLiftingLine keyword).
+    nodes_count, core_radius, spacing and any other NonPlanarLiftingLine keyword), or XFOIL
+    polars with polar_source "xfoil" (options npane, niter, polar_timeout, cache_dir): the
+    PolarSpec of the AVL level (xfoil_spec, so the same polar cache entries), and a polar table
+    on the alpha grid of the flow (alpha_range_deg / alpha_step_deg are set from it).
 
     The flow is the one shared by every level: a single polar Reynolds number (local_reynolds
     False, operating_re = flow.re, like the AVL level), n_crit and xtr of the configuration.
@@ -150,16 +213,19 @@ class NpLltBackend:
 
     evaluate_planform(csv, section_dir) returns the bdFoil coefficients ("Cx [-]"...,
     "Cdprofile [-]") and diagnostics: CL2d / CD2d of the section polars at check_alpha_deg at
-    EVERY control point (the 2D constraint seen by this level), NeuralFoil confidence, number
-    of angles of attack clamped at the ends of the polar table (a failure if fail_on_clamp,
-    outside the root zone of a wall image, see ROOT_ZONE_FRACTION).
+    EVERY control point (the 2D constraint seen by this level), polar confidence (NeuralFoil
+    analysis confidence, or 1 / 0 for the converged / filled XFOIL points), number of angles of
+    attack clamped at the ends of the polar table (a failure if fail_on_clamp, outside the root
+    zone of a wall image, see ROOT_ZONE_FRACTION).
     """
     name = "npllt"
 
     def __init__(self, paths, flow: dict, attitude: dict = None, image: str = "wall",
                  kind: str = "FOIL", neuralfoil_model: str = "xxlarge", nodes_count: int = 100,
                  core_radius: float = None, fail_on_clamp: bool = True,
-                 check_alpha_deg: float = 0.0, root_zone: float = None, **solver_options):
+                 check_alpha_deg: float = 0.0, root_zone: float = None,
+                 polar_source: str = "neuralfoil", npane: int = None, niter: int = None,
+                 polar_timeout: float = 300.0, cache_dir: str = None, **solver_options):
         self.module = bridge.np_llt_solver(paths)
         logging.getLogger(self.module.__name__).setLevel(logging.WARNING)
         surface_type = _check_image(image)["surface_type"]
@@ -167,16 +233,37 @@ class NpLltBackend:
         xtr = flow.get("xtr", (0.1, 0.1))
         if core_radius is None:
             core_radius = 0.005 if image == "wall" else 0.0
+        self.polar_source = polar_source
+        self.solver_class = self.module.NonPlanarLiftingLine
+        self.core = None
+        if polar_source == "xfoil":
+            if {"alpha_range_deg", "alpha_step_deg"} & set(solver_options):
+                raise ValueError("NpLltBackend: with polar_source 'xfoil' the polar table is the "
+                                 "alpha grid of the flow (no alpha_range_deg / alpha_step_deg)")
+            self.core = bridge.bdfoil_core()
+            self.spec = xfoil_spec(self.core, flow, 250 if npane is None else npane,
+                                   100 if niter is None else niter)
+            start, stop, step = self.spec.alpha
+            solver_options.update({"alpha_range_deg": (start, stop), "alpha_step_deg": step})
+            self.xfoil_settings = {"cache_dir": Path(cache_dir) if cache_dir else None,
+                                   "timeout": float(polar_timeout)}
+            self.solver_class = _xfoil_lifting_line(self.module, self.core, self.spec,
+                                                    self.xfoil_settings)
+        elif npane is not None or niter is not None or cache_dir is not None:
+            raise ValueError("NpLltBackend: npane / niter / cache_dir are XFOIL options "
+                             "(polar_source 'xfoil')")
         self.options = {
             "nodes_count": int(nodes_count), "cant_deg": float(attitude.get("cant", 0.0)),
             "rake_deg": float(attitude.get("rake", 0.0)),
             "yaw_deg": float(attitude.get("yaw", 0.0)), "sink": float(attitude.get("sink", 0.0)),
             "surface_type": surface_type, "operating_re": float(flow["re"]),
-            "local_reynolds": False, "polar_source": "neuralfoil", "foil_kind": kind,
+            "local_reynolds": False, "polar_source": polar_source, "foil_kind": kind,
             "length_factor": 1.0, "neuralfoil_model": neuralfoil_model,
             "neuralfoil_n_crit": float(flow.get("n_crit", 1.0)),
             "neuralfoil_xtr": (float(xtr[0]), float(xtr[1])), "core_radius": float(core_radius),
             **solver_options}
+        if self.options["local_reynolds"] and polar_source == "xfoil":
+            raise ValueError("NpLltBackend: polar_source 'xfoil' needs local_reynolds False")
         self.fail_on_clamp = bool(fail_on_clamp)
         self.check_alpha = np.radians(float(check_alpha_deg))
         self.root_zone = (ROOT_ZONE_FRACTION if image == "wall" else 0.0) \
@@ -200,7 +287,15 @@ class NpLltBackend:
             options.update({f"{k}_deg": float(v) for k, v in attitude.items() if k != "sink"})
             if "sink" in attitude:
                 options["sink"] = float(attitude["sink"])
-        solver = self.module.NonPlanarLiftingLine(str(csv_path), str(section_dir), **options)
+        if self.core is None:
+            solver = self.solver_class(str(csv_path), str(section_dir), **options)
+        else:
+            try:
+                solver = self.solver_class(str(csv_path), str(section_dir), **options)
+            except self.core.model.ExeError:
+                raise
+            except self.core.model.CoreError as error:
+                raise SolverFailure(f"NPLLT x XFOIL failed: {error}") from error
         setup_time = time.perf_counter() - start
         solver.solve_lifting_line()
         if not solver.converged:
@@ -229,6 +324,9 @@ class NpLltBackend:
                     "n_iterations": int(solver.n_iterations),
                     "time_setup_s": setup_time, "time_solve_s": time.perf_counter() - start
                     - setup_time})
+        if self.core is not None:
+            out.update({"xfoil_filled_points": int(getattr(solver, "xfoil_filled_points", 0)),
+                        "time_polar_s": float(getattr(solver, "time_polar_s", 0.0))})
         if self.fail_on_clamp and clamped:
             raise SolverFailure(f"NPLLT: {clamped} angles of attack outside the polar table "
                                 "(stall), the clamped polar values would be exploited")
@@ -276,12 +374,7 @@ class AvlCoreBackend:
                              "definition as the NPLLT levels)")
         settings.update({"zsym": _check_image(image)["zsym"], "viscous_model": "profile"})
         self.settings = core.model.Settings(**settings)
-        # default range: down to -6 deg so that the polar covers the low cl of the tip strips
-        start, stop, step = flow.get("alpha", (-6.0, 12.0, 0.5))
-        self.spec = core.xfoil.PolarSpec(
-            re=float(flow["re"]), ncrit=float(flow.get("n_crit", 1.0)),
-            xtr=tuple(float(v) for v in flow.get("xtr", (0.1, 0.1))),
-            alpha=(float(start), float(stop), float(step)), npane=int(npane), niter=int(niter))
+        self.spec = xfoil_spec(core, flow, npane, niter)
         attitude = attitude or {}
         self.attitude = core.model.Attitude(cant=float(attitude.get("cant", 0.0)),
                                             rake=float(attitude.get("rake", 0.0)),
@@ -402,8 +495,10 @@ def make_backend(level, problem, paths):
               "image": problem.image or "wall",
               "kind": (problem.planform or {}).get("kind", "FOIL"),
               "check_alpha_deg": float((problem.section_constraint or {}).get("alpha_deg", 0.0))}
+    # XFOIL polars (AVL, NPLLT x XFOIL): the polar cache of the configuration
+    uses_xfoil = level.solver == "avl" or options.get("polar_source") == "xfoil"
+    if uses_xfoil and problem.paths.get("polar_cache") and "cache_dir" not in options:
+        options["cache_dir"] = problem.paths["polar_cache"]
     if level.solver == "npllt":
         return NpLltBackend(paths, flow, **common, **options)
-    if problem.paths.get("polar_cache") and "cache_dir" not in options:
-        options["cache_dir"] = problem.paths["polar_cache"]
     return AvlCoreBackend(paths, flow, **common, **options)
