@@ -1,0 +1,76 @@
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], sizes: {'hartmann': [10, 20, 40], 'airfoil': [5, 10, 20]}, EGO sizes: {'hartmann': [20, 40], 'airfoil': [10, 20]}, EGO initial designs: {'hartmann': [20, 10], 'airfoil': [20, 5]}, n_LF = 4 n_HF
+
+=== Nested designs: medians over the seeds ===
+--- airfoil (n_LF = 4 n_HF) ---
+                            rmse_rel  rmse_rel_top10   nlpd  coverage_50  coverage_90  coverage_95  coverage_99  z_std  fit_time_s
+n_hf model                                                                                                                        
+5    GPy/emukit AR1 (MAP)      0.375           0.369  3.364        0.609        0.916        0.952        0.982  0.941       3.077
+     GPy/emukit AR1 (MLE)      0.372           0.297  4.616        0.244        0.584        0.664        0.786  2.175       9.066
+     SMT MFK                   0.395           0.339  7.852        0.177        0.410        0.479        0.602  3.481       1.872
+     mfego CoKriging (MAP)     0.394           0.221  3.458        0.474        0.839        0.887        0.942  1.245       0.078
+     mfego CoKriging (MLE)     0.398           0.257  4.027        0.310        0.674        0.749        0.855  1.812       0.110
+     mfego HF only (MAP)       0.696           0.997  4.142        0.507        0.928        0.952        0.978  0.982       0.026
+     mfego recursive (MAP)     0.394           0.221  3.458        0.474        0.839        0.887        0.942  1.245       0.077
+10   GPy/emukit AR1 (MAP)      0.251           0.211  3.067        0.436        0.835        0.895        0.948  1.325       5.006
+     GPy/emukit AR1 (MLE)      0.273           0.200  3.888        0.330        0.698        0.783        0.882  1.976      10.696
+     SMT MFK                   0.327           0.231  8.747        0.192        0.426        0.486        0.589  3.740       2.226
+     mfego CoKriging (MAP)     0.320           0.182  3.425        0.426        0.794        0.852        0.936  1.405       0.136
+     mfego CoKriging (MLE)     0.324           0.176  3.787        0.440        0.804        0.855        0.920  1.547       0.144
+     mfego HF only (MAP)       0.475           0.262  3.740        0.661        0.916        0.952        0.978  0.897       0.031
+     mfego recursive (MAP)     0.320           0.182  3.425        0.426        0.794        0.852        0.936  1.404       0.135
+20   GPy/emukit AR1 (MAP)      0.208           0.111  3.195        0.402        0.792        0.845        0.899  1.608       8.073
+     GPy/emukit AR1 (MLE)      0.278           0.150  3.507        0.428        0.772        0.828        0.905  1.636      15.946
+     SMT MFK                   0.294           0.159  4.282        0.318        0.668        0.738        0.831  2.139       2.716
+     mfego CoKriging (MAP)     0.257           0.116  3.176        0.476        0.856        0.897        0.948  1.248       0.276
+     mfego CoKriging (MLE)     0.340           0.132  3.540        0.471        0.828        0.870        0.920  1.483       0.280
+     mfego HF only (MAP)       0.290           0.173  3.288        0.552        0.840        0.891        0.939  1.305       0.042
+     mfego recursive (MAP)     0.257           0.117  3.176        0.478        0.856        0.897        0.948  1.248       0.270
+
+--- hartmann (n_LF = 4 n_HF) ---
+                            rmse_rel  rmse_rel_top10    nlpd  coverage_50  coverage_90  coverage_95  coverage_99  z_std  fit_time_s
+n_hf model                                                                                                                         
+10   GPy/emukit AR1 (MAP)      0.952           2.416   1.240        0.503        0.803        0.852        0.897  1.966       4.494
+     GPy/emukit AR1 (MLE)      1.147           2.601   6.359        0.330        0.571        0.628        0.718  3.889       7.569
+     SMT MFK                   1.490           2.562   4.207        0.574        0.793        0.818        0.861  2.886       9.218
+     mfego CoKriging (MAP)     0.951           2.679   2.880        0.418        0.777        0.821        0.868  2.665       0.135
+     mfego CoKriging (MLE)     1.029           2.728  19.601        0.261        0.556        0.611        0.686  6.384       0.287
+     mfego HF only (MAP)       0.973           2.736   2.958        0.408        0.774        0.824        0.870  2.698       0.032
+     mfego recursive (MAP)     0.951           2.679   2.880        0.418        0.777        0.821        0.868  2.665       0.116
+20   GPy/emukit AR1 (MAP)      0.986           2.288   1.313        0.554        0.819        0.851        0.900  1.740       6.194
+     GPy/emukit AR1 (MLE)      1.188           2.547   2.575        0.486        0.746        0.789        0.838  2.556       9.261
+     SMT MFK                   1.221           2.631   2.911        0.403        0.704        0.756        0.825  2.572      10.473
+     mfego CoKriging (MAP)     0.845           2.317   1.368        0.505        0.827        0.862        0.899  2.011       0.451
+     mfego CoKriging (MLE)     0.991           2.528   4.393        0.406        0.668        0.718        0.793  3.285       0.491
+     mfego HF only (MAP)       0.855           2.337   1.137        0.541        0.839        0.869        0.903  1.911       0.041
+     mfego recursive (MAP)     0.845           2.317   1.368        0.505        0.827        0.862        0.899  2.011       0.297
+40   GPy/emukit AR1 (MAP)      0.758           1.848   0.241        0.669        0.888        0.914        0.945  1.254      11.702
+     GPy/emukit AR1 (MLE)      0.867           2.072   0.797        0.614        0.863        0.897        0.933  1.415      15.694
+     SMT MFK                   1.010           2.221   0.670        0.660        0.890        0.916        0.944  1.320      15.640
+     mfego CoKriging (MAP)     0.756           1.940   0.595        0.538        0.830        0.871        0.919  1.641       4.232
+     mfego CoKriging (MLE)     1.008           2.593   2.018        0.491        0.766        0.808        0.868  2.386       3.240
+     mfego HF only (MAP)       0.804           2.132   0.730        0.550        0.828        0.865        0.913  1.690       0.067
+     mfego recursive (MAP)     0.756           1.940   0.595        0.538        0.830        0.871        0.919  1.641       3.903
+
+=== Exactness: emukit hyperparameters in mfego CoKriging (max over the test points; mean / std(y), relative latent variance) ===
+                                 exact_mean     exact_var        cond_v
+problem  model                                                         
+airfoil  GPy/emukit AR1 (MAP)  3.831466e-12  4.484773e-11  1.948327e+06
+         GPy/emukit AR1 (MLE)  3.961798e-11  3.185911e-10  8.196713e+06
+hartmann GPy/emukit AR1 (MAP)  9.375786e-13  5.509901e-13  2.022447e+06
+         GPy/emukit AR1 (MLE)  3.392149e-12  3.048871e-11  7.771203e+07
+
+=== Data of the current infilling (NN-MF-EGO, budget = cost of the nested design with the same n_HF): medians ===
+                                                                     cost  n_lf_data  n_hf_data  rmse_rel  rmse_rel_top10   nlpd  coverage_95  z_std  std_at_hf_points
+problem  n_hf model                                                                                                                                                   
+airfoil  10   EGO data + LF completion + mfego CoKriging (MAP)      151.5       50.5       10.0     0.388           0.111  4.318        0.710  1.992             0.000
+              EGO data + exact conditioning (same hyperparameters)  142.0       40.5       10.0     0.384           0.113  3.648        0.825  1.604             0.000
+              EGO data + mfego recursive (MAP)                      142.0       40.5       10.0     0.416           0.118  3.957        0.774  1.772             0.033
+         20   EGO data + LF completion + mfego CoKriging (MAP)      303.0       92.5       21.0     0.341           0.086  3.905        0.735  1.861             0.000
+              EGO data + exact conditioning (same hyperparameters)  282.5       71.5       21.0     0.324           0.084  4.139        0.728  2.048             0.000
+              EGO data + mfego recursive (MAP)                      282.5       71.5       21.0     0.319           0.089  4.166        0.750  2.001             0.002
+hartmann 20   EGO data + LF completion + mfego CoKriging (MAP)      307.0       47.0       26.0     0.873           1.868  0.558        0.986  0.550             0.005
+              EGO data + exact conditioning (same hyperparameters)  281.0       21.0       26.0     0.820           1.997  0.572        0.988  0.515             0.005
+              EGO data + mfego recursive (MAP)                      281.0       21.0       26.0     0.820           1.997  0.572        0.988  0.515             0.014
+         40   EGO data + LF completion + mfego CoKriging (MAP)      618.5       79.0       54.0     0.668           1.733  0.289        0.981  0.582             0.003
+              EGO data + exact conditioning (same hyperparameters)  565.0       25.0       54.0     0.659           1.781  0.299        0.982  0.571             0.003
+              EGO data + mfego recursive (MAP)                      565.0       25.0       54.0     0.660           1.781  0.299        0.982  0.570             0.052

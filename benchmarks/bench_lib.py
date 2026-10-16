@@ -27,6 +27,7 @@ if str(ROOT / "mfego") not in sys.path:
 
 # pylint: disable=wrong-import-position,import-error
 from src.acquisition import AcquisitionFunction  # noqa: E402
+from src.cokriging import CoKriging  # noqa: E402
 from src.data_management import ExperimentData  # noqa: E402
 from src.kernels import SquaredExponentialKernel  # noqa: E402
 from src.optimizer import EGOOptimizer  # noqa: E402
@@ -96,6 +97,26 @@ class HartmannMF:
         return datasets
 
 
+def nested_doe(problem, points_per_level: list, seed: int = 0) -> list:
+    """[CK] Nested design X_L in ... in X_1 of a problem with all its levels (LHS of level 1,
+    greedy maximin subsets above, ExperimentData.generate_nested_design):
+    [(x_1, y_1), ..., (x_L, y_L)]."""
+    data = ExperimentData(bounds=[(0.0, 1.0)] * problem.dim, costs=[1.0] * len(points_per_level))
+    data.generate_nested_design(points_per_level, seed=seed * 100)
+    return [(data.x_dict[l], problem(data.x_dict[l], l))
+            for l in range(1, len(points_per_level) + 1)]
+
+
+def experiment_data(datasets: list) -> ExperimentData:
+    """ExperimentData of the datasets [(x_1, y_1), ..., (x_L, y_L)] (inputs in [0, 1]^d)."""
+    data = ExperimentData(bounds=[(0.0, 1.0)] * datasets[0][0].shape[1],
+                          costs=[1.0] * len(datasets))
+    for level, (x, y) in enumerate(datasets, start=1):
+        data.x_dict[level], data.y_dict[level] = np.asarray(x), np.asarray(y, dtype=float)
+        data.metrics_dict[level] = [{} for _ in y]
+    return data
+
+
 # 2/4 ---------------------------------------------------------------------------------------------
 # Surrogate wrappers (common interface)
 # -------------------------------------------------------------------------------------------------
@@ -130,14 +151,10 @@ class MfegoSurrogate(Surrogate):
 
     def fit(self, datasets):
         datasets = datasets if self.multi_fidelity else datasets[-1:]
-        data = ExperimentData(bounds=[(0.0, 1.0)] * datasets[0][0].shape[1],
-                              costs=[1.0] * len(datasets))
-        for level, (x, y) in enumerate(datasets, start=1):
-            data.x_dict[level], data.y_dict[level] = np.asarray(x), np.asarray(y, dtype=float)
-            data.metrics_dict[level] = [{} for _ in y]
-        self.model = self.model_class(len(datasets), SquaredExponentialKernel, seed=self.seed,
-                                      **self.model_kwargs)
-        self.model.fit(data)
+        kwargs = dict(self.model_kwargs)
+        kernel_class = kwargs.pop("kernel_class", SquaredExponentialKernel)
+        self.model = self.model_class(len(datasets), kernel_class, seed=self.seed, **kwargs)
+        self.model.fit(experiment_data(datasets))
         return self
 
     def predict(self, x):
@@ -147,6 +164,128 @@ class MfegoSurrogate(Surrogate):
     @property
     def rhos(self):
         return [float(r) for r in self.model.rhos]
+
+
+class CoKrigingSurrogate(Surrogate):
+    """[CK] mfego CoKriging: co-kriging conditioned on all the data, nested designs only
+    (model_kwargs go to src.cokriging.CoKriging, e.g. priors=...)."""
+    name = "mfego CoKriging (MF)"
+    multi_fidelity = True
+
+    def __init__(self, seed: int = 0, **model_kwargs):
+        self.seed = seed
+        self.model_kwargs = model_kwargs
+        self.model = None
+
+    def fit(self, datasets):
+        self.model = CoKriging(len(datasets), seed=self.seed, **self.model_kwargs)
+        self.model.fit(experiment_data(datasets))
+        return self
+
+    def predict(self, x):
+        return self.model.predict_batch(np.atleast_2d(x))
+
+    @property
+    def rhos(self):
+        return [float(r) for r in self.model.rhos]
+
+
+class EmukitAR1Surrogate(Surrogate):
+    """[CK] GPy + emukit linear multi-fidelity model: AR(1) co-kriging of Kennedy & O'Hagan
+    conditioned on all the data ([LG] Eq. 3.11), all the hyperparameters estimated JOINTLY by
+    maximum likelihood (no prior). Same kernel as mfego for each level (ARD RBF + constant
+    bias), Gaussian noise per level, same bounds as mfego. Each level is centred by its own mean
+    (constant trend of each level, as mfego; compatible with the AR(1) structure, it only changes
+    the constant of delta_l) and all the levels are divided by a common scale.
+    priors (e.g. DEFAULT_PRIORS of mfego): joint MAP with the same prior densities. set_prior
+    replaces the bounds by the positive (softplus) transformation of GPy and adds its log-Jacobian
+    log(1 - exp(-theta)): close to a log-space MAP for small values (noise, t2), close to the
+    parameter-space MAP of mfego for t1 and large lengthscales."""
+    multi_fidelity = True
+
+    def __init__(self, seed: int = 0, n_restarts: int = 5, priors: dict = None):
+        self.seed = seed
+        self.n_restarts = n_restarts
+        self.priors = priors
+        self.name = "GPy/emukit AR1 (MF, " + ("MLE" if priors is None else "MAP") + ")"
+        self.model = None
+        self.kernels = None
+        self.y_means, self.y_std = [], 1.0
+        self.datasets = None
+
+    def fit(self, datasets):
+        import GPy  # noqa: PLC0415
+        from emukit.model_wrappers.gpy_model_wrappers import (  # noqa: PLC0415
+            GPyMultiOutputWrapper)
+        from emukit.multi_fidelity.convert_lists_to_array import (  # noqa: PLC0415
+            convert_xy_lists_to_arrays)
+        from emukit.multi_fidelity.kernels import LinearMultiFidelityKernel  # noqa: PLC0415
+        from emukit.multi_fidelity.models import GPyLinearMultiFidelityModel  # noqa: PLC0415
+        from src.surrogate_models import (BIAS_VARIANCE_BOUNDS, LENGTHSCALE_BOUNDS,  # noqa
+                                          NOISE_BOUNDS, SIGNAL_VARIANCE_BOUNDS)
+        np.random.seed(self.seed)  # GPy draws its restarts with the global generator
+        self.datasets = [(np.asarray(x), np.asarray(y, dtype=float)) for x, y in datasets]
+        self.y_means = [float(np.mean(y)) for _, y in self.datasets]
+        self.y_std = float(np.std(np.concatenate([y - m for (_, y), m in
+                                                  zip(self.datasets, self.y_means)])))
+        x_array, y_array = convert_xy_lists_to_arrays(
+            [x for x, _ in self.datasets],
+            [((y - m) / self.y_std).reshape(-1, 1) for (_, y), m in zip(self.datasets,
+                                                                          self.y_means)])
+        dim = self.datasets[0][0].shape[1]
+        self.kernels = [GPy.kern.RBF(dim, ARD=True) + GPy.kern.Bias(dim) for _ in datasets]
+        for kernel in self.kernels:
+            kernel.parts[0].lengthscale.constrain_bounded(*LENGTHSCALE_BOUNDS, warning=False)
+            kernel.parts[0].variance.constrain_bounded(*SIGNAL_VARIANCE_BOUNDS, warning=False)
+            kernel.parts[1].variance.constrain_bounded(*BIAS_VARIANCE_BOUNDS, warning=False)
+        gpy_model = GPyLinearMultiFidelityModel(x_array, y_array,
+                                                LinearMultiFidelityKernel(self.kernels),
+                                                n_fidelities=len(datasets))
+        for likelihood in gpy_model.likelihood.likelihoods_list:
+            likelihood.variance.constrain_bounded(*NOISE_BOUNDS, warning=False)
+        if self.priors is not None:
+            for kernel, likelihood in zip(self.kernels, gpy_model.likelihood.likelihoods_list):
+                for param, group in ((kernel.parts[0].lengthscale, "lengthscale"),
+                                     (kernel.parts[0].variance, "signal_variance"),
+                                     (kernel.parts[1].variance, "bias_variance"),
+                                     (likelihood.variance, "noise")):
+                    if self.priors.get(group) is not None:
+                        param.set_prior(_gpy_prior(self.priors[group]), warning=False)
+        self.model = GPyMultiOutputWrapper(gpy_model, len(datasets),
+                                           n_optimization_restarts=self.n_restarts,
+                                           verbose_optimization=False)
+        self.model.optimize()
+        return self
+
+    def predict(self, x, level: int = None):
+        x = np.atleast_2d(x)
+        level = len(self.kernels) if level is None else level
+        mean, var = self.model.predict(np.column_stack([x, np.full(len(x), level - 1)]))
+        return (self.y_means[level - 1] + self.y_std * mean[:, 0],
+                self.y_std ** 2 * np.maximum(var[:, 0], 0.0))
+
+    @property
+    def rhos(self):
+        return [float(r) for r in self.model.gpy_model.kern.scaling_param.values]
+
+    def to_cokriging(self) -> CoKriging:
+        """mfego CoKriging with the hyperparameters fitted by emukit (no fit): the predictions
+        must be the same if both implement the same co-kriging (exactness check)."""
+        model = CoKriging(len(self.kernels), SquaredExponentialKernel, use_map=False)
+        model.rhos = self.rhos
+        # GPy adds a constant 1e-8 to the noise variance (ExactGaussianInference: variance + 1e-8)
+        noises = [float(lik.variance.values[0]) + 1e-8
+                  for lik in self.model.gpy_model.likelihood.likelihoods_list]
+        for l, (gp, kernel) in enumerate(zip(model.gps, self.kernels)):
+            rbf, bias = kernel.parts
+            gp.kernel.set_params(np.concatenate([rbf.lengthscale.values,
+                                                 [rbf.variance.values[0], bias.variance.values[0]]]))
+            gp.noise, gp.y_std = noises[l], self.y_std
+            # zero mean of every centred level -> E[Z_l] = m_l = rho_(l-1) m_(l-1) + y_mean_l
+            gp.y_mean = self.y_means[0] if l == 0 else (self.y_means[l]
+                                                         - model.rhos[l - 1] * self.y_means[l - 1])
+        model.condition([x for x, _ in self.datasets], [y for _, y in self.datasets])
+        return model
 
 
 class SklearnSurrogate(Surrogate):
@@ -208,6 +347,17 @@ class SmtSurrogate(Surrogate):
         if not self.multi_fidelity:
             return []
         return [float(np.ravel(par["beta"])[0]) for par in self.model.optimal_par[1:]]
+
+
+def _gpy_prior(prior: tuple):
+    """GPy prior with the same density as an mfego prior triple (family, a, b)."""
+    import GPy  # noqa: PLC0415
+    family, a, b = prior
+    if family == "invgamma":
+        return GPy.priors.InverseGamma(a, b)
+    if family == "gamma":
+        return GPy.priors.Gamma(a, b)
+    return GPy.priors.LogGaussian(a, b)
 
 
 def fidelity_values(costs) -> list:
@@ -318,9 +468,11 @@ class History:
 
 def run_mfego(problem: HartmannMF, datasets: list, budget: float, seed: int = 0,
               multi_fidelity: bool = True, model_class: type = MultifidelityModel,
-              **model_kwargs) -> History:
+              return_model: bool = False, **model_kwargs):
     """mfego NN-MF-EGO (all the levels) or SF-EGO (highest level only) until the budget.
     model_kwargs are passed to model_class (MultifidelityModel or a subclass, e.g. use_map=True).
+    The recommendation is evaluated with the highest level of the problem (Hartmann: f itself).
+    [CK] return_model=True returns (history, final model, ExperimentData of the run).
     """
     datasets = datasets if multi_fidelity else datasets[-1:]
     costs = list(problem.costs) if multi_fidelity else [problem.costs[-1]]
@@ -334,7 +486,8 @@ def run_mfego(problem: HartmannMF, datasets: list, budget: float, seed: int = 0,
         def evaluate(self, design_point, level):
             return float(problem(np.atleast_2d(design_point), levels[level - 1])[0]), {}
 
-    model = model_class(len(datasets), SquaredExponentialKernel, seed=seed, **model_kwargs)
+    kernel_class = model_kwargs.pop("kernel_class", SquaredExponentialKernel)
+    model = model_class(len(datasets), kernel_class, seed=seed, **model_kwargs)
     acq = AcquisitionFunction(model, data)
     ego = EGOOptimizer(data, model, Simulator(len(datasets)), acq, seed=seed,
                        save_state_path=str(Path(_tmp_dir()) / f"mfego_{seed}.json"))
@@ -355,10 +508,10 @@ def run_mfego(problem: HartmannMF, datasets: list, budget: float, seed: int = 0,
     surrogate = MfegoSurrogate(multi_fidelity=multi_fidelity, seed=seed)
     surrogate.model = model
     model.fit(data)
-    history.recommendation_error = float(hartmann6(recommend(surrogate, problem.dim, seed))[0]
-                                         - problem.f_star)
+    x_rec = recommend(surrogate, problem.dim, seed)
+    history.recommendation_error = float(problem(x_rec, problem.num_levels)[0] - problem.f_star)
     history.rhos = surrogate.rhos
-    return history
+    return (history, model, data) if return_model else history
 
 
 def run_botorch(problem: HartmannMF, datasets: list, budget: float, seed: int = 0,

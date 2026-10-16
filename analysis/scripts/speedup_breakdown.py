@@ -75,11 +75,11 @@ def make_non_vectorized_de(original):
 
 def cold_initial_guesses(original):
     """N8 OFF: no warm start (every restart is random)."""
-    def guesses(self, d, n_restarts, log_bounds):
+    def guesses(self, *args, **kwargs):
         saved = self.kernel.lengthscale
         self.kernel.lengthscale = None
         try:
-            return original(self, d, n_restarts, log_bounds)
+            return original(self, *args, **kwargs)
         finally:
             self.kernel.lengthscale = saved
     return guesses

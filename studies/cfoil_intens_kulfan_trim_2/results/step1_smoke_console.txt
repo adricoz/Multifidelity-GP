@@ -1,0 +1,73 @@
+12:09:36 INFO step1: Reference MC2_60_6101_1 + camber: {'t_0': 0.332208, 't_1': 0.376276, 't_2': 0.161338, 't_3': 0.209012, 's_1': 0.0, 's_2': 0.0, 's_3': 0.0, 'yaw_target': 4.0}
+12:09:36 INFO step1: Flow settings per level (identical): {'confidence_constraint': {'n_crit': 1.0, 'xtr': [0.1, 0.1], 're': 5000000.0, 'model': 'xxxlarge'}, 'NPLLT x NeuralFoil xxxlarge': {'n_crit': 1.0, 'xtr': [0.1, 0.1], 're': 5000000.0, 'model': 'xxxlarge'}, 'NPLLT x XFOIL': {'n_crit': 1.0, 'xtr': [0.1, 0.1], 're': 5000000.0, 'alpha': [-6.0, 12.0, 0.5], 'npane': 250, 'niter': 300}, 'AVL x XFOIL': {'n_crit': 1.0, 'xtr': [0.1, 0.1], 're': 5000000.0, 'alpha': [-6.0, 12.0, 0.5], 'npane': 250, 'niter': 300}}
+12:09:36 INFO step1: Yaw band (3.8, 4.2) deg, penalty 0.01 CD per deg
+12:09:36 INFO step1: Known constraints, feasible share of the design space: {'delta_solved': 1.0, 'min_thickness': 0.693, 'Ixx': 0.786, 'thickness_0.90': 0.917, 'thickness_0.95': 0.9, 'leading_edge_upper': 1.0, 'leading_edge_lower': 0.812, 'wiggliness': 0.347, 'nf_confidence': 0.9, 'all': 0.147} -> DOE oversampling 28
+12:09:36 INFO src.run_utils: --------------------------------------------------
+12:09:36 INFO src.run_utils: C-foil section optimization at the reference lift - cfoil_intens_kulfan_trim_2 started on 15/10/2026 at 12:09:36
+12:09:36 INFO pipelines.bdtoolbox_foil.run: Problem cfoil_intens_kulfan_trim_2: 8 variables ['t_0', 't_1', 't_2', 't_3', 's_1', 's_2', 's_3', 'yaw_target'], levels ['npllt', 'npllt', 'avl'], costs [1.0, 30.0, 50.0]
+12:09:36 INFO pipelines.bdtoolbox_foil.run: GP hyperparameters: MAP, InvGamma(3.0, 2.0) lengthscale prior | known constraints: on
+12:09:37 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.71828 at level 1
+12:09:42 INFO pipelines.bdtoolbox_foil.run: DOE level 1: 20 points, 0 failed
+12:09:42 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.71644 at level 2
+12:10:11 INFO pipelines.bdtoolbox_foil.run: DOE level 2: 6 points, 0 failed
+12:10:16 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.67219 at level 3
+12:10:50 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 9.5
+12:11:49 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 3
+12:12:16 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 5.5
+12:12:26 INFO pipelines.bdtoolbox_foil.run: DOE level 3: 4 points, 0 failed
+12:12:26 INFO src.optimizer: --- EGO Iteration 1/5 ---
+12:12:26 INFO src.surrogate_models: GP level 1 trained (n=20). Noise: 1.082e-13 | rho: -
+12:12:26 INFO src.surrogate_models: GP level 2 trained (n=6). Noise: 2.982e-14 | rho: 1.0005
+12:12:26 INFO src.surrogate_models: GP level 3 trained (n=4). Noise: 5.298e-15 | rho: 1.0001
+12:12:58 INFO src.optimizer: 
+Next selected point to evaluate: [0.6796 0.2884 0.2755 0.1674 0.7662 0.4676 0.7721 0.6022] | Level: 1 | Merit: 0.004527
+12:12:58 INFO src.optimizer:     -> Evaluated value: 0.026796 at level 1
+12:12:58 INFO src.optimizer: --- EGO Iteration 2/5 ---
+12:12:58 INFO src.surrogate_models: GP level 1 trained (n=21). Noise: 1.208e-13 | rho: -
+12:12:58 INFO src.surrogate_models: GP level 2 trained (n=6). Noise: 2.523e-14 | rho: 1.0004
+12:12:58 INFO src.surrogate_models: GP level 3 trained (n=4). Noise: 3.944e-15 | rho: 1.0002
+12:13:23 INFO src.optimizer: 
+Next selected point to evaluate: [0.9392 0.0889 0.1321 0.192  0.9497 0.6691 0.6301 0.4593] | Level: 1 | Merit: 0.000944
+12:13:24 INFO src.optimizer:     -> Evaluated value: 0.026870 at level 1
+12:13:24 INFO src.optimizer: --- EGO Iteration 3/5 ---
+12:13:24 INFO src.surrogate_models: GP level 1 trained (n=22). Noise: 1.272e-13 | rho: -
+12:13:24 INFO src.surrogate_models: GP level 2 trained (n=6). Noise: 2.517e-14 | rho: 1.0004
+12:13:24 INFO src.surrogate_models: GP level 3 trained (n=4). Noise: 3.698e-15 | rho: 1.0002
+12:13:42 INFO src.optimizer: 
+Next selected point to evaluate: [0.7688 0.1347 0.553  0.1075 0.7191 0.3503 0.659  0.1667] | Level: 1 | Merit: 0.000655
+12:13:42 INFO src.optimizer:     -> Evaluated value: 0.026815 at level 1
+12:13:42 INFO src.optimizer: --- EGO Iteration 4/5 ---
+12:13:42 INFO src.surrogate_models: GP level 1 trained (n=23). Noise: 1.345e-13 | rho: -
+12:13:42 INFO src.surrogate_models: GP level 2 trained (n=6). Noise: 2.486e-14 | rho: 1.0005
+12:13:42 INFO src.surrogate_models: GP level 3 trained (n=4). Noise: 3.417e-15 | rho: 1.0002
+12:14:01 INFO src.optimizer: 
+Next selected point to evaluate: [0.9122 0.1159 0.4645 0.1092 0.4517 0.1233 0.5463 0.936 ] | Level: 1 | Merit: 0.000692
+12:14:02 INFO src.optimizer:     -> Evaluated value: 0.026884 at level 1
+12:14:02 INFO src.optimizer: --- EGO Iteration 5/5 ---
+12:14:02 INFO src.surrogate_models: GP level 1 trained (n=24). Noise: 1.373e-13 | rho: -
+12:14:02 INFO src.surrogate_models: GP level 2 trained (n=6). Noise: 2.475e-14 | rho: 1.0004
+12:14:02 INFO src.surrogate_models: GP level 3 trained (n=4). Noise: 2.815e-15 | rho: 1.0001
+12:14:18 INFO src.optimizer: 
+Next selected point to evaluate: [0.6943 0.3705 0.0527 0.2063 0.6266 0.4872 0.8314 0.0715] | Level: 1 | Merit: 0.000615
+12:14:19 INFO src.optimizer:     -> Evaluated value: 0.026819 at level 1
+12:14:19 INFO src.surrogate_models: GP level 1 trained (n=25). Noise: 1.417e-13 | rho: -
+12:14:19 INFO src.surrogate_models: GP level 2 trained (n=6). Noise: 2.485e-14 | rho: 1.0004
+12:14:19 INFO src.surrogate_models: GP level 3 trained (n=4). Noise: 2.750e-15 | rho: 1.0001
+12:14:19 INFO src.optimizer: Optimization summary: {"best_observed_x": [0.5502577948612991, 0.38155946629564846, 0.20203038398689968, 0.2654765282575237, 0.590766622116962, 0.8468943935019915, 0.6767152680375734, 0.5918386134232915], "best_observed_y": 0.024573799814597175, "surrogate_best_x": [0.6795834537961994, 0.28839057706226184, 0.2754993780088858, 0.16735830429856274, 0.7661926667523836, 0.46756204155939723, 0.7721279289566944, 0.6022305831865347], "surrogate_best_f": 0.024344206356793994, "total_cost": 405.0, "n_points_per_level": {"1": 25, "2": 6, "3": 4}, "n_failed_per_level": {"1": 0, "2": 0, "3": 0}, "rhos": [1.000442992731599, 1.000131125968052], "timings_s": {"model_fit": 0.284, "acquisition": 111.029, "simulation": 1.174}, "mean_simulation_time_per_level_s": {"1": 0.2347}}
+12:14:19 INFO pipelines.bdtoolbox_foil.run: Verification of the surrogate optimum at level 3: {'t_0': 0.4231000289110879, 't_1': 0.2967045135130369, 't_2': 0.14611985072213257, 't_3': 0.2252282404185257, 's_1': 0.0915481666880959, 's_2': 0.016890510389849303, 's_3': 0.09303198223917358, 'yaw_target': 4.03066917495596}
+12:14:50 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 4.5, 7.5
+12:15:00 INFO pipelines.bdtoolbox_foil.run:     -> verified objective: 0.024533957527415183 (surrogate prediction 0.0243442)
+12:15:00 INFO src.surrogate_models: GP level 1 trained (n=25). Noise: 1.417e-13 | rho: -
+12:15:00 INFO src.surrogate_models: GP level 2 trained (n=6). Noise: 2.485e-14 | rho: 1.0004
+12:15:00 INFO src.surrogate_models: GP level 3 trained (n=5). Noise: 7.299e-15 | rho: 0.9994
+12:15:00 INFO src.optimizer: Surrogate exported to C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\runs\1015_120921\surrogate.json
+12:15:00 INFO pipelines.bdtoolbox_foil.run: Best design (level 3): objective 0.024534, {'t_0': 0.4231000289110879, 't_1': 0.2967045135130369, 't_2': 0.14611985072213257, 't_3': 0.2252282404185257, 's_1': 0.0915481666880959, 's_2': 0.016890510389849303, 's_3': 0.09303198223917358, 'yaw_target': 4.03066917495596}
+Convergence graph saved as : C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\runs\1015_120921\convergence_plot.png
+Interactive convergence graph saved as : C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\runs\1015_120921\convergence_plot.html
+Response surface saved as : C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\runs\1015_120921\response_surface_2d.png
+Interactive response surface saved as : C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\runs\1015_120921\response_surface_2d.html
+12:15:03 INFO src.run_utils: C-foil section optimization at the reference lift - cfoil_intens_kulfan_trim_2 finished on 15/10/2026 at 12:15:03
+12:15:03 INFO src.run_utils: Total computation time: 327.02 s (0:05:27)
+12:15:03 INFO src.run_utils: --------------------------------------------------
+12:15:03 INFO step1: Failed evaluations per level: {'1': {'n': 25, 'failed': 0, 'xfoil': 0, 'trim': 0, 'other': 0, 'out_of_band': 0}, '2': {'n': 6, 'failed': 0, 'xfoil': 0, 'trim': 0, 'other': 0, 'out_of_band': 0}, '3': {'n': 5, 'failed': 0, 'xfoil': 0, 'trim': 0, 'other': 0, 'out_of_band': 3}}
+Run directory: C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\runs\1015_120921

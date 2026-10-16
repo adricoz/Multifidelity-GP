@@ -3,8 +3,8 @@ import numpy as np
 import pytest
 from conftest import fill_data, forrester_hf, forrester_lf
 from src.data_management import ExperimentData
-from src.kernels import SquaredExponentialKernel
-from src.surrogate_models import MultifidelityModel
+from src.kernels import Matern52Kernel, SquaredExponentialKernel
+from src.surrogate_models import DEFAULT_PRIORS, LENGTHSCALE_ONLY_PRIORS, MultifidelityModel
 
 X_TEST = np.linspace(0, 1, 101).reshape(-1, 1)
 
@@ -120,6 +120,120 @@ def test_to_dict_from_dict_round_trip(forrester_data, use_map):
         np.testing.assert_allclose(a, b, rtol=1e-10, atol=1e-12)
     assert clone.rhos == model.rhos
     assert clone.use_map == use_map and all(gp.use_map == use_map for gp in clone.gps)
+    assert all(a.priors == b.priors for a, b in zip(model.gps, clone.gps))
+
+
+def test_priors_are_shared_by_every_level_and_saved(forrester_data):
+    """[PRIORS] the priors argument reaches every level and the JSON state."""
+    priors = {"noise": None, "signal_variance": ("gamma", 2.0, 1.0)}
+    model = fitted_model(forrester_data, use_map=True, priors=priors)
+    for gp in model.gps:
+        assert gp.priors["noise"] is None and gp.priors["signal_variance"] == ("gamma", 2.0, 1.0)
+        assert gp.priors["bias_variance"] == DEFAULT_PRIORS["bias_variance"]
+    state = model.to_dict()
+    # the file stores the priors actually used (self-describing), not only the overrides
+    assert set(state["priors"]) == {"signal_variance", "bias_variance", "noise", "rho"}
+    clone = MultifidelityModel.from_dict(state)
+    assert all(a.priors == b.priors for a, b in zip(model.gps, clone.gps))
+    assert "signal_variance gamma(2, 1)" in model.estimator_label()
+
+
+def test_inputs_are_normalized_with_the_bounds(forrester_data):
+    """[NORM] the same data on [0, 10] (x * 10) give the same model as on [0, 1]: the GPs see
+    x scaled to [0, 1] with the bounds of the design space; the JSON keeps the bounds."""
+    model = fitted_model(forrester_data, use_map=True)
+    scaled = ExperimentData(bounds=[(0.0, 10.0)], costs=[1.0, 10.0])
+    for l in (1, 2):
+        scaled.x_dict[l] = 10.0 * forrester_data.x_dict[l]
+        scaled.y_dict[l] = forrester_data.y_dict[l]
+    model_scaled = fitted_model(scaled, use_map=True)
+    for a, b in zip(model.predict_batch(X_TEST), model_scaled.predict_batch(10.0 * X_TEST)):
+        np.testing.assert_allclose(a, b, rtol=1e-8, atol=1e-10)
+    clone = MultifidelityModel.from_dict(model_scaled.to_dict())
+    np.testing.assert_allclose(clone.input_bounds, [[0.0, 10.0]])
+    np.testing.assert_allclose(clone.predict_batch(10.0 * X_TEST)[0],
+                               model_scaled.predict_batch(10.0 * X_TEST)[0], rtol=1e-10)
+
+
+def test_matern_kernel_model_round_trip(forrester_data):
+    """[MAT] a multi-fidelity model with the Matern 5/2 kernel is saved and reloaded."""
+    model = MultifidelityModel(2, Matern52Kernel, seed=0, use_map=True)
+    model.fit(forrester_data)
+    clone = MultifidelityModel.from_dict(model.to_dict())
+    assert clone.kernel_class is Matern52Kernel
+    np.testing.assert_allclose(clone.predict_batch(X_TEST)[0], model.predict_batch(X_TEST)[0],
+                               rtol=1e-10)
+    assert rmse(model) < 1.0
+
+
+def test_v1_json_keeps_the_v1_behaviour(forrester_data):
+    """[RHO] [NORM] a file written before rho_centering / input_bounds (mfego v1) is reloaded
+    with the v1 behaviour (no prior on rho, constant at rho_init, raw inputs)."""
+    state = fitted_model(forrester_data, use_map=True).to_dict()
+    for key in ("rho_centering", "input_bounds"):
+        del state[key]
+    clone = MultifidelityModel.from_dict(state)
+    assert not clone.rho_centering and clone.input_bounds is None
+    assert all(gp.priors["rho"] is None and not gp.rho_centering for gp in clone.gps)
+
+
+def test_v1_json_with_raw_inputs_is_reloaded_without_scaling(forrester_data):
+    """[NORM] a v1 file (no input_bounds) holds lengthscales in the raw input units: it is
+    reloaded with the identity and predicts like the model it describes (bounds [0, 10])."""
+    scaled = ExperimentData(bounds=[(0.0, 10.0)], costs=[1.0, 10.0])
+    for l in (1, 2):
+        scaled.x_dict[l] = 10.0 * forrester_data.x_dict[l]
+        scaled.y_dict[l] = forrester_data.y_dict[l]
+    model = fitted_model(scaled, use_map=True)
+    # the same model written by v1: no new keys, lengthscale in raw units (x 10)
+    state = model.to_dict()
+    for key in ("rho_centering", "input_bounds"):
+        del state[key]
+    for level in state["levels"]:
+        level["kernel_params"][0] *= 10.0
+    clone = MultifidelityModel.from_dict(state)
+    assert clone.input_bounds is None
+    for a, b in zip(model.predict_batch(10.0 * X_TEST), clone.predict_batch(10.0 * X_TEST)):
+        np.testing.assert_allclose(a, b, rtol=1e-8, atol=1e-10)
+
+
+def test_rho_options_default_to_v1():
+    """[RHO] MultifidelityModel keeps the mfego v1 rho by default (not centred, no prior on rho);
+    rho_centering=True brings the default N(1, 2^2) prior; an explicit prior on rho is kept."""
+    default = MultifidelityModel(2, SquaredExponentialKernel, use_map=True)
+    assert not default.rho_centering
+    assert all(gp.priors["rho"] is None and not gp.rho_centering for gp in default.gps)
+    centred = MultifidelityModel(2, SquaredExponentialKernel, use_map=True, rho_centering=True)
+    assert all(gp.priors["rho"] == DEFAULT_PRIORS["rho"] and gp.rho_centering
+               for gp in centred.gps)
+    explicit = MultifidelityModel(2, SquaredExponentialKernel, use_map=True,
+                                  priors={"rho": ("normal", 1.0, 1.0)})
+    assert all(gp.priors["rho"] == ("normal", 1.0, 1.0) for gp in explicit.gps)
+
+
+def test_learned_rho_model_round_trip(forrester_data):
+    """[V3] centred rho learned with a lognormal prior (mode 1): rho = 2 recovered on Forrester;
+    the prior is saved and the reloaded model gives the same predictions."""
+    model = fitted_model(forrester_data, use_map=True, rho_centering=True,
+                         priors={"rho": ("lognormal", 1.0, 1.0)}, rho_bounds=(1e-3, 50.0))
+    assert model.rhos[0] == pytest.approx(2.0, abs=0.1)
+    clone = MultifidelityModel.from_dict(model.to_dict())
+    assert all(gp.priors["rho"] == ("lognormal", 1.0, 1.0) for gp in clone.gps)
+    for a, b in zip(model.predict_batch(X_TEST), clone.predict_batch(X_TEST)):
+        np.testing.assert_allclose(a, b, rtol=1e-10, atol=1e-12)
+
+
+def test_old_json_without_priors_keeps_the_lengthscale_prior_only(forrester_data):
+    """[PRIORS] a file written before the priors on t1, t2 and the noise is reloaded with the
+    previous behaviour (lengthscale prior only) and gives the same predictions."""
+    model = fitted_model(forrester_data, use_map=True)
+    state = model.to_dict()
+    del state["priors"]
+    clone = MultifidelityModel.from_dict(state)
+    assert clone.priors == LENGTHSCALE_ONLY_PRIORS
+    assert all(gp.priors["noise"] is None for gp in clone.gps)
+    for a, b in zip(model.predict_batch(X_TEST), clone.predict_batch(X_TEST)):
+        np.testing.assert_allclose(a, b, rtol=1e-10, atol=1e-12)
 
 
 def test_map_keeps_the_surrogate_accurate(forrester_data):

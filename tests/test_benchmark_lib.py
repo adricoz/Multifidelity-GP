@@ -53,6 +53,41 @@ def test_mfego_optimization_loop_respects_the_budget():
     assert set(history.levels[1:]) <= {1, 2}
 
 
+def test_nested_doe_and_cokriging_surrogate():
+    """[CK] nested design (HF points among the LF points) and the CoKriging wrapper."""
+    problem = bl.HartmannMF()
+    (x_lf, y_lf), (x_hf, y_hf) = bl.nested_doe(problem, [16, 6], seed=0)
+    assert len(y_lf) == 16 and len(y_hf) == 6
+    assert all(np.min(np.linalg.norm(x_lf - x, axis=1)) == 0.0 for x in x_hf)
+    np.testing.assert_allclose(y_hf, bl.hartmann6(x_hf))
+    surrogate = bl.CoKrigingSurrogate(seed=0).fit([(x_lf, y_lf), (x_hf, y_hf)])
+    mean, var = surrogate.predict(x_hf)
+    np.testing.assert_allclose(mean, y_hf, atol=1e-3 * np.std(y_hf))
+    assert len(surrogate.rhos) == 1 and np.all(var >= 0)
+
+
+def test_run_mfego_can_return_the_model():
+    """[CK] return_model=True gives the final model and the (non-nested) data of the run."""
+    problem = bl.HartmannMF()
+    history, model, data = bl.run_mfego(problem, problem.doe([10, 5], seed=0), budget=70,
+                                        seed=0, return_model=True, use_map=True)
+    assert model.is_fitted() and len(data.get_training_data(2)[1]) >= 5
+    assert history.cost[-1] >= 70.0
+
+
+def test_emukit_and_cokriging_are_the_same_cokriging():
+    """[CK] emukit hyperparameters put in mfego CoKriging -> same predictions ([LG] Eq. 3.11)."""
+    pytest.importorskip("emukit")
+    datasets = bl.nested_doe(bl.HartmannMF(), [16, 6], seed=0)
+    surrogate = bl.EmukitAR1Surrogate(seed=0, n_restarts=1).fit(datasets)
+    x_test = np.random.default_rng(1).random((50, 6))
+    mean_gpy, var_gpy = surrogate.predict(x_test)
+    mean_ck, var_ck = surrogate.to_cokriging().predict_batch(x_test)
+    np.testing.assert_allclose(mean_ck, mean_gpy, rtol=1e-8, atol=1e-8 * np.std(mean_gpy))
+    # GPy adds 1e-8 (standardized) to the noise in its inference only, not in its prediction
+    np.testing.assert_allclose(var_ck, var_gpy, rtol=1e-4, atol=2e-8 * surrogate.y_std ** 2)
+
+
 def test_smt_mfk_rho():
     pytest.importorskip("smt")
     datasets = bl.HartmannMF().doe([20, 10], seed=0)

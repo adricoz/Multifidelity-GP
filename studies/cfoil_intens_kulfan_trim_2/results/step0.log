@@ -1,0 +1,246 @@
+12:00:29 INFO step0: Yaw model: feasible share of the fitting space 0.085
+12:00:31 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.71828 at level 1
+12:00:32 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:00:32 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9869 0.1171 0.8982 0.5937 0.9616 0.8174 0.9072 0.5225]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:33 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:00:33 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 2 control points (min 0.02).
+12:00:33 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:00:33 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 2 control points (min 0.02).
+12:00:34 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9894 0.3048 0.9864 0.0514 0.7799 0.7837 0.0219 0.0495]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:34 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8424 0.8925 0.9751 0.0868 0.1279 0.5071 0.5622 0.0101]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:34 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.0159 0.4773 0.7778 0.9764 0.0141 0.1498 0.56   0.0823]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:35 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9001 0.4133 0.0413 0.2168 0.1471 0.115  0.6253 0.0143]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:35 WARNING np_llt_solver: No convergence after 200 iterations (max |R| = 5.01e-02 at control point 0, 2 clamped angles, last step factor 0.000977, 0.32 s). A lifting line meeting a wall (surface_type=0) or the ysym plane at an angle has a kink singularity at its root: use a small cut-off, e.g. core_radius=0.005.
+12:00:35 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [1, 2].
+12:00:35 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.597  0.3846 0.1165 0.257  0.8505 0.9346 0.8715 0.4977]): NPLLT did not converge (max residual 5.01e-02, 200 iterations)
+12:00:35 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8911 0.732  0.8181 0.9722 0.7149 0.8436 0.6209 0.0368]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:36 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.0365 0.505  0.9229 0.2535 0.0589 0.5519 0.9862 0.1063]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:36 WARNING np_llt_solver: No convergence after 200 iterations (max |R| = 1.18e-02 at control point 1, 0 clamped angles, last step factor 0.5, 0.32 s). A lifting line meeting a wall (surface_type=0) or the ysym plane at an angle has a kink singularity at its root: use a small cut-off, e.g. core_radius=0.005.
+12:00:36 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9127 0.1166 0.2067 0.8298 0.127  0.1441 0.6014 0.576 ]): NPLLT did not converge (max residual 1.18e-02, 200 iterations)
+12:00:36 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9838 0.1195 0.327  0.5597 0.6361 0.7653 0.2631 0.105 ]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:37 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.6561 0.1271 0.9826 0.8297 0.5872 0.306  0.6418 0.0406]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:37 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:00:38 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:00:38 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:00:38 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9923 0.9216 0.7891 0.3498 0.6362 0.625  0.8748 0.4814]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:38 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9104 0.7429 0.7985 0.946  0.1051 0.3186 0.4223 0.0819]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:39 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.2279 0.4282 0.9147 0.9628 0.5454 0.3173 0.0022 0.217 ]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:39 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.2739 0.6659 0.9685 0.0607 0.6934 0.7283 0.0601 0.1514]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:40 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9088 0.4728 0.9598 0.6238 0.569  0.1114 0.0054 0.1803]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:40 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.1798 0.5695 0.7317 0.0881 0.3767 0.0462 0.5403 0.0257]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:41 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:00:41 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9981 0.2447 0.2505 0.2234 0.2145 0.6152 0.6726 0.5249]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:41 WARNING np_llt_solver: No convergence after 200 iterations (max |R| = 3.97e-01 at control point 0, 3 clamped angles, last step factor 0.000977, 0.31 s). A lifting line meeting a wall (surface_type=0) or the ysym plane at an angle has a kink singularity at its root: use a small cut-off, e.g. core_radius=0.005.
+12:00:41 WARNING np_llt_solver: Angle of attack outside the polar table at 3 control points [0, 1, 2].
+12:00:41 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8158 0.7573 0.9845 0.3983 0.9624 0.6119 0.2365 0.533 ]): NPLLT did not converge (max residual 3.97e-01, 200 iterations)
+12:00:42 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:00:42 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.6946 0.2068 0.4882 0.3526 0.1286 0.0836 0.1208 0.1781]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:44 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.1586 0.6123 0.5732 0.5707 0.0669 0.098  0.0493 0.1026]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:44 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [6.374e-01 1.666e-01 9.191e-01 6.376e-01 3.314e-01 5.948e-01 7.170e-02
+ 4.000e-04]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:44 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.985  0.1104 0.8009 0.5892 0.1875 0.5254 0.9755 0.0388]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:44 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8617 0.4583 0.8303 0.6918 0.9257 0.6779 0.0954 0.0297]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:45 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9885 0.7812 0.9003 0.3392 0.6228 0.8768 0.3874 0.0693]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:46 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.4591 0.8417 0.9789 0.3629 0.5237 0.1491 0.1857 0.1119]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:47 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:00:47 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.4806 0.4629 0.4466 0.8016 0.8689 0.9952 0.8785 0.4494]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:47 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:00:48 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.6228 0.564  0.4759 0.358  0.7083 0.6553 0.6706 0.024 ]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:48 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:00:48 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9415 0.4897 0.5846 0.0982 0.9682 0.7133 0.9003 0.4631]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:49 WARNING np_llt_solver: No convergence after 200 iterations (max |R| = 3.85e-01 at control point 0, 2 clamped angles, last step factor 0.000977, 0.30 s). A lifting line meeting a wall (surface_type=0) or the ysym plane at an angle has a kink singularity at its root: use a small cut-off, e.g. core_radius=0.005.
+12:00:49 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [1, 2].
+12:00:49 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9406 0.5313 0.8123 0.9744 0.7334 0.6981 0.9825 0.5627]): NPLLT did not converge (max residual 3.85e-01, 200 iterations)
+12:00:49 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.4717 0.803  0.9712 0.8312 0.4929 0.5307 0.3425 0.1183]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:50 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.6325 0.2065 0.8102 0.9166 0.9763 0.748  0.6334 0.0246]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:50 WARNING np_llt_solver: No convergence after 200 iterations (max |R| = 6.88e-01 at control point 0, 1 clamped angles, last step factor 0.00781, 0.31 s). A lifting line meeting a wall (surface_type=0) or the ysym plane at an angle has a kink singularity at its root: use a small cut-off, e.g. core_radius=0.005.
+12:00:50 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:00:50 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9449 0.3067 0.6595 0.4271 0.5514 0.4572 0.9866 0.5647]): NPLLT did not converge (max residual 6.88e-01, 200 iterations)
+12:00:51 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:00:52 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9801 0.6148 0.9372 0.6052 0.7359 0.4137 0.7484 0.0739]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:52 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:00:52 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8358 0.1252 0.4151 0.8541 0.6336 0.8136 0.71   0.5566]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:53 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9927 0.5057 0.1553 0.3515 0.4822 0.3295 0.1437 0.0867]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:53 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:00:53 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9609 0.0866 0.2002 0.4217 0.929  0.8959 0.3422 0.572 ]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:53 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9002 0.0415 0.3612 0.653  0.1546 0.019  0.5313 0.0483]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:54 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.0876 0.4236 0.9329 0.8753 0.6312 0.7037 0.4339 0.0595]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:54 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.4252 0.6701 0.9541 0.4278 0.6958 0.5804 0.9713 0.0322]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:55 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7409 0.1554 0.729  0.1693 0.0183 0.4623 0.5906 0.104 ]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:55 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.5633 0.2102 0.9206 0.2998 0.7878 0.5064 0.3499 0.0241]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:56 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8801 0.9308 0.7748 0.2983 0.0427 0.1629 0.2157 0.1068]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:57 WARNING np_llt_solver: No convergence after 200 iterations (max |R| = 9.36e-02 at control point 0, 2 clamped angles, last step factor 0.125, 0.31 s). A lifting line meeting a wall (surface_type=0) or the ysym plane at an angle has a kink singularity at its root: use a small cut-off, e.g. core_radius=0.005.
+12:00:57 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [1, 2].
+12:00:57 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.6304 0.8148 0.8852 0.1427 0.9908 0.863  0.6331 0.487 ]): NPLLT did not converge (max residual 9.36e-02, 200 iterations)
+12:00:58 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8481 0.0604 0.4731 0.9134 0.1554 0.0484 0.0503 0.1875]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:58 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.6127 0.5863 0.6232 0.6465 0.4078 0.3605 0.0027 0.0051]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:59 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9039 0.303  0.5455 0.8913 0.1942 0.5004 0.561  0.0355]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:00:59 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.5492 0.4406 0.3291 0.2996 0.6899 0.7561 0.1557 0.0501]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:00 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.4498 0.3332 0.6335 0.9197 0.2675 0.1007 0.3862 0.1156]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:02 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.4626 0.3164 0.925  0.2525 0.2946 0.6404 0.3714 0.1622]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:02 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7666 0.2729 0.0158 0.5469 0.2735 0.4657 0.7512 0.0387]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:03 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.5908 0.7773 0.8001 0.8743 0.0306 0.0066 0.1262 0.0353]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:03 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [8.223e-01 2.359e-01 6.572e-01 3.956e-01 5.194e-01 3.072e-01 7.732e-01
+ 5.000e-04]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:03 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:03 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9358 0.1201 0.3498 0.4473 0.724  0.4196 0.492  0.5576]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:04 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:04 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9386 0.5093 0.5151 0.1865 0.3979 0.6109 0.3756 0.0386]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:05 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.6629 0.3012 0.2524 0.8818 0.7073 0.6503 0.5052 0.1361]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:05 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9975 0.0641 0.8622 0.4713 0.6278 0.6832 0.0705 0.1488]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:06 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 1 control points (min 0.33).
+12:01:06 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.1691 0.6525 0.6297 0.5454 0.5571 0.7796 0.7474 0.0087]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:06 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.4313 0.7583 0.8064 0.0998 0.942  0.7825 0.5902 0.0207]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:07 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:01:09 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8519 0.3742 0.9215 0.1004 0.2087 0.2803 0.9034 0.0629]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:09 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:09 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9907 0.3104 0.7423 0.8836 0.1238 0.4942 0.7007 0.5903]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:10 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.698  0.2428 0.9178 0.2807 0.0574 0.0691 0.3716 0.2674]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:11 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:11 WARNING np_llt_solver: NeuralFoil confidence below 0.50 at 2 control points (min 0.05).
+12:01:11 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.0086 0.5366 0.9214 0.7491 0.0624 0.5176 0.8662 0.0441]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:11 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:11 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9459 0.1467 0.9408 0.0538 0.6389 0.5475 0.9105 0.5348]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:11 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.918  0.1884 0.7747 0.8239 0.6306 0.3841 0.2033 0.0166]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:12 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7127 0.5916 0.7162 0.6399 0.1479 0.6194 0.7755 0.0195]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:12 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.3351 0.4107 0.9164 0.484  0.2075 0.2351 0.3428 0.0536]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:13 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:13 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7176 0.3113 0.8711 0.2578 0.953  0.9931 0.8709 0.4507]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:14 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9721 0.3368 0.7809 0.0826 0.3921 0.2296 0.0626 0.0674]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:14 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8517 0.4844 0.6135 0.218  0.9795 0.756  0.0238 0.0755]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:14 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:01:15 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:01:15 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:16 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:17 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.628  0.2889 0.3208 0.573  0.2187 0.4629 0.3869 0.1116]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:17 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:01:18 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7993 0.8217 0.9966 0.694  0.0216 0.0309 0.6087 0.0336]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:18 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7308 0.1468 0.7984 0.8832 0.5239 0.8252 0.321  0.1082]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:19 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.882  0.6395 0.5445 0.2791 0.3625 0.0657 0.2477 0.0361]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:20 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.3347 0.4981 0.963  0.1658 0.3919 0.2898 0.936  0.0824]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:20 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.0554 0.5867 0.6094 0.2024 0.6779 0.7271 0.2667 0.1406]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:20 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.362  0.4028 0.6865 0.213  0.2908 0.9265 0.9031 0.0234]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:21 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8305 0.7618 0.9149 0.1517 0.6565 0.2602 0.5194 0.0248]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:22 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.5606 0.9812 0.9849 0.2354 0.3028 0.2336 0.7141 0.084 ]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:22 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8435 0.1749 0.8161 0.873  0.1386 0.0414 0.7054 0.2191]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:22 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8342 0.8316 0.9745 0.1347 0.8518 0.7158 0.0764 0.0828]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:23 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9777 0.8872 0.8707 0.8617 0.3899 0.451  0.1184 0.1803]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:23 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:23 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9606 0.4596 0.836  0.7918 0.4977 0.693  0.3889 0.5766]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:24 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.6696 0.4375 0.4872 0.4724 0.7352 0.3304 0.2871 0.0753]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:24 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.4486 0.5103 0.9153 0.894  0.4413 0.8993 0.6763 0.0723]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:24 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:24 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.6891 0.6095 0.3375 0.3515 0.6232 0.6861 0.8061 0.5019]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:25 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.2672 0.5695 0.8531 0.1081 0.81   0.3037 0.0874 0.0299]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:25 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:26 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7538 0.194  0.4004 0.492  0.1534 0.3222 0.9439 0.0922]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:27 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8702 0.3254 0.3866 0.796  0.7731 0.5104 0.1199 0.209 ]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:28 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8768 0.439  0.9088 0.4296 0.3348 0.379  0.2692 0.1361]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:28 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8565 0.488  0.4275 0.9195 0.1958 0.0884 0.1522 0.014 ]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:29 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.5542 0.486  0.1927 0.2786 0.3096 0.2581 0.1811 0.1125]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:29 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8918 0.4807 0.8061 0.6657 0.0132 0.0327 0.3851 0.2147]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:29 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7149 0.3434 0.8033 0.997  0.0674 0.2728 0.1654 0.1128]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:30 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8494 0.2082 0.4975 0.2174 0.5506 0.6065 0.0645 0.0919]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:31 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9304 0.1429 0.3189 0.3134 0.5856 0.2053 0.336  0.2225]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:31 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9321 0.3769 0.5649 0.634  0.4244 0.8012 0.4505 0.025 ]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:32 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.2234 0.4567 0.6716 0.5311 0.0989 0.2972 0.803  0.0091]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:33 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.5295 0.3111 0.9055 0.3391 0.4906 0.147  0.5878 0.0658]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:33 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:01:33 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:01:34 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.5897 0.7978 0.5819 0.2695 0.1602 0.307  0.4151 0.0661]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:35 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9733 0.1272 0.4382 0.1817 0.1451 0.2352 0.5515 0.194 ]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:35 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9235 0.5775 0.2948 0.1762 0.1236 0.3246 0.4104 0.2028]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:36 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.5945 0.502  0.6178 0.9754 0.761  0.9918 0.9588 0.0193]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:36 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8172 0.3944 0.9759 0.1162 0.6987 0.418  0.045  0.2243]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:36 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.6706 0.8457 0.577  0.2715 0.5439 0.3629 0.1352 0.0866]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:37 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7505 0.3139 0.0845 0.47   0.4635 0.8647 0.8198 0.0297]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:37 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.3925 0.4509 0.9783 0.91   0.1486 0.0041 0.5993 0.0403]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:37 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:38 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7273 0.3687 0.1455 0.6481 0.6673 0.8681 0.8525 0.5229]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:40 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:41 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.5364 0.8696 0.8441 0.5901 0.3155 0.0382 0.005  0.3063]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:42 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9377 0.0332 0.4653 0.7141 0.4405 0.2535 0.3101 0.2137]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:43 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.4519 0.3316 0.7043 0.1345 0.1179 0.26   0.2701 0.0557]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:43 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.5513 0.4528 0.6969 0.7686 0.5126 0.6078 0.382  0.1015]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:44 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9492 0.0825 0.8205 0.9377 0.058  0.4481 0.7651 0.1208]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:44 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:44 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7631 0.5925 0.6712 0.4754 0.936  0.7344 0.9504 0.4616]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:45 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.3547 0.5717 0.7033 0.4708 0.8024 0.7083 0.3776 0.0822]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:46 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:01:46 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.8467 0.2662 0.681  0.5534 0.0137 0.341  0.2551 0.1304]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:46 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9424 0.9651 0.9326 0.6716 0.1526 0.1124 0.2085 0.2079]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:47 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:01:47 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.5977 0.3967 0.8085 0.996  0.7474 0.7919 0.1119 0.0323]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:48 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.9871 0.6004 0.5957 0.7924 0.4183 0.4025 0.7186 0.0133]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:50 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7167 0.7975 0.871  0.5059 0.73   0.6567 0.6301 0.0407]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:51 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.2782 0.4681 0.7408 0.9059 0.1712 0.1146 0.014  0.1503]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:52 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:01:52 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7012 0.2388 0.5451 0.5916 0.5143 0.7005 0.8245 0.0512]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:53 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.4783 0.7652 0.8887 0.9458 0.245  0.2044 0.4731 0.1247]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:53 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:01:53 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:01:55 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:01:58 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7904 0.1515 0.6719 0.292  0.8845 0.6975 0.231  0.1297]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:59 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.5915 0.6244 0.7687 0.1573 0.1954 0.007  0.2352 0.0163]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:01:59 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.6204 0.4348 0.8098 0.6651 0.0962 0.0911 0.0387 0.0143]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:02:00 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:02:01 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.2162 0.5535 0.3315 0.4611 0.444  0.4619 0.4052 0.1049]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:02:02 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.4358 0.7055 0.8886 0.9144 0.2401 0.535  0.7527 0.1134]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:02:02 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:02:02 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.5508 0.6366 0.912  0.2113 0.4139 0.9125 0.9188 0.4896]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:02:03 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:02:03 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7436 0.3854 0.5078 0.1315 0.7926 0.5119 0.6785 0.4821]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:02:03 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.321  0.562  0.6465 0.4928 0.4777 0.166  0.0285 0.1617]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:02:04 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7209 0.1604 0.6758 0.2789 0.2927 0.403  0.3136 0.0215]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:02:05 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7343 0.317  0.3586 0.3905 0.364  0.1933 0.5455 0.0075]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:02:05 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.6249 0.2911 0.8994 0.8789 0.2958 0.395  0.963  0.0174]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:02:06 WARNING pipelines.bdtoolbox_foil.simulator: Evaluation failed (level 1, point [0.7998 0.37   0.2913 0.5146 0.8727 0.9051 0.4325 0.0896]): trim on yaw: target CL 0.71828 out of reach within yaw bounds [1.0, 8.0]
+12:02:06 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:02:07 WARNING np_llt_solver: Angle of attack outside the polar table at 2 control points [0, 1].
+12:02:07 INFO step0: Yaw model, first sample: 300 sections, 165 trimmed, yaw 1.02 to 8.00 deg (98 s)
+12:03:07 INFO step0: Yaw model: second sample out-of-sample RMSE 0.041 deg (max 0.156); final 10-fold CV RMSE 0.038 deg, near the band 0.041 deg (95 % of |error| < 0.052 deg)
+12:03:08 INFO step0: Flow settings per level (identical): {'confidence_constraint': {'n_crit': 1.0, 'xtr': [0.1, 0.1], 're': 5000000.0, 'model': 'xxxlarge'}, 'NPLLT x NeuralFoil xxxlarge': {'n_crit': 1.0, 'xtr': [0.1, 0.1], 're': 5000000.0, 'model': 'xxxlarge'}, 'NPLLT x XFOIL': {'n_crit': 1.0, 'xtr': [0.1, 0.1], 're': 5000000.0, 'alpha': [-6.0, 12.0, 0.5], 'npane': 250, 'niter': 300}, 'AVL x XFOIL': {'n_crit': 1.0, 'xtr': [0.1, 0.1], 're': 5000000.0, 'alpha': [-6.0, 12.0, 0.5], 'npane': 250, 'niter': 300}}
+12:03:08 INFO step0: Reference: fit gap 4.68e-07 (thickness weights), delta solved 0.108139 (frozen 0.108139)
+12:03:08 INFO step0: Reference: Ixx 6.7175e-05 (aerosandbox 6.7167e-05), upper_0 0.2742, lower_0 -0.0580, NeuralFoil confidence 0.977
+12:03:21 INFO step0: Feasible share: {'delta_solved': 1.0, 'min_thickness': 0.6926, 'Ixx': 0.7856, 'thickness_0.90': 0.917, 'thickness_0.95': 0.9003, 'leading_edge_upper': 1.0, 'leading_edge_lower': 0.812, 'wiggliness': 0.3474, 'nf_confidence': 0.8998, 'all': 0.147}
+12:03:25 INFO step0: Feasible box (physical, proposed bounds): {'t_0': [0.26, 0.5], 't_1': [0.19, 0.56], 't_2': [0.08, 0.32], 't_3': [0.174, 0.5], 's_1': [-0.1, 0.15], 's_2': [-0.1, 0.15], 's_3': [-0.1, 0.15], 'yaw_target': [3.8, 4.2]}; feasible share in the box 0.150
+12:03:42 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 9
+12:03:54 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 7.5
+12:03:55 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 5
+12:03:55 INFO step0: XFOIL step 0.5 / niter 100 (previous runs): 0/30 failed, 0.1 filled points per polar, 6.4 s per polar
+12:04:22 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 9
+12:04:38 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 7.5
+12:04:40 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 5
+12:04:40 INFO step0: XFOIL step 0.5 / niter 300: 0/30 failed, 0.1 filled points per polar, 9.3 s per polar
+12:05:06 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 3.75
+12:05:21 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 7.25
+12:05:26 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = -0.75, 5
+12:05:37 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 10.25
+12:05:39 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = -4.25
+12:05:45 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 7.25, 9
+12:05:49 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = -1.75, 7.75
+12:05:58 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 6.5
+12:06:00 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 6.25
+12:06:03 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = 4.5, 4.75, 7.25
+12:06:14 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = -0.75, 6.75
+12:06:18 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = -2.5, 3
+12:06:24 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = -1.75, -1
+12:06:25 WARNING bdFoil.Code.core.xfoil: polar interior gap filled by interpolation at alpha = -2.75, 0.75
+12:06:25 INFO step0: XFOIL step 0.25 / niter 300: 0/30 failed, 0.8 filled points per polar, 23.8 s per polar
+12:06:25 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.71828 at level 1
+12:06:25 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.71644 at level 2
+12:06:30 INFO pipelines.bdtoolbox_foil.simulator: Equal-lift reference: CL_ref = 0.67219 at level 3
+12:06:35 INFO step0: Reference, NPLLT x NeuralFoil xxxlarge: CL_ref 0.71828, CD 0.026769, delta 0.108139 (0.2 s for the reference solve)
+12:06:35 INFO step0: Reference, NPLLT x XFOIL: CL_ref 0.71644, CD 0.026760, delta 0.108139 (0.1 s for the reference solve)
+12:06:35 INFO step0: Reference, AVL x XFOIL: CL_ref 0.67219, CD 0.024535, delta 0.108139 (4.9 s for the reference solve)
+12:07:12 INFO step0: Check section 1: target 3.970, yaw {1: 3.987962428495366, 2: 3.9720297629393686, 3: 3.8697762735310746}, CD {1: 0.02707688954628967, 2: 0.027001359835281454, 3: 0.02477764022981996}
+12:07:15 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:07:15 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:07:25 INFO step0: Check section 2: target 4.124, yaw {1: 4.057048486816383, 2: 4.088414415872528, 3: 3.753916191876202}, CD {1: 0.027836425104187164, 2: 0.027712396001437906, 3: 0.025308547878845435}
+12:07:37 INFO step0: Check section 3: target 4.182, yaw {1: 4.14099324960228, 2: 4.094650769103552, 3: 3.752878851338044}, CD {1: 0.027699893960803065, 2: 0.02764959109919446, 3: 0.025320927170258203}
+12:07:56 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:07:56 WARNING np_llt_solver: Angle of attack outside the polar table at 1 control points [1].
+12:08:05 INFO step0: Check section 4: target 3.803, yaw {1: 3.7962196905975536, 2: 3.8003849921220314, 3: 3.249808550220529}, CD {1: 0.02796920798320423, 2: 0.027854639448178377, 3: 0.02556022365216594}
+12:08:18 INFO step0: Check section 5: target 4.160, yaw {1: 4.180974785489218, 2: 4.155702105447105, 3: 4.199387171586}, CD {1: 0.027711660948690993, 2: 0.02768573353667669, 3: 0.02544375453580889}
+12:08:30 INFO step0: Check section 6: target 4.183, yaw {1: 4.1683698893221415, 2: 4.151712297000242, 3: 4.1546758383286235}, CD {1: 0.027002582320466335, 2: 0.02680018896494064, 3: 0.02458897663059371}
+12:08:30 INFO step0: Checks written in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\studies\cfoil_intens_kulfan_trim_2\results\step0_checks.json

@@ -1,0 +1,147 @@
+720 nested fits in 113 s
+120 EGO runs in 250 s
+40 optimization runs in 32 s
+=== 1. Nested designs: medians over the seeds ===
+--- airfoil ---
+                                     rmse_rel     q2   nlpd  coverage_95  z_rms  fit_time_s
+n_hf model                                                                                 
+5    BoTorch MF-GP                      0.433  0.813  3.458        0.967  0.823       1.326
+     BoTorch SingleTaskGP (HF only)     0.837  0.299  4.308        0.948  1.145       0.291
+     GPy/emukit AR1 (MAP)               0.375  0.860  3.364        0.952  0.953       3.193
+     GPy/emukit AR1 (MLE)               0.372  0.862  4.616        0.664  2.196       8.692
+     SMT MFK                            0.395  0.844  7.852        0.479  3.482       1.895
+     mfego v1 CoKriging                 0.394  0.844  3.458        0.887  1.253       0.080
+     mfego v2 CoKriging                 0.370  0.863  3.381        0.926  1.108       0.081
+     mfego v2 HF only                   0.738  0.455  4.249        0.960  0.929       0.028
+10   BoTorch MF-GP                      0.260  0.932  3.029        0.953  0.974       1.597
+     BoTorch SingleTaskGP (HF only)     0.459  0.789  3.719        0.918  1.110       0.303
+     GPy/emukit AR1 (MAP)               0.251  0.937  3.067        0.895  1.334       5.303
+     GPy/emukit AR1 (MLE)               0.273  0.925  3.888        0.783  1.980      11.374
+     SMT MFK                            0.327  0.893  8.747        0.486  3.825       2.325
+     mfego v1 CoKriging                 0.320  0.897  3.425        0.852  1.416       0.132
+     mfego v2 CoKriging                 0.255  0.935  3.065        0.914  1.194       0.112
+     mfego v2 HF only                   0.459  0.789  3.868        0.984  0.666       0.032
+20   BoTorch MF-GP                      0.195  0.962  2.775        0.938  1.002       2.321
+     BoTorch SingleTaskGP (HF only)     0.261  0.932  3.148        0.918  1.100       0.256
+     GPy/emukit AR1 (MAP)               0.208  0.957  3.195        0.845  1.634       8.516
+     GPy/emukit AR1 (MLE)               0.278  0.922  3.507        0.828  1.638      15.927
+     SMT MFK                            0.294  0.913  4.282        0.738  2.158       3.239
+     mfego v1 CoKriging                 0.257  0.934  3.176        0.897  1.253       0.268
+     mfego v2 CoKriging                 0.209  0.956  2.805        0.943  0.972       0.215
+     mfego v2 HF only                   0.271  0.927  3.202        0.968  0.821       0.040
+
+--- airfoil_xfoil ---
+                                     rmse_rel     q2   nlpd  coverage_95  z_rms  fit_time_s
+n_hf model                                                                                 
+5    BoTorch MF-GP                      0.349  0.878  3.392        0.957  0.892       1.256
+     BoTorch SingleTaskGP (HF only)     0.841  0.292  4.367        0.957  0.997       0.267
+     GPy/emukit AR1 (MAP)               0.292  0.914  3.182        0.952  0.921       3.189
+     GPy/emukit AR1 (MLE)               0.280  0.921  5.305        0.681  2.734      12.612
+     SMT MFK                            0.316  0.900  6.043        0.606  2.976       1.684
+     mfego v1 CoKriging                 0.290  0.916  3.306        0.880  1.346       0.079
+     mfego v2 CoKriging                 0.291  0.915  3.152        0.939  1.006       0.077
+     mfego v2 HF only                   0.749  0.438  4.263        0.966  0.877       0.027
+10   BoTorch MF-GP                      0.223  0.950  2.863        0.906  1.246       1.812
+     BoTorch SingleTaskGP (HF only)     0.421  0.823  3.735        0.901  1.270       0.252
+     GPy/emukit AR1 (MAP)               0.192  0.963  3.276        0.818  1.828       5.392
+     GPy/emukit AR1 (MLE)               0.203  0.959  3.820        0.736  2.154      14.863
+     SMT MFK                            0.227  0.948  6.018        0.636  3.124       2.285
+     mfego v1 CoKriging                 0.226  0.949  3.586        0.786  2.021       0.133
+     mfego v2 CoKriging                 0.195  0.962  2.833        0.868  1.459       0.114
+     mfego v2 HF only                   0.462  0.786  3.874        0.974  0.746       0.031
+20   BoTorch MF-GP                      0.142  0.980  2.670        0.885  1.347       1.446
+     BoTorch SingleTaskGP (HF only)     0.245  0.940  3.237        0.882  1.384       0.239
+     GPy/emukit AR1 (MAP)               0.148  0.978  3.454        0.755  2.062       8.754
+     GPy/emukit AR1 (MLE)               0.144  0.979  3.766        0.742  2.372      10.921
+     SMT MFK                            0.178  0.968  4.805        0.657  2.692       3.074
+     mfego v1 CoKriging                 0.146  0.979  3.090        0.826  1.720       0.263
+     mfego v2 CoKriging                 0.122  0.985  2.412        0.901  1.238       0.214
+     mfego v2 HF only                   0.257  0.934  3.191        0.938  0.928       0.040
+
+--- hartmann ---
+                                     rmse_rel     q2   nlpd  coverage_95  z_rms  fit_time_s
+n_hf model                                                                                 
+10   BoTorch MF-GP                      1.000 -0.001  2.519        0.826  2.588       2.821
+     BoTorch SingleTaskGP (HF only)     1.018 -0.036  7.146        0.708  4.132       2.587
+     GPy/emukit AR1 (MAP)               0.952  0.090  1.240        0.852  1.979       5.215
+     GPy/emukit AR1 (MLE)               1.147 -0.315  6.359        0.628  3.894       6.940
+     SMT MFK                            1.490 -1.240  4.207        0.818  2.967       8.237
+     mfego v1 CoKriging                 0.951  0.096  2.880        0.821  2.751       0.107
+     mfego v2 CoKriging                 0.921  0.152  2.094        0.851  2.459       0.114
+     mfego v2 HF only                   0.977  0.046  2.366        0.847  2.505       0.033
+20   BoTorch MF-GP                      0.919  0.154  2.872        0.778  2.815       2.476
+     BoTorch SingleTaskGP (HF only)     0.921  0.152  2.214        0.796  2.498       0.527
+     GPy/emukit AR1 (MAP)               0.986  0.027  1.313        0.851  1.782       5.668
+     GPy/emukit AR1 (MLE)               1.188 -0.417  2.575        0.789  2.578       9.654
+     SMT MFK                            1.221 -0.504  2.911        0.756  2.591       9.915
+     mfego v1 CoKriging                 0.845  0.287  1.368        0.862  2.070       0.256
+     mfego v2 CoKriging                 0.824  0.320  0.587        0.892  1.582       0.245
+     mfego v2 HF only                   0.865  0.252  0.827        0.885  1.702       0.042
+40   BoTorch MF-GP                      0.835  0.303  3.060        0.798  2.911       8.004
+     BoTorch SingleTaskGP (HF only)     0.857  0.264  1.684        0.826  2.264       0.591
+     GPy/emukit AR1 (MAP)               0.758  0.426  0.241        0.914  1.257      16.137
+     GPy/emukit AR1 (MLE)               0.867  0.249  0.797        0.897  1.431      19.635
+     SMT MFK                            1.010 -0.019  0.670        0.916  1.327      19.651
+     mfego v1 CoKriging                 0.756  0.428  0.595        0.871  1.647       2.068
+     mfego v2 CoKriging                 0.662  0.562  0.131        0.923  1.177       1.564
+     mfego v2 HF only                   0.809  0.346  0.421        0.912  1.422       0.074
+
+=== 2. LOO (by location / by observation) vs test set (mfego CoKriging): medians ===
+                                          q2  loo_q2  loo_obs_q2  coverage_95  loo_coverage_95  loo_obs_coverage_95   nlpd  loo_nlpd  loo_obs_nlpd
+problem       model              n_hf                                                                                                             
+airfoil       mfego v1 CoKriging 5     0.844   0.727       0.929        0.887            1.000                1.000  3.458     3.964         2.826
+                                 10    0.897   0.916       0.947        0.852            1.000                0.900  3.425     3.293         2.944
+                                 20    0.934   0.903       0.946        0.897            0.900                0.950  3.176     3.389         3.136
+              mfego v2 CoKriging 5     0.863   0.694       0.945        0.926            0.800                1.000  3.381     3.800         2.652
+                                 10    0.935   0.939       0.967        0.914            0.900                0.900  3.065     3.180         2.705
+                                 20    0.956   0.935       0.966        0.943            0.900                0.950  2.805     3.211         2.905
+airfoil_xfoil mfego v1 CoKriging 5     0.916   0.860       0.997        0.880            1.000                1.000  3.306     3.278         1.421
+                                 10    0.949   0.957       0.993        0.786            0.900                0.900  3.586     2.892         2.095
+                                 20    0.979   0.973       0.985        0.826            0.925                0.925  3.090     2.647         2.429
+              mfego v2 CoKriging 5     0.915   0.808       0.999        0.939            1.000                1.000  3.152     3.335         1.021
+                                 10    0.962   0.973       0.993        0.868            0.900                0.900  2.833     2.830         2.133
+                                 20    0.985   0.977       0.983        0.901            0.925                0.925  2.412     2.651         2.546
+hartmann      mfego v1 CoKriging 10    0.096   0.037       0.020        0.821            0.900                0.900  2.880    -0.414        -0.430
+                                 20    0.287   0.283       0.329        0.862            0.900                0.900  1.368    -0.147        -0.147
+                                 40    0.428   0.402       0.463        0.871            0.950                0.938  0.595    -0.084        -0.092
+              mfego v2 CoKriging 10    0.152  -0.003       0.101        0.851            0.900                0.900  2.094    -0.350        -0.436
+                                 20    0.320   0.568       0.679        0.892            0.950                0.950  0.587    -0.207        -0.549
+                                 40    0.562   0.527       0.750        0.923            0.975                0.950  0.131    -0.023        -0.483
+
+=== 3. Data of the infilling: medians ===
+                                                    cost  n_lf_data  n_hf_data  rmse_rel     q2   nlpd  coverage_95  loo_q2  std_at_hf  recommendation
+problem       n_hf version model                                                                                                                      
+airfoil       10   v1      EGO exact conditioning  142.0       40.5       10.0     0.384  0.853  3.648        0.825   0.957      0.000         111.418
+                           EGO recursive           142.0       40.5       10.0     0.416  0.827  3.957        0.774     NaN      0.033         111.418
+                   v2      EGO exact conditioning  140.0       41.5       10.0     0.358  0.872  3.573        0.796   0.984      0.000         111.413
+                           EGO recursive           140.0       41.5       10.0     0.370  0.863  3.621        0.813     NaN      0.029         111.413
+              20   v1      EGO exact conditioning  282.5       71.5       21.0     0.324  0.895  4.139        0.728   0.985      0.000         111.411
+                           EGO recursive           282.5       71.5       21.0     0.319  0.898  4.166        0.750     NaN      0.002         111.411
+                   v2      EGO exact conditioning  281.0       80.5       20.0     0.311  0.903  4.174        0.698   0.990      0.000         111.410
+                           EGO recursive           281.0       80.5       20.0     0.313  0.902  4.160        0.679     NaN      0.002         111.410
+airfoil_xfoil 10   v1      EGO exact conditioning  143.0       37.0       11.0     0.303  0.908  4.030        0.744   0.988      0.000         110.600
+                           EGO recursive           143.0       37.0       11.0     0.323  0.896  4.308        0.725     NaN      0.012         110.600
+                   v2      EGO exact conditioning  144.5       42.0       10.0     0.306  0.906  3.649        0.805   0.991      0.000         110.600
+                           EGO recursive           144.5       42.0       10.0     0.309  0.904  3.741        0.804     NaN      0.024         110.600
+              20   v1      EGO exact conditioning  280.0       80.0       20.0     0.290  0.916  3.540        0.787   0.985      0.000         110.600
+                           EGO recursive           280.0       80.0       20.0     0.341  0.883  4.185        0.697     NaN      0.002         110.600
+                   v2      EGO exact conditioning  284.5       83.5       20.0     0.295  0.913  3.902        0.780   0.996      0.000         110.600
+                           EGO recursive           284.5       83.5       20.0     0.343  0.882  3.715        0.772     NaN      0.001         110.600
+hartmann      20   v1      EGO exact conditioning  281.0       21.0       26.0     0.820  0.327  0.572        0.988   0.981      0.005           0.101
+                           EGO recursive           281.0       21.0       26.0     0.820  0.327  0.572        0.988     NaN      0.014           0.101
+                   v2      EGO exact conditioning  280.0       81.0       20.5     0.906  0.179  0.484        0.984   0.965      0.002           0.292
+                           EGO recursive           280.0       81.0       20.5     0.867  0.249  0.488        0.984     NaN      0.067           0.292
+              40   v1      EGO exact conditioning  565.0       25.0       54.0     0.659  0.565  0.299        0.982   0.989      0.003           0.000
+                           EGO recursive           565.0       25.0       54.0     0.660  0.565  0.299        0.982     NaN      0.052           0.000
+                   v2      EGO exact conditioning  561.5      126.5       44.0     0.850  0.278  0.493        0.979   0.950      0.002           0.004
+                           EGO recursive           561.5      126.5       44.0     0.847  0.283  0.486        0.979     NaN      0.095           0.004
+
+=== 4. Optimization of Hartmann 6D (budget 250): f - f* ===
+                    best HF error        recommendation error       
+                           median   mean               median   mean
+method                                                              
+BoTorch qLogEI (SF)         0.625  0.977                0.706  1.005
+NN-MF-EGO v1                0.259  0.591                0.249  0.486
+NN-MF-EGO v2                0.317  0.562                0.291  0.513
+SF-EGO v2                   0.523  0.720                0.458  0.669
+

@@ -56,6 +56,25 @@ class ExperimentData:
             self.y_dict[l] = np.array([])  # Initialize y_dict for this level
             self.metrics_dict[l] = []  # Initialize metrics_dict for this level
 
+    def generate_nested_design(self, points_per_level: list[int], seed: int = 42) -> None:
+        """
+        [CK] Nested design of experiments X_L included in ... included in X_1 (needed by
+        src.cokriging.CoKriging): a Latin hypercube of points_per_level[0] points for level 1,
+        then each level keeps a well spread subset (greedy maximin) of the level below.
+        """
+        if any(n_high > n_low for n_low, n_high in zip(points_per_level, points_per_level[1:])):
+            raise ValueError(f"Nested design: the number of points must not increase with the "
+                             f"level, got {points_per_level}.")
+        sampler = qmc.LatinHypercube(d=self.dim, seed=seed + 1)
+        x = qmc.scale(sampler.random(n=points_per_level[0]),
+                      [b[0] for b in self.bounds], [b[1] for b in self.bounds])
+        for l, n_points in enumerate(points_per_level, start=1):
+            if l > 1:
+                x = greedy_maximin(x, n_points, self.bounds)
+            self.x_dict[l] = x
+            self.y_dict[l] = np.array([])
+            self.metrics_dict[l] = []
+
     def is_already_evaluated(self, level: int, x: np.ndarray, tol: float = 1e-6) -> bool:
         """
         Check if a point has already been evaluated at a given fidelity level.

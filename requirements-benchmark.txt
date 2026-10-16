@@ -15,6 +15,12 @@ pandas>=2.0
 scikit-learn>=1.5     # single-fidelity GaussianProcessRegressor
 smt>=2.6              # KRG (single fidelity) and MFK (recursive co-kriging, Le Gratiet)
 botorch>=0.12         # SingleTaskGP / SingleTaskMultiFidelityGP, qLogEI, multi-fidelity KG (pulls torch)
+GPy>=1.14             # tested 1.14.2 (binary wheel for Python 3.13 / numpy 2.5)
+emukit>=0.5           # tested 0.5.1: AR(1) linear multi-fidelity co-kriging (benchmarks/cokriging)
+
+# Airfoil problem of benchmarks/cokriging (NeuralFoil xxsmall / xxxlarge)
+neuralfoil>=0.3       # tested 0.3.3
+aerosandbox>=4.2      # tested 4.2.10 (Kulfan parameters of the NACA sections)
 
 # Notebook execution
 jupyter

@@ -226,3 +226,43 @@ class SquaredExponentialKernel(Kernel):
         grads.append(exp_part)
         grads.append(self.bias_variance * np.ones_like(exp_part))
         return grads
+
+
+class Matern52Kernel(Kernel):
+    """
+    [MAT] Matern 5/2 kernel (twice differentiable functions, less smooth than the squared
+    exponential; default of BoTorch / GPyTorch), same hyperparameters [l_1..l_d, t1, t2]:
+        k(x, x') = t1 (1 + sqrt(5) r + 5 r^2 / 3) exp(-sqrt(5) r) + t2,
+        r^2 = sum_m (x_m - x'_m)^2 / l_m^2.
+    """
+    def _matern(self, sq_dist: np.ndarray) -> np.ndarray:
+        """t1 (1 + sqrt(5) r + 5 r^2 / 3) exp(-sqrt(5) r) + t2 for r^2 = sq_dist."""
+        r = np.sqrt(np.maximum(sq_dist, 0.0))
+        return self.signal_variance * (1.0 + np.sqrt(5.0) * r + 5.0 * sq_dist / 3.0) \
+            * np.exp(-np.sqrt(5.0) * r) + self.bias_variance
+
+    def get_covariance_matrix(self, x_train: np.ndarray) -> np.ndarray:
+        return self._matern(np.sum(pairwise_sq_diff(x_train) / self.lengthscale ** 2, axis=2))
+
+    def get_cross_variance_vector(self, x_new: np.ndarray, x_train: np.ndarray) -> np.ndarray:
+        return self.get_cross_covariance_matrix(x_new, x_train).reshape(-1, 1)
+
+    def get_cross_covariance_matrix(self, x_new: np.ndarray, x_train: np.ndarray) -> np.ndarray:
+        diff = np.atleast_2d(x_new)[:, None, :] - x_train[None, :, :]
+        return self._matern(np.sum(diff ** 2 / self.lengthscale ** 2, axis=2))
+
+    def get_log_params_gradients(self, x_train: np.ndarray) -> list[np.ndarray]:
+        """
+        dK/dlog(theta_j) for theta = [l_1..l_d, t1, t2]:
+        - dK/dlog(l_m) = t1 (5/3) (1 + sqrt(5) r) exp(-sqrt(5) r) (x_m - x'_m)^2 / l_m^2
+        - dK/dlog(t1)  = K - t2,   dK/dlog(t2) = t2 * ones
+        """
+        l = self.lengthscale
+        sq_diff = pairwise_sq_diff(x_train)
+        r = np.sqrt(np.sum(sq_diff / l ** 2, axis=2))
+        common = self.signal_variance * (5.0 / 3.0) * (1.0 + np.sqrt(5.0) * r) \
+            * np.exp(-np.sqrt(5.0) * r)
+        grads = [common * sq_diff[:, :, m] / l[m] ** 2 for m in range(len(l))]
+        grads.append(self._matern(r ** 2) - self.bias_variance)
+        grads.append(self.bias_variance * np.ones_like(r))
+        return grads

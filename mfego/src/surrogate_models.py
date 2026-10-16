@@ -8,7 +8,7 @@ import numpy as np
 from scipy.linalg import cho_solve, solve_triangular
 from scipy.optimize import minimize
 from src.data_management import ExperimentData
-from src.kernels import Kernel, SquaredExponentialKernel
+from src.kernels import Kernel, Matern52Kernel, SquaredExponentialKernel
 
 # [FIX-R3] logging.basicConfig() removed from this module: a library must not configure the
 # root logger at import time (it silently disabled the basicConfig() of the calling scripts).
@@ -33,8 +33,148 @@ NLL_FAILURE = 1e10
 # Default value only: every GaussianProcess / MultifidelityModel can use its own prior
 # (argument lengthscale_prior, see benchmarks/map_hartmann/RAPPORT_MAP.md for the choice).
 LENGTHSCALE_PRIOR = (3.0, 2.0)
+# [PRIORS] Priors of the MAP estimation (use_map=True) on EVERY hyperparameter group. Like the
+# bounds, they assume NORMALIZED outputs (FIX-N7) and inputs in [0, 1]. A prior is a triple
+# (family, a, b) on the hyperparameter itself (MAP in parameter space, no Jacobian of the log):
+#   ("invgamma", alpha, beta)  mode beta / (alpha + 1)
+#   ("gamma", shape, rate)     mode (shape - 1) / rate
+#   ("lognormal", mu, sigma)   median exp(mu), mode exp(mu - sigma^2)
+# None = no prior on this group. "lengthscale" is set from LENGTHSCALE_PRIOR / lengthscale_prior.
+# [RHO] "rho" (correlation between levels) takes
+#   ("normal", mean, std): rho profiled in closed form (any sign),
+#       rho_hat = (F^T K^-1 y + mean / std^2) / (F^T K^-1 F + 1 / std^2),
+#   [V3] ("lognormal", mu, s): rho > 0 learned with the other hyperparameters (log rho is one
+#       more parameter of L-BFGS-B); mode exp(mu - s^2), so mu = s^2 puts the mode at 1, and
+#       the penalty -log p is then (log rho)^2 / (2 s^2) + constant: a N(0, s^2) on log rho,
+#       symmetric in factor around 1 (rho = 2 and rho = 0.5 cost the same).
+# Profiling and learning give the same rho for the same prior: for a fixed theta the closed form
+# IS the optimum in rho. The lognormal prior has no closed form, hence the learned rho.
+PRIOR_GROUPS = ("lengthscale", "signal_variance", "bias_variance", "noise", "rho")
+PRIOR_FAMILIES = ("invgamma", "gamma", "lognormal", "normal")
+DEFAULT_PRIORS = {
+    "lengthscale": ("invgamma",) + LENGTHSCALE_PRIOR,
+    # t1: unit-variance outputs -> mode 1 (median e, 95 % in [0.38, 19])
+    "signal_variance": ("lognormal", 1.0, 1.0),
+    # t2: badly identified constant term (the mean is already removed): small, wide prior
+    "bias_variance": ("lognormal", float(np.log(1e-2)), 2.0),
+    # noise: nugget of a deterministic code: median 1e-4, mode 2e-6
+    "noise": ("lognormal", float(np.log(1e-4)), 2.0),
+    # [RHO] rho: levels describing the same physics, rho close to 1; std 2 chosen by
+    # benchmarks/surrogate_v2/run_selection.py (weak prior: on Hartmann 6D it brings the share of
+    # rho at its bound 5 from 68 % to 27 %; std 1: 8 %, see RAPPORT_V2.md Section 3).
+    # Default only with rho_centering=True (see GaussianProcess): no prior on rho otherwise.
+    "rho": ("normal", 1.0, 2.0),
+}
+# [PRIORS] behaviour of use_map=True before the priors on t1, t2, the noise and rho
+# (lengthscales only)
+LENGTHSCALE_ONLY_PRIORS = {"signal_variance": None, "bias_variance": None, "noise": None,
+                           "rho": None}
+# [RHO] priors of mfego v1 (16/10/2026: priors on l, t1, t2 and the noise, none on rho)
+V1_PRIORS = {"rho": None}
 # [MAP] relative margin used to flag a hyperparameter sitting at a search bound (diagnostics)
 BOUND_FLAG_MARGIN = 1.05
+# [V3] lower bound of a learned rho (lognormal prior: rho > 0)
+RHO_LEARNED_MIN = 1e-3
+# [V3] rho of mfego v3 (default of CoKriging, chosen by benchmarks/surrogate_v3/run_benchmark.py):
+# learned with LogNormal(1, 1) (mode 1; penalty (log rho)^2 / 2, i.e. 2 nats at rho = 0.14 and
+# 7.1) within wide bounds, so that the prior and not the bound limits rho
+V3_RHO_PRIOR = ("lognormal", 1.0, 1.0)
+V3_RHO_BOUNDS = (RHO_LEARNED_MIN, 50.0)
+
+
+def neg_log_prior(prior: tuple, log_value: np.ndarray) -> tuple[float, np.ndarray]:
+    """
+    [PRIORS] -log p(theta) summed over the values (constant terms dropped) and its derivative
+    with respect to log(theta), for theta = exp(log_value):
+    - ("invgamma", alpha, beta): (alpha + 1) log t + beta / t
+    - ("gamma", k, rate):        -(k - 1) log t + rate t
+    - ("lognormal", mu, sigma):  log t + (log t - mu)^2 / (2 sigma^2)
+
+    Args:
+    - prior: (family, a, b) triple (see DEFAULT_PRIORS).
+    - log_value: numpy array of log-hyperparameters.
+    Returns:
+    - value: float, -log p summed over the values.
+    - grad: numpy array (same shape as log_value), d(-log p) / dlog(theta).
+    """
+    family, a, b = prior
+    log_value = np.asarray(log_value, dtype=float)
+    value = np.exp(log_value)
+    if family == "invgamma":
+        return float(np.sum((a + 1.0) * log_value + b / value)), (a + 1.0) - b / value
+    if family == "gamma":
+        return float(np.sum(-(a - 1.0) * log_value + b * value)), -(a - 1.0) + b * value
+    if family == "lognormal":
+        return (float(np.sum(log_value + (log_value - a) ** 2 / (2.0 * b ** 2))),
+                1.0 + (log_value - a) / b ** 2)
+    raise ValueError(f"Unknown prior family: {family!r} (allowed: {PRIOR_FAMILIES})")
+
+
+def check_priors(priors) -> dict:
+    """
+    [PRIORS] Validates a (possibly partial) dict of priors {group: (family, a, b) or None}.
+
+    Returns:
+    - dict with the same groups, each value a (family, float, float) tuple or None.
+    Raises:
+    - ValueError for an unknown group, an unknown family or invalid parameters.
+    """
+    if priors is None:
+        return {}
+    checked = {}
+    for group, prior in dict(priors).items():
+        if group not in PRIOR_GROUPS:
+            raise ValueError(f"Unknown prior group {group!r} (allowed: {PRIOR_GROUPS})")
+        if prior is None:
+            checked[group] = None
+            continue
+        if len(prior) != 3 or prior[0] not in PRIOR_FAMILIES:
+            raise ValueError(f"Prior of {group!r} must be (family, a, b) with family in "
+                             f"{PRIOR_FAMILIES} or None, got {prior!r}")
+        if (group == "rho" and prior[0] not in ("normal", "lognormal")) \
+           or (group != "rho" and prior[0] == "normal"):
+            raise ValueError(f"The prior of 'rho' must be ('normal', mean, std) or ('lognormal', "
+                             f"mu, s), and 'normal' is only for 'rho': got {prior!r} for {group!r}")
+        family, a, b = prior[0], float(prior[1]), float(prior[2])
+        if not (np.isfinite(a) and np.isfinite(b) and b > 0.0
+                and (family in ("lognormal", "normal") or a > 0.0)):
+            raise ValueError(f"Invalid parameters for the prior of {group!r}: {prior!r}")
+        checked[group] = (family, a, b)
+    return checked
+
+
+def describe_priors(priors: dict) -> str:
+    """[PRIORS] Readable description of a priors dict, e.g. 'lengthscale invgamma(3, 2); ...'."""
+    return "; ".join(f"{group} " + ("none" if priors.get(group) is None else
+                                    f"{priors[group][0]}({priors[group][1]:.3g}, "
+                                    f"{priors[group][2]:.3g})")
+                     for group in PRIOR_GROUPS)
+
+
+def saved_priors(resolved: dict, overrides: dict) -> dict:
+    """
+    [PRIORS] JSON form of the priors actually used by a model: every group of `resolved` (the
+    priors of a GP), except the lengthscales when they come from lengthscale_prior (saved
+    separately, possibly one pair per level) rather than from the `overrides` dict.
+    """
+    return {group: None if prior is None else list(prior) for group, prior in resolved.items()
+            if group != "lengthscale" or group in overrides}
+
+
+def scale_to_unit(x: np.ndarray, bounds: np.ndarray) -> np.ndarray:
+    """
+    [NORM] Inputs scaled to [0, 1]^d with the bounds of the design space,
+    x_unit = (x - lower) / (upper - lower); bounds None: x unchanged (identity).
+
+    Args:
+    - x: numpy array (m, d) of raw inputs.
+    - bounds: numpy array (d, 2) of [lower, upper] per input, or None.
+    """
+    if bounds is None:
+        return x
+    lower, upper = bounds[:, 0], bounds[:, 1]
+    span = np.where(upper > lower, upper - lower, 1.0)
+    return (np.asarray(x, dtype=float) - lower) / span
 
 
 def check_lengthscale_prior(prior) -> tuple[float, float]:
@@ -54,6 +194,22 @@ def check_lengthscale_prior(prior) -> tuple[float, float]:
     if len(values) != 2 or not all(np.isfinite(v) and v > 0.0 for v in values):
         raise ValueError(f"lengthscale_prior must be a pair (alpha > 0, beta > 0), got {prior!r}")
     return values
+
+
+def lengthscale_priors_per_level(lengthscale_prior, num_levels: int) -> list[tuple[float, float]]:
+    """
+    [MAP] One validated (alpha, beta) pair per level from None, a single pair or a list of
+    num_levels pairs.
+    """
+    if lengthscale_prior is None:
+        return [check_lengthscale_prior(None)] * num_levels
+    array = np.asarray(lengthscale_prior, dtype=float)
+    if array.shape == (2,):
+        return [check_lengthscale_prior(array)] * num_levels
+    if array.shape == (num_levels, 2):
+        return [check_lengthscale_prior(pair) for pair in array]
+    raise ValueError(f"lengthscale_prior must be None, one (alpha, beta) pair or "
+                     f"{num_levels} pairs, got {lengthscale_prior!r}")
 
 
 def safe_cholesky(matrix: np.ndarray) -> tuple[np.ndarray, float]:
@@ -84,7 +240,8 @@ class GaussianProcess:
       the fitting and prediction of the GP model.
     """
     def __init__(self, kernel: Kernel, seed: int = None, use_map: bool = False,
-                 lengthscale_prior: tuple[float, float] = None):
+                 lengthscale_prior: tuple[float, float] = None, priors: dict = None,
+                 rho_centering: bool = False):
         self.x_train = None
         self.y_train = None
         self.kernel = kernel
@@ -100,11 +257,25 @@ class GaussianProcess:
         self.rho = None
         # [FIX-R1] local seeded random generator for the restarts (was the global np.random)
         self.rng = np.random.default_rng(seed)
-        # [MAP] True: MAP estimation of the hyperparameters (InvGamma prior on the lengthscales,
-        # see LENGTHSCALE_PRIOR) instead of the maximum likelihood
+        # [MAP] True: MAP estimation of the hyperparameters (priors self.priors) instead of the
+        # maximum likelihood
         self.use_map = bool(use_map)
         # [MAP] (alpha, beta) of the InvGamma prior of this GP (None -> LENGTHSCALE_PRIOR)
         self.lengthscale_prior = check_lengthscale_prior(lengthscale_prior)
+        # [PRIORS] prior of each hyperparameter group: DEFAULT_PRIORS, InvGamma(lengthscale_prior)
+        # on the lengthscales, then the entries of `priors` (None in `priors` = no prior; a
+        # "lengthscale" entry of `priors` wins over lengthscale_prior)
+        overrides = check_priors(priors)
+        self.priors = {**DEFAULT_PRIORS, "lengthscale": ("invgamma",) + self.lengthscale_prior,
+                       **overrides}
+        # [RHO] True: the level below is centred too, so that the constant of the residual
+        # y - rho f follows rho (False: constant fixed for rho = rho_init, which pulls the
+        # profiled rho towards rho_init when the level below has a mean far from 0; mfego v1)
+        self.rho_centering = bool(rho_centering)
+        # [RHO] the default prior on rho goes with the centred rho (benchmarked together):
+        # without centring, no prior on rho unless `priors` sets one (mfego v1 behaviour)
+        if not self.rho_centering and "rho" not in overrides:
+            self.priors["rho"] = None
 
     def fit(self, x_train, y_train, n_restarts=3, f_prev: np.ndarray = None,
             rho_init: float = 1.0, estimate_rho: bool = False,
@@ -117,6 +288,11 @@ class GaussianProcess:
         [FIX-T1] If estimate_rho is True, rho is profiled out of the likelihood with its
         closed form (Le Gratiet thesis Eq. 4.10, non-nested case B.1.2):
             rho_hat = (F^T K^-1 y) / (F^T K^-1 F),
+        [RHO] or, with use_map and a ("normal", mean, std) prior on rho,
+            rho_hat = (F^T K^-1 y + mean / std^2) / (F^T K^-1 F + 1 / std^2),
+        [V3] or, with use_map and a ("lognormal", mu, s) prior on rho, rho > 0 is learned with
+        the kernel hyperparameters (log rho is the last parameter of L-BFGS-B, bounds
+        [max(rho_bounds[0], RHO_LEARNED_MIN), rho_bounds[1]]),
         otherwise rho is fixed to rho_init.
 
         Returns:
@@ -127,11 +303,18 @@ class GaussianProcess:
         n, d = self.x_train.shape
         if f_prev is not None:
             f_prev = np.asarray(f_prev, dtype=float).reshape(-1)
+        learn_rho = self._learns_rho(f_prev, estimate_rho)
 
         # Define bounds for the hyperparameters
         # [FIX-N2] log-space bounds (see the module constants)
         param_bounds = [LENGTHSCALE_BOUNDS] * d \
                        + [SIGNAL_VARIANCE_BOUNDS, BIAS_VARIANCE_BOUNDS, NOISE_BOUNDS]
+        if learn_rho:
+            # [V3] learned rho: one more (log) parameter, positive
+            if rho_bounds[1] <= RHO_LEARNED_MIN:
+                raise ValueError(f"A learned rho (lognormal prior) is positive: its upper bound "
+                                 f"must exceed {RHO_LEARNED_MIN}, got rho_bounds={rho_bounds}")
+            param_bounds.append((max(rho_bounds[0], RHO_LEARNED_MIN), rho_bounds[1]))
         log_bounds = [(np.log(lo), np.log(hi)) for lo, hi in param_bounds]
 
         # [FIX-N7] normalization at rho_init, then (if rho is estimated and rho_hat is far from
@@ -145,7 +328,7 @@ class GaussianProcess:
             best_nll = np.inf
             best_params = None
 
-            for init_guess in self._initial_guesses(d, restarts, log_bounds):
+            for init_guess in self._initial_guesses(d, restarts, log_bounds, learn_rho):
 
                 res = minimize(self.negative_log_likelihood, init_guess,
                                args=rho_args + (self._kernel_has_gradients(), self.use_map),
@@ -163,13 +346,16 @@ class GaussianProcess:
                     f"bounds={param_bounds}). Check for duplicated points or constant outputs.")
 
             params = np.exp(best_params)
-            self.kernel.set_params(params[:-1])
-            self.noise = params[-1]
+            self.kernel.set_params(params[:d + 2])
+            self.noise = params[d + 2]
 
-            covariance_matrix = self.kernel.get_covariance_matrix(self.x_train) \
-                                       + self.noise * np.eye(n)
-            l_chol, _ = safe_cholesky(covariance_matrix)
-            self.rho = self._profile_rho(l_chol, *rho_args)
+            if learn_rho:
+                self.rho = float(params[d + 3])
+            else:
+                covariance_matrix = self.kernel.get_covariance_matrix(self.x_train) \
+                                           + self.noise * np.eye(n)
+                l_chol, _ = safe_cholesky(covariance_matrix)
+                self.rho = self._profile_rho(l_chol, *rho_args, self._rho_prior(self.use_map))
             if f_prev is None or not estimate_rho \
                or abs(self.rho - rho_ref) <= 1e-3 * max(1.0, abs(rho_ref)):
                 break
@@ -177,6 +363,9 @@ class GaussianProcess:
 
         # [FIX-N4] training target in raw units, then factorization shared with the reloading
         target_raw = y_obs if f_prev is None else y_obs - self.rho * f_prev
+        if f_prev is not None and self.rho_centering:
+            # [RHO] constant of the residual for the final rho
+            self.y_mean = float(np.mean(target_raw))
         self.condition(self.x_train, target_raw)
         return self.rho
 
@@ -187,17 +376,19 @@ class GaussianProcess:
                                 with_grad: bool = False, use_map: bool = False):
         """
         Negative log-likelihood (Eqs. 15-16 of the reference article) of the normalized
-        residual y_n - rho * f_n, as a function of the LOG of [l_1..l_d, t1, t2, noise].
+        residual y_n - rho * f_n, as a function of the LOG of [l_1..l_d, t1, t2, noise]
+        ([V3] and rho as a last parameter when it is learned, see fit()).
         [FIX-N2] log-space parameters, [FIX-N3] returns (nll, gradient) if with_grad.
-        [MAP] if use_map, adds -log p(l_m) of the InvGamma(alpha, beta) prior on each lengthscale
-        (self.lengthscale_prior, constant terms dropped): negative log-posterior, MAP in l-space.
+        [MAP] [PRIORS] if use_map, adds -log p of the prior of every hyperparameter group
+        (self.priors, constant terms dropped): negative log-posterior, MAP in parameter space.
         (Was a closure inside fit(); it is a method now so that it can be unit-tested.)
         Side effect: sets the kernel parameters and the noise.
         """
-        n = len(y_n)
+        n, d = len(y_n), self.x_train.shape[1]
         params = np.exp(log_params)
-        self.kernel.set_params(params[:-1])
-        self.noise = params[-1]
+        self.kernel.set_params(params[:d + 2])
+        self.noise = params[d + 2]
+        learned_rho = len(log_params) == d + 4
 
         try:
             # Compute the covariance matrix K and its Cholesky decomposition
@@ -208,8 +399,13 @@ class GaussianProcess:
         except np.linalg.LinAlgError:
             return (NLL_FAILURE, np.zeros_like(log_params)) if with_grad else NLL_FAILURE
 
-        # [FIX-T1] profiled (or fixed) rho, then residual target of Eq. 18
-        rho = self._profile_rho(l_chol, y_n, f_n, rho_init, estimate_rho, rho_bounds)
+        # [FIX-T1] profiled (or fixed) rho, [V3] or learned rho, then residual target of Eq. 18
+        if learned_rho:
+            rho, rho_prior = float(params[d + 3]), None
+        else:
+            rho_prior = self._rho_prior(use_map)
+            rho = self._profile_rho(l_chol, y_n, f_n, rho_init, estimate_rho, rho_bounds,
+                                    rho_prior)
         target = y_n if f_n is None else y_n - rho * f_n
 
         # [FIX-N4] cho_solve exploits the triangular factor (was a generic solve)
@@ -220,39 +416,67 @@ class GaussianProcess:
         # Eqs. (15), (16) from the reference article
         nll = data_fit + 0.5 * log_det + 0.5 * n * np.log(2 * np.pi)
 
-        # [MAP] -log p(l) = (alpha + 1) log(l) + beta / l + const, for the d lengthscales only
-        # (params[d:] are t1, t2 and the noise, without prior)
-        d = self.x_train.shape[1]
-        prior_alpha, prior_beta = self.lengthscale_prior
+        # [MAP] [PRIORS] -log p of the priors of l_1..l_d, t1, t2, the noise ([V3] and rho)
         if use_map:
-            nll += np.sum((prior_alpha + 1.0) * log_params[:d] + prior_beta / params[:d])
+            prior_value, prior_grad = self.neg_log_priors(log_params)
+            nll += prior_value
+        # [RHO] -log p(rho) of the normal prior, when rho is estimated
+        if rho_prior is not None and f_n is not None and estimate_rho:
+            nll += (rho - rho_prior[0]) ** 2 / (2.0 * rho_prior[1] ** 2)
         if not with_grad:
             #must be float for scipy
             return float(nll)
 
         # [FIX-N3] analytical gradient (GPML Eq. 5.9): 0.5 * tr((K^-1 - a a^T) dK/dlog(t)).
-        # By the envelope theorem, d(rho_hat)/dtheta is not needed (dNLL/drho = 0 at rho_hat);
-        # this still holds with the prior, which does not depend on rho.
+        # By the envelope theorem, d(rho_hat)/dtheta is not needed (d(NLL + prior)/drho = 0 at
+        # rho_hat, which minimizes NLL + the prior on rho for the current theta).
         w_mat = cho_solve((l_chol, True), np.eye(n)) - np.outer(alpha, alpha)
         grad = [0.5 * np.sum(w_mat * d_k)
                 for d_k in self.kernel.get_log_params_gradients(self.x_train)]
         grad.append(0.5 * self.noise * np.trace(w_mat))
+        if learned_rho:
+            # [V3] d(0.5 t^T K^-1 t) / dlog(rho) with t = y_n - rho f_n
+            grad.append(-rho * float(np.dot(f_n, alpha)))
         grad = np.array(grad)
         if use_map:
-            # [MAP] d(-log p(l)) / dlog(l) = (alpha + 1) - beta / l
-            grad[:d] += (prior_alpha + 1.0) - prior_beta / params[:d]
+            grad += prior_grad
         return float(nll), grad
+
+    def neg_log_priors(self, log_params: np.ndarray) -> tuple[float, np.ndarray]:
+        """
+        [PRIORS] Sum of -log p over the hyperparameter groups that have a prior (self.priors),
+        and its gradient w.r.t. the log-parameters [log l_1..log l_d, log t1, log t2, log noise]
+        ([V3] and log rho when rho is learned: lognormal prior of the "rho" group).
+        """
+        d = self.x_train.shape[1]
+        value, grad = 0.0, np.zeros(len(log_params))
+        groups = [("lengthscale", slice(0, d)), ("signal_variance", slice(d, d + 1)),
+                  ("bias_variance", slice(d + 1, d + 2)), ("noise", slice(d + 2, d + 3))]
+        if len(log_params) == d + 4:
+            groups.append(("rho", slice(d + 3, d + 4)))
+        for group, index in groups:
+            if self.priors[group] is not None:
+                group_value, group_grad = neg_log_prior(self.priors[group], log_params[index])
+                value += group_value
+                grad[index] += group_grad
+        return value, grad
 
     def _normalize(self, y_obs: np.ndarray, f_prev: np.ndarray,
                    rho_ref: float) -> tuple[np.ndarray, np.ndarray]:
         """
-        [FIX-N7] Sets y_mean / y_std from the residual y - rho_ref * f_prev and returns the
+        [FIX-N7] Sets y_std (and y_mean) from the residual y - rho_ref * f_prev and returns the
         normalized observations and previous-level predictions.
+        [RHO] With rho_centering, y and f_prev are both centred: the normalized residual
+        y_n - rho f_n = (y - mean(y) - rho (f - mean(f))) / y_std has a zero mean for ANY rho,
+        and y_mean is set at the end of fit(), for the final rho.
         """
         residual = y_obs if f_prev is None else y_obs - rho_ref * f_prev
-        self.y_mean = float(np.mean(residual))
-        std = float(np.std(residual))
-        self.y_std = std if std > 1e-12 * max(1.0, abs(self.y_mean)) else 1.0
+        mean, std = float(np.mean(residual)), float(np.std(residual))
+        self.y_std = std if std > 1e-12 * max(1.0, abs(mean)) else 1.0
+        if f_prev is not None and self.rho_centering:
+            return ((y_obs - np.mean(y_obs)) / self.y_std,
+                    (f_prev - np.mean(f_prev)) / self.y_std)
+        self.y_mean = mean
         y_n = (y_obs - self.y_mean) / self.y_std
         f_n = None if f_prev is None else f_prev / self.y_std
         return y_n, f_n
@@ -315,30 +539,50 @@ class GaussianProcess:
         return type(self.kernel).get_log_params_gradients is not \
                Kernel.get_log_params_gradients
 
-    def _initial_guesses(self, d: int, n_restarts: int,
-                         log_bounds: list[tuple[float, float]]) -> list[np.ndarray]:
+    def _initial_guesses(self, d: int, n_restarts: int, log_bounds: list[tuple[float, float]],
+                         learn_rho: bool = False) -> list[np.ndarray]:
         """
         Initial guesses (log-space) for the L-BFGS-B restarts.
         [FIX-N8] the first restart is warm-started from the previous hyperparameters (if any),
         the others keep the previous random initialization.
+        [V3] learned rho: the previous rho (if positive) for the first restart, 1 for the others.
         """
         lows = np.array([b[0] for b in log_bounds])
         highs = np.array([b[1] for b in log_bounds])
+        rho_guess = [self.rho if self.rho is not None and self.rho > 0 else 1.0] if learn_rho \
+            else []
         guesses = []
         if self.kernel.lengthscale is not None and len(self.kernel.lengthscale) == d:
-            previous = np.concatenate([self.kernel.get_params(), [self.noise]])
+            previous = np.concatenate([self.kernel.get_params(), [self.noise], rho_guess])
             guesses.append(np.clip(np.log(previous), lows, highs))
         while len(guesses) < max(n_restarts, 1):
-            init_guess = np.concatenate((self.rng.uniform(0.2, 1.5, d), [1.0, 1e-4, 1e-6]))
+            init_guess = np.concatenate((self.rng.uniform(0.2, 1.5, d), [1.0, 1e-4, 1e-6],
+                                         [1.0] if learn_rho else []))
             guesses.append(np.clip(np.log(init_guess), lows, highs))
         return guesses
 
+    def _learns_rho(self, f_prev: np.ndarray, estimate_rho: bool) -> bool:
+        """[V3] True if rho is learned with the other hyperparameters (estimated rho, MAP with a
+        lognormal prior on rho, which has no closed form); False: profiled or fixed rho."""
+        prior = self.priors.get("rho")
+        return (f_prev is not None and estimate_rho and self.use_map and prior is not None
+                and prior[0] == "lognormal")
+
+    def _rho_prior(self, use_map: bool):
+        """[RHO] (mean, std) of the normal prior on rho if it is active (use_map), else None."""
+        prior = self.priors.get("rho")
+        return None if not use_map or prior is None or prior[0] != "normal" \
+            else (prior[1], prior[2])
+
     @staticmethod
     def _profile_rho(l_chol: np.ndarray, y_n: np.ndarray, f_n: np.ndarray, rho_init: float,
-                     estimate_rho: bool, rho_bounds: tuple[float, float]) -> float:
+                     estimate_rho: bool, rho_bounds: tuple[float, float],
+                     rho_prior: tuple[float, float] = None) -> float:
         """
         [FIX-T1] Closed-form (GLS) estimate of rho for fixed kernel hyperparameters
         (Le Gratiet thesis Eq. 4.10 with H = F): rho = F^T K^-1 y / F^T K^-1 F, clipped.
+        [RHO] With a normal prior (mean, std) on rho (MAP):
+            rho = (F^T K^-1 y + mean / std^2) / (F^T K^-1 F + 1 / std^2).
         Returns None for the first level and rho_init if rho is not estimated.
         """
         if f_n is None:
@@ -346,10 +590,13 @@ class GaussianProcess:
         if not estimate_rho:
             return float(rho_init)
         k_inv_f = cho_solve((l_chol, True), f_n)
-        denominator = float(np.dot(f_n, k_inv_f))
+        numerator, denominator = float(np.dot(k_inv_f, y_n)), float(np.dot(f_n, k_inv_f))
+        if rho_prior is not None:
+            numerator += rho_prior[0] / rho_prior[1] ** 2
+            denominator += 1.0 / rho_prior[1] ** 2
         if denominator <= 1e-14:
             return float(rho_init)
-        return float(np.clip(np.dot(k_inv_f, y_n) / denominator, *rho_bounds))
+        return float(np.clip(numerator / denominator, *rho_bounds))
 
     def to_dict(self) -> dict:
         """[FIX-X1] Hyperparameters and normalization constants of the GP (JSON friendly)."""
@@ -371,14 +618,14 @@ class GaussianProcess:
         - dict with the estimator, the lengthscales, t1, t2, the noise (normalized and raw),
           rho, n and the lists of lengthscale indices at the lower / upper bound.
         """
+        estimator = f"MAP ({describe_priors(self.priors)})" if self.use_map else "MLE"
         if self.kernel.lengthscale is None:
-            return {"estimator": "MAP" if self.use_map else "MLE", "fitted": False}
+            return {"estimator": estimator, "fitted": False}
         lengthscales = np.asarray(self.kernel.lengthscale, dtype=float)
         lo, hi = LENGTHSCALE_BOUNDS
         return {
             "fitted": True,
-            "estimator": (f"MAP InvGamma{tuple(self.lengthscale_prior)}" if self.use_map
-                          else "MLE"),
+            "estimator": estimator,
             "n_train": 0 if self.x_train is None else int(len(self.x_train)),
             "lengthscales": lengthscales.tolist(),
             "signal_variance": float(self.kernel.signal_variance),
@@ -395,7 +642,8 @@ class GaussianProcess:
         }
 
 # [FIX-X1] registry used to rebuild a model from a JSON file
-KERNELS = {"SquaredExponentialKernel": SquaredExponentialKernel}
+KERNELS = {"SquaredExponentialKernel": SquaredExponentialKernel,
+           "Matern52Kernel": Matern52Kernel}
 
 
 class MultifidelityModel:
@@ -405,20 +653,32 @@ class MultifidelityModel:
     def __init__(self, l, kernel_class: Kernel, estimate_rho: bool = True,
                  rho_init: float = 1.0, rho_bounds: tuple[float, float] = (-5.0, 5.0),
                  min_points_rho: int = None, n_restarts: int = 3, seed: int = None,
-                 use_map: bool = False, lengthscale_prior=None):
+                 use_map: bool = False, lengthscale_prior=None, priors: dict = None,
+                 rho_centering: bool = False):
         self.num_levels = l
         self.kernel_class = kernel_class
-        # [MAP] MAP estimation (lengthscale prior) of the hyperparameters of every level
+        # [MAP] MAP estimation (priors on the hyperparameters) of every level
         self.use_map = bool(use_map)
         # [MAP] InvGamma(alpha, beta) prior of each level: None (LENGTHSCALE_PRIOR), one
         # (alpha, beta) pair for every level, or a list of l pairs (one per level)
-        self.lengthscale_priors = self._priors_per_level(lengthscale_prior, l)
+        self.lengthscale_priors = lengthscale_priors_per_level(lengthscale_prior, l)
+        # [PRIORS] overrides of DEFAULT_PRIORS shared by every level (None: default priors;
+        # LENGTHSCALE_ONLY_PRIORS: prior on the lengthscales only, as before)
+        self.priors = check_priors(priors)
+        # [RHO] centred level below in the profiled rho, with the N(1, 2^2) prior if use_map
+        # (see GaussianProcess). Default False (mfego v1): the v2 rho improves the surrogate on
+        # nested designs (CoKriging) but not NN-MF-EGO (benchmarks/surrogate_v2/RAPPORT_V2.md)
+        self.rho_centering = bool(rho_centering)
         # List to hold GaussianProcess instances for each fidelity level
         # [FIX-R1] each GP gets its own seed (reproducible restarts)
         self.gps = [GaussianProcess(kernel_class(), seed=None if seed is None else seed + i,
                                     use_map=use_map,
-                                    lengthscale_prior=self.lengthscale_priors[i])
+                                    lengthscale_prior=self.lengthscale_priors[i],
+                                    priors=self.priors, rho_centering=rho_centering)
                     for i in range(l)]
+        # [NORM] bounds of the design space, set by fit(): the GPs work in [0, 1]^d (the domain
+        # of the priors and of the search bounds); None = inputs used as they are
+        self.input_bounds = None
         # Initialize correlation coefficients between levels
         # (level 1 has no rho since Y(0) = 0, Sacher Eq. 9: rhos[l-2] links level l-1 to l)
         self.rhos = [rho_init for _ in range(l - 1)]
@@ -435,49 +695,30 @@ class MultifidelityModel:
         # [FIX-X1] data actually used by the last fit (exact export / reloading)
         self.train_data = {}
 
-    @staticmethod
-    def _priors_per_level(lengthscale_prior, num_levels: int) -> list[tuple[float, float]]:
-        """
-        [MAP] One validated (alpha, beta) pair per level from None, a single pair or a list of
-        num_levels pairs.
-        """
-        if lengthscale_prior is None:
-            return [check_lengthscale_prior(None)] * num_levels
-        array = np.asarray(lengthscale_prior, dtype=float)
-        if array.shape == (2,):
-            return [check_lengthscale_prior(array)] * num_levels
-        if array.shape == (num_levels, 2):
-            return [check_lengthscale_prior(pair) for pair in array]
-        raise ValueError(f"lengthscale_prior must be None, one (alpha, beta) pair or "
-                         f"{num_levels} pairs, got {lengthscale_prior!r}")
-
     def estimator_label(self) -> str:
         """[MAP] Readable description of the hyperparameter estimation (for the logs)."""
         if not self.use_map:
             return "MLE"
-        priors = sorted(set(self.lengthscale_priors))
-        if len(priors) == 1:
-            return f"MAP, InvGamma{priors[0]} lengthscale prior"
-        return "MAP, InvGamma lengthscale priors per level " + str(self.lengthscale_priors)
+        labels = sorted({describe_priors(gp.priors) for gp in self.gps})
+        if len(labels) == 1:
+            return f"MAP, priors: {labels[0]}"
+        return "MAP, priors per level: " + " | ".join(describe_priors(gp.priors)
+                                                     for gp in self.gps)
 
     def fit(self, experiment_data: ExperimentData) -> None:
         """
         Fit one Gaussian process to each fidelity level in the data.
         """
         logger.debug("Fitting the multifidelity model (%s).", self.estimator_label())
-        if self.use_map:
-            x_all = np.vstack([experiment_data.get_training_data(l)[0]
-                               for l in range(1, self.num_levels + 1)])
-            if x_all.size and (x_all.min() < -1e-9 or x_all.max() > 1.0 + 1e-9):
-                logger.warning("MAP lengthscale prior defined for inputs in [0, 1], but the "
-                               "inputs span [%.3g, %.3g]: normalize them.", x_all.min(),
-                               x_all.max())
+        # [NORM] the GPs see the inputs scaled to [0, 1] with the bounds of the design space
+        self.input_bounds = np.asarray(experiment_data.bounds, dtype=float)
         for l in range(1, self.num_levels + 1):
             # [FIX-R4] failed evaluations (NaN) are excluded from the training data
             x_l, y_l = experiment_data.get_training_data(l)
             if len(y_l) == 0:
                 raise ValueError(f"No valid observation available at fidelity level {l}.")
             self.train_data[l] = (x_l, y_l)
+            x_l = scale_to_unit(x_l, self.input_bounds)
 
             if l == 1:
                 self.gps[0].fit(x_l, y_l, n_restarts = self.n_restarts)
@@ -519,13 +760,14 @@ class MultifidelityModel:
         """
         Predict the mean and variance of the multifidelity model up to a specified fidelity level.
         """
-        f_hat, sigma_2_hat, _ = self._predict_batch_up_to(np.atleast_2d(x_new), level)
+        f_hat, sigma_2_hat, _ = self.predict_batch(x_new, level)
         return float(f_hat[0]), float(sigma_2_hat[0])
 
     def _predict_batch_up_to(self, x_new: np.ndarray, level: int
                              ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
         """
         [FIX-N6] Vectorized recursive prediction (Eqs. 11-12) up to a given level.
+        [NORM] x_new is in the (scaled) input space of the GPs: use predict_batch for raw inputs.
 
         Returns:
         - f_hat: (m,) means, sigma_2_hat: (m,) variances, gp_variances: (m, level) variances
@@ -553,8 +795,7 @@ class MultifidelityModel:
         """
         Return the final prediction AND individual variances for the merit function
         """
-        f_hat, sigma_2_hat, gp_variances = self._predict_batch_up_to(
-            np.atleast_2d(x_new), self.num_levels)
+        f_hat, sigma_2_hat, gp_variances = self.predict_batch(x_new)
         return float(f_hat[0]), float(sigma_2_hat[0]), gp_variances[0].tolist()
 
     def predict_batch(self, x_new: np.ndarray, level: int = None
@@ -570,7 +811,8 @@ class MultifidelityModel:
         - mean (m,), variance (m,) and variances of each discrepancy GP (m, level).
         """
         level = self.num_levels if level is None else level
-        return self._predict_batch_up_to(np.atleast_2d(x_new), level)
+        return self._predict_batch_up_to(scale_to_unit(np.atleast_2d(x_new), self.input_bounds),
+                                         level)
 
     def to_dict(self) -> dict:
         """
@@ -594,6 +836,12 @@ class MultifidelityModel:
             "min_points_rho": self.min_points_rho,
             "use_map": self.use_map,
             "lengthscale_prior": [list(p) for p in self.lengthscale_priors],
+            # [PRIORS] priors actually used (self-describing file: a later change of
+            # DEFAULT_PRIORS does not change a reloaded model; the lengthscale prior of each level
+            # is in "lengthscale_prior" unless "priors" sets it)
+            "priors": saved_priors(self.gps[0].priors, self.priors),
+            "rho_centering": self.rho_centering,
+            "input_bounds": None if self.input_bounds is None else self.input_bounds.tolist(),
             "fit_sizes":[len(self.train_data[l][1]) for l in range(1, self.num_levels + 1)],
             "levels": levels,
         }
@@ -605,6 +853,13 @@ class MultifidelityModel:
         The residual targets of the levels l >= 2 are recomputed with Eq. 18.
         """
         kernel_class = kernel_class or KERNELS[state.get("kernel", "SquaredExponentialKernel")]
+        # [PRIORS] files written before the priors on t1, t2 and the noise: lengthscale prior
+        # only; [RHO] files written before rho_centering (mfego v1 and older): no prior on rho,
+        # constant of the residual at rho_init (same model if it is fitted again)
+        legacy = "rho_centering" not in state
+        priors = dict(state.get("priors", LENGTHSCALE_ONLY_PRIORS))
+        if legacy:
+            priors["rho"] = None
         model = cls(state["num_levels"], kernel_class,
                     estimate_rho=state.get("estimate_rho", False),
                     rho_init=state.get("rho_init", 1.0),
@@ -612,8 +867,12 @@ class MultifidelityModel:
                     min_points_rho=state.get("min_points_rho"),
                     use_map=state.get("use_map", False),
                     # [MAP] files written before the configurable prior: module default
-                    lengthscale_prior=state.get("lengthscale_prior"))
+                    lengthscale_prior=state.get("lengthscale_prior"),
+                    priors=priors, rho_centering=state.get("rho_centering", False))
         model.rhos = [float(r) for r in state.get("rhos", [1.0] * (model.num_levels - 1))]
+        # [NORM] files written before the input normalization: inputs used as they are
+        bounds = state.get("input_bounds")
+        model.input_bounds = None if bounds is None else np.asarray(bounds, dtype=float)
 
         for l in range(1, model.num_levels + 1):
             level_state = state["levels"][l - 1]
@@ -625,6 +884,7 @@ class MultifidelityModel:
             x_l = np.atleast_2d(np.array(level_state["x_train"], dtype=float))
             y_l = np.array(level_state["y_train"], dtype=float).reshape(-1)
             model.train_data[l] = (x_l, y_l)
+            x_l = scale_to_unit(x_l, model.input_bounds)
 
             if l == 1:
                 target_y = y_l

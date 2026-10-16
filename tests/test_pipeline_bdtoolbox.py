@@ -173,3 +173,32 @@ def test_real_solvers_on_a_naca_section():
     values = [simulator.evaluate(np.array([0.5, 0.5, 0.5]), level)[0] for level in (1, 2, 3)]
     assert all(0.005 < v < 0.03 for v in values)
     assert abs(values[1] - values[2]) / values[2] < 0.1  # NeuralFoil xxxlarge close to XFOIL
+
+
+def test_npllt_xfoil_polars_share_the_avl_spec_and_cache(tmp_path):
+    """NPLLT x XFOIL: same PolarSpec (flow n_crit / xtr / alpha) and polar cache as AVL x XFOIL,
+    polar table on the alpha grid of the flow, bdFoil XFOIL method replaced (no XFOIL run)."""
+    paths = bridge.resolve_paths()
+    if not (paths.bdfoil_root / "NonPlanarSolver" / "np_llt_solver.py").is_file():
+        pytest.skip("bdFoil clone not found")
+    pytest.importorskip("numba")
+    pytest.importorskip("neuralfoil")
+    bridge.setup(paths)
+    from pipelines.bdtoolbox_foil import solvers  # pylint: disable=import-outside-toplevel
+    flow = {"re": 5e6, "n_crit": 2.5, "xtr": [0.3, 0.2], "alpha": [-6.0, 12.0, 0.25]}
+    npllt = solvers.NpLltBackend(paths, flow, polar_source="xfoil", npane=240, niter=300,
+                                 cache_dir=str(tmp_path))
+    avl = solvers.AvlCoreBackend(paths, flow, npane=240, niter=300, cache_dir=str(tmp_path))
+    assert npllt.spec == avl.spec
+    assert npllt.xfoil_settings["cache_dir"] == avl.cache_dir == tmp_path
+    assert (npllt.spec.ncrit, npllt.spec.xtr, npllt.spec.alpha) == (2.5, (0.3, 0.2),
+                                                                    (-6.0, 12.0, 0.25))
+    assert npllt.options["alpha_range_deg"] == (-6.0, 12.0)
+    assert npllt.options["alpha_step_deg"] == 0.25
+    assert npllt.options["polar_source"] == "xfoil"
+    assert issubclass(npllt.solver_class, npllt.module.NonPlanarLiftingLine)
+    assert solvers._NPLLT_XFOIL_POLAR in vars(npllt.solver_class)  # pylint: disable=protected-access
+    with pytest.raises(ValueError, match="XFOIL options"):
+        solvers.NpLltBackend(paths, flow, npane=240)
+    with pytest.raises(ValueError, match="alpha grid"):
+        solvers.NpLltBackend(paths, flow, polar_source="xfoil", alpha_step_deg=1.0)

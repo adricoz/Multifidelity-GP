@@ -1,0 +1,52 @@
+test sets and designs ready in 0 s
+1800 fits in 53 s
+=== Decision table (mean over the design x size cells, reference v1 SE) ===
+                                    dNLPD                        RMSE ratio                        mean dNLPD
+problem                           airfoil airfoil_xfoil hartmann    airfoil airfoil_xfoil hartmann           
+variant                                                                                                      
+centred rho, no prior (Matern)     -0.269        -0.196   -0.722      0.832         0.944    0.922     -0.396
+centred rho, N(1, 2.0^2) (Matern)  -0.269        -0.197   -0.497      0.832         0.944    0.944     -0.321
+centred rho, N(1, 1.0^2) (Matern)  -0.269        -0.200   -0.374      0.832         0.944    0.964     -0.281
+v1 (Matern)                        -0.207        -0.306   -0.249      0.895         0.914    0.999     -0.254
+centred rho, N(1, 0.5^2) (Matern)  -0.269        -0.210   -0.263      0.830         0.941    0.983     -0.247
+centred rho, no prior (SE)         -0.056         0.163   -0.571      0.920         1.053    0.942     -0.155
+centred rho, N(1, 2.0^2) (SE)      -0.056         0.163   -0.314      0.920         1.053    0.957     -0.069
+centred rho, N(1, 1.0^2) (SE)      -0.057         0.160   -0.198      0.919         1.052    0.968     -0.031
+v1 (SE)                             0.000         0.000    0.000      1.000         1.000    1.000      0.000
+centred rho, N(1, 0.5^2) (SE)      -0.057         0.152   -0.048      0.917         1.051    0.989      0.016
+
+CHOSEN VARIANT: centred rho, no prior (Matern)
+
+=== Medians over all the fits per problem ===
+                                                 rmse_rel   nlpd  coverage_95  z_rms    rho  fit_time_s
+problem       variant                                                                                  
+airfoil       centred rho, N(1, 0.5^2) (Matern)     0.281  3.182        0.927  1.120  0.842       0.138
+              centred rho, N(1, 0.5^2) (SE)         0.323  3.398        0.862  1.443  0.831       0.155
+              centred rho, N(1, 1.0^2) (Matern)     0.281  3.183        0.927  1.118  0.839       0.134
+              centred rho, N(1, 1.0^2) (SE)         0.323  3.397        0.862  1.441  0.826       0.145
+              centred rho, N(1, 2.0^2) (Matern)     0.281  3.183        0.927  1.117  0.838       0.134
+              centred rho, N(1, 2.0^2) (SE)         0.323  3.397        0.862  1.441  0.826       0.149
+              centred rho, no prior (Matern)        0.281  3.183        0.927  1.117  0.838       0.134
+              centred rho, no prior (SE)            0.323  3.397        0.862  1.441  0.826       0.151
+              v1 (Matern)                           0.304  3.221        0.942  0.956  0.987       0.127
+              v1 (SE)                               0.338  3.432        0.875  1.338  0.984       0.151
+airfoil_xfoil centred rho, N(1, 0.5^2) (Matern)     0.203  2.944        0.902  1.244  1.017       0.120
+              centred rho, N(1, 0.5^2) (SE)         0.225  3.335        0.851  1.542  1.020       0.132
+              centred rho, N(1, 1.0^2) (Matern)     0.203  2.944        0.900  1.249  1.017       0.118
+              centred rho, N(1, 1.0^2) (SE)         0.225  3.335        0.847  1.544  1.020       0.140
+              centred rho, N(1, 2.0^2) (Matern)     0.203  2.944        0.900  1.250  1.017       0.115
+              centred rho, N(1, 2.0^2) (SE)         0.224  3.335        0.845  1.548  1.020       0.138
+              centred rho, no prior (Matern)        0.203  2.944        0.900  1.250  1.017       0.118
+              centred rho, no prior (SE)            0.224  3.335        0.845  1.550  1.020       0.140
+              v1 (Matern)                           0.198  2.868        0.921  1.167  1.004       0.116
+              v1 (SE)                               0.230  3.167        0.874  1.385  1.005       0.132
+hartmann      centred rho, N(1, 0.5^2) (Matern)     0.857  0.598        0.898  1.572  1.392       0.286
+              centred rho, N(1, 0.5^2) (SE)         0.844  0.763        0.873  1.720  1.416       0.314
+              centred rho, N(1, 1.0^2) (Matern)     0.847  0.580        0.898  1.530  2.373       0.276
+              centred rho, N(1, 1.0^2) (SE)         0.841  0.735        0.877  1.698  2.185       0.310
+              centred rho, N(1, 2.0^2) (Matern)     0.820  0.491        0.907  1.412  3.619       0.273
+              centred rho, N(1, 2.0^2) (SE)         0.837  0.682        0.884  1.588  3.419       0.322
+              centred rho, no prior (Matern)        0.809  0.423        0.908  1.367  5.000       0.268
+              centred rho, no prior (SE)            0.822  0.626        0.884  1.553  5.000       0.310
+              v1 (Matern)                           0.864  0.635        0.898  1.549  0.966       0.275
+              v1 (SE)                               0.855  0.735        0.872  1.697  0.963       0.313
