@@ -1,0 +1,13 @@
+{
+ "name": "guess_bimodal",
+ "comment": "HYPOTHESE du 22/10/2026, a remplacer par la vraie distribution d'usage : un mode pres (TWA 45 +- 4 deg) et un mode portant (TWA 135 +- 7 deg), meme poids, TWS 13 +- 3 nd dans les deux modes. Bornes : domaine ou la VPP MDS de l'Intens SY converge (elle echoue a 45/20, 90/20 et 150/10).",
+ "nodes_per_dim": 3,
+ "modes": [
+  {"name": "pres", "weight": 0.5,
+   "twa": {"mean": 45.0, "std": 4.0, "lower": 38.0, "upper": 52.0},
+   "tws": {"mean": 13.0, "std": 3.0, "lower": 8.0, "upper": 18.0}},
+  {"name": "portant", "weight": 0.5,
+   "twa": {"mean": 135.0, "std": 7.0, "lower": 120.0, "upper": 148.0},
+   "tws": {"mean": 13.0, "std": 3.0, "lower": 8.0, "upper": 18.0}}
+ ]
+}

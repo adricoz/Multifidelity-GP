@@ -11,7 +11,10 @@ Stages (everything goes to runs/<date>_<name>/, see src/run_dir.py):
   3. the loop (VPPSectionOptimizer) until the wall-clock limit;
   4. validation: AVL x XFOIL and NPLLT at the VPP states of the final incumbent and of the mean
      section (start point of the search);
-  5. results/*.csv|json, README.md, figures (scripts/real_run_figures.py).
+  5. results/*.csv|json (and results/surrogate.pkl, the final surrogate), figures
+     (scripts/real_run_figures.py);
+  6. with --profile: behaviour of the validated sections on each operating profile
+     (scripts/profile_analysis.py).
 
 Run (MDS environment), check the load of the machine first:
     ..\\.venv-mds\\Scripts\\python scripts\\run_real_vpp.py --name real_1h --time-limit-min 42
@@ -24,6 +27,7 @@ Third run (HF = NPLLT x XFOIL, flexible foil, parallel batches on 32 logical cor
 import argparse
 import json
 import os
+import pickle
 import sys
 from pathlib import Path
 
@@ -42,6 +46,7 @@ from src.run_dir import RunDir  # noqa: E402
 from src.section_pca import (CFoilFamily, KulfanBoxFamily, SectionPCA,  # noqa: E402
                              notebook_bounds, section_ixx)
 from src.foil_codes import LEVELS, LEVELS_XFOIL  # noqa: E402
+from src.operating_profile import OperatingProfile  # noqa: E402
 from src.vpp_coupling import FSICorrection, IntensSYVPP  # noqa: E402
 from src.vpp_optimize import (OUTPUT_NAMES, CodeRunner, RealFoilProblem,  # noqa: E402
                               VPPPool, VPPSectionOptimizer, start_design, validate)
@@ -80,6 +85,10 @@ def main():
                         help="processes for the VPP solves (0 = in the main process)")
     parser.add_argument("--compare", nargs="*", default=[],
                         help="best_section.json of earlier runs, validated at the end as well")
+    parser.add_argument("--profile", nargs="*", default=[],
+                        help="operating profiles (JSON, src/operating_profile.py): behaviour of the "
+                             "validated sections on each distribution, at the end of the run "
+                             "(scripts/profile_analysis.py; the search is unchanged)")
     args = parser.parse_args()
     if args.smoke:
         args.n_low, args.n_high, args.time_limit_min = 30, 8, 4.0
@@ -168,8 +177,10 @@ def main():
                     else None)
     run.log("validation done")
     runner.close()
-    if vpp_pool is not None:
-        vpp_pool.close()
+    # the final surrogate (means only, ~60 MB; its variances come back by conditioning it again):
+    # later analyses of the run, e.g. scripts/profile_analysis.py with another distribution
+    with open(run.path("results", "surrogate.pkl"), "wb") as file:
+        pickle.dump(surrogate.mean_only_copy(), file, protocol=pickle.HIGHEST_PROTOCOL)
 
     # 5. results
     import pandas as pd  # noqa: PLC0415
@@ -191,6 +202,16 @@ def main():
     print(summary)
     from real_run_figures import make_figures  # noqa: PLC0415
     make_figures(run.root)
+    # 6. behaviour of the validated sections on the operating profiles of the run
+    if args.profile:
+        from profile_analysis import analyse, print_summary  # noqa: PLC0415
+        for path in args.profile:
+            profile = OperatingProfile.from_json(path)
+            print_summary(analyse(run.root, profile, n_workers=max(args.vpp_workers, 16),
+                                  vpp_pool=vpp_pool, surrogate=surrogate))
+            run.log(f"operating profile {profile.name}: results/profile_{profile.name}.json")
+    if vpp_pool is not None:
+        vpp_pool.close()
     run.log("done")
 
 

@@ -1,0 +1,944 @@
+% =============================================================================================
+%  Recherche de la section du C-foil par co-krigeage séquentiel ciblé par la VPP :
+%  description exacte de l'algorithme et de l'architecture (état du code du 22/10/2026,
+%  branche feat/vpp-acceleration, 3e vrai run).
+%  Compilation : tectonic -X compile algorithme_vpp_cible.tex --outdir build
+% =============================================================================================
+\documentclass[10pt,a4paper]{article}
+\usepackage{fontspec}
+\usepackage[french]{babel}
+\usepackage{csquotes}
+\usepackage[a4paper,margin=1.8cm,top=1.6cm,bottom=1.8cm]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{xcolor}
+\usepackage{booktabs,tabularx,array,longtable}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{titlesec}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+\usepackage[hidelinks,unicode]{hyperref}
+
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,
+            urlcolor=blue!60!black,pdftitle={Recherche de la section du C-foil ciblee par la VPP}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\setlist{itemsep=0.1em,topsep=0.2em,leftmargin=1.3em}
+\titleformat{\section}{\normalfont\large\bfseries\color{blue!40!black}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{0.9em}{0.3em}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0.6em}{0.2em}
+\renewcommand{\arraystretch}{1.12}
+
+\tcbset{enhanced,breakable,boxrule=0.6pt,arc=1.2mm,left=1.5mm,right=1.5mm,top=0.6mm,bottom=0.6mm,
+        fonttitle=\bfseries\small,before skip=0.5em,after skip=0.5em}
+\newtcolorbox{danslecode}[1][]{colback=green!3,colframe=green!35!black,
+  title={Dans le code\ifx&#1&\else~— #1\fi}}
+\newtcolorbox{subtilite}[1][]{colback=orange!4,colframe=orange!70!black,
+  title={Subtilité\ifx&#1&\else~— #1\fi}}
+\newtcolorbox{aretenir}[1][]{colback=violet!4,colframe=violet!60!black,
+  title={À retenir\ifx&#1&\else~— #1\fi}}
+\newtcolorbox{nonfait}[1][]{colback=red!3,colframe=red!50!black,
+  title={Ce qui n'est pas fait\ifx&#1&\else~— #1\fi}}
+
+\floatname{algorithm}{Algorithme}
+\algrenewcommand\algorithmicrequire{\textbf{Entrées :}}
+\algrenewcommand\algorithmicensure{\textbf{Sorties :}}
+\algrenewcommand\algorithmicwhile{\textbf{tant que}}
+\algrenewcommand\algorithmicdo{\textbf{faire}}
+\algrenewcommand\algorithmicfor{\textbf{pour}}
+\algrenewcommand\algorithmicif{\textbf{si}}
+\algrenewcommand\algorithmicthen{\textbf{alors}}
+\algrenewcommand\algorithmicelse{\textbf{sinon}}
+\algrenewcommand\algorithmicend{\textbf{fin}}
+\algrenewcommand\algorithmicreturn{\textbf{retourner}}
+
+\newcommand{\vx}{\bm{x}}
+\newcommand{\vz}{\bm{z}}
+\newcommand{\vw}{\bm{w}}
+\newcommand{\va}{\bm{a}}
+\newcommand{\vu}{\bm{u}}
+\newcommand{\vd}{\bm{d}}
+\newcommand{\vc}{\bm{c}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\tp}{^{\mathsf{T}}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\ExplSyntaxOn
+\cs_new_protected:Npn \mf_breakable:n #1
+  {
+    \str_set:Nn \l_tmpa_str {#1}
+    \str_map_inline:Nn \l_tmpa_str
+      {
+        ##1
+        \str_if_in:nnT { _./,(=[ } {##1} { \allowbreak }
+      }
+  }
+\NewDocumentCommand \py { m } { \texttt { \mf_breakable:n {#1} } }
+\ExplSyntaxOff
+
+\begin{document}
+
+{\centering
+{\Large\bfseries\color{blue!40!black} Recherche de la section du C-foil par co-krigeage séquentiel
+ciblé par la VPP\par}
+\vspace{0.2em}
+{\large Description exacte de l'algorithme et de l'architecture\par}
+\vspace{0.3em}
+{\small \py{Multifidelity-GP-Clean/vpp_acceleration} · branche \py{feat/vpp-acceleration} · état du
+code du 3e vrai run (\py{runs/2026-10-22_1519_real_npllt_xfoil_fsi}) · 22/10/2026\par}
+\vspace{0.2em}}
+
+\tableofcontents
+
+% ---------------------------------------------------------------------------------------------
+\section{Ce que fait l'algorithme, en une page}
+% ---------------------------------------------------------------------------------------------
+\textbf{Le but.} On cherche la section (le profil) du C-foil de l'Intens SY qui maximise la vitesse du
+bateau donnée par la VPP de MDS, moyennée sur cinq conditions de vent. La forme en plan du foil est fixée,
+et seule la section change.
+
+\textbf{La difficulté.} La VPP appelle le modèle du foil des centaines de fois par point de polaire. Les codes
+aérodynamiques (NPLLT, AVL avec XFOIL) sont trop lents pour cela. On remplace donc le foil, dans la VPP, par
+un \textbf{surrogate} de son torseur : un co-krigeage multi-fidélité, dont les entrées sont la section et
+l'attitude du foil. Ce surrogate s'améliore pendant la recherche. On ajoute des calculs de code
+\textbf{là où la VPP travaille} (les états d'équilibre des sections candidates) et \textbf{sur ce qui compte
+pour la vitesse} (chaque coefficient est pondéré par $(\partial V/\partial C_k)^2$).
+
+\textbf{La boucle.} Elle alterne deux étapes jusqu'à une limite de temps.
+\begin{enumerate}
+  \item \textbf{La mise à jour de l'optimiseur.}
+        \begin{itemize}
+          \item On crible 256 sections nouvelles au premier ordre, avec le surrogate et les sensibilités de
+                vitesse de la meilleure section du moment (le \enquote{titulaire}).
+          \item On résout la VPP complète sur les 3 meilleures et sur le titulaire, puis le titulaire devient
+                la meilleure des quatre.
+          \item Les états d'équilibre de ces 4 sections, aux 5 conditions, donnent les points
+                d'intégration du critère de raffinement.
+        \end{itemize}
+  \item \textbf{Un lot de raffinement.} On choisit 16 couples (point, niveau de code), l'un après l'autre,
+        par la meilleure réduction de variance de la vitesse par unité de coût. Puis les codes du lot
+        tournent en parallèle, et leurs résultats entrent dans le co-krigeage.
+\end{enumerate}
+
+\textbf{Les niveaux de code} (3e run).
+\begin{itemize}
+  \item \textbf{Niveau 1 (BF) :} ligne portante non plane NPLLT avec les polaires NeuralFoil xxxlarge.
+  \item \textbf{Niveau 2 (HF) :} la même ligne portante, avec les polaires XFOIL.
+  \item \textbf{Niveau 3 :} AVL × XFOIL, la chaîne de la RS de production. Il ne sert qu'à la validation finale.
+\end{itemize}
+
+\textbf{Le foil est flexible.} Le surrogate et les codes sont rigides. La VPP ajoute une correction de
+déformée, tirée de la RS FSI de production et mise à l'échelle de la raideur de la section (§\,\ref{sec:fsi}).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[font=\footnotesize, >=Stealth,
+  box/.style={draw, rounded corners=2pt, align=center, fill=white, inner sep=3pt, minimum height=0.9cm},
+  pool/.style={draw, rounded corners=2pt, align=center, fill=orange!8, inner sep=3pt, minimum height=0.9cm},
+  disk/.style={draw, align=center, fill=gray!10, inner sep=3pt}]
+  \node[box, text width=4.3cm] (loop) {\textbf{Boucle} \py{VPPSectionOptimizer}\\ mises à jour, lots, arrêt au temps limite};
+  \node[box, text width=4.3cm, below=0.35cm of loop] (gp) {\textbf{Surrogate} \py{TorsorCoKriging}\\ 7 \py{CoKriging} (Fx … Mz, Cpmin), 7 fils};
+  \node[box, text width=4.3cm, below=0.35cm of gp] (crit) {\textbf{Critère} \py{choose} / \py{batched_imse_gains}\\ lot de 16 par \enquote{kriging believer}};
+  \begin{scope}[on background layer]
+    \node[draw, dashed, rounded corners, fill=blue!3, fit=(loop)(gp)(crit), inner sep=6pt,
+          label={[font=\footnotesize\bfseries]above:processus principal}] (main) {};
+  \end{scope}
+  \node[pool, text width=3.6cm, left=2.3cm of gp] (codes) {\textbf{\py{CodeRunner}} : 28 processus\\ \py{FoilCodes} : NPLLT × NF,\\ NPLLT × XFOIL,\\ AVL × XFOIL (bdFoil)};
+  \node[disk, text width=3.2cm, below=0.5cm of codes] (cache) {cache des polaires XFOIL\\ (disque, partagé)};
+  \node[pool, text width=3.6cm, right=2.3cm of gp] (vpp) {\textbf{\py{VPPPool}} : 30 processus\\ \py{IntensSYVPP} (MDS)\\ + \py{FSICorrection}};
+  \node[disk, text width=3.2cm, below=0.5cm of vpp] (pkl) {\py{surrogate_v<n>.pkl}\\ (moyennes seules)};
+  \draw[->] (crit.west) -- ++(-0.45,0) |- ([yshift=-2mm]codes.east) node[pos=0.72, below, font=\scriptsize] {points, niveaux};
+  \draw[->] ([yshift=2mm]codes.east) -- ([yshift=2mm]gp.west) node[midway, above] {coefficients};
+  \draw[<->] (codes) -- (cache);
+  \draw[->] (gp.east) -- (vpp.west) node[midway, above] {publication};
+  \draw[->] (vpp) -- (pkl);
+  \draw[->] (vpp.north) |- (loop.east) node[pos=0.75, above] {états, $\partial V/\partial C$};
+\end{tikzpicture}
+\caption{Les trois groupes de processus d'un run (§\,\ref{sec:architecture}). Les deux pools ne travaillent
+jamais en même temps : la boucle est synchrone.}
+\label{fig:architecture}
+\end{figure}
+
+\begin{aretenir}
+\begin{itemize}
+  \item \textbf{Ce qui est optimisé :} 10 scores PCA d'une section de Kulfan (16 poids), dans une famille de
+        sections admissibles.
+  \item \textbf{Ce que voit la VPP :} la moyenne du co-krigeage, plus la correction FSI.
+  \item \textbf{Ce qui est raffiné :} le co-krigeage, autour des états VPP des sections en compétition.
+  \item \textbf{Ce qui décide :} la vitesse moyenne sur 5 conditions, calculée par la VPP complète sur 4
+        sections à chaque mise à jour.
+  \item \textbf{Ce qui s'analyse ensuite :} le comportement des sections retenues sur une distribution
+        d'usage (TWA, TWS), donnée à chaque run (§\,\ref{sec:profil}). Elle ne change pas la recherche.
+\end{itemize}
+\end{aretenir}
+
+\subsection*{Notations}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+$\vz\in\mathbb{R}^{k}$, $k=10$ & scores PCA de la section (blanchis, de variance 1 sur la famille) \\
+$\vw = \mathcal{D}(\vz)\in\mathbb{R}^{16}$ & poids de Kulfan décodés (8 extrados, 8 intrados) \\
+$\va=(a_c,a_r,a_y)$ & attitude du foil : \py{Cant_Eff}, \py{Rake_Eff}, \py{Yaw_Eff} [°] \\
+$\vx=(\vz,\va)\in\mathbb{R}^{13}$ & entrée du surrogate \\
+$C_k(\vx)$, $k=1..7$ & sorties : $F_x,F_y,F_z,M_x,M_y,M_z$ (coefficients, moments en m) et $C_{p,\min}$ \\
+$f_l$, $l=1,2,3$ & codes : NPLLT × NeuralFoil, NPLLT × XFOIL, AVL × XFOIL \\
+$\mu_k(\vx)$, $s_k^2(\vx)$ & moyenne et variance a posteriori du co-krigeage de la sortie $k$ (niveau 2) \\
+$c=(\mathrm{TWA}_c,\mathrm{TWS}_c)$ & condition de navigation, $c=1..5$ \\
+$\vu\in\mathbb{R}^7$ & inconnues de la VPP : vitesse, dérive, gîte, assiette, déplacement de carène, safran,
+réduction de voilure (\py{Flat}) \\
+$V^\star(\vz;c)$ & vitesse d'équilibre maximale de la section $\vz$ à la condition $c$ \\
+$J(\vz)$ & objectif : $\frac15\sum_c V^\star(\vz;c)$ \\
+$d_{kc}$ & sensibilité $\partial V^\star/\partial C_k$ à l'état du titulaire, condition $c$ [nd par unité] \\
+\bottomrule
+\end{tabularx}
+
+% ---------------------------------------------------------------------------------------------
+\section{Le problème d'optimisation}
+% ---------------------------------------------------------------------------------------------
+\[
+  \max_{\vz}\; J(\vz) = \frac{1}{5}\sum_{c=1}^{5} V^\star(\vz;c)
+  \qquad\text{sous la contrainte}\qquad \mathcal{D}(\vz)\in\mathcal{F},
+\]
+où $\mathcal{F}$ est la famille des sections admissibles (§\,\ref{sec:section}).
+
+\begin{itemize}
+  \item \textbf{Les conditions.} Ce sont les couples (TWA, TWS) : (45°, 12 nd), (45°, 16 nd), (60°, 16 nd),
+        (75°, 16 nd) et (90°, 14 nd). Elles ont le même poids.
+  \item \textbf{La vitesse $V^\star(\vz;c)$} est celle de la VPP de MDS (§\,\ref{sec:vpp}), dont le foil a pour
+        coefficients $\mu_k(\vz,\va)$ plus la correction FSI.
+  \item \textbf{Le référentiel du gain :} la recherche part du profil actuel du C-foil, admissible une fois
+        projeté sur les 10 modes. Le gain est donc mesuré par rapport au foil actuel.
+\end{itemize}
+
+\begin{danslecode}
+\py{scripts/run_real_vpp.py} : \py{CONDITIONS}, puis \py{VPPSectionOptimizer.update} : la vitesse
+d'une section est \py{np.nanmean(speeds)} sur les 5 états (une condition non résolue est ignorée).
+\end{danslecode}
+
+% ---------------------------------------------------------------------------------------------
+\section{La VPP : MDS, Intens SY, variante \texorpdfstring{\py{CFoilFSI}}{CFoilFSI}}
+\label{sec:vpp}
+% ---------------------------------------------------------------------------------------------
+\subsection{Le système}
+La VPP est celle de MDS, branche \py{new_master}, avec le bateau \py{build_IntensSY(foil='CFoilFSI')}
+(C-foil de rayon 9,8 m). Elle reproduit vpp36 à $2\cdot10^{-6}$ nd près. C'est un \py{IntensSYSystem} de
+9 sous-systèmes, évalués dans cet ordre (lu sur le système construit) :
+
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Sous-système & Entrées (variables globales) & Modèle \\
+\midrule
+\py{Weight} & masse, $X/Y/Z_{CG}$, gîte, assiette, dérive & poids au CG (pas de RS) \\
+\py{Hull Dyn} & gîte, assiette, dérive, \py{CC_Dspl}, vitesse & RS de Chebyshev (efforts hydrodynamiques de coque) \\
+\py{Hull Archi} & gîte, assiette, dérive, \py{CC_Dspl} & RS (hydrostatique, et l'enfoncement \py{CC_Sink_Out}) \\
+\py{Foil Dyn} & gîte, dérive, assiette, \py{Foil_Cant/Rake/Yaw}, vitesse & \textbf{RS du C-foil, remplacée par notre surrogate} \\
+\py{Foil Archi} & idem sans la vitesse & RS (poussée d'Archimède du foil) \\
+\py{Rudder}, \py{Rudder STBD} & gîte, assiette, dérive, angle de safran, vitesse, \py{Hvol} & RS des deux safrans \\
+\py{Sail} & dérive, \py{Flat}, TWA, TWS, vitesse, gîte, assiette, quête du mât & RS des voiles (entrées AWA, \py{Flat}) \\
+\py{Windage} & gîte, assiette, dérive, TWA, TWS, vitesse & RS du fardage \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Les équations d'équilibre.} \py{TSystem.t_eval} évalue chaque sous-système. Chacun rend son torseur
+(forces et moments) transporté au repère de référence \py{CG ref}, situé en $(X_{CG},0,0)$. La somme donne
+les 6 résidus \py{Eq.Fx} … \py{Eq.Mz}. Avant cela, \py{IntensSYSystem.update_system_frame} fait deux
+opérations :
+\begin{itemize}
+  \item il ferme la hauteur d'assise \py{Hvol}, à partir de l'enfoncement statique et dynamique de la coque ;
+  \item il tourne les bras de levier (les positions des repères des composants) selon l'attitude du bateau.
+        Les forces, elles, sont déjà dans le repère monde.
+\end{itemize}
+
+\subsection{Le problème résolu à chaque condition}
+Les 7 inconnues $\vu$ et leurs bornes, pour la RS de coque \py{lin85t} :
+
+\begin{tabular}{@{}llll@{}}
+\toprule
+Inconnue & Sens & Bornes & Départ \\
+\midrule
+\py{Speed} & vitesse du bateau [nd] & $[6, 24]$ & 12 \\
+\py{Leeway} & dérive [°] & $[-6, 6]$ & 3 \\
+\py{Heel} & gîte [°] & $[0, 8]$ & 3 \\
+\py{Trim} & assiette [°] & $[-1{,}5;\ 1{,}5]$ & 0 \\
+\py{CC_Dspl} & déplacement porté par la carène [kg] & $[8500, 13500]$ & 11\,540 \\
+\py{Rudder_Angle} & angle de safran [°] & $[-12, 12]$ & 0 \\
+\py{Flat} & réduction de puissance des voiles [–] & $[0{,}3;\ 1]$ & 0,6 \\
+\bottomrule
+\end{tabular}
+
+\[
+  V^\star(\vz;c) = \max_{\vu}\; u_1 \quad\text{s.c.}\quad
+  \frac{R_i(\vu;\vz,c)}{e_i} = 0,\; i=1..6, \qquad \vu_{\min}\le\vu\le\vu_{\max},
+\]
+avec $R_i$ les résidus \py{Eq.*} et $e=(10^3,10^3,10^3,10^4,10^4,10^4)$ (N et N·m mis à la même échelle).
+\begin{itemize}
+  \item \textbf{Le solveur :} SLSQP de SciPy (\py{ftol} $10^{-9}$, 400 itérations au plus).
+  \item \textbf{Le succès :} il faut que SLSQP converge \emph{et} que $\|R/e\|<10^{-4}$.
+  \item \textbf{La relance :} en cas d'échec, une seule. Elle part de l'état initial fixe si un départ avait
+        été donné, sinon de ce départ avec 2 nd de plus et 2° de gîte en moins.
+  \item \textbf{Les commandes du foil :} \py{Foil_Cant}, \py{Foil_Rake} et \py{Foil_Yaw} restent à 0, comme dans
+        les cas de navigation vpp36. Il n'y a pas de commande de foil.
+\end{itemize}
+
+\begin{subtilite}[dépendance au chemin]
+Le solve n'est pas une fonction pure de ses entrées : MDS garde un état interne d'un solve au suivant, par
+exemple la fermeture de l'enfoncement. Le 21/10, la même section et le même départ ont donné 14,83 nd
+une fois et 17,58 nd après d'autres solves. D'où trois règles :
+\begin{itemize}
+  \item à chaque mise à jour, les sections sont résolues en partant des états du titulaire
+        (départ « chaud ») ;
+  \item des départs supplémentaires sont possibles (\py{extra_guesses}), et l'on garde la vitesse convergée
+        la plus haute ;
+  \item une différence finie compare deux solves \textbf{du même processus} (§\,\ref{sec:sensibilites}).
+\end{itemize}
+\end{subtilite}
+
+\begin{subtilite}[pas d'extrapolation en attitude]
+Les commandes du foil sont nulles, donc $\va$ = (gîte, assiette, dérive). Les bornes de ces trois inconnues,
+$[0,8]\times[-1{,}5;1{,}5]\times[-6,6]$, sont exactement la boîte de la RS du foil, et aussi celle du plan
+d'expériences du surrogate. Un état VPP ne sort donc jamais du domaine du surrogate en attitude.
+\end{subtilite}
+
+\subsection{Le foil dans la VPP}
+\label{sec:foilvpp}
+Le composant \py{IntensSY_foil_dyn}, dans \py{intenssy_subsystems.py} (dossier
+\py{Systems/Ships/Sail/IntensSY} de MDS), fait quatre choses :
+\begin{enumerate}
+  \item il calcule l'attitude effective :
+        \[ a_c = \text{gîte}+\text{Foil\_Cant},\qquad a_r=\text{assiette}+\text{Foil\_Rake},\qquad
+           a_y=\text{dérive}+\text{Foil\_Yaw} ; \]
+  \item il assemble le vecteur d'entrée de la RS \textbf{par nom}, d'après ses \py{input_names}
+        (\py{foil_rs_vector}). La vitesse n'est passée que si la RS déclare l'entrée \py{Speed_kts} ;
+  \item il appelle \py{regression(x)}, puis lit \py{prediction} et \py{out('Cpmin')} ;
+  \item il redimensionne les 6 premières sorties par $q S=\tfrac12\rho_{\text{eau}} S V^2$, avec
+        $S=2{,}275$~m² et $V$ en m/s. Le torseur est appliqué à l'origine du repère du foil, le bord d'attaque
+        de la cale basse : $(10{,}5745;\ 3{,}69217;\ -0{,}606084)$ m dans le repère du bateau.
+\end{enumerate}
+
+\textbf{Bending} et \textbf{Twisting}, quand la RS les a, sont des sorties de rapport. Elles ne sont pas
+multipliées par $qS$ et n'entrent pas dans l'équilibre.
+
+\textbf{Le remplacement par le surrogate.} \py{SurrogateFoilRS} (\py{src/vpp_coupling.py}) a les attributs
+que MDS lit sur une \py{VppChebyRS} : \py{input_names}, \py{output_names}, \py{prediction}, \py{eval},
+\py{regression}, \py{out}, \py{data}, les drapeaux d'extrapolation. \py{IntensSYVPP.set_foil} le met à la
+place de la RS du composant \py{Foil Dyn}. À chaque appel de MDS, avec $x=(a_c,a_r,a_y[,V])$ :
+\[
+  \text{prediction} = \big(\mu_1..\mu_7\big)(\vz,\va)
+  \;+\; \underbrace{r(\vz)\, b_{1..7}(\va)\, V^2}_{\text{correction FSI}},\qquad
+  (\text{Bending},\text{Twisting}) = r(\vz)\, b_{8,9}(\va)\, V^2 .
+\]
+La section $\vz$ est fixée pour un solve.
+
+\begin{nonfait}
+\begin{itemize}
+  \item \textbf{Pas d'entrée Hvol :} le foil ne voit pas la hauteur d'assise. C'est un choix du 22/10, et la
+        RS de production non plus ne la voit pas.
+  \item \textbf{La VPP utilise la moyenne du surrogate}, et non sa loi : la variance ne se propage pas dans
+        l'équilibre.
+  \item \textbf{Cpmin n'entre ni dans l'objectif ni dans une contrainte.} Il est modélisé et rapporté seulement.
+\end{itemize}
+\end{nonfait}
+
+\subsection{La correction FSI (foil flexible)}
+\label{sec:fsi}
+La RS FSI de production (\py{CFoil_R9800_S3250_C700_fsi_rs_vpp.json}) vient de bdFoil
+\py{CFoil_fsi.ipynb} : AVL × XFOIL avec un modèle de poutre \enquote{supported}, sur 625 points, avec la
+vitesse $V\in[7,28]$ nd en 4\textsuperscript{e} entrée. Elle donne l'effet de la déformée pour le profil
+actuel.
+
+La déformée suit la charge, donc $V^2$ (structure linéaire), et son effet sur les coefficients aussi :
+$C_k(\va,V)=C_k^{\text{rigide}}(\va)+b_k(\va)V^2$. On l'a vérifié sur la RS : l'écart à 7 nd divisé par
+$V^2-49$ est constant à 3 \% près jusqu'à 24 nd, et la loi suit la RS à 1,3 \% près au pire sur les forces.
+La pente vient d'une régression sur $V_j\in\{7;10{,}5;14;17{,}5;21;24{,}5;28\}$ :
+\[
+  b_k(\va) = \frac{\sum_j \big(V_j^2-\overline{V^2}\big)\big(C_k^{RS}(\va,V_j)-\overline{C_k^{RS}}\big)}
+                  {\sum_j \big(V_j^2-\overline{V^2}\big)^2},
+  \qquad
+  \delta_k(\vz,\va,V) = r(\vz)\, b_k(\va)\, V^2,\qquad
+  r(\vz)=\frac{I_{xx}(\text{profil actuel})}{I_{xx}(\mathcal{D}(\vz))}.
+\]
+\begin{itemize}
+  \item \textbf{Le domaine :} l'attitude est ramenée dans la boîte de la RS. La loi en $V^2$ vaut aussi
+        sous 7 nd, sans extrapoler la RS.
+  \item \textbf{Le rapport $r$ :} un profil plus raide se déforme moins. La flexion va en $1/EI$, la torsion
+        en $1/GJ$, et les deux sont prises proportionnelles à $I_{xx}$ (même famille, même corde, même
+        structure). Avec la contrainte $I_{xx}\ge I_{xx}^{\text{actuel}}$, on a $r\le 1$.
+  \item \textbf{Le contrôle :} la VPP avec \enquote{partie rigide de la RS + $\delta$} redonne la VPP de
+        production à 0,0005 nd près à 45/16, et à 0,007 nd près à 90/14 (test \py{test_fsi_correction_reproduces_the_production_vpp}).
+  \item \textbf{L'effet :} la déformée fait gagner 0,075 nd à 45/16 et 0,31 nd à 90/14.
+\end{itemize}
+
+\begin{subtilite}[hypothèses de la correction]
+Elle suppose deux choses :
+\begin{itemize}
+  \item à attitude égale, la section porte les charges du profil actuel, à quelques pour cent près ;
+  \item la structure est celle de la campagne de production.
+\end{itemize}
+C'est une correction de premier ordre. Un calcul FSI des profils comparés (bdFoil \py{simulation_fsi}) la
+vérifierait.
+\end{subtilite}
+
+\subsection{Les sensibilités de vitesse}
+\label{sec:sensibilites}
+$d_{kc}=\partial V^\star/\partial C_k$ se calcule par différences finies avant, à l'état du titulaire et pour
+chaque condition : on décale la sortie $k$ du surrogate de $h_k$, puis on refait le solve depuis l'état de
+base :
+\[
+  d_{kc} \approx \frac{V^\star\big(\mu+h_k\bm{e}_k\big) - V^\star(\mu)}{h_k},\qquad
+  h = (5\cdot10^{-4},\,10^{-2},\,10^{-2},\,2\cdot10^{-2},\,3\cdot10^{-3},\,3\cdot10^{-3})
+\]
+pour $F_x,F_y,F_z,M_x,M_y,M_z$, soit environ 3 \% de chaque coefficient. Le décalage s'applique avant la
+correction FSI.
+
+\begin{danslecode}[\py{_vpp_task}, branche \enquote{sensitivity}]
+Chaque tâche refait d'abord le solve de base \emph{dans son propre processus}, puis le solve décalé. Avec un
+état de base calculé par un autre processus, le premier test court donnait $\partial V/\partial F_x=-32$ au
+lieu de $+83$, à cause de la dépendance au chemin.
+\begin{itemize}
+  \item Une dérivée non calculable (NaN) reprend sa valeur précédente, ou 0 la première fois.
+  \item Les sensibilités sont recalculées une mise à jour sur trois.
+\end{itemize}
+Au 3\textsuperscript{e} run, $d_{F_x}$ allait de 84 (45/12) à 302 (90/14) nd par unité de $F_x$. Les autres
+dérivées sont plus petites d'un à deux ordres.
+\end{danslecode}
+
+% ---------------------------------------------------------------------------------------------
+\section{Les codes du torseur}
+\label{sec:codes}
+% ---------------------------------------------------------------------------------------------
+\textbf{Le foil} est celui de la RS de production (bdFoil \py{CFoil_generation.ipynb}) :
+\begin{itemize}
+  \item un arc circulaire \py{cfoil_arc} de rayon 9,8 m et de 3,25 m d'envergure ;
+  \item une corde de 0,70 m constante (effilement 1, vrillage nul), 41 stations ;
+  \item une tangente d'emplanture à \py{cant_geom} = 20,168°, l'extrémité vers l'intérieur
+        (\py{tip_side} $=-1$) ;
+  \item une image de paroi en $z=0$ (AVL \py{iZsym} $=+1$ ; NPLLT \py{surface_type} 0).
+\end{itemize}
+
+\textbf{Le repère et l'attitude.} Le repère bdFoil a son origine au bord d'attaque de la cale basse, $x$ vers
+l'avant, $y$ vers bâbord, $z$ vers le haut. Les moments sont réduits à cette origine, comme dans la RS. Les
+entrées passent telles quelles : cant $=a_c$, rake $=a_r$, yaw $=a_y$, sink $=0$.
+
+\textbf{L'écoulement.} $Re=5\cdot10^6$ sur toute l'envergure, $n_{\text{crit}}=1$, transition à 10 \% sur les
+deux faces, table d'incidence de $-6°$ à $12°$ par pas de 0,5°.
+
+\textbf{Le profil.} 121 points par face (AVL ne lit pas 161 points et échoue sans rien écrire), avec un bord
+de fuite d'épaisseur $0{,}00197\,c$.
+
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Niveau & Modèle & Cpmin \\
+\midrule
+1 (BF) & ligne portante non plane (Phillips \& Snyder, \py{bdFoil/NonPlanarSolver}), 100 nœuds, rayon de cœur
+0,005 corde, polaires NeuralFoil xxxlarge. Temps : 0,2 à 0,4 s. &
+20\textsuperscript{e} percentile, sur les points de contrôle, du Cpmin NeuralFoil à l'incidence locale
+($1-(u_e/V)^2$, stations de couche limite $x/c\ge1{,}6$ \%) \\
+2 (HF) & la même ligne portante avec les polaires XFOIL (\py{npane} 250, \py{niter} 300, 120 s au plus).
+Temps : 2 à 13 s pour la polaire d'une nouvelle section, puis 0,1 s par attitude. &
+20\textsuperscript{e} percentile du cpmin de la polaire XFOIL à l'incidence locale. La polaire est relue
+dans le cache. \\
+3 (validation) & AVL (bdFoil core) : traînée induite au plan de Trefftz, traînée de profil = CD de la
+polaire XFOIL au cl de chaque bande (modèle \enquote{profile}). Temps : 4,8 s par appel. &
+20\textsuperscript{e} percentile des Cpmin de bande (\py{cp_min_perc} 20), comme la RS \\
+\bottomrule
+\end{tabularx}
+
+\begin{itemize}
+  \item \textbf{Les sorties.} Les sorties 1 à 6 sont les coefficients bruts de bdFoil, \py{Cx} … \py{Cmz},
+        sans conversion. L'étape 0 a montré qu'ils retrouvent la RS de production : pentes de 0,86 à 0,96 et
+        $R^2\ge0{,}996$ pour AVL.
+  \item \textbf{Les échecs.} Un calcul raté (NPLLT non convergé, polaire XFOIL ratée, décrochage hors de la
+        zone d'emplanture de 2 \% d'envergure) rend des sorties NaN avec son message d'erreur.
+  \item \textbf{Les deux niveaux du surrogate.} Sur le profil actuel, NeuralFoil xxxlarge et XFOIL donnent les
+        mêmes forces à 0,1 \% près. Ils ne diffèrent vraiment que sur Cpmin : NeuralFoil ne voit pas le pic de
+        bord d'attaque.
+\end{itemize}
+
+\begin{danslecode}
+\py{src/foil_codes.py} : \py{PLANFORM}, \py{FLOW}, \py{LEVELS_XFOIL}, et \py{FoilCodes.evaluate(weights,
+attitude, level)}, qui rend \py{(y, info)}. Les backends sont dans \py{pipelines/bdtoolbox_foil/solvers.py}
+(\py{NpLltBackend}, \py{AvlCoreBackend}).
+\begin{itemize}
+  \item Le cache des polaires XFOIL a pour clé le sha256 du fichier \py{.xf} et les réglages. Il publie par
+        un seul \py{os.replace}, donc deux processus qui calculent la même section ne se gênent pas : le
+        premier qui écrit gagne.
+  \item Chaque processus écrit sa propre configuration \py{codes_config_<pid>.json}.
+\end{itemize}
+\end{danslecode}
+
+% ---------------------------------------------------------------------------------------------
+\section{La section : Kulfan, famille admissible, PCA}
+\label{sec:section}
+% ---------------------------------------------------------------------------------------------
+\textbf{Kulfan (CST).} Le poids de bord d'attaque est nul et l'épaisseur de bord de fuite $TE$ fixée. Avec 8
+poids par face :
+\[
+  y_{\text{ext}}(x) = \sqrt{x}(1-x)\sum_{i=0}^{7} u_i B_i(x) + x\,\tfrac{TE}{2},\qquad
+  y_{\text{int}}(x) = \sqrt{x}(1-x)\sum_{i=0}^{7} l_i B_i(x) - x\,\tfrac{TE}{2},
+\]
+où $B_i$ sont les polynômes de Bernstein de degré 7. Aux stations fixées, les coordonnées sont une fonction
+affine des 16 poids : $\bm{y}=A\vw+\bm{b}$.
+
+\textbf{Le profil actuel.} Ce sont les poids de référence de l'étude \py{cfoil_intens_kulfan_trim_2}
+(\py{CFoilFamily.from_study_config(...).reference_weights()}) : l'épaisseur du MC2 et la cambrure de
+référence ($\delta=0{,}108139$), soit 12,25 \% d'épaisseur et $I_{xx}=6{,}7174\cdot10^{-5}$ (corde unité).
+
+\textbf{La famille $\mathcal{F}$} (2\textsuperscript{e} et 3\textsuperscript{e} runs). Une section appartient
+à la famille si elle remplit quatre conditions :
+\begin{enumerate}
+  \item ses 16 poids sont dans une boîte centrée sur le profil actuel, de largeur la moitié de celle de la
+        boîte de \py{Dim-Reduction/experiments.ipynb} (\py{KulfanBoxFamily.centered}, \py{notebook_bounds}) ;
+  \item ses faces ne se croisent pas : l'épaisseur locale est $\ge0$ sur 2001 stations ;
+  \item $I_{xx}\ge I_{xx}^{\text{actuel}}$, avec
+        $I_{xx}=\int\big[\tau^3/12+\tau(y_c-y_g)^2\big]dx$, $\tau$ l'épaisseur, $y_c$ la ligne moyenne et $y_g$
+        le centre de gravité (\py{section_ixx}) ;
+  \item NeuralFoil xxxlarge est confiant : la confiance d'analyse est $\ge0{,}9$ à 0, 2, 4 et 6° (\py{confident}).
+\end{enumerate}
+Les tirages se font par hypercube latin dans la boîte, puis on rejette les sections hors famille et on retire
+jusqu'à en avoir assez (\py{KulfanBoxFamily.sample}).
+
+\textbf{La PCA.}
+\begin{itemize}
+  \item \textbf{L'ajustement :} sur 4000 sections de la famille. On prend leurs coordonnées à 200 stations
+        uniformes, on les centre (sans les standardiser), puis on fait une SVD :
+        $Y-\bar{\bm{y}}=USV\tp$.
+  \item \textbf{Les scores} sont blanchis : $z_j=(\bm{y}-\bar{\bm{y}})\cdot\bm{v}_j/\sigma_j$.
+  \item \textbf{Le décodage} est exact : chaque mode est $\bm{v}_j=A\bm{m}_j$, d'où
+        $\mathcal{D}(\vz)=\bar{\vw}+\sum_{j\le k}\sigma_j z_j\bm{m}_j$.
+  \item \textbf{Le nombre de modes :} la famille a un rang de 16, et $k=10$ modes portent 99,86 \% de la
+        variance géométrique. Ces 10 scores forment l'espace de recherche.
+\end{itemize}
+
+\begin{subtilite}[l'admissibilité se vérifie sur la section décodée]
+La troncature à 10 modes retire un peu d'$I_{xx}$ : 24 \% des sections projetées sortaient de la famille.
+\py{RealFoilProblem.sample_sections} tire donc des sections de la famille, les encode, puis \textbf{ne garde
+que les scores dont la section décodée est encore dans la famille}. Celle-ci est la section que voient les
+codes. Les bornes des scores (pour normaliser le surrogate) sont les minimums et maximums de 4096 tirages
+admissibles.
+\end{subtilite}
+
+% ---------------------------------------------------------------------------------------------
+\section{Le surrogate du torseur : 7 co-krigeages AR(1)}
+\label{sec:surrogate}
+% ---------------------------------------------------------------------------------------------
+\textbf{La structure.} Il y a un co-krigeage \py{CoKriging} de mfego par sortie : 7 modèles indépendants
+($F_x$ … $M_z$, $C_{p,\min}$) sur le \textbf{même plan imbriqué}. Un calcul de code donne en effet tout le
+torseur (\py{TorsorCoKriging}, \py{src/vpp_targeted.py}). Les entrées $\vx\in\mathbb{R}^{13}$ sont ramenées
+dans $[0,1]^{13}$ avec les bornes du problème.
+
+\textbf{Le modèle auto-régressif} (Kennedy \& O'Hagan), pour chaque sortie :
+\[
+  Z_1(\vx)=\delta_1(\vx),\qquad Z_2(\vx)=\rho\,Z_1(\vx)+\delta_2(\vx),
+\]
+où $\delta_1$ et $\delta_2$ sont des GP indépendants, chacun avec une moyenne constante et le noyau
+\[
+  k(\vx,\vx') = t_1\Big(1+\sqrt5\,r+\tfrac53 r^2\Big)e^{-\sqrt5\,r}+t_2,\qquad
+  r^2=\sum_{m=1}^{13}\frac{(x_m-x'_m)^2}{\ell_m^2}
+\]
+(Matérn 5/2 à longueurs de corrélation par dimension, plus une constante), avec un bruit de pépite.
+
+\textbf{Les hyperparamètres} sont estimés niveau par niveau : sur un plan imbriqué sans bruit, la
+vraisemblance se factorise. On les estime par MAP (L-BFGS-B, 3 relances), avec les priors suivants
+(sorties normalisées, entrées dans $[0,1]$) :
+
+\begin{tabular}{@{}lll@{}}
+\toprule
+Paramètre & Prior & Bornes \\
+\midrule
+$\ell_m$ & InvGamma(3, 2), mode 0,5 & $[10^{-2},10]$ \\
+$t_1$ & LogNormale(1, 1) & $[10^{-4},10^2]$ \\
+$t_2$ & LogNormale($\ln 10^{-2}$, 2) & $[10^{-8},10^2]$ \\
+bruit & LogNormale($\ln 10^{-4}$, 2) & $[10^{-8},10^{-2}]$ \\
+$\rho$ & Normale(1, $2^2$) (\enquote{v2}), profilé en forme close, centré & $[-5,5]$ \\
+\bottomrule
+\end{tabular}
+
+Le niveau 2 s'ajuste sur le résidu $z_2-\rho\,z_1(X_2)$, où $z_1(X_2)$ sont les valeurs \emph{observées} du
+niveau 1 aux points HF. Le résidu est centré, donc sa moyenne est nulle quel que soit $\rho$. Pour $\Theta$
+fixé, $\hat\rho$ est l'optimum en forme close sous le prior normal.
+
+\textbf{La prédiction} conditionne $Z_2(\vx)$ sur \emph{toutes} les observations $\bm{z}$ (des deux
+niveaux), avec la matrice de covariance jointe $V$, factorisée une fois par Cholesky ($V=LL\tp$) :
+\[
+  \mu(\vx)=m_2+\bm{k}(\vx)\tp V^{-1}(\bm{z}-\bm{m}),\qquad
+  s^2(\vx)=c_{22}(\vx,\vx)-\bm{k}(\vx)\tp V^{-1}\bm{k}(\vx),
+\]
+avec $\Cov(Z_i(\vx),Z_j(\vx'))=\sum_{m\le\min(i,j)}P(m,i)P(m,j)\,\sigma_{y,m}^2\,k_m(\vx,\vx')$ et
+$P(1,2)=\rho$.
+
+\begin{danslecode}[ce qui coûte, et comment c'est réparti]
+\begin{itemize}
+  \item \py{fit(refit=True)} : de nouveaux hyperparamètres (MAP). \py{fit(refit=False)} : on garde les
+        hyperparamètres, et l'on reconditionne seulement (Cholesky de $V$, $\alpha=V^{-1}(\bm z-\bm m)$).
+        Les 7 modèles tournent dans 7 fils (\py{TorsorCoKriging.map_models}), et le résultat est identique
+        au calcul en série.
+  \item \textbf{Le rythme des réajustements :} de nouveaux hyperparamètres dès que le plan a grossi de 25 \%
+        depuis le dernier ajustement (\py{refit_growth} = 1,25). Au 3\textsuperscript{e} run, cela s'est
+        produit à 314, 408, 518, 651, 830 et 1045 points. Sinon, on reconditionne seulement.
+  \item \textbf{Pour la VPP, la moyenne seule :} \py{TorsorCoKriging.predict} appelle \py{latent_mean}, soit
+        $m_2+\bm{k}(\vx)\tp\alpha$, en $O(n)$. La variance demanderait une résolution triangulaire en
+        $O(n^2)$ par point, et la VPP appelle le foil des centaines de fois par solve.
+  \item \textbf{Les workers VPP} reçoivent une copie sans le facteur de Cholesky (\py{mean_only_copy}), qui
+        ne sait prédire que les moyennes.
+\end{itemize}
+\end{danslecode}
+
+% ---------------------------------------------------------------------------------------------
+\section{Le critère de raffinement ciblé par la VPP}
+\label{sec:critere}
+% ---------------------------------------------------------------------------------------------
+\textbf{L'idée.} À un état d'équilibre, une erreur $\Delta C_k$ sur le coefficient $k$ change la vitesse de
+$d_k\Delta C_k$ environ. Les modèles sont indépendants, donc au premier ordre
+\[
+  \Var V \approx \sum_{k=1}^{6} d_k^2\, s_k^2(\vx).
+\]
+On cherche à réduire cette variance \textbf{en moyenne sur les points d'intégration}, qui entourent les
+états VPP des sections en compétition. Cpmin a un poids nul : il n'agit pas sur la vitesse.
+
+\textbf{Le poids des sorties.} $w_k=\frac15\sum_c d_{kc}^2$ (moyenne sur les conditions des sensibilités du
+titulaire).
+
+\textbf{Les points d'intégration $\{\vx^{\text{int}}_i\}_{i=1}^N$.} À chaque mise à jour, on prend les 20
+états (4 sections × 5 conditions). Autour de chacun, on tire un nuage de Sobol de 16 points, où la section
+reste fixée et l'attitude varie de $\pm(1°;\,0{,}3°;\,1°)$ en (cant, rake, yaw), dans la boîte. Cela fait
+$N=320$ points.
+
+\textbf{Le gain exact d'une observation} (ALC/IMSE, \py{batched_imse_gains}). Soit un candidat $\vx_m$ et un
+niveau $l$. Le plan doit rester imbriqué : on ajoute les observations $(\vx_m,j)$ pour tous les niveaux
+$j\le l$ qui manquent en $\vx_m$. Avec $\bm{c}_i$ la covariance a posteriori entre $Z_2(\vx^{\text{int}}_i)$
+et ces observations, et $S$ leur covariance a posteriori (bruit compris), la réduction exacte de la
+variance de $Z_2$ en $\vx^{\text{int}}_i$ est $\bm{c}_i\tp S^{-1}\bm{c}_i$. D'où
+\[
+  G_k(\vx_m,l)=\frac1N\sum_{i=1}^{N}\bm{c}_i\tp S^{-1}\bm{c}_i .
+\]
+Le calcul se fait pour tous les candidats d'un coup (tableaux à un axe de plus), avec les blocs
+$W=L^{-1}C(\D,\cdot)$.
+
+\textbf{Le rendement et le choix.}
+\[
+  (\vx^\star,l^\star)=\argmax_{m,\,l}\;\frac{\sum_{k\le6} w_k\,G_k(\vx_m,l)}{C(\vx_m,l)},\qquad
+  C(\vx_m,l)=\sum_{j\le l,\ j\text{ manquant}} c_j,\qquad c=(1,2).
+\]
+Pour un point nouveau, le niveau 2 coûte $1+2=3$. Pour un point BF sans HF, il coûte 2.
+
+\begin{subtilite}[le rapport de coût 1 : 2]
+Les codes d'un lot tournent en même temps. Un choix coûte surtout le temps de sélection, de 1 à 6 s, à peu
+près le même aux deux niveaux. Un calcul HF n'allonge le lot que si sa section est nouvelle (la polaire
+XFOIL). Au 2\textsuperscript{e} run, en séquentiel avec AVL, le rapport valait 1 : 6.
+\end{subtilite}
+
+\textbf{Les candidats} (\py{VPPSectionOptimizer.candidates}).
+\begin{itemize}
+  \item 500 points des nuages autour des états (25 par état).
+  \item 256 points de tout le domaine : des sections admissibles nouvelles, avec une attitude de Sobol dans la
+        boîte.
+  \item Au plus 512 points BF sans HF, les plus récents, pour lesquels seul le niveau 2 est possible.
+  \item On retire les candidats à moins de $10^{-3}$ (cube unité, norme infinie) d'un calcul raté.
+\end{itemize}
+
+% ---------------------------------------------------------------------------------------------
+\section{Les lots en parallèle : le \enquote{kriging believer}}
+\label{sec:lots}
+% ---------------------------------------------------------------------------------------------
+On veut 16 choix par lot pour faire tourner les codes en parallèle. Ce n'est pas un choix des 16 meilleurs
+rendements d'un coup : ces points seraient presque tous voisins et redondants. On choisit plutôt l'un après
+l'autre. Après chaque choix, on conditionne le co-krigeage sur le point choisi comme s'il avait été
+calculé, avec pour valeur provisoire la \textbf{moyenne prédite du niveau concerné}.
+
+\textbf{Pourquoi c'est exact pour notre critère.} La covariance a posteriori d'un GP,
+\[
+  k_n(\bm{a},\bm{b})=k(\bm{a},\bm{b})-\bm{k}(\bm{a},X)K^{-1}\bm{k}(X,\bm{b}),
+\]
+ne dépend que des \emph{positions} des observations, et non de leurs valeurs. Le gain $G_k$ du choix suivant voit donc exactement
+la réduction de variance apportée par les choix précédents. La valeur provisoire laisse les moyennes
+inchangées (test \py{test_kriging_believer_placeholder}). Le lot s'étale tout seul.
+
+\begin{algorithm}[h]
+\caption{Un lot (\py{VPPSectionOptimizer.step})}
+\begin{algorithmic}[1]
+\State $n\gets$ taille du plan ; \textbf{si} $n\ge1{,}25\,n_{\text{dernier ajustement}}$ \textbf{alors} nouveaux hyperparamètres \textbf{sinon} reconditionnement
+\State mise à jour de l'optimiseur (§\,\ref{sec:optimiseur}) : titulaire, états, points d'intégration, $d_{kc}$
+\State $w_k\gets\frac15\sum_c d_{kc}^2$ ; candidats $\{\vx_m\}$ et niveaux manquants
+\For{$b=1..16$}
+  \State $(\vx_b,l_b)\gets$ meilleur rendement (§\,\ref{sec:critere}) ; marquer ses niveaux $\le l_b$ comme faits
+  \If{$b<16$}
+     \For{chaque niveau $j\le l_b$ manquant en $\vx_b$} ajouter $(\vx_b,j)$ avec la valeur $\mu^{(j)}(\vx_b)$ \EndFor
+     \State reconditionner les 7 modèles (hyperparamètres fixes)
+  \EndIf
+\EndFor
+\State retirer les valeurs provisoires (\py{truncate})
+\State lancer en parallèle tous les calculs (point, niveau) du lot (28 processus)
+\For{chaque choix $b$}
+   \State ajouter ses résultats, niveau 1 d'abord. Un résultat NaN, ou un HF dont le BF manque, est rejeté, et le point rejoint la liste des échecs
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+% ---------------------------------------------------------------------------------------------
+\section{L'optimiseur de section}
+\label{sec:optimiseur}
+% ---------------------------------------------------------------------------------------------
+Il y a une mise à jour avant chaque lot (\py{update_every} = 1, \py{VPPSectionOptimizer.update}).
+\begin{enumerate}
+  \item \textbf{La publication} du surrogate courant pour les workers VPP.
+  \item \textbf{Les sensibilités} $d_{kc}$, une mise à jour sur trois.
+  \item \textbf{Le criblage} (\py{screen}). On tire 256 sections admissibles nouvelles, avec la graine
+        $\text{seed}+31\,n_{\text{mises à jour}}$, et on y ajoute le titulaire. On garde fixe l'attitude
+        $\va_c$ des états du titulaire et sa vitesse $V_c$. Le changement de vitesse au premier ordre vaut
+        alors
+        \[
+          \Delta V_c(\vz)=\sum_{k\le6} d_{kc}\big[\mu_k(\vz,\va_c)-\mu_k(\vz_{\text{tit}},\va_c)\big]
+          + \big(r(\vz)-r(\vz_{\text{tit}})\big)\sum_{k\le6} d_{kc}\, b_k(\va_c)V_c^2,
+        \]
+        où le second terme est la différence des corrections FSI. On calcule aussi
+        \[
+          \sigma(\vz)=\tfrac15\Big(\sum_c\sum_{k\le6} d_{kc}^2\,s_k^2(\vz,\va_c)\Big)^{1/2},\qquad
+          \text{score}(\vz)=\tfrac15\sum_c\Delta V_c(\vz)+\kappa\,\sigma(\vz),\quad\kappa=1 .
+        \]
+        Le terme $\kappa\sigma$ est un optimisme face à l'incertitude : une section dont la vitesse est
+        incertaine mérite d'être regardée. On retient les 3 meilleurs scores.
+  \item \textbf{La VPP complète} sur ces 3 sections et sur le titulaire, aux 5 conditions, soit 20 solves en
+        parallèle, avec départ aux états du titulaire. La section de meilleure vitesse moyenne devient le
+        titulaire.
+  \item \textbf{Les points d'intégration} : nuages de Sobol autour des 20 états des 4 sections
+        (§\,\ref{sec:critere}).
+\end{enumerate}
+
+\textbf{Le départ et la fin.}
+\begin{itemize}
+  \item \textbf{Le départ :} le premier titulaire est le profil actuel projeté, et ses états sont résolus à la
+        première mise à jour.
+  \item \textbf{La boucle} s'arrête quand le temps écoulé depuis le début du run dépasse la limite. Le lot en
+        cours se termine.
+  \item \textbf{La fin :} un dernier ajustement des hyperparamètres, puis une dernière mise à jour. Celle-ci
+        fixe le titulaire final avec le modèle final.
+\end{itemize}
+
+\begin{subtilite}[ce que la recherche explore vraiment]
+Le titulaire ne bouge que vers une section \emph{tirée} au criblage : la recherche trie des réserves de
+sections aléatoires, environ 13\,000 en 52 mises à jour au 3\textsuperscript{e} run. Ce n'est pas un optimum
+local au sens strict.
+
+Les réserves dépendent de la graine. Les 2\textsuperscript{e} et 3\textsuperscript{e} runs, de même graine,
+même famille et même PCA, ont donc criblé les mêmes sections. Ils ont choisi le même profil à la même mise à
+jour (la 14\textsuperscript{e}), alors que leurs modèles différaient : AVL rigide d'un côté, NPLLT × XFOIL
+flexible de l'autre.
+\end{subtilite}
+
+% ---------------------------------------------------------------------------------------------
+\section{Le plan de départ}
+% ---------------------------------------------------------------------------------------------
+\begin{itemize}
+  \item \textbf{Le niveau 1 :} $n_1=256$ points, avec des sections admissibles tirées (§\,\ref{sec:section})
+        et une attitude par hypercube latin dans $[0,8]\times[-1{,}5;1{,}5]\times[-6,6]$.
+  \item \textbf{Le niveau 2 :} $n_2=64$ points choisis parmi les points BF réussis, par maximin glouton dans
+        le cube unité (\py{greedy_maximin}). Le premier est le plus proche du centre, puis on ajoute à chaque
+        fois le point le plus loin des points déjà pris. Le plan est donc imbriqué.
+  \item \textbf{Les échecs} sont écartés. Au 3\textsuperscript{e} run, il y a eu 253/256 BF et 61/64 HF
+        réussis, en 1,4 min de calcul parallèle.
+\end{itemize}
+
+% ---------------------------------------------------------------------------------------------
+\section{L'architecture logicielle et parallèle}
+\label{sec:architecture}
+% ---------------------------------------------------------------------------------------------
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X@{}}
+\toprule
+Fichier & Rôle \\
+\midrule
+\py{scripts/run_real_vpp.py} & orchestration en 5 étapes : famille et PCA, plan de départ, boucle,
+validation, résultats et figures \\
+\py{src/section_pca.py} & Kulfan, \py{KulfanBoxFamily}, \py{SectionPCA}, \py{section_ixx} \\
+\py{src/meta_foil.py} & lecteur de RS de Chebyshev (\py{ChebyshevRS}), filtre \py{confident} \\
+\py{src/foil_codes.py} & \py{FoilCodes} : les 3 niveaux, Cpmin \\
+\py{pipelines/bdtoolbox_foil/} & backends NPLLT, AVL et XFOIL (bdFoil) \\
+\py{src/vpp_coupling.py} & \py{FSICorrection}, \py{SurrogateFoilRS}, \py{IntensSYVPP} (solve, sensibilités) \\
+\py{mfego/src/cokriging.py} & \py{CoKriging} AR(1) \\
+\py{src/vpp_targeted.py} & \py{TorsorCoKriging}, \py{latent_mean}, \py{choose} \\
+\py{src/sequential_design.py} & \py{batched_imse_gains} (gain ALC exact) \\
+\py{src/vpp_optimize.py} & \py{RealFoilProblem}, \py{CodeRunner}, \py{VPPPool}, \py{VPPSectionOptimizer}, \py{validate} \\
+\py{src/run_dir.py}, \py{scripts/real_run_figures.py} & dossier de run, figures \\
+\py{src/operating_profile.py}, \py{profiles/*.json} & distribution d'usage : mélange de modes, nœuds et poids \\
+\py{scripts/profile_analysis.py} & comportement des sections sur une distribution d'usage (§\,\ref{sec:profil}) \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Les processus} (fig.~\ref{fig:architecture}), sur un Ryzen 9 5950X de 16 cœurs (32 logiques) avec
+128 Go de mémoire.
+\begin{itemize}
+  \item \textbf{Le processus principal :} la boucle, le surrogate et le critère. Il a 2 fils BLAS, et les
+        7 modèles tournent en 7 fils pendant l'ajustement, le conditionnement, les variances et les gains.
+  \item \textbf{\py{CodeRunner} : 28 processus.} Chacun a son \py{FoilCodes}. Le pool est créé au premier lot
+        de plusieurs points, puis gardé pendant tout le run. Un point seul tourne dans le processus principal.
+  \item \textbf{\py{VPPPool} : 30 processus.} Chacun a son \py{IntensSYVPP}, avec la correction FSI. À chaque
+        mise à jour, le processus principal écrit \py{data/surrogate_v<n>.pkl}, la copie \enquote{moyennes
+        seules}. Un worker ne relit le fichier que si la version a changé, et le fichier précédent est
+        supprimé.
+  \item \textbf{Les workers des deux pools} démarrent avec un seul fil BLAS (variables d'environnement posées
+        avant leur création). Les deux pools ne travaillent jamais en même temps.
+\end{itemize}
+
+\textbf{Le dossier d'un run}, \py{runs/<date>_<nom>/} :
+\begin{itemize}
+  \item \py{config.json} : tous les réglages ;
+  \item \py{run.log} ;
+  \item \py{data/evaluations.csv} : un calcul de code par ligne, avec le niveau, les entrées, les sorties,
+        le temps et l'erreur ; aussi \py{data/pca.json} et \py{data/codes/} (configurations, cache des
+        polaires) ;
+  \item \py{results/} : \py{history.csv} (un choix par ligne), \py{updates.json}, \py{validation.csv},
+        \py{best_section.json}, \py{summary.txt}, \py{surrogate.pkl} (le surrogate final, copie
+        \enquote{moyennes seules}), et \py{profile_<nom>.csv|json} si une distribution d'usage est
+        analysée ;
+  \item \py{figures/} : convergence, points, sections, validation, vitesses, et \py{profile_<nom>}.
+\end{itemize}
+
+% ---------------------------------------------------------------------------------------------
+\section{La validation finale}
+% ---------------------------------------------------------------------------------------------
+Pour chaque section validée (le meilleur profil, le profil de départ et les meilleurs profils des runs
+antérieurs, donnés par \py{--compare}) :
+\begin{enumerate}
+  \item on résout la VPP aux 5 conditions avec le surrogate final et la FSI ;
+  \item on lance les codes de niveaux 1, 2 et 3 aux 5 états, en parallèle ;
+  \item on corrige la vitesse au premier ordre de l'écart mesuré entre le surrogate et le code :
+        \[
+          V_{\text{code}}\approx V_{\text{surrogate}}-\sum_{k\le6} d_{kc}\big(\mu_k-C_k^{\text{code}}\big).
+        \]
+        Le code est soit le niveau 2, soit AVL. On compare aussi l'erreur à l'écart type annoncé,
+        $\big(\sum_k d_{kc}^2 s_k^2\big)^{1/2}$.
+\end{enumerate}
+On n'a pas résolu la VPP avec un code dans la boucle : avec AVL, cela prendrait environ 30 min par condition.
+
+\textbf{Le résultat du 3\textsuperscript{e} run.}
+\begin{itemize}
+  \item \textbf{Le gain} du meilleur profil sur le profil actuel vaut +0,241 nd en moyenne vu par
+        NPLLT × XFOIL, et +0,217 nd vu par AVL × XFOIL. Il tient aux 5 conditions, de +0,02 à +0,40 nd.
+  \item \textbf{Le Cpmin} passe de $-2{,}57$ à $-0{,}87$.
+  \item \textbf{La précision :} l'erreur du surrogate contre NPLLT × XFOIL vaut 0,010 nd RMS au meilleur
+        profil.
+\end{itemize}
+
+% ---------------------------------------------------------------------------------------------
+\section{L'analyse sur une distribution d'usage}
+\label{sec:profil}
+% ---------------------------------------------------------------------------------------------
+\textbf{Le principe.} La recherche optimise la vitesse moyenne sur les conditions du run, et le
+co-krigeage reste celui des sections précédentes (décision du 22/10). Le bateau, lui, navigue selon une
+distribution de (TWA, TWS), en général bimodale : un mode au près, un mode au portant. On ne la connaît pas
+encore. Elle se donne donc \textbf{à chaque run}, dans un fichier JSON, et elle sert à \textbf{analyser} les
+sections retenues : le meilleur profil, le profil de départ et les profils comparés.
+
+\textbf{La distribution} (\py{src/operating_profile.py}) est un mélange de modes. Chaque mode $m$ a un poids
+$\pi_m$, une loi normale tronquée de TWA et une loi normale tronquée de TWS, indépendantes dans le mode :
+\[
+  p(\mathrm{TWA},\mathrm{TWS})=\sum_m \pi_m\,\mathcal{N}_{[a_m,b_m]}(\mathrm{TWA};\bar\theta_m,\sigma_{\theta,m})\,
+  \mathcal{N}_{[c_m,d_m]}(\mathrm{TWS};\bar v_m,\sigma_{v,m}).
+\]
+\begin{itemize}
+  \item \textbf{La quadrature.} Elle est produit par mode : $n$ nœuds par variable, aux points de probabilité
+        médiane de $n$ strates équiprobables (les quantiles $(i+\frac12)/n$ de la loi tronquée), chacun de
+        poids $\pi_m/n^2$. On a donc $\mathbb{E}_p[Q]\approx\sum_{\text{nœuds}} w\,Q$.
+  \item \textbf{Les bornes.} Les nœuds restent dans les bornes : pas de queue hors du domaine de la VPP.
+  \item \textbf{Des nœuds explicites.} Un fichier peut aussi donner ses nœuds directement, par exemple un
+        histogramme de conditions enregistrées. Les poids sont alors normalisés à 1.
+\end{itemize}
+
+\textbf{L'hypothèse actuelle} (\py{profiles/guess_bimodal.json}, à remplacer) :
+\begin{itemize}
+  \item un mode \enquote{près}, TWA $45\pm4°$ sur $[38,52]$ ;
+  \item un mode \enquote{portant}, TWA $135\pm7°$ sur $[120,148]$ ;
+  \item le même poids pour les deux, TWS $13\pm3$ nd sur $[8,18]$ dans les deux modes ;
+  \item $3\times3$ nœuds par mode, soit 18 nœuds.
+\end{itemize}
+
+\textbf{L'analyse} (\py{scripts/profile_analysis.py}, ou l'option \py{--profile} de \py{run_real_vpp.py}) se
+fait en quatre étapes :
+\begin{enumerate}
+  \item on recharge le surrogate final du run ; un reconditionnement, sans changer les hyperparamètres, lui
+        rend ses variances ;
+  \item on résout la VPP (avec la FSI si le run l'avait) à chaque nœud, pour chaque section, dans le pool
+        VPP ;
+  \item on calcule à chaque nœud les sensibilités, puis l'écart type de la vitesse prédite
+        $\big(\sum_k d_k^2 s_k^2\big)^{1/2}$. Le surrogate a été raffiné autour des états des conditions du
+        run, et un nœud loin d'eux (au portant) est moins sûr ;
+  \item on prend les espérances \textbf{sur les nœuds résolus par toutes les sections}, pour comparer les
+        mêmes conditions : $\mathbb{E}_p[V]$, la vitesse équivalente en temps $1/\mathbb{E}_p[1/V]$, l'écart
+        type, les mêmes par mode, et le gain sur le profil de départ. La probabilité résolue par chaque
+        section est donnée à part.
+\end{enumerate}
+
+\begin{subtilite}[des nœuds sans équilibre]
+La VPP de l'Intens SY n'a pas d'équilibre au portant profond par petit temps. La gîte bute sur sa borne de
+0°, avec un résidu non nul, et c'est vrai aussi avec la RS de production. Elle n'en a pas non plus par vent
+fort (45/20, 90/20 : vitesse à sa borne de 24 nd ou \py{Flat} au minimum). Ces nœuds sont signalés, et non
+cachés. Ils relèvent du réglage de la VPP (bornes, configuration de foil au portant), pas du surrogate.
+\end{subtilite}
+
+\textbf{Le résultat sur le 3\textsuperscript{e} run.} L'analyse s'est faite après coup, sur le surrogate
+\py{data/surrogate_v52.pkl}.
+\begin{itemize}
+  \item \textbf{Les nœuds résolus :} les deux profils ensemble en résolvent 72 \% de la probabilité, tout le
+        près et 22 \% sur les 50 \% du portant.
+  \item \textbf{Le gain} du meilleur profil sur le profil actuel vaut \textbf{+0,099 nd} : +0,085 nd au près et
+        +0,13 nd au portant. Sur les 5 conditions du run, centrées sur le reaching, il valait +0,24 nd.
+  \item \textbf{L'écart type} du surrogate est d'environ 0,006 nd. C'est l'estimation du modèle lui-même : le
+        portant n'a pas été validé contre les codes.
+\end{itemize}
+
+% ---------------------------------------------------------------------------------------------
+\section{Les réglages du 3\textsuperscript{e} run}
+% ---------------------------------------------------------------------------------------------
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Réglage & Valeur \\
+\midrule
+commande & \py{run_real_vpp.py --box current --box-scale 0.5 --hf npllt_xfoil --hf-cost 2 --fsi --batch 16 --workers 28 --vpp-workers 30 --n-low 256 --n-high 64 --time-limit-min 65 --compare <best_section.json du 2e run>} \\
+PCA & $k=10$, ajustée sur 4000 sections, graine 0 \\
+plan de départ & 256 BF, 64 HF \\
+lots & 16 choix, rapport de coût 1 : 2 \\
+mise à jour & à chaque lot ; sensibilités une fois sur trois ; criblage de 256 sections, 3 retenues, $\kappa=1$ \\
+points d'intégration & 16 par état, demi-largeurs $(1°;\,0{,}3°;\,1°)$ \\
+candidats & 25 par état (500), 256 dans tout le domaine, $\le512$ BF sans HF \\
+réajustement & croissance de 25 \% du plan \\
+co-krigeage & Matérn 5/2 à longueurs par dimension + constante, MAP, $\rho\sim\mathcal{N}(1,2^2)$ sur $[-5,5]$, 3 relances \\
+FSI & RS \py{CFoil_R9800_S3250_C700_fsi_rs_vpp.json}, rapport $I_{xx}$ \\
+arrêt & 65 min depuis le début du run (fin réelle : 69,7 min) \\
+\bottomrule
+\end{tabularx}
+
+% ---------------------------------------------------------------------------------------------
+\section{Limites connues et évolutions prévues}
+% ---------------------------------------------------------------------------------------------
+\begin{enumerate}
+  \item \textbf{La recherche par tirages.} Il faudrait un raffinement local autour du titulaire (des
+        candidats dans un voisinage qui se resserre, ou un gradient sur le surrogate), et un run avec une
+        autre graine des réserves.
+  \item \textbf{La distribution d'usage} sert aujourd'hui à l'analyse seulement (§\,\ref{sec:profil}). Si un
+        jour on voulait chercher directement sur elle, quatre endroits du code changeraient :
+        \begin{itemize}
+          \item la vitesse d'une section (\py{update}), qui deviendrait une moyenne pondérée par les poids
+                $\omega_c$ des nœuds ;
+          \item le gain du criblage (\py{screen}) ;
+          \item les sensibilités, à calculer à chaque nœud ;
+          \item la moyenne sur les points d'intégration de \py{batched_imse_gains}, à pondérer par
+                $\omega_{c(i)}\,d_{k\,c(i)}^2$.
+        \end{itemize}
+        Une analyse qui montre un gain très différent selon le mode, comme au 3\textsuperscript{e} run
+        (+0,085 nd au près contre +0,13 nd au portant), est un signe que cela vaudrait la peine. Il faudrait aussi
+        donner aux conditions du run les poids de la distribution, et rendre la VPP résoluble sur tout son
+        domaine.
+  \item \textbf{Le coût de la sélection.} Le choix d'un lot, en $O(n^2)$, est devenu le goulot : de 25 à
+        100 s par lot de 16 au 3\textsuperscript{e} run, pour un plan de 300 à 1300 points.
+  \item \textbf{Les sensibilités ponctuelles aberrantes} : une fois au 3\textsuperscript{e} run, $d_{F_x}$ a
+        valu 201 au lieu de 111 pendant trois mises à jour. On pourrait prendre la médiane de deux solves, ou
+        rejeter une valeur trop loin de la précédente.
+  \item \textbf{La FSI de premier ordre} et \textbf{la validation entre modèles potentiels} : quelques calculs
+        CFD aux états VPP des profils comparés trancheraient.
+\end{enumerate}
+
+\end{document}
