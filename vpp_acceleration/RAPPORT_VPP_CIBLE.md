@@ -383,6 +383,22 @@ script [`scripts/real_step0_calibration.py`](scripts/real_step0_calibration.py).
 * **La précision :** 0,005 nd d'erreur de vitesse contre AVL au meilleur profil.
 * **À confirmer** avec NPLLT × XFOIL et la CFD, car AVL ne voit que la ligne de cambrure.
 
+**Le 3e run** : [`runs/2026-10-22_1519_real_npllt_xfoil_fsi/README.md`](runs/2026-10-22_1519_real_npllt_xfoil_fsi/README.md).
+
+* **Le cadre :** celui du 2e run, avec trois changements.
+  * Le niveau HF est **NPLLT × XFOIL**, et AVL × XFOIL ne sert plus qu'à la validation.
+  * Le foil est **flexible** : la correction de déformée de la RS FSI de production est mise à l'échelle de l'Ixx
+    (`vpp_coupling.FSICorrection`). Elle redonne la VPP de production à 0,0005 nd près.
+  * Les calculs tournent **en parallèle** : lots de 16 points choisis par « kriging believer », 28 processus de calcul,
+    30 processus VPP, co-krigeages en fils.
+* **Le résultat :** le même profil que le 2e run. Le gain sur le profil actuel vaut **+0,24 nd vu par NPLLT × XFOIL et
+  +0,22 nd vu par AVL**, et il tient dans les 5 conditions. Le Cpmin passe de −2,57 à −0,87.
+* **Pourquoi le même profil :** les deux runs criblent les mêmes réserves de sections, tirées avec la même graine. Le
+  choix tient au changement de modèle et à la déformée. Il reste le meilleur de tirages aléatoires : un raffinement
+  local autour de lui est la suite naturelle.
+* **Le débit :** 816 choix en 65 min, contre 373 au 2e run ; 313 calculs HF dans le plan final, contre 121. Le choix
+  des lots, en n², est devenu le goulot.
+
 ## 10. Fichiers
 
 | Fichier | Rôle |
