@@ -1,0 +1,500 @@
+% =============================================================================================
+%  Plan séquentiel multi-fidélité pour le co-krigeage — méthode de Le Gratiet & Cannamela
+%  (2015) corrigée. Note d'implémentation pour vpp_acceleration.
+%  Compilation : tectonic -X compile sequential_cokriging.tex --outdir build
+% =============================================================================================
+\documentclass[10pt,a4paper]{article}
+\usepackage{fontspec}
+\usepackage[french]{babel}
+\usepackage{csquotes}
+\usepackage[a4paper,margin=1.8cm,top=1.6cm,bottom=1.8cm]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{xcolor}
+\usepackage{booktabs,tabularx,array}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{titlesec}
+\usepackage[hidelinks,unicode]{hyperref}
+
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,
+            urlcolor=blue!60!black,pdftitle={Plan sequentiel multi-fidelite pour le co-krigeage}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\setlist{itemsep=0.1em,topsep=0.2em,leftmargin=1.3em}
+\titleformat{\section}{\normalfont\large\bfseries\color{blue!40!black}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{0.9em}{0.3em}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0.6em}{0.2em}
+\renewcommand{\arraystretch}{1.12}
+
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}
+
+\tcbset{enhanced,breakable,boxrule=0.6pt,arc=1.2mm,left=1.5mm,right=1.5mm,top=0.6mm,bottom=0.6mm,
+        fonttitle=\bfseries\small,before skip=0.5em,after skip=0.5em}
+\newtcolorbox{danslecode}[1][]{colback=green!3,colframe=green!35!black,
+  title={Dans le code\ifx&#1&\else~— #1\fi}}
+\newtcolorbox{subtilite}[1][]{colback=orange!4,colframe=orange!70!black,
+  title={Subtilité\ifx&#1&\else~— #1\fi}}
+\newtcolorbox{aretenir}[1][]{colback=violet!4,colframe=violet!60!black,
+  title={À retenir\ifx&#1&\else~— #1\fi}}
+
+\definecolor{codebg}{gray}{0.965}
+\lstdefinestyle{py}{language=Python,basicstyle=\ttfamily\scriptsize,
+  keywordstyle=\color[RGB]{0,70,160}\bfseries,stringstyle=\color[RGB]{160,40,40},
+  commentstyle=\color[RGB]{80,120,80}\itshape,backgroundcolor=\color{codebg},
+  frame=single,framerule=0.3pt,rulecolor=\color{gray!50},breaklines=true,
+  showstringspaces=false,columns=fullflexible,keepspaces=true,upquote=true,
+  aboveskip=0.4em,belowskip=0.2em}
+\lstset{style=py}
+
+\floatname{algorithm}{Algorithme}
+\algrenewcommand\algorithmicrequire{\textbf{Entrées :}}
+\algrenewcommand\algorithmicensure{\textbf{Sorties :}}
+\algrenewcommand\algorithmicwhile{\textbf{tant que}}
+\algrenewcommand\algorithmicdo{\textbf{faire}}
+\algrenewcommand\algorithmicfor{\textbf{pour}}
+\algrenewcommand\algorithmicif{\textbf{si}}
+\algrenewcommand\algorithmicthen{\textbf{alors}}
+\algrenewcommand\algorithmicend{\textbf{fin}}
+\algrenewcommand\algorithmicreturn{\textbf{retourner}}
+
+\newcommand{\vx}{\bm{x}}
+\newcommand{\vu}{\bm{u}}
+\newcommand{\vz}{\bm{z}}
+\newcommand{\vd}{\bm{d}}
+\newcommand{\Kt}{\widetilde{\bm{K}}}
+\newcommand{\Q}{\mathcal{Q}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\tp}{^{\mathsf{T}}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\ExplSyntaxOn
+\cs_new_protected:Npn \mf_breakable:n #1
+  {
+    \str_set:Nn \l_tmpa_str {#1}
+    \str_map_inline:Nn \l_tmpa_str
+      {
+        ##1
+        \str_if_in:nnT { _./,(=[ } {##1} { \allowbreak }
+      }
+  }
+\NewDocumentCommand \py { m } { \texttt { \mf_breakable:n {#1} } }
+\ExplSyntaxOff
+
+\begin{document}
+
+{\centering
+{\Large\bfseries\color{blue!40!black} Plan séquentiel multi-fidélité pour le co-krigeage\par}
+\vspace{0.2em}
+{\large Méthode de Le Gratiet \& Cannamela (2015) corrigée — note d'implémentation\par}
+\vspace{0.3em}
+{\small \py{Multifidelity-GP-Clean/vpp_acceleration} · s'appuie sur \py{mfego/src/cokriging.py} (lecture seule)
+· 19/10/2026\par}
+\vspace{0.2em}}
+
+% ---------------------------------------------------------------------------------------------
+\section{Objectif et principe}
+% ---------------------------------------------------------------------------------------------
+On dispose de $L$ codes de calcul hiérarchisés (niveaux $l=1,\dots,L$, coûts $c_1<\dots<c_L$) et d'un
+co-krigeage \py{CoKriging} ajusté sur un plan \emph{imbriqué} $\D_L\subset\dots\subset\D_1$. On veut un
+modèle du niveau $L$ \textbf{précis sur tout le domaine} $\Q$ — ce n'est pas la recherche d'un optimum, rôle
+de l'EGO de mfego. À chaque itération, il faut deux décisions : \emph{où} calculer ($\vx_0$) et \emph{jusqu'à
+quel niveau} ($l$). Calculer $\vx_0$ au niveau $l$ impose de le calculer aux niveaux $1,\dots,l$ : le plan
+reste imbriqué, condition exigée par \py{CoKriging.fit}.
+
+Le Gratiet \& Cannamela~\cite{LGC15} choisissent $\vx_0$ au maximum d'une variance de prédiction
+\enquote{ajustée} par validation croisée, puis $l$ par une approximation de la réduction de l'erreur intégrée
+(IMSE) pondérée par le rapport des coûts. Nous gardons cette architecture, avec trois changements :
+\begin{enumerate}
+  \item le choix du niveau compare des réductions de variance \textbf{mesurées sur la sortie haute fidélité}
+        et calculées \textbf{exactement} (§\,\ref{sec:niveau}). La règle publiée omet un facteur $\rho^2$ et
+        utilise un volume non borné ;
+  \item l'ajustement par validation croisée se réduit au leave-one-out (LOO) \emph{de chaque GP de biais
+        seul} (§\,\ref{sec:point}) : les éq.~6–7 de~\cite{LGC15} deviennent inutiles ;
+  \item la cellule de Voronoï est définie dans la métrique du noyau (invariante par changement d'unités).
+\end{enumerate}
+
+% ---------------------------------------------------------------------------------------------
+\section{Modèle et décomposition de la variance}\label{sec:modele}
+% ---------------------------------------------------------------------------------------------
+Le modèle auto-régressif de Kennedy \& O'Hagan~\cite{KO00,LG13,LGG14} s'écrit
+\begin{equation}\label{eq:ar1}
+  Z_1=\delta_1,\qquad Z_l(\vx)=\rho_{l-1}\,Z_{l-1}(\vx)+\delta_l(\vx),\qquad
+  \delta_1,\dots,\delta_L \text{ GP indépendants},\qquad z_l = Z_l(\D_l)+\varepsilon_l,\
+  \varepsilon_l\sim\mathcal{N}(0,\tau_l^2\bm{I}).
+\end{equation}
+On note $P_j=\prod_{k=j}^{L-1}\rho_k$ ($P_L=1$), de sorte que $Z_L=\sum_j P_j\,\delta_j$ : $P_j$ est le
+\enquote{gain} avec lequel la correction apportée par le niveau $j$ se propage jusqu'à la sortie haute fidélité.
+On note $\vd_j=z_j-\rho_{j-1}z_{j-1}(\D_j)$ les résidus observés ($\vd_1=z_1$), calculables grâce à
+l'imbrication, et $\mu_j$, $k^n_j(\vx,\vx')$, $\sigma_j^2(\vx)=k^n_j(\vx,\vx)$ la moyenne, la covariance et la
+variance a posteriori de $\delta_j$ sachant $\vd_j$ seul.
+
+\begin{proposition}[décomposition, \cite{LG13} prop.~3.1, \cite{LGC15} éq.~4]\label{prop:decomp}
+Si le plan est imbriqué et les niveaux $j<L$ sans bruit, alors, à hyperparamètres fixés,
+\begin{equation}\label{eq:decomp}
+  \mathbb{E}[Z_L(\vx)\mid z]=\sum_{j=1}^{L}P_j\,\mu_j(\vx),\qquad
+  \Var[Z_L(\vx)\mid z]=\sum_{j=1}^{L}P_j^2\,\sigma_j^2(\vx).
+\end{equation}
+\end{proposition}
+\emph{Preuve.} L'application $(z_1,\dots,z_L)\mapsto(\vd_1,\dots,\vd_L)$ est linéaire et inversible
+(triangulaire par blocs, ce qui demande $z_{j-1}$ observé sur $\D_j$, donc l'imbrication). Or $\vd_j$ ne
+dépend que de $\delta_j$. Les $\delta_j$ étant indépendants, conditionner par $z$ revient à conditionner
+chaque $\delta_j$ par son propre $\vd_j$. \hfill$\square$
+
+\textbf{Lecture physique.} $\sigma_j^2(\vx)$ est ce qu'on ignore encore de la correction apportée par le
+niveau $j$ ; $P_j^2$ dit combien cette ignorance pèse sur la sortie haute fidélité. C'est cette
+décomposition qui permet de décider \emph{quel} code lancer.
+
+\begin{danslecode}
+\begin{itemize}
+  \item $\delta_j$ est le GP \py{model.gps[j-1]}. \py{CoKriging.fit} l'ajuste sur les entrées ramenées au
+        cube unité, $\vu=$\,\py{model._unit(x)}, et sur le résidu $\vd_j$. Ses longueurs de corrélation
+        $\theta_{j,m}$ (\py{gp.kernel.lengthscale}) sont donc sans dimension.
+  \item $P_j$ s'obtient par \py{model._factors(np.array([L]))[0, j-1]}. Les $\rho$ sont dans
+        \py{model.rhos} (\py{rhos[l-2]} relie $l-1$ à $l$) ; ce sont des estimations ponctuelles (MAP, prior
+        lognormale en v3).
+  \item $\sigma_j^2(\vu)$ vaut \py{gp.predict_batch(u)[1] - gp.get_noise_variance()}, et $\tau_j^2$ vaut
+        \py{gp.get_noise_variance()}.
+  \item \textbf{Vérification} (cas 2D à 3 niveaux, plan 40/15/6) : $\sum_j P_j^2\sigma_j^2$ égale la variance
+        de \py{model.predict_batch(x, include_noise=False)} à $1{,}2\cdot10^{-4}$ près en relatif.
+        L'écart vient du bruit $\tau_j^2$ appris par mfego : le résidu $\vd_j$ contient $\rho^2\tau_{j-1}^2$,
+        si bien que l'égalité~\eqref{eq:decomp} n'est exacte qu'à l'ordre $\rho^2\tau_{j-1}^2/\sigma^2$.
+\end{itemize}
+\end{danslecode}
+
+% ---------------------------------------------------------------------------------------------
+\section{Où calculer : variance ajustée par validation croisée}\label{sec:point}
+% ---------------------------------------------------------------------------------------------
+\textbf{Pourquoi la variance seule ne suffit pas.} La variance d'un GP,
+$\sigma^2(\vx)=k(\vx,\vx)-\bm{k}(\vx)\tp\Kt^{-1}\bm{k}(\vx)$ avec $\Kt=\bm{K}+\tau^2\bm{I}$,
+\emph{ne dépend pas des valeurs observées}. Seules la géométrie du plan et les hyperparamètres y entrent.
+Or ces hyperparamètres sont uniques sur tout $\Q$ (noyau stationnaire) : le modèle suppose une
+\enquote{rugosité} uniforme. Pensons à un phénomène localisé, comme un décrochage ou une ventilation : là où
+la fonction varie plus vite que prévu, l'erreur réelle dépasse $\sigma$, et la variance ne le voit pas. Le
+LOO, lui, mesure des erreurs réellement observées~\cite{LGC15,KvB04}.
+
+\textbf{LOO en forme close.} Pour un GP de moyenne $m$, avec $\bm{\alpha}=\Kt^{-1}(\bm{y}-m)$ et des
+hyperparamètres fixés, l'erreur et la variance de prédiction de $y_i$ sans le point $i$
+valent~\cite{Dub83},~\cite[éq.~5.12]{RW06} :
+\begin{equation}\label{eq:loo}
+  e_i=\frac{\alpha_i}{[\Kt^{-1}]_{ii}},\qquad s_i^2=\frac{1}{[\Kt^{-1}]_{ii}},\qquad
+  z_i^2=\frac{e_i^2}{s_i^2}=\frac{\alpha_i^2}{[\Kt^{-1}]_{ii}}.
+\end{equation}
+Si le modèle est correct, $z_i\sim\mathcal{N}(0,1)$ : $z_i^2\gg1$ signale une erreur sous-estimée. $z_i^2$
+est invariant par changement d'échelle de $y$, on peut donc utiliser directement \py{gp.alpha} (sorties
+normalisées).
+
+\begin{proposition}[LOO par niveau]\label{prop:loo}
+Sous les hypothèses de la proposition~\ref{prop:decomp}, soit $\vx_i\in\D_j$, et $e_j(\vx_i)$, $s_j^2(\vx_i)$
+l'erreur et la variance LOO du co-krigeage au niveau $j$ quand $\vx_i$ est retiré de tous les niveaux. Alors
+\[
+  e_j(\vx_i)-\rho_{j-1}\,e_{j-1}(\vx_i)=e_i^{(\delta_j)},\qquad
+  s_j^2(\vx_i)-\rho_{j-1}^2\,s_{j-1}^2(\vx_i)=s_i^{2\,(\delta_j)},
+\]
+où $e_i^{(\delta_j)}$, $s_i^{2\,(\delta_j)}$ sont donnés par~\eqref{eq:loo} pour le GP $\delta_j$ seul, sur ses
+résidus $\vd_j$.
+\end{proposition}
+\emph{Preuve.} Retirer $\vx_i$ de tous les niveaux laisse le plan imbriqué. La proposition~\ref{prop:decomp}
+donne alors $\mu_{j,-i}=\rho_{j-1}\mu_{j-1,-i}+\mu^{\delta_j}_{-i}$. Comme
+$z_j(\vx_i)=\rho_{j-1}z_{j-1}(\vx_i)+d_j(\vx_i)$, on soustrait ; on raisonne de même sur les variances,
+grâce à l'indépendance des $\delta_j$. \hfill$\square$
+
+Le terme de l'éq.~8 de~\cite{LGC15},
+$(e_j-\hat\rho\,e_{j-1})^2/(s_j^2-\hat\rho^2 s_{j-1}^2)$, est donc exactement le $z_i^2$ du GP
+\py{gps[j-1]}. Il se calcule à partir de son facteur de Cholesky, sans réajustement ni éq.~6–7. Chez
+Le Gratiet, $\hat\rho$ est ré-estimé sans le point $i$ (moindres carrés généralisés) ; chez nous, $\rho$ est
+appris avec le noyau et reste fixé, comme les autres hyperparamètres. Vérification par
+\py{CoKriging.leave_one_out(level, by_location=True)} : écart de $1{,}6\cdot10^{-4}$ à 3 niveaux et de
+$1{,}2\cdot10^{-2}$ à 2 niveaux, en relatif à l'écart-type des erreurs (bruit BF relativement plus grand).
+
+\textbf{Variance ajustée et choix du point} (\cite{LGC15}, éq.~8–9) :
+\begin{equation}\label{eq:adj}
+  k_{\mathrm{adj}}(\vx)=\sum_{j=1}^{L}P_j^2\,\sigma_j^2(\vx)\,a_j(\vx),\qquad
+  a_j(\vx)=1+z^2_{j,\,i_j(\vx)},\qquad
+  \vx_0=\argmax_{\vx\in\Q}\,k_{\mathrm{adj}}(\vx).
+\end{equation}
+$i_j(\vx)$ est le point de $\D_j$ dont la cellule de Voronoï contient $\vx$, c'est-à-dire son plus proche
+voisin. \cite{LGC15} prennent la distance euclidienne dans les unités brutes, qui dépend du choix des unités
+(degrés de gîte contre nœuds de vitesse). \textbf{Nous proposons la métrique du noyau},
+$\sum_m(u_m-u_{i,m})^2/\theta_{j,m}^2$ : pour un noyau stationnaire, le plus proche voisin est alors le point
+\emph{le plus corrélé} à $\vx$. Ce choix est invariant par changement d'unités et suit l'anisotropie.
+
+\begin{subtilite}[ce que fait vraiment l'ajustement]
+\begin{itemize}
+  \item Si le modèle est bien calibré, $\mathbb{E}[z^2]=1$ : $a_j\approx2$ partout, et $\argmax$ ne bouge pas.
+        L'ajustement n'agit que là où les erreurs observées s'écartent de la variance prédite.
+  \item Il ne fait qu'\emph{augmenter} la variance, jamais la réduire là où le modèle est trop prudent.
+  \item $k_{\mathrm{adj}}$ est discontinu aux frontières des cellules. L'évolution différentielle de SciPy
+        (déjà utilisée par \py{EGOOptimizer._find_next_point}) le supporte ; il n'est pas besoin de
+        construire la tessellation.
+  \item Avec peu de points, $z^2$ est bruité : un seul calcul aberrant gonfle toute sa cellule. Borner
+        $z^2\le z^2_{\max}$ (par exemple 9) est une option prudente, qui n'est pas dans~\cite{LGC15}.
+  \item Le maximum de variance tend à tomber sur les bords du domaine (comportement \enquote{ALM}, voir
+        \cite[ch.~6]{Gra20}). C'est attendu ; la variante du §\,\ref{sec:limites} corrige ce biais.
+\end{itemize}
+\end{subtilite}
+
+% ---------------------------------------------------------------------------------------------
+\section{Jusqu'à quel niveau : réduction d'IMSE par unité de coût}\label{sec:niveau}
+% ---------------------------------------------------------------------------------------------
+L'objectif global est l'erreur quadratique intégrée $\mathrm{IMSE}_L=\int_\Q\Var[Z_L(\vx)\mid z]\,d\vx$
+\cite{SWMW89}. Calculer $\vx_0$ aux niveaux $1..l$ revient à observer $d_j(\vx_0)=\delta_j(\vx_0)+\varepsilon_j$
+pour $j\le l$. Chaque $\delta_j$ concerné subit une mise à jour de rang un, et les autres ne changent pas :
+\[
+  \sigma_j^2(\vx)\;\longrightarrow\;\sigma_j^2(\vx)-\frac{k_j^n(\vx,\vx_0)^2}{\sigma_j^2(\vx_0)+\tau_j^2}.
+\]
+Avec~\eqref{eq:decomp}, le gain sur la sortie haute fidélité est donc \emph{exactement}, à hyperparamètres fixés,
+\begin{equation}\label{eq:gain}
+  G_l(\vx_0)=\sum_{j=1}^{l}P_j^2\,a_j(\vx_0)\int_\Q\frac{k_j^n(\vx,\vx_0)^2}{\sigma_j^2(\vx_0)+\tau_j^2}\,d\vx
+  \;\approx\;\sum_{j=1}^{l}P_j^2\,a_j(\vx_0)\,\frac{1}{N}\sum_{k=1}^{N}
+  \frac{k_j^n(\vu_k,\vu_0)^2}{\sigma_j^2(\vu_0)+\tau_j^2},
+\end{equation}
+avec $N$ points de Sobol $\vu_k$ dans le cube unité. Le volume $|\Q|$, commun à tous les niveaux, ne change
+pas le choix. Le facteur $a_j(\vx_0)$ reprend l'éq.~10 de~\cite{LGC15} (variance ajustée au point ajouté).
+Le gain ne dépend pas de la valeur que le code va rendre : il est connu \emph{avant} de lancer le calcul.
+C'est le principe des stratégies de réduction pas à pas de l'incertitude (SUR)~\cite{Bect12}. Le niveau est
+choisi au \textbf{meilleur rendement}, en incertitude retirée par unité de temps de calcul, comme dans le
+critère MR-SUR multi-fidélité de~\cite{Stroh22} :
+\begin{equation}\label{eq:regle}
+  l^\star=\argmax_{l=1..L}\ \frac{G_l(\vx_0)}{C_l},\qquad C_l=\sum_{j=1}^{l}c_j
+  \quad\text{(coût cumulé : l'imbrication impose les niveaux inférieurs).}
+\end{equation}
+Calculer~\eqref{eq:gain} coûte $O(N n_j)$ par niveau, et seulement au point $\vx_0$ retenu : c'est
+négligeable. Vérification contre un reconditionnement complet (\py{CoKriging.condition} avec $\vx_0$ ajouté
+aux niveaux $1..l$) : écart relatif de $10^{-5}$ à $2\cdot10^{-3}$.
+
+\begin{aretenir}[pourquoi corriger la règle publiée]
+Pour $L=2$, \cite{LGC15} approchent la réduction par $\sigma_j^2(\vx_0)\,V_j$ avec un \enquote{volume
+d'influence} $V_j=\prod_m\theta_{j,m}$ (éq.~5). On note $R_1=\sigma_1^2V_1$ et $B=c_2/c_1$.
+\begin{itemize}
+  \item \textbf{Unités.} $\mathrm{IMSE}^1_{\mathrm{red}}=R_1$ est une réduction de l'IMSE de la sortie
+        \emph{BF}, alors que $\mathrm{IMSE}^2_{\mathrm{red}}=\rho^2R_1+\sigma_2^2V_2$ concerne la sortie
+        \emph{HF}. Or un calcul BF réduit l'IMSE de la HF de $\rho^2R_1$. Comparons les deux règles, avec le
+        même proxy :
+        \[
+          \text{\cite{LGC15} : } B\,R_1>\rho^2R_1+\sigma_2^2V_2\iff(B-\rho^2)\,R_1>\sigma_2^2V_2;
+          \qquad
+          \text{éq.~\eqref{eq:regle} : } B\,\rho^2R_1>\sigma_2^2V_2 .
+        \]
+        Les deux ne coïncident que pour $\rho^2\approx1$. Si $\rho^2\ge B$, la règle publiée ne lance
+        \emph{jamais} la BF ; si $\rho<1$, elle la lance trop. Dans mfego, $\hat\rho\approx2{,}4$ sur les
+        données de l'EGO (Hartmann), et la v3 monte jusqu'à 25.
+  \item \textbf{Volume.} $V_j$ n'est pas borné : sur notre cas test, $\theta_2=(3{,}4;\,4{,}8)$ donne
+        $V_2=16$, pour un domaine de volume 1. L'intégrale de~\eqref{eq:gain} est bornée par construction.
+\end{itemize}
+\textbf{Cas test} (2D, 2 niveaux, plan 40/15, $\hat\rho=1{,}99$, 256 points candidats). Le résidu $\delta_2$
+est lisse et déjà bien appris : 99\,\% de la variance HF vient du niveau 1, la bonne réponse est donc la BF.
+Part des points où la BF est choisie :
+\begin{center}\small
+\begin{tabular}{lccc}
+\toprule
+ & règle de \cite{LGC15} (algorithme 1 complet) & proxy corrigé & gain exact~\eqref{eq:gain}–\eqref{eq:regle}\\
+\midrule
+$B=5$  & 0,85 & 0,97 & 1,00\\
+$B=20$ & 0,99 & 1,00 & 1,00\\
+\bottomrule
+\end{tabular}
+\end{center}
+Le premier test de l'algorithme 1, $\sigma^2_l(\vx_0)<\overline{\sigma^2_l}$, devient inutile :
+\eqref{eq:regle} compare directement les gains.
+\end{aretenir}
+
+% ---------------------------------------------------------------------------------------------
+\section{Algorithme et intégration dans le code}\label{sec:code}
+% ---------------------------------------------------------------------------------------------
+\begin{algorithm}[h]
+\caption{Co-krigeage séquentiel (une évaluation par itération)}\label{alg:seq}
+\small
+\begin{algorithmic}[1]
+\Require \py{data} (\py{ExperimentData} imbriqué et évalué), \py{simulator} (\py{BaseSimulator}),
+  \py{data.costs}, budget, $N$, seuil $Q^2_{\mathrm{cible}}$
+\While{budget restant $\ge c_1$ \textbf{et} $Q^2_{\mathrm{LOO}}<Q^2_{\mathrm{cible}}$}
+  \State \py{model = CoKriging(L)} ; \py{model.fit(data)} \Comment{hyperparamètres ré-estimés}
+  \State $z^2_{j,i}\gets$ \eqref{eq:loo} sur chaque \py{model.gps[j-1]} \Comment{proposition~\ref{prop:loo}}
+  \State $\vx_0\gets\argmax k_{\mathrm{adj}}$ \eqref{eq:adj} par évolution différentielle, masque \py{feasibility}
+  \State $l^\star\gets\argmax_l G_l(\vx_0)/C_l$ \eqref{eq:gain}–\eqref{eq:regle} avec $N$ points de Sobol
+  \For{$j=1,\dots,l^\star$} \Comment{du moins cher au plus cher}
+    \State \py{y, metrics = simulator.evaluate(x0, j)} ; \py{data.add_observation(j, x0, y, metrics)}
+    \If{$y$ non fini} \textbf{sortir de la boucle pour} \Comment{niveaux $>j$ non lancés : plan imbriqué}
+    \EndIf
+  \EndFor
+  \State $Q^2_{\mathrm{LOO}}\gets$ \py{prediction_scores(*model.leave_one_out())["q2"]}
+\EndWhile
+\State \Return \py{model}, \py{data}, historique (coût, $Q^2_{\mathrm{LOO}}$, niveaux choisis)
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Noyau de calcul.} Les fonctions ci-dessous ont été testées contre le vrai \py{CoKriging} (écarts
+du §\,\ref{sec:valid}). Elles n'utilisent que des objets existants de mfego.
+\begin{lstlisting}
+import numpy as np
+from scipy.linalg import cho_solve, solve_triangular
+
+def level_weights(model):                      # P_j, j = 1..L (single access to a private helper)
+    return model._factors(np.array([model.num_levels]))[0]
+
+def posterior_cov(gp, u_a, u_b):               # k_j^n(u_a, u_b), raw units, latent (no noise)
+    v_a = solve_triangular(gp.l_chol, gp.kernel.get_cross_covariance_matrix(u_a, gp.x_train).T, lower=True)
+    v_b = solve_triangular(gp.l_chol, gp.kernel.get_cross_covariance_matrix(u_b, gp.x_train).T, lower=True)
+    return gp.y_std ** 2 * (gp.kernel.get_cross_covariance_matrix(u_a, u_b) - v_a.T @ v_b)
+
+def level_variances(model, u):                 # sigma_j^2(u), shape (L, m)
+    return np.array([np.maximum(gp.predict_batch(u)[1] - gp.get_noise_variance(), 0.0) for gp in model.gps])
+
+def loo_z2(gp):                                # Eq. (3): alpha_i^2 / [K^-1]_ii
+    return gp.alpha ** 2 / np.diag(cho_solve((gp.l_chol, True), np.eye(len(gp.x_train))))
+
+def adjustment(model, z2, u):                  # a_j(u) = 1 + z^2 of the most correlated point of D_j
+    out = []
+    for j, gp in enumerate(model.gps):
+        d2 = np.sum(((u[:, None, :] - gp.x_train[None, :, :]) / gp.kernel.lengthscale) ** 2, axis=2)
+        out.append(1.0 + z2[j][np.argmin(d2, axis=1)])
+    return np.array(out)
+
+def adjusted_variance(model, z2, u):           # Eq. (4)
+    p2 = level_weights(model)[:, None] ** 2
+    return np.sum(p2 * level_variances(model, u) * adjustment(model, z2, u), axis=0)
+
+def delta_imse(model, z2, u0, u_int):          # Eq. (5): G_l(u0) for l = 1..L, u0 of shape (1, d)
+    p2, a, gains = level_weights(model) ** 2, adjustment(model, z2, u0)[:, 0], []
+    for j, gp in enumerate(model.gps):
+        k_x0, s2_0 = posterior_cov(gp, u_int, u0)[:, 0], posterior_cov(gp, u0, u0)[0, 0]
+        gains.append(p2[j] * a[j] * np.mean(k_x0 ** 2) / (s2_0 + gp.get_noise_variance()))
+    return np.cumsum(gains)
+
+def choose_level(model, z2, u0, u_int, costs):  # Eq. (6)
+    return int(np.argmax(delta_imse(model, z2, u0, u_int) / np.cumsum(costs))) + 1
+\end{lstlisting}
+Les points de Sobol se tirent par \py{u_int = scipy.stats.qmc.Sobol(d, seed=s).random(N)}, déjà dans le
+cube unité ; $N\approx 1024$ à $4096$ suffit pour $d\lesssim10$. La recherche de $\vx_0$ réutilise
+l'enveloppe vectorisée de \py{EGOOptimizer._find_next_point}, qui minimise
+\py{-adjusted_variance(model, z2, model._unit(x))}.
+
+\begin{danslecode}[intégration dans \py{vpp_acceleration}]
+\begin{itemize}
+  \item \textbf{Fichiers.} Le module va dans \py{vpp_acceleration/src/sequential_design.py}, les scripts
+        dans \py{vpp_acceleration/}, les tests dans \py{vpp_acceleration/tests/}. mfego n'est pas
+        modifié.
+  \item \textbf{Imports.} \py{mfego/src} n'a pas de \py{__init__.py} : c'est un \emph{paquet espace de
+        noms}. Si \py{vpp_acceleration/src} n'en a pas non plus, Python fusionne les deux dossiers sous le
+        nom \py{src} (testé) :
+        \py{sys.path.insert(0, ROOT/"mfego")} et \py{sys.path.insert(1, ROOT/"vpp_acceleration")}, puis
+        \py{from src.cokriging import CoKriging} et \py{from src.sequential_design import ...}.
+        Deux règles en découlent :
+        \begin{itemize}
+          \item \textbf{aucun} \py{__init__.py} dans \py{vpp_acceleration/src}, sinon ce dossier masque
+                tout mfego ;
+          \item \textbf{aucun nom de module déjà pris} par mfego (\py{acquisition}, \py{cokriging},
+                \py{data_management}, \py{kernels}, \py{optimizer}, \py{run_utils}, \py{simulator},
+                \py{surrogate_models}, \py{validation}, \py{visualization}). Un doublon est ignoré sans
+                message d'erreur (testé).
+        \end{itemize}
+  \item \textbf{GP par niveau.} Seul \py{fit()} conditionne \py{model.gps}. \py{from_dict} et
+        \py{from_multifidelity} ne conditionnent que le système joint. Pour un modèle rechargé, il faut
+        reconditionner : \py{gp.condition(model._unit(X_j), d_j)}, avec
+        \py{d_j = y_j - rho * y_prev[nested_index(X_j, X_prev)]}.
+  \item \textbf{Méthodes privées.} \py{_factors} et \py{_unit} sont privées : n'y accéder que via
+        \py{level_weights} et une fonction \py{to_unit}, pour n'avoir qu'un endroit à corriger si mfego
+        change.
+  \item \textbf{Échecs.} \py{add_observation} stocke un calcul raté en NaN, que \py{get_training_data}
+        exclut. Comme les niveaux sont évalués dans l'ordre croissant et qu'on s'arrête au premier échec,
+        \py{missing_points_for_nesting(data, L)} reste vide et \py{fit} ne lève pas d'erreur.
+  \item \textbf{Coûts.} \py{data.costs} doit être dans une unité homogène (secondes CPU). Le coût est
+        cumulé dans~\eqref{eq:regle}.
+\end{itemize}
+\end{danslecode}
+
+% ---------------------------------------------------------------------------------------------
+\section{Validation}\label{sec:valid}
+% ---------------------------------------------------------------------------------------------
+\textbf{Tests unitaires} (\py{pytest}). Entre parenthèses, l'écart mesuré sur le cas 2D, puis la tolérance
+proposée.
+\begin{enumerate}
+  \item \py{adjusted_variance} avec $z^2=0$ égale la variance de
+        \py{predict_batch(include_noise=False)} ($1{,}2\cdot10^{-4}$ ; $10^{-3}$).
+  \item Proposition~\ref{prop:loo} contre \py{leave_one_out(level, by_location=True)}
+        ($1{,}6\cdot10^{-4}$ à $1{,}2\cdot10^{-2}$ ; $5\cdot10^{-2}$).
+  \item \py{delta_imse} contre la baisse de variance moyenne après \py{condition()} avec $\vx_0$ ajouté aux
+        niveaux $1..l$ et une valeur arbitraire ($\le2\cdot10^{-3}$ ; $10^{-2}$).
+  \item Après chaque itération, \py{missing_points_for_nesting} est vide.
+\end{enumerate}
+\textbf{Benchmark.}
+\begin{itemize}
+  \item \emph{Problèmes :} Forrester (dossier \py{example/cokriging}), Hartmann (classe \py{HartmannMF} de
+        \py{benchmarks/bench_lib.py}) et profil (classe \py{AirfoilMF} du dossier \py{benchmarks/cokriging}).
+  \item \emph{Référence :} plan imbriqué LHS (\py{generate_nested_design}) \textbf{à coût égal}, 10 graines.
+  \item \emph{Métriques :} \py{validation.prediction_scores} sur un jeu de test (RMSE relative, $Q^2$,
+        couverture à 95\,\%, NLPD), et part de BF.
+  \item \emph{Variantes :} variance seule ou ajustée, règle de~\cite{LGC15} ou règle~\eqref{eq:regle}.
+  \item \emph{Critère de succès :} RMSE inférieure à celle du LHS imbriqué, sans dégrader la couverture.
+\end{itemize}
+
+% ---------------------------------------------------------------------------------------------
+\section{Limites et extensions}\label{sec:limites}
+% ---------------------------------------------------------------------------------------------
+\begin{itemize}
+  \item \textbf{$\rho$ ponctuel.} \cite{LGC15,LGG14} intègrent $\rho$ (prior de Jeffreys). Sa variance
+        a posteriori s'ajoute alors à~\eqref{eq:decomp}. Chez nous, elle manque : la variance est optimiste
+        avec peu de points HF, et le choix du niveau est sensible à $\hat\rho$. Correction possible, au
+        premier ordre (krigeage universel,~\cite[éq.~2.42]{RW06}) : ajouter
+        $P_j^2\,r_j(\vx)^2/(\bm{f}\tp\Kt_j^{-1}\bm{f})$, avec $\bm{f}$ le niveau $j-1$ centré sur $\D_j$ et
+        $r_j(\vx)=\tilde\mu_{j-1}(\vx)-\bm{f}\tp\Kt_j^{-1}\bm{k}_j(\vx)$. Ce terme reste à valider.
+  \item \textbf{Bruit des niveaux inférieurs.} Les propositions~\ref{prop:decomp}–\ref{prop:loo} ne sont
+        alors qu'approchées, à l'ordre $\rho^2\tau_{j-1}^2/\sigma_j^2$ : à surveiller avec des solveurs
+        mal convergés.
+  \item \textbf{Variante ALC} (\cite{Gra20}, ch.~6). Choisir $\vx_0=\argmax_{\vx}\max_l G_l(\vx)/C_l$ au lieu
+        du maximum de variance. C'est plus coûteux, car il faut~\eqref{eq:gain} à chaque candidat, mais cela
+        évite le biais vers les bords et vise directement l'IMSE.
+  \item \textbf{Calculs en parallèle.} La variance ne dépend pas des valeurs : une sélection gloutonne est
+        exacte. On ajoute le point choisi avec une valeur fictive par \py{condition()}, puis on recommence.
+        Cela remplace l'échantillonnage MCMC suivi de k-means de~\cite{LGC15}, §\,3.3 ; pour les heuristiques
+        de type \enquote{liar}, voir~\cite{Gin10}.
+  \item \textbf{Sorties multiples (VPP).} Il faut un \py{CoKriging} par coefficient $o$, avec une tolérance
+        physique $\varepsilon_o$ pour chacun. On agrège alors $\sum_o k_{\mathrm{adj},o}/\varepsilon_o^2$
+        pour le point et $\sum_o G_{l,o}/\varepsilon_o^2$ pour le niveau, et on s'arrête quand chaque RMSE
+        LOO passe sous $\varepsilon_o$.
+  \item \textbf{Région d'intérêt.} Tirer les points d'intégration de~\eqref{eq:gain} parmi les états de
+        fonctionnement de la VPP donne un IMSE pondéré~\cite{Pic10}, sans autre changement de code. Le
+        critère d'arrêt peut alors être la RMSE LOO pondérée de~\cite{W21}.
+\end{itemize}
+
+{\small
+\begin{thebibliography}{99}\setlength{\itemsep}{0.05em}
+\bibitem{LGC15} L. Le Gratiet, C. Cannamela, \emph{Cokriging-based sequential design strategies using fast
+  cross-validation techniques for multi-fidelity computer codes}, Technometrics 57(3):418–427, 2015.
+\bibitem{KO00} M. C. Kennedy, A. O'Hagan, \emph{Predicting the output from a complex computer code when fast
+  approximations are available}, Biometrika 87(1):1–13, 2000.
+\bibitem{LG13} L. Le Gratiet, \emph{Multi-fidelity Gaussian process regression for computer experiments},
+  thèse, Université Paris Diderot, 2013.
+\bibitem{LGG14} L. Le Gratiet, J. Garnier, \emph{Recursive co-kriging model for design of computer experiments
+  with multiple levels of fidelity}, Int. J. Uncertainty Quantification 4(5):365–386, 2014.
+\bibitem{Dub83} O. Dubrule, \emph{Cross validation of kriging in a unique neighborhood}, Mathematical Geology
+  15(6):687–699, 1983.
+\bibitem{RW06} C. E. Rasmussen, C. K. I. Williams, \emph{Gaussian Processes for Machine Learning}, MIT Press,
+  2006 (§\,2.7 et §\,5.4.2).
+\bibitem{SWMW89} J. Sacks, W. J. Welch, T. J. Mitchell, H. P. Wynn, \emph{Design and analysis of computer
+  experiments}, Statistical Science 4(4):409–423, 1989.
+\bibitem{Bect12} J. Bect, D. Ginsbourger, L. Li, V. Picheny, E. Vazquez, \emph{Sequential design of computer
+  experiments for the estimation of a probability of failure}, Statistics and Computing 22(3):773–793, 2012.
+\bibitem{Stroh22} R. Stroh, J. Bect, S. Demeyer, N. Fischer, D. Marquis, E. Vazquez, \emph{Sequential design of
+  multi-fidelity computer experiments: maximizing the rate of stepwise uncertainty reduction}, Technometrics
+  64(2):199–209, 2022.
+\bibitem{Pic10} V. Picheny, D. Ginsbourger, O. Roustant, R. T. Haftka, N.-H. Kim, \emph{Adaptive designs of
+  experiments for accurate approximation of a target region}, J. Mechanical Design 132(7):071008, 2010.
+\bibitem{Gra20} R. B. Gramacy, \emph{Surrogates: Gaussian Process Modeling, Design and Optimization for the
+  Applied Sciences}, Chapman \& Hall/CRC, 2020 (ch.~6, ALM et ALC).
+\bibitem{Gin10} D. Ginsbourger, R. Le Riche, L. Carraro, \emph{Kriging is well-suited to parallelize
+  optimization}, in \emph{Computational Intelligence in Expensive Optimization Problems}, Springer, 2010.
+\bibitem{KvB04} J. P. C. Kleijnen, W. C. M. van Beers, \emph{Application-driven sequential designs for
+  simulation experiments: kriging metamodelling}, J. Operational Research Society 55:876–883, 2004.
+\bibitem{W21} J. Westermann, A. Zea, U. D. Hanebeck, \emph{Adaptive sampling for global meta modeling using a
+  Gaussian process variance measure}, European Control Conference, 573–579, 2021.
+\end{thebibliography}}
+
+\end{document}

@@ -1,0 +1,248 @@
+% =============================================================================================
+%  Mind map du co-krigeage séquentiel (méthode de Le Gratiet & Cannamela corrigée).
+%  Page 1 : une itération de l'algorithme. Page 2 : les étapes de construction du code.
+%  Compilation : tectonic -X compile mindmap_algo.tex --outdir build
+% =============================================================================================
+\documentclass[10pt]{article}
+\usepackage{fontspec}
+\usepackage[french]{babel}
+\usepackage[a4paper,landscape,margin=0.8cm]{geometry}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,backgrounds,shapes.geometric,calc}
+\pagestyle{empty}
+
+\ExplSyntaxOn
+\cs_new_protected:Npn \mf_breakable:n #1
+  {
+    \str_set:Nn \l_tmpa_str {#1}
+    \str_map_inline:Nn \l_tmpa_str
+      {
+        ##1
+        \str_if_in:nnT { _./,(=[ } {##1} { \allowbreak }
+      }
+  }
+\NewDocumentCommand \py { m } { \texttt { \mf_breakable:n {#1} } }
+\ExplSyntaxOff
+
+\definecolor{cin}{RGB}{90,90,90}
+\definecolor{c1}{RGB}{31,119,180}
+\definecolor{c2}{RGB}{148,103,189}
+\definecolor{c3}{RGB}{214,39,40}
+\definecolor{c4}{RGB}{255,127,14}
+\definecolor{c5}{RGB}{44,160,44}
+\definecolor{c6}{RGB}{23,150,160}
+\definecolor{done}{RGB}{44,160,44}
+\definecolor{todo}{RGB}{230,120,0}
+\definecolor{later}{RGB}{130,130,130}
+
+\newcommand{\vx}{\bm{x}}
+\setlist{nosep,leftmargin=0.9em,label=\textbullet}
+
+\tikzset{
+  box/.style={draw=#1,fill=#1!7,line width=1.1pt,rounded corners=3mm,text width=6.6cm,
+              inner sep=2.2mm,align=left,font=\footnotesize},
+  head/.style={font=\small\bfseries,text=#1!75!black},
+  center/.style={ellipse,draw=black!70,fill=yellow!12,line width=1.4pt,align=center,
+                 inner sep=1.5mm,font=\normalsize},
+  branch/.style={line width=4pt,draw=#1!45,line cap=round},
+  flow/.style={-{Stealth[length=3.2mm]},line width=1.2pt,draw=black!55},
+  lab/.style={font=\scriptsize\itshape,fill=white,inner sep=1pt,text=black!75},
+  badge/.style={circle,fill=#1,text=white,font=\small\bfseries,inner sep=1.2pt,minimum size=5.2mm},
+}
+\newcommand{\circled}[1]{\tikz[baseline=-0.7ex]\node[circle,draw,inner sep=0.5pt,
+  minimum size=3.6mm,font=\tiny\bfseries]{#1};}
+\newcommand{\boxtitle}[3]{% color, number, title
+  \tikz[baseline=-0.6ex]\node[badge=#1]{#2};\ {\small\bfseries\color{#1!75!black}#3}\par\vspace{0.6mm}}
+
+\begin{document}
+% =============================================================================================
+%  PAGE 1 — une itération
+% =============================================================================================
+\begin{center}
+\begin{tikzpicture}
+
+\node[center] (C) at (0,0) {\textbf{Une itération du}\\\textbf{co-krigeage séquentiel}\\[1mm]
+  {\scriptsize But : rendre le niveau haut précis}\\[-0.4mm]
+  {\scriptsize au moindre coût de calcul}};
+
+\node[box=c1] (S1) at (-7.6,3.55) {\boxtitle{c1}{1}{Ajuster le modèle}
+  \textit{Question : que sait-on ?}
+  \begin{itemize}
+    \item \py{model = CoKriging(L)} ; \py{model.fit(data)}
+    \item un GP $\delta_j$ par niveau, ajusté sur ses résidus $d_j=z_j-\rho_{j-1}z_{j-1}$
+    \item $\rho$ appris $\Rightarrow$ gains $P_j=\rho_j\cdots\rho_{L-1}$
+    \item hyperparamètres \textbf{figés} jusqu'à la fin de l'itération
+  \end{itemize}};
+
+\node[box=c2] (S2) at (0,6.55) {\boxtitle{c2}{2}{Décomposer l'incertitude}
+  \textit{Question : où, et à quel niveau, ignore-t-on ?}
+  \begin{itemize}
+    \item $\operatorname{Var}[Z_L(\vx)]=\sum_j P_j^2\,\sigma_j^2(\vx)$ \hfill (N2)\\
+          part de chaque niveau dans l'incertitude HF
+    \item erreurs LOO de chaque $\delta_j$ : $z^2_{j,i}=\alpha_i^2/[\widetilde{\bm K}^{-1}]_{ii}$ \hfill (N3)
+    \item $z^2\gg1$ : le modèle se trompe plus qu'il ne le croit
+  \end{itemize}};
+
+\node[box=c3] (S3) at (7.6,3.55) {\boxtitle{c3}{3}{Où calculer ? $\;\rightarrow\vx_0$}
+  \textit{Question : où le modèle est-il le moins fiable ?}
+  \begin{itemize}
+    \item variance ajustée \hfill (N4)\\
+          $k_{\mathrm{adj}}(\vx)=\sum_jP_j^2\sigma_j^2(\vx)\,(1+z^2_{j,\text{voisin}})$
+    \item voisin = point le plus corrélé (métrique du noyau)
+    \item $\vx_0=\arg\max k_{\mathrm{adj}}$ : évolution différentielle, dans le domaine réalisable (\py{feasibility})
+  \end{itemize}};
+
+\node[box=c4] (S4) at (7.6,-3.55) {\boxtitle{c4}{4}{Jusqu'à quel niveau ? $\;\rightarrow l^\star$}
+  \textit{Question : quel calcul rapporte le plus par seconde CPU ?}
+  \begin{itemize}
+    \item gain exact si $\vx_0$ est calculé aux niveaux $1..l$ : \hfill (N5)\\
+          $G_l=\sum_{j\le l}P_j^2\!\int\!\frac{k^n_j(\vx,\vx_0)^2}{\sigma_j^2(\vx_0)+\tau_j^2}d\vx$
+    \item intégrale = moyenne sur les points d'intégration
+    \item coût cumulé $C_l=c_1+\dots+c_l$ (imbrication)
+    \item $l^\star=\arg\max_l G_l/C_l$ \hfill (N6)\\ \textbf{$\rho^2$ inclus} : correction de LG
+  \end{itemize}};
+
+\node[box=c5] (S5) at (0,-6.55) {\boxtitle{c5}{5}{Calculer}
+  \textit{Action : lancer les codes}
+  \begin{itemize}
+    \item niveaux $1,2,\dots,l^\star$ en $\vx_0$, du moins cher au plus cher
+    \item \py{simulator.evaluate(x0, j)} puis \py{data.add_observation(j, x0, y)}
+    \item échec (NaN) $\Rightarrow$ arrêt : les niveaux au-dessus ne sont pas lancés
+    \item le plan reste \textbf{imbriqué}
+  \end{itemize}};
+
+\node[box=c6] (S6) at (-7.6,-3.55) {\boxtitle{c6}{6}{Arrêter ?}
+  \textit{Question : est-ce assez précis ?}
+  \begin{itemize}
+    \item $Q^2_{\mathrm{LOO}}\ge$ cible (\py{leave_one_out} + \py{prediction_scores})
+    \item ou budget de calcul épuisé
+    \item plus tard, avec la VPP : incertitude sur la vitesse $\sigma_V<$ tolérance
+  \end{itemize}};
+
+\node[box=cin,text width=5.55cm] (IN) at (-11.05,7.75) {{\small\bfseries\color{cin}Entrées}\par\vspace{0.4mm}
+  \begin{itemize}
+    \item plan imbriqué évalué $\mathcal D_L\subset\dots\subset\mathcal D_1$ (\py{ExperimentData})
+    \item coûts $c_1<\dots<c_L$ (\py{data.costs}), domaine et \py{feasibility}
+    \item points d'intégration : Sobol (global) ou états VPP (orienté objectif)
+    \item simulateur (\py{BaseSimulator})
+  \end{itemize}};
+
+\node[box=cin,text width=5.55cm] (OUT) at (-11.05,-8.05) {{\small\bfseries\color{cin}Sorties}\par\vspace{0.4mm}
+  \begin{itemize}
+    \item surrogate final \py{CoKriging} (+ \py{to_dict})
+    \item données enrichies, toujours imbriquées
+    \item historique : coût, $Q^2$, niveaux choisis
+  \end{itemize}};
+
+\node[font=\large\bfseries,text=black!75,anchor=north east,text width=12cm,align=right] at (13.9,9.6) {Mind map 1/2 — comment marche une itération};
+\node[font=\scriptsize,text=black!60,anchor=north east,align=right] at (13.9,8.95)
+  {(N$k$) = équation $k$ de \py{sequential_cokriging.pdf}\\démonstrations dans \py{complements_mathematiques.pdf}};
+
+\begin{pgfonlayer}{background}
+  \foreach \s/\c in {S1/c1,S2/c2,S3/c3,S4/c4,S5/c5,S6/c6}{\draw[branch=\c] (C) -- (\s);}
+\end{pgfonlayer}
+
+\draw[flow] (IN) -- (S1);
+\draw[flow] (S1) to[bend left=12] (S2);
+\draw[flow] (S2) to[bend left=12] (S3);
+\draw[flow] (S3) to node[lab,right]{$\vx_0$} (S4);
+\draw[flow] (S4) to[bend left=12] node[lab,below right]{$\vx_0,\ l^\star$} (S5);
+\draw[flow] (S5) to[bend left=12] (S6);
+\draw[flow] (S6) to node[lab,left]{non : itération suivante} (S1);
+\draw[flow] (S6) -- node[lab,right]{oui} (OUT);
+\end{tikzpicture}
+\end{center}
+
+\newpage
+% =============================================================================================
+%  PAGE 2 — construction du code
+% =============================================================================================
+\begin{center}
+\begin{tikzpicture}
+
+\node[center] (C) at (0,0) {\textbf{Construire}\\\py{vpp_acceleration/src/}\\\py{sequential_design.py}\\[1mm]
+  {\scriptsize dans l'ordre : chaque étape}\\[-0.4mm]{\scriptsize testée avant la suivante}};
+
+\node[box=done] (B1) at (-7.6,3.55) {\boxtitle{done}{1}{Noyau de calcul}
+  \textit{État : écrit et testé (hors dépôt)}
+  \begin{itemize}
+    \item \py{level_weights}, \py{level_variances}, \py{posterior_cov} : (N2)
+    \item \py{loo_z2}, \py{adjustment}, \py{adjusted_variance} : (N3)–(N4)
+    \item \py{delta_imse}, \py{choose_level} : (N5)–(N6)
+  \end{itemize}
+  \textbf{Test :} décomposition à $10^{-4}$, LOO à $\le10^{-2}$, gain contre reconditionnement à $\le2\cdot10^{-3}$};
+
+\node[box=todo] (B2) at (0,6.55) {\boxtitle{todo}{2}{Choix du point}
+  \textit{Étape \circled{3} de la page 1}
+  \begin{itemize}
+    \item enveloppe vectorisée de \py{differential_evolution}, reprise d'\py{EGOOptimizer._find_next_point}
+    \item masque \py{feasibility} : critère nul hors du domaine
+  \end{itemize}
+  \textbf{Test :} en 1D, $\vx_0$ coïncide avec le maximum de $k_{\mathrm{adj}}$ sur une grille fine};
+
+\node[box=todo] (B3) at (7.6,3.55) {\boxtitle{todo}{3}{Boucle ask / tell / run}
+  \textit{Étapes \circled{1} à \circled{6} de la page 1}
+  \begin{itemize}
+    \item classe \py{SequentialCoKriging(data, simulator, ...)}
+    \item \py{tell} : niveaux $1..l^\star$ dans l'ordre, arrêt au premier NaN
+    \item historique (coût, $Q^2$, niveaux), critère d'arrêt
+  \end{itemize}
+  \textbf{Test :} \py{missing_points_for_nesting} vide après chaque itération};
+
+\node[box=todo] (B4) at (7.6,-3.55) {\boxtitle{todo}{4}{Plan initial sous contraintes}
+  \textit{Ce qui manque dans mfego}
+  \begin{itemize}
+    \item LHS sur-échantillonné $\rightarrow$ filtre \py{feasibility} $\rightarrow$ maximin $\rightarrow$ sous-ensembles imbriqués
+    \item \py{generate_nested_design} n'accepte pas de contraintes aujourd'hui
+  \end{itemize}
+  \textbf{Test :} tous les points réalisables, plan imbriqué};
+
+\node[box=todo] (B5) at (0,-6.55) {\boxtitle{todo}{5}{Valider l'algorithme}
+  \textit{Sur des problèmes connus, avant la VPP}
+  \begin{itemize}
+    \item Forrester, Hartmann, profil (\py{benchmarks/cokriging})
+    \item contre un LHS imbriqué \textbf{à coût égal}, 10 graines
+    \item variantes : règle de LG ou corrigée ; avec ou sans ajustement LOO
+  \end{itemize}
+  \textbf{Test :} RMSE plus faible à coût égal, couverture à 95\,\% conservée};
+
+\node[box=todo] (B6) at (-7.6,-3.55) {\boxtitle{todo}{6}{Généraliser pour la VPP}
+  \textit{Mêmes formules, autres arguments}
+  \begin{itemize}
+    \item points d'intégration en argument : Sobol ou états d'équilibre VPP
+    \item plusieurs sorties : un \py{CoKriging} par composante du torseur, poids $w_o=(\partial V/\partial F_o)^2$
+    \item diagnostic $N_{\mathrm{eff}}$ en grande dimension ; option sans ajustement ($a_j=1$)
+  \end{itemize}
+  \textbf{Test :} un poids unique redonne le cas mono-sortie};
+
+\node[box=later,text width=5.55cm] (B7) at (-11.05,-8.05) {\boxtitle{later}{7}{Brancher sur le projet}
+  \textit{Plus tard, après validation}
+  \begin{itemize}
+    \item 0 cadrage $\rightarrow$ 1 chaîne de solveurs $\rightarrow$ 2 surrogate de base $\rightarrow$ 3 VPP
+          $\rightarrow$ 4 raffinement orienté objectif (cet algorithme) $\rightarrow$ 5 validation CFD
+  \end{itemize}};
+
+\node[box=cin,text width=5.55cm] (LEG) at (-11.05,7.75) {{\small\bfseries\color{cin}Légende}\par\vspace{0.6mm}
+  \tikz[baseline=-0.6ex]\node[badge=done,minimum size=3.4mm,inner sep=0pt]{};\ fait et testé\par
+  \tikz[baseline=-0.6ex]\node[badge=todo,minimum size=3.4mm,inner sep=0pt]{};\ à faire maintenant, dans l'ordre\par
+  \tikz[baseline=-0.6ex]\node[badge=later,minimum size=3.4mm,inner sep=0pt]{};\ plus tard (projet VPP)\par\vspace{0.6mm}
+  mfego n'est pas modifié : on appelle \py{src/cokriging.py}};
+
+\node[font=\large\bfseries,text=black!75,anchor=north east,text width=12cm,align=right] at (13.9,9.6) {Mind map 2/2 — comment on construit l'algorithme};
+
+\begin{pgfonlayer}{background}
+  \foreach \s/\c in {B1/done,B2/todo,B3/todo,B4/todo,B5/todo,B6/todo}{\draw[branch=\c] (C) -- (\s);}
+\end{pgfonlayer}
+
+\draw[flow] (B1) to[bend left=12] (B2);
+\draw[flow] (B2) to[bend left=12] (B3);
+\draw[flow] (B3) -- (B4);
+\draw[flow] (B4) to[bend left=12] (B5);
+\draw[flow] (B5) to[bend left=12] (B6);
+\draw[flow] (B6) -- (B7);
+\end{tikzpicture}
+\end{center}
+\end{document}

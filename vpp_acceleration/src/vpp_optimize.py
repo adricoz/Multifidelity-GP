@@ -1,0 +1,603 @@
+"""
+Search of the section that maximizes the boat speed, with the VPP-targeted sequential co-kriging
+of the foil torsor (real runs of 2026-10-22: NPLLT x NeuralFoil / AVL x XFOIL or NPLLT x XFOIL,
+MDS VPP, rigid or flexible foil).
+
+The problem (RealFoilProblem). A section = 16 Kulfan weights of a KulfanBoxFamily (no crossing
+surfaces, NeuralFoil confident, Ixx constraint), reduced to its k first PCA scores. Inputs of the
+surrogate: (z_1..z_k, Cant_Eff, Rake_Eff, Yaw_Eff), no Hvol. Outputs: Fx, Fy, Fz, Mx, My, Mz, Cpmin
+(7 co-krigings, rho bounded v2).
+
+The objective. The mean, over the navigation conditions, of the boat speed given by the MDS VPP
+whose foil is the mean of the co-kriging (vpp_coupling), plus the deformation correction of the
+flexible foil when the VPP has one (vpp_coupling.FSICorrection, third run).
+
+The loop (VPPSectionOptimizer), every `update_every` batches:
+  1. screening: for n_screen sections of the family (new each time) and the incumbent, the speed
+     change predicted to FIRST ORDER at the attitude of the incumbent's states, condition c:
+         dV_c(z) = sum_k (dV/dC_k)_c [C_k(z, att_c) - C_k(z_inc, att_c)],
+     C_k = mean of the co-kriging (+ FSI correction, which depends on the section through its
+     stiffness), its standard deviation sigma(z) from the variances of the co-krigings, and the
+     score mean_c dV_c + kappa sigma (optimism under uncertainty: a section whose speed is
+     uncertain is worth a look);
+  2. the n_top best scores and the incumbent are solved with the full VPP (every condition);
+     the best mean speed becomes the incumbent;
+  3. the integration points of the criterion are Sobol clouds around the VPP states of these
+     sections: the refinement goes where the decision "which section is best" is taken;
+  4. every `sensitivities_every` updates, dV/dC_k at the incumbent by finite differences.
+One batch = `batch_size` pairs (point, level), chosen one after the other by the best
+speed-variance reduction per unit of cost (vpp_targeted.choose, the ALC gains of
+sequential_design). After each choice the co-krigings are conditioned on the chosen point as if it
+had been run, with its predicted mean as value ("kriging believer"): the variance of a GP does
+not depend on the observed values, so the next choice sees exactly the variance reduction of the
+previous ones, and the batch spreads by itself. The codes of the batch then run in parallel
+(CodeRunner), and the placeholders are replaced by the real values. batch_size = 1 is the
+sequential loop of the first two runs. The run stops at a wall-clock limit.
+
+Parallel pieces (third run, 2026-10-22, 32 logical cores): the codes of a batch in a pool of
+worker processes, the VPP solves of an update and the finite differences of the sensitivities in
+another pool (VPPPool: one MDS per process), the 7 co-krigings in threads (TorsorCoKriging).
+
+Costs of the criterion. Wall-clock per choice, overhead included. Sequential loop (first two
+runs): level 1 ~0.2 s + overhead, level 2 (AVL) ~12 s + overhead, ratio 1 : 6. Batches with
+NPLLT x XFOIL: the codes of a batch run at the same time, a choice costs the selection overhead
+(~1-2 s, the same at both levels) and an HF run lengthens the batch only when its section is new
+(XFOIL polar, 2-13 s; then 0.1 s per attitude): ratio 1 : 2.
+"""
+import os
+import pickle
+import time
+from concurrent.futures import ProcessPoolExecutor
+
+import numpy as np
+from scipy.stats import qmc
+
+from src.data_management import greedy_maximin
+from src.section_pca import section_ixx
+from src.vpp_targeted import TorsorCoKriging, choose
+
+ATTITUDE_BOUNDS = [(0.0, 8.0), (-1.5, 1.5), (-6.0, 6.0)]       # box of the C-foil RS
+SPREAD = np.array([1.0, 0.3, 1.0])                              # cloud half-width [deg]
+EXCLUSION_RADIUS = 1e-3            # a candidate this close to a failed run is not a candidate
+OUTPUT_NAMES = ["Fx", "Fy", "Fz", "Mx", "My", "Mz", "Cpmin"]
+# the worker processes compute one run at a time: one BLAS thread each
+SINGLE_THREAD = {name: "1" for name in ("OMP_NUM_THREADS", "MKL_NUM_THREADS",
+                                        "OPENBLAS_NUM_THREADS", "NUMBA_NUM_THREADS")}
+
+
+def _process_pool(n_workers, initializer, initargs) -> ProcessPoolExecutor:
+    """A pool whose workers run with one BLAS thread. The variables are read when a process
+    imports numpy: the main process keeps the setting it started with, the workers (spawned on
+    demand, at any time) read the new one."""
+    os.environ.update(SINGLE_THREAD)
+    return ProcessPoolExecutor(max_workers=n_workers, initializer=initializer, initargs=initargs)
+
+
+# 1/5 ---------------------------------------------------------------------------------------------
+# The problem
+# -------------------------------------------------------------------------------------------------
+class RealFoilProblem:
+    """Sections of a family through a PCA, plus the 3 attitude angles of the foil RS.
+    ixx_reference: Ixx of the current section; stiffness_ratios(scores) = ixx_reference / Ixx
+    (1 if None), the scale of the FSI correction."""
+
+    def __init__(self, pca, family, attitude_bounds=ATTITUDE_BOUNDS, spread=SPREAD,
+                 ixx_reference=None):
+        self.pca, self.family = pca, family
+        self.n_scores = int(pca.n_modes)
+        self.attitude_bounds = list(attitude_bounds)
+        self.spread = np.asarray(spread, dtype=float)
+        self.lo = np.array([b[0] for b in self.attitude_bounds])
+        self.hi = np.array([b[1] for b in self.attitude_bounds])
+        self.ixx_reference = ixx_reference
+        self._bounds = None
+
+    def sample_sections(self, n_sections: int, seed: int) -> np.ndarray:
+        """Scores (n, k) of sections of the family whose DECODED section (the one the codes
+        see: its projection on the k modes) still belongs to the family. With k = 10 and the Ixx
+        constraint, the projection takes a little stiffness away: 24 % of the projected sections
+        would leave the family (2026-10-22)."""
+        kept, attempt = [], 0
+        while sum(len(k) for k in kept) < n_sections:
+            scores = self.pca.encode(self.family.sample(2 * n_sections, seed + 7919 * attempt))
+            kept.append(scores[self.family.contains(self.pca.decode(scores))])
+            attempt += 1
+        return np.vstack(kept)[:n_sections]
+
+    def weights(self, scores: np.ndarray) -> np.ndarray:
+        return self.pca.decode(np.atleast_2d(scores))
+
+    def stiffness_ratios(self, scores: np.ndarray) -> np.ndarray:
+        scores = np.atleast_2d(scores)
+        if self.ixx_reference is None:
+            return np.ones(len(scores))
+        return self.ixx_reference / section_ixx(self.weights(scores), self.family.te_thickness)
+
+    def bounds(self) -> list:
+        if self._bounds is None:
+            scores = self.sample_sections(4096, seed=101)
+            self._bounds = [(float(a), float(b)) for a, b in zip(scores.min(0), scores.max(0))] \
+                + self.attitude_bounds
+        return self._bounds
+
+    def cloud(self, points: np.ndarray, n_per_state: int, seed: int) -> np.ndarray:
+        """Sobol cloud around each point: section fixed, attitude +- spread, clipped."""
+        sobol = 2.0 * qmc.Sobol(d=len(self.spread), scramble=True, seed=seed).random(n_per_state) - 1.0
+        out = []
+        for point in np.atleast_2d(points):
+            attitude = np.clip(point[self.n_scores:] + sobol * self.spread, self.lo, self.hi)
+            out.append(np.column_stack([np.repeat(point[None, :self.n_scores], n_per_state, 0),
+                                        attitude]))
+        return np.vstack(out)
+
+    def global_points(self, n_points: int, seed: int) -> np.ndarray:
+        attitude = self.lo + qmc.Sobol(d=len(self.lo), scramble=True,
+                                       seed=seed).random(n_points) * (self.hi - self.lo)
+        return np.column_stack([self.sample_sections(n_points, seed), attitude])
+
+
+# 2/5 ---------------------------------------------------------------------------------------------
+# The codes, in parallel worker processes
+# -------------------------------------------------------------------------------------------------
+_WORKER = {}
+
+
+def _init_worker(work_dir, levels):
+    from src.foil_codes import FoilCodes  # noqa: PLC0415
+    _WORKER["codes"] = FoilCodes(work_dir, levels=levels)
+
+
+def _run_one(task):
+    weights, attitude, level = task
+    y, info = _WORKER["codes"].evaluate(weights, attitude, level)
+    return y, info
+
+
+class CodeRunner:
+    """
+    Runs the codes on points of the problem and records every run in the run folder.
+    `levels`: the levels of foil_codes (LEVELS or LEVELS_XFOIL); a run of level l uses
+    levels[l - 1]. Several points go to a pool of worker processes, kept for the whole run; a
+    single point runs in the main process.
+    """
+
+    def __init__(self, problem: RealFoilProblem, run, n_workers: int = 6, levels=None):
+        from src.foil_codes import LEVELS, FoilCodes  # noqa: PLC0415
+        self.problem, self.run, self.n_workers = problem, run, int(n_workers)
+        self.levels = list(levels or LEVELS)
+        self.work_dir = run.path("data", "codes")
+        self.local = FoilCodes(self.work_dir, levels=self.levels)
+        self.costs = self.local.costs
+        self.n_runs = {level: 0 for level in range(1, len(self.levels) + 1)}
+        self.time = {level: 0.0 for level in range(1, len(self.levels) + 1)}
+        self.pool = None
+
+    def run_tasks(self, points: np.ndarray, levels, tag: str = "") -> tuple:
+        """One run per point, at its level: outputs (m, 7) (NaN rows = failed runs) and the
+        infos, in the order of the points."""
+        points = np.atleast_2d(points)
+        levels = np.broadcast_to(np.asarray(levels, dtype=int), (len(points),))
+        weights = self.problem.weights(points[:, :self.problem.n_scores])
+        tasks = [(w, p[self.problem.n_scores:], int(level))
+                 for w, p, level in zip(weights, points, levels)]
+        if len(tasks) == 1 or self.n_workers <= 1:
+            results = [self.local.evaluate(*task) for task in tasks]
+        else:
+            if self.pool is None:
+                self.pool = _process_pool(self.n_workers, _init_worker,
+                                          (str(self.work_dir), self.levels))
+            results = list(self.pool.map(_run_one, tasks))
+        y = np.array([r[0] for r in results])
+        for point, level, (values, info) in zip(points, levels, results):
+            self.n_runs[int(level)] += 1
+            self.time[int(level)] += info["time_s"]
+            self.run.add_evaluation({
+                "tag": tag, "level": int(level), "ok": not info["error"],
+                **{f"x{i}": float(v) for i, v in enumerate(point)},
+                **dict(zip(OUTPUT_NAMES, (float(v) for v in values))),
+                "time_s": round(info["time_s"], 3), "error": info["error"][:200],
+                "elapsed_min": round(self.run.elapsed() / 60, 3)})
+        return y, [r[1] for r in results]
+
+    def evaluate(self, points: np.ndarray, level: int, tag: str = "") -> tuple:
+        """All the points at one level (start design, validation)."""
+        return self.run_tasks(points, level, tag)
+
+    def close(self) -> None:
+        if self.pool is not None:
+            self.pool.shutdown()
+            self.pool = None
+
+
+def start_design(problem: RealFoilProblem, runner: CodeRunner, n_low: int, n_high: int,
+                 seed: int, n_models: int = 7, costs=(1.0, 6.0),
+                 n_threads: int = 1) -> TorsorCoKriging:
+    """Nested design: sections of the family, attitude by Latin hypercube, HF by maximin among
+    the LF points that succeeded; failed runs are left out (recorded in the run folder)."""
+    scores = problem.sample_sections(n_low, seed)
+    attitude = problem.lo + qmc.LatinHypercube(d=len(problem.lo), seed=seed).random(n_low) \
+        * (problem.hi - problem.lo)
+    x_low = np.column_stack([scores, attitude])
+    y_low, _ = runner.evaluate(x_low, 1, tag="start")
+    ok = np.all(np.isfinite(y_low), axis=1)
+    x_low, y_low = x_low[ok], y_low[ok]
+    x_high = greedy_maximin(x_low, n_high, problem.bounds())
+    y_high, _ = runner.evaluate(x_high, 2, tag="start")
+    ok_high = np.all(np.isfinite(y_high), axis=1)
+    surrogate = TorsorCoKriging(problem.bounds(), costs=costs, seed=seed, n_models=n_models,
+                                n_threads=n_threads)
+    surrogate.add(1, x_low, y_low)
+    surrogate.add(2, x_high[ok_high], y_high[ok_high])
+    runner.run.log(f"start design: LF {len(x_low)} ok / {n_low}, HF {ok_high.sum()} ok / "
+                   f"{len(x_high)}")
+    return surrogate
+
+
+# 3/5 ---------------------------------------------------------------------------------------------
+# The VPP solves, in parallel worker processes
+# -------------------------------------------------------------------------------------------------
+_VPP_WORKER = {}
+
+
+def _init_vpp_worker(options):
+    from src.vpp_coupling import FSICorrection, IntensSYVPP  # noqa: PLC0415
+    fsi = FSICorrection() if options["fsi"] else None
+    _VPP_WORKER["vpp"] = IntensSYVPP(foil=options["foil"], with_hvol=options["with_hvol"], fsi=fsi)
+    _VPP_WORKER["version"] = None
+
+
+def _vpp_task(task):
+    """("solve", ...) -> state dict; ("sensitivity", ...) -> dV/dC_k."""
+    kind, path, version, scores, ratio, twa, tws, guess, base_state, k = task
+    if _VPP_WORKER["version"] != version:
+        with open(path, "rb") as file:
+            _VPP_WORKER["surrogate"] = pickle.load(file)
+        _VPP_WORKER["version"] = version
+    vpp, predict = _VPP_WORKER["vpp"], _VPP_WORKER["surrogate"].predict
+    vpp.set_foil(predict, scores, ratio)
+    if kind == "solve":
+        return vpp.solve(twa, tws, guess=guess)
+    # the base state is solved again in THIS process: the MDS state carries over from one solve
+    # to the next (path dependence), so the finite difference must take two solves of the same
+    # process (with the base state of another worker, the smoke test of 2026-10-22 gave dV/dFx
+    # of -32 instead of +83)
+    base = vpp.solve(twa, tws, guess=base_state["unknowns"])
+    if not base["success"]:
+        return float("nan")
+    return float(vpp.speed_sensitivities(predict, scores, twa, tws, base,
+                                         stiffness_ratio=ratio, outputs=[k])[k])
+
+
+class VPPPool:
+    """
+    The VPP solves of an update (sections x conditions) and the finite differences of the
+    sensitivities (conditions x 6 coefficients), in parallel: one IntensSYVPP (MDS) per worker
+    process. The surrogate goes to the workers through a pickle file, written once per new
+    version (publish), read once per worker.
+    Each worker has its own MDS state: the path dependence of the solve (vpp_coupling, SLSQP)
+    differs from one worker to another, as it differed from one call to the next in the
+    sequential loop.
+    """
+
+    def __init__(self, run, n_workers: int, options: dict):
+        self.run, self.path, self.version = run, None, 0
+        self.pool = _process_pool(n_workers, _init_vpp_worker, (options,))
+
+    def publish(self, surrogate) -> None:
+        """The means of the surrogate for the workers (TorsorCoKriging.mean_only_copy)."""
+        old = self.path
+        self.version += 1
+        self.path = self.run.path("data", f"surrogate_v{self.version}.pkl")
+        with open(self.path, "wb") as file:
+            pickle.dump(surrogate.mean_only_copy(), file, protocol=pickle.HIGHEST_PROTOCOL)
+        if old is not None and old.exists():
+            old.unlink()                  # the workers have read it (the maps are synchronous)
+
+    def solve(self, sections, ratios, conditions, guesses=None) -> list:
+        """States [section][condition] (vpp_coupling.IntensSYVPP.solve)."""
+        tasks = [("solve", self.path, self.version, scores, float(ratio), twa, tws,
+                  None if guesses is None else guesses[j], None, None)
+                 for scores, ratio in zip(sections, ratios)
+                 for j, (twa, tws) in enumerate(conditions)]
+        states = list(self.pool.map(_vpp_task, tasks))
+        n = len(conditions)
+        return [states[i * n:(i + 1) * n] for i in range(len(sections))]
+
+    def sensitivities(self, scores, ratio, conditions, base_states, n_outputs=6) -> np.ndarray:
+        """dV/dC_k (n_conditions, n_outputs) at the section, from its base states."""
+        tasks = [("sensitivity", self.path, self.version, scores, float(ratio), twa, tws, None,
+                  state, k)
+                 for (twa, tws), state in zip(conditions, base_states) for k in range(n_outputs)]
+        return np.array(list(self.pool.map(_vpp_task, tasks))).reshape(len(conditions), n_outputs)
+
+    def close(self) -> None:
+        self.pool.shutdown()
+
+
+# 4/5 ---------------------------------------------------------------------------------------------
+# The optimizer
+# -------------------------------------------------------------------------------------------------
+class VPPSectionOptimizer:
+    """The loop of the module docstring. vpp_pool: None (VPP solves in the main process, on
+    `vpp`) or a VPPPool; `vpp` is used for its FSI correction in any case."""
+
+    def __init__(self, problem, surrogate, runner, vpp, conditions, run, time_limit_s,
+                 n_per_state=16, n_local=512, n_global=256, refit_every=10, update_every=10,
+                 sensitivities_every=2, n_screen=256, n_top=3, kappa=1.0, seed=0,
+                 start_scores=None, batch_size=1, vpp_pool=None, refit_growth=None,
+                 n_lf_only=None):
+        """refit_growth: new hyperparameters when the design has grown by this factor since the
+        last fit (e.g. 1.25; a fit costs O(n^3) and the batches add many points), instead of
+        every refit_every batches. n_lf_only: at most this many LF points without HF among the
+        candidates (the most recent ones, i.e. near the current states)."""
+        self.problem, self.surrogate, self.runner, self.vpp = problem, surrogate, runner, vpp
+        self.conditions, self.run = list(conditions), run
+        self.time_limit_s = float(time_limit_s)
+        self.n_per_state, self.n_local, self.n_global = n_per_state, n_local, n_global
+        self.refit_every, self.update_every = refit_every, update_every
+        self.sensitivities_every = sensitivities_every
+        self.n_screen, self.n_top, self.kappa, self.seed = n_screen, n_top, kappa, seed
+        self.batch_size, self.vpp_pool = int(batch_size), vpp_pool
+        self.refit_growth, self.n_lf_only = refit_growth, n_lf_only
+        self.fitted_size = None                            # design size at the last refit
+        self.iteration, self.n_batches, self.n_updates = 0, 0, 0
+        # start of the search: the given section (e.g. the current C-foil section), or the mean
+        # section of the PCA
+        self.incumbent = np.zeros(problem.n_scores) if start_scores is None \
+            else np.asarray(start_scores, dtype=float)
+        self.incumbent_states = None
+        self.derivatives = None                            # (n_conditions, 6)
+        self.states, self.x_int = None, None
+        self.history, self.updates = [], []
+        # points where a run failed: excluded from the candidates (the first real run chose the
+        # same failing HF point 4 times in a row, 40 s each, 2026-10-22)
+        self.failed = []
+
+    # --- VPP pieces ---
+    def solve_sections(self, sections, guesses=None) -> list:
+        """States [section][condition] of several sections, with the current surrogate."""
+        ratios = self.problem.stiffness_ratios(np.array(sections))
+        if self.vpp_pool is not None:                # the surrogate published by update()
+            return self.vpp_pool.solve(sections, ratios, self.conditions, guesses)
+        out = []
+        for scores, ratio in zip(sections, ratios):
+            self.vpp.set_foil(self.surrogate.predict, scores, ratio)
+            out.append([self.vpp.solve(twa, tws, guess=None if guesses is None else guesses[j])
+                        for j, (twa, tws) in enumerate(self.conditions)])
+        return out
+
+    def solve_section(self, scores, guesses=None) -> list:
+        return self.solve_sections([scores], guesses)[0]
+
+    def state_points(self, scores, states) -> np.ndarray:
+        return np.array([np.concatenate([scores, [s["Cant_Eff"], s["Rake_Eff"], s["Yaw_Eff"]]])
+                         for s in states])
+
+    def sensitivities(self) -> None:
+        ratio = float(self.problem.stiffness_ratios(self.incumbent)[0])
+        if self.vpp_pool is not None:
+            derivatives = self.vpp_pool.sensitivities(self.incumbent, ratio, self.conditions,
+                                                      self.incumbent_states)
+        else:
+            derivatives = np.array([
+                self.vpp.speed_sensitivities(self.surrogate.predict, self.incumbent, twa, tws,
+                                             state, stiffness_ratio=ratio)
+                for (twa, tws), state in zip(self.conditions, self.incumbent_states)])
+        bad = ~np.isfinite(derivatives)
+        if bad.any():
+            # a failed solve: keep the previous value of that derivative (0 the first time)
+            previous = self.derivatives if self.derivatives is not None \
+                else np.zeros_like(derivatives)
+            derivatives[bad] = previous[bad]
+            self.run.log(f"speed sensitivities: {bad.sum()} failed solves, previous values kept")
+        self.derivatives = derivatives
+        self.run.log("speed sensitivities dV/dC (rows = conditions): "
+                     + np.array2string(self.derivatives, precision=2, suppress_small=True))
+
+    def screen(self) -> np.ndarray:
+        """Scores (n_top, k) of the best candidates by mean_c dV_c + kappa sigma."""
+        candidates = np.vstack([self.incumbent[None],
+                                self.problem.sample_sections(self.n_screen,
+                                                             self.seed + 31 * self.n_updates)])
+        ratios = self.problem.stiffness_ratios(candidates)
+        gain = np.zeros(len(candidates))
+        variance = np.zeros(len(candidates))
+        for j, state in enumerate(self.incumbent_states):
+            attitude = np.array([state["Cant_Eff"], state["Rake_Eff"], state["Yaw_Eff"]])
+            x = np.column_stack([candidates, np.repeat(attitude[None], len(candidates), 0)])
+            means = self.surrogate.predict(x)[:, :6]
+            gain += (means - means[0]) @ self.derivatives[j]
+            if self.vpp.fsi is not None:
+                # the FSI correction of a section = its stiffness ratio x the one of the RS
+                delta = self.vpp.fsi(attitude[None], state["speed"])[0, :6]
+                gain += (ratios - ratios[0]) * (delta @ self.derivatives[j])
+            variance += self.surrogate.variances(x)[:, :6] @ self.derivatives[j] ** 2
+        gain /= len(self.conditions)
+        sigma = np.sqrt(variance) / len(self.conditions)
+        score = gain + self.kappa * sigma
+        order = np.argsort(-score[1:])[:self.n_top] + 1
+        self.last_screen = {"gain": gain[order].tolist(), "sigma": sigma[order].tolist(),
+                            "incumbent_sigma": float(sigma[0])}
+        return candidates[order]
+
+    def update(self) -> None:
+        """Screening, full VPP of the best candidates and of the incumbent, new integration
+        points, new sensitivities (module docstring)."""
+        start = time.perf_counter()
+        if self.vpp_pool is not None:
+            self.vpp_pool.publish(self.surrogate)    # the model of this update, for the workers
+        if self.incumbent_states is None:
+            self.incumbent_states = self.solve_section(self.incumbent)
+        if self.derivatives is None or self.n_updates % self.sensitivities_every == 0:
+            self.sensitivities()
+        top = self.screen()
+        sections = [self.incumbent] + list(top)
+        guesses = [s["unknowns"] for s in self.incumbent_states]
+        results = []
+        for scores, states in zip(sections, self.solve_sections(sections, guesses)):
+            speeds = [s["speed"] if s["success"] else np.nan for s in states]
+            results.append((np.nanmean(speeds), scores, states, speeds))
+        best = max(results, key=lambda r: r[0] if np.isfinite(r[0]) else -np.inf)
+        changed = best[1] is not self.incumbent and not np.allclose(best[1], self.incumbent)
+        self.incumbent, self.incumbent_states = best[1], best[2]
+        self.states = np.vstack([self.state_points(r[1], r[2]) for r in results])
+        self.x_int = self.problem.cloud(self.states, self.n_per_state, self.seed + self.iteration)
+        record = {"update": self.n_updates, "iteration": self.iteration,
+                  "elapsed_min": self.run.elapsed() / 60, "cost": self.surrogate.cost,
+                  "n_lf": self.surrogate.sizes[0], "n_hf": self.surrogate.sizes[1],
+                  "incumbent_speed": float(best[0]), "incumbent_speeds": best[3],
+                  "changed": bool(changed), "candidate_speeds": [float(r[0]) for r in results],
+                  "incumbent": self.incumbent.tolist(), **self.last_screen,
+                  "time_s": time.perf_counter() - start}
+        self.updates.append(record)
+        self.run.log(f"update {self.n_updates}: incumbent mean speed {best[0]:.4f} kt "
+                     f"({'new' if changed else 'kept'}), candidates "
+                     f"{np.round(record['candidate_speeds'], 3)}, {record['time_s']:.0f} s")
+        self.n_updates += 1
+
+    # --- one batch and the loop ---
+    def candidates(self) -> tuple:
+        """Candidates (M, d) and their missing levels (M, 2): clouds around the states, points of
+        the whole domain, the LF points without HF; minus the neighbours of failed runs."""
+        x_cand = np.vstack([self.problem.cloud(self.states, max(1, self.n_local // len(self.states)),
+                                               self.seed + 7 * self.iteration + 1),
+                            self.problem.global_points(self.n_global, self.seed + 7 * self.iteration + 2)])
+        missing = np.ones((len(x_cand), 2), dtype=bool)
+        x_low, x_high = self.surrogate.x_lists
+        has_high = np.array([np.any(np.all(np.isclose(x, x_high), axis=1)) for x in x_low])
+        lf_only = x_low[~has_high][-self.n_lf_only:] if self.n_lf_only else x_low[~has_high]
+        x_cand = np.vstack([x_cand, lf_only])
+        missing = np.vstack([missing, np.column_stack([np.zeros(len(lf_only), bool),
+                                                       np.ones(len(lf_only), bool)])])
+        if self.failed:
+            # distance in the unit cube of the bounds, as sequential_design.EXCLUSION_RADIUS
+            span = np.array([b[1] - b[0] for b in self.problem.bounds()])
+            gaps = np.abs(x_cand[:, None, :] - np.array(self.failed)[None]) / span
+            keep = np.min(np.max(gaps, axis=2), axis=1) > EXCLUSION_RADIUS
+            x_cand, missing = x_cand[keep], missing[keep]
+        return x_cand, missing
+
+    @staticmethod
+    def levels_to_run(choice) -> list:
+        """The missing levels up to the chosen one (nested design)."""
+        return [level for level in (1, 2)
+                if level <= choice["level"] and choice["missing"][level - 1]]
+
+    def step(self) -> list:
+        """One batch (module docstring): choices, codes in parallel, data. Returns the records."""
+        start = time.perf_counter()
+        size = sum(self.surrogate.sizes)
+        if self.refit_growth:
+            refit = self.fitted_size is None or size >= self.refit_growth * self.fitted_size
+        else:
+            refit = self.n_batches % self.refit_every == 0
+        self.surrogate.fit(refit=refit)
+        if refit:
+            self.fitted_size = size
+            self.run.log(f"batch {self.n_batches}: hyperparameters refitted on {size} points")
+        if self.n_batches % self.update_every == 0 or self.states is None:
+            self.update()
+        weights = np.mean(self.derivatives ** 2, axis=0)               # (6,): Cpmin weight 0
+        x_cand, missing = self.candidates()
+        sizes = self.surrogate.sizes
+        choices = []
+        for _ in range(self.batch_size):
+            choice = choose(self.surrogate, weights, x_cand, missing, self.x_int, np.inf)
+            if choice["level"] is None:
+                break
+            choices.append(choice)
+            missing[choice["index"], :choice["level"]] = False
+            if len(choices) < self.batch_size:          # kriging believer (module docstring)
+                for level in self.levels_to_run(choice):
+                    self.surrogate.add(level, choice["x"],
+                                       self.surrogate.predict(choice["x"][None], level=level))
+                self.surrogate.fit(refit=False)
+        self.surrogate.truncate(sizes)
+        select_s = time.perf_counter() - start
+
+        tasks = [(i, level) for i, choice in enumerate(choices) for level in self.levels_to_run(choice)]
+        y, infos = self.runner.run_tasks(np.array([choices[i]["x"] for i, _ in tasks]),
+                                         [level for _, level in tasks], tag=f"batch{self.n_batches}")
+        results = {task: (y[row], infos[row]) for row, task in enumerate(tasks)}
+        records = []
+        for i, choice in enumerate(choices):
+            x, ok = choice["x"], True
+            for level in self.levels_to_run(choice):
+                values, info = results[(i, level)]
+                in_lf = level == 1 or np.any(np.all(np.isclose(self.surrogate.x_lists[0], x), axis=1))
+                if not np.all(np.isfinite(values)) or not in_lf:
+                    ok = False
+                    self.failed.append(x.copy())
+                    self.run.log(f"batch {self.n_batches}: level {level} failed "
+                                 f"({info['error'][:80] or 'its level 1 failed'})")
+                    break
+                self.surrogate.add(level, x, values)
+            distances = np.linalg.norm((self.states[:, self.problem.n_scores:]
+                                        - x[self.problem.n_scores:]) / self.problem.spread, axis=1)
+            same_section = np.all(np.isclose(self.states[:, :self.problem.n_scores],
+                                             x[:self.problem.n_scores]), axis=1)
+            records.append({"iteration": self.iteration, "batch": self.n_batches,
+                            "elapsed_min": self.run.elapsed() / 60, "level": choice["level"],
+                            "ratio": choice["ratio"], "ok": ok,
+                            "near_state": bool(same_section.any()),
+                            "attitude_distance": float(distances[same_section].min())
+                            if same_section.any() else float("nan"),
+                            "x": x.tolist(), "time_s": (time.perf_counter() - start) / len(choices),
+                            "select_s": select_s, "n_lf": self.surrogate.sizes[0],
+                            "n_hf": self.surrogate.sizes[1]})
+            self.iteration += 1
+        self.history.extend(records)
+        self.n_batches += 1
+        return records
+
+    def run_loop(self) -> None:
+        while self.run.elapsed() < self.time_limit_s:
+            records = self.step()
+            if not records:
+                break
+            if self.batch_size > 1 or self.iteration % 5 == 0:
+                last = records[-1]
+                n_high = sum(r["level"] == 2 for r in records)
+                self.run.log(f"batch {last['batch']}: {len(records)} choices ({n_high} HF), LF/HF "
+                             f"{last['n_lf']}/{last['n_hf']}, selection {last['select_s']:.1f} s, "
+                             f"{last['time_s'] * len(records):.1f} s")
+        self.surrogate.fit(refit=True)
+        self.update()                                      # final incumbent with the final model
+
+
+# 5/5 ---------------------------------------------------------------------------------------------
+# Validation of the final surrogate with the codes at the VPP states
+# -------------------------------------------------------------------------------------------------
+def validate(optimizer: VPPSectionOptimizer, sections: dict, extra_levels=None) -> list:
+    """The codes at the VPP states of the given sections (name -> scores): HF (level 2, the
+    reference of the surrogate) and LF, plus extra_levels {name: level} (e.g. {"avl": 3});
+    surrogate mean and sigma against HF, and the first-order speed error per state."""
+    rows = []
+    names = list(sections)
+    guesses = [s["unknowns"] for s in optimizer.incumbent_states]
+    all_states = optimizer.solve_sections([sections[n] for n in names], guesses)
+    for name, states in zip(names, all_states):
+        scores = sections[name]
+        points = optimizer.state_points(scores, states)
+        codes = {"hf": 2, "lf": 1, **(extra_levels or {})}
+        values = {key: optimizer.runner.evaluate(points, level, tag=f"validation_{name}")[0]
+                  for key, level in codes.items()}
+        mean = optimizer.surrogate.predict(points)
+        sigma = np.sqrt(optimizer.surrogate.variances(points))
+        for j, (state, point) in enumerate(zip(states, points)):
+            error = mean[j, :6] - values["hf"][j, :6]
+            speed_error = float(error @ optimizer.derivatives[j])
+            speed_sigma = float(np.sqrt(sigma[j, :6] ** 2 @ optimizer.derivatives[j] ** 2))
+            row = {"section": name, "condition": f"{state['twa']:.0f}/{state['tws']:.0f}",
+                   "speed_kt": state["speed"], "success": state["success"],
+                   **{f"{n}_sur": float(v) for n, v in zip(OUTPUT_NAMES, mean[j])},
+                   **{f"{n}_sigma": float(v) for n, v in zip(OUTPUT_NAMES, sigma[j])},
+                   "speed_error_kt": speed_error, "speed_sigma_kt": speed_sigma,
+                   **{f"att{i}": float(v) for i, v in enumerate(point[optimizer.problem.n_scores:])}}
+            for key, array in values.items():
+                row.update({f"{n}_{key}": float(v) for n, v in zip(OUTPUT_NAMES, array[j])})
+                if key not in ("hf", "lf"):
+                    row[f"speed_error_{key}_kt"] = float(
+                        (mean[j, :6] - array[j, :6]) @ optimizer.derivatives[j])
+            rows.append(row)
+    return rows

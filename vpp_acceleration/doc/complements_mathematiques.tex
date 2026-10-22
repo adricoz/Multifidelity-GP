@@ -1,0 +1,470 @@
+% =============================================================================================
+%  Compléments mathématiques à la note d'implémentation (sequential_cokriging.tex) :
+%  dictionnaire des notations de Le Gratiet & Cannamela (2015) et démonstrations détaillées.
+%  Compilation : tectonic -X compile complements_mathematiques.tex --outdir build
+% =============================================================================================
+\documentclass[10pt,a4paper]{article}
+\usepackage{fontspec}
+\usepackage[french]{babel}
+\usepackage{csquotes}
+\usepackage[a4paper,margin=1.8cm,top=1.6cm,bottom=1.8cm]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{xcolor}
+\usepackage{booktabs,tabularx,array}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+\usepackage[hidelinks,unicode]{hyperref}
+
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,
+            urlcolor=blue!60!black,pdftitle={Complements mathematiques co-krigeage sequentiel}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\setlist{itemsep=0.1em,topsep=0.2em,leftmargin=1.3em}
+\titleformat{\section}{\normalfont\large\bfseries\color{blue!40!black}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{0.9em}{0.3em}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0.6em}{0.2em}
+\renewcommand{\arraystretch}{1.18}
+
+\tcbset{enhanced,breakable,boxrule=0.6pt,arc=1.2mm,left=1.5mm,right=1.5mm,top=0.6mm,bottom=0.6mm,
+        fonttitle=\bfseries\small,before skip=0.5em,after skip=0.5em}
+\newtcolorbox{aretenir}[1][]{colback=violet!4,colframe=violet!60!black,
+  title={À retenir\ifx&#1&\else~— #1\fi}}
+\newtcolorbox{lgbox}[1][]{colback=gray!5,colframe=gray!55!black,
+  title={Chez Le Gratiet \& Cannamela\ifx&#1&\else~— #1\fi}}
+
+\newcommand{\vx}{\bm{x}}
+\newcommand{\vu}{\bm{u}}
+\newcommand{\vz}{\bm{z}}
+\newcommand{\vd}{\bm{d}}
+\newcommand{\vw}{\bm{w}}
+\newcommand{\Kt}{\widetilde{\bm{K}}}
+\newcommand{\Lam}{\bm{\Lambda}}
+\newcommand{\Q}{\mathcal{Q}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\tp}{^{\mathsf{T}}}
+\newcommand{\shr}{\hat\sigma^2_{\rho}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\ExplSyntaxOn
+\cs_new_protected:Npn \mf_breakable:n #1
+  {
+    \str_set:Nn \l_tmpa_str {#1}
+    \str_map_inline:Nn \l_tmpa_str
+      {
+        ##1
+        \str_if_in:nnT { _./,(=[ } {##1} { \allowbreak }
+      }
+  }
+\NewDocumentCommand \py { m } { \texttt { \mf_breakable:n {#1} } }
+\ExplSyntaxOff
+
+\begin{document}
+
+{\centering
+{\Large\bfseries\color{blue!40!black} Co-krigeage séquentiel : compléments mathématiques\par}
+\vspace{0.2em}
+{\large Dictionnaire des notations de Le Gratiet \& Cannamela et démonstrations détaillées\par}
+\vspace{0.3em}
+{\small Complément de \py{sequential_cokriging.tex} (même dossier) · 20/10/2026\par}
+\vspace{0.2em}}
+
+Ce document justifie pas à pas les résultats de la note d'implémentation. « (N$k$) » désigne l'équation $k$
+de la note, « LG ($k$) » l'équation $k$ de Le Gratiet \& Cannamela~\cite{LGC15}. Tous les hyperparamètres
+(longueurs de corrélation, variances, bruits) sont supposés fixés, comme dans~\cite{LGC15} pendant une
+itération. Les identités matricielles utilisées ont été vérifiées numériquement.
+
+% ---------------------------------------------------------------------------------------------
+\section{Dictionnaire des notations}\label{sec:dico}
+% ---------------------------------------------------------------------------------------------
+{\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright}p{2.9cm}>{\raggedright}p{4.4cm}X@{}}
+\toprule
+\textbf{Note} & \textbf{Le Gratiet \& Cannamela} & \textbf{Sens, et objet mfego}\tabularnewline
+\midrule
+$L$ & $s$ & nombre de niveaux (\py{model.num_levels})\tabularnewline
+$Z_l(\vx)$ ; $\D_l$, $n_l$ ; $\vz_l$ & $Y^l(\vx)$ ; $\mathbf{D}^l$, $n_l$ ; $\mathbf{y}^l=y^l(\mathbf{D}^l)$ &
+  processus du code $l$ ; plan du niveau $l$ ; valeurs calculées
+  (\py{data.get_training_data(l)})\tabularnewline
+$\delta_l$ & $\delta^l$ & correction (« biais ») apportée par le niveau $l$ (GP \py{model.gps[l-1]})\tabularnewline
+$m_l$ (constante) & $\mathbf{f}_l'(\vx)\beta_l$ & tendance de $\delta^l$ (\py{gp.y_mean})\tabularnewline
+$k_l(\vx,\vx')$ & $\sigma_l^2\,r_l(\vx,\vx')$ & covariance a priori de $\delta^l$ ;
+  mfego : \py{y_std**2 * (t1*r + t2)}\tabularnewline
+$\theta_{l,m}$ & $\theta_l^m$ & longueurs de corrélation (\py{gp.kernel.lengthscale}, cube unité)\tabularnewline
+$\rho_{l-1}$ (ponctuel) & $\rho_{l-1}$, de moyenne a posteriori $\hat\rho_{l-1}$ &
+  facteur d'échelle entre $l-1$ et $l$ (\py{model.rhos[l-2]})\tabularnewline
+$\rho_{l-1}^2$ & $\hat\sigma^2_{\rho_{l-1}}=\mathbb{E}[\rho_{l-1}^2]$ & poids de propagation d'un niveau au
+  suivant\tabularnewline
+$P_j^2=\prod_{k=j}^{L-1}\rho_k^2$ & $\prod_{k=j}^{s-1}\hat\sigma^2_{\rho_k}$ & gain de la correction $j$
+  jusqu'à la sortie HF (\py{level_weights(model)**2})\tabularnewline
+$\vd_l$ & $\mathbf{y}^l-\rho_{l-1}\,y^{l-1}(\mathbf{D}^l)$ & résidus observés du niveau $l$
+  (\py{gp.y_train})\tabularnewline
+$\sigma_l^2(\vx)=k^n_l(\vx,\vx)$ & $\sigma^2_{\delta^l}(\vx)$ & variance a posteriori de la correction
+  $l$ au point $\vx$\tabularnewline
+$\mathbb{E}[Z_l(\vx)|\vz]$, $\Var[Z_l(\vx)|\vz]$ & $\mu^l_{n_l}(\vx)$, $k^l_{n_l}(\vx,\vx)$ & moyenne et
+  variance prédictives du niveau $l$ (\py{model.predict_batch(x, level=l)})\tabularnewline
+$e_l(\vx_i)$, $s_l^2(\vx_i)$ & $\varepsilon_{\mathrm{LOO\text{-}CV},l}(\vx_i^l)$,
+  $\sigma^2_{\mathrm{LOO\text{-}CV},l}(\vx_i^l)$ & erreur et variance LOO
+  (\py{model.leave_one_out(l, by_location=True)})\tabularnewline
+$c_l$, $c_l/c_{l-1}$ & $t_l$, $B_{l/l-1}$ & coût d'un calcul (\py{data.costs})\tabularnewline
+$G_l(\vx_0)$ & $\approx\big(\prod_{k=l}^{s-1}\hat\sigma^2_{\rho_k}\big)\,\mathrm{IMSE}^l_{\mathrm{red}}(\vx_0)$
+  & réduction de l'IMSE \emph{haute fidélité} (§\,\ref{sec:rho})\tabularnewline
+\bottomrule
+\end{tabularx}}
+
+\begin{aretenir}[les quatre « variances » de Le Gratiet \& Cannamela]
+\begin{enumerate}
+  \item $\sigma_l^2$ \textbf{(un nombre)} est le paramètre d'amplitude du processus $\delta^l$ : a priori,
+        $\Var[\delta^l(\vx)]=\sigma_l^2$ puisque $r_l(\vx,\vx)=1$. C'est l'écart-type typique de la
+        correction, au carré. Il est estimé par maximum de vraisemblance restreint : c'est le premier
+        « LG (4) », l'article a deux équations (4).
+  \item $\sigma^2_{\delta^l}(\vx)$ \textbf{(une fonction de $\vx$)} est la variance \emph{a posteriori} de la
+        correction $l$ en $\vx$, une fois vues les données. LG la définissent au §\,3.1 par la matrice
+        bordée de LG (3). Avec $\mathbf{u}=\mathbf{h}_l(\vx)-\mathbf{H}_l'\mathbf{R}_l^{-1}\mathbf{r}_l(\vx)$,
+        elle vaut
+        \[
+          \sigma^2_{\delta^l}(\vx)=\sigma_l^2\Big(\underbrace{1}_{\text{a priori}}
+          \;\underbrace{-\,\mathbf{r}_l'\mathbf{R}_l^{-1}\mathbf{r}_l}_{\text{apport des données}}
+          \;\underbrace{+\,\mathbf{u}'(\mathbf{H}_l'\mathbf{R}_l^{-1}\mathbf{H}_l)^{-1}\mathbf{u}}_{\text{incertitude sur }(\rho_{l-1},\beta_l)}\Big),
+          \qquad \mathbf{h}_l(\vx)=\big(\mu^{l-1}_{n_{l-1}}(\vx),\ \mathbf{f}_l(\vx)\big).
+        \]
+        Notre $\sigma_l^2(\vx)$ est la même quantité \emph{sans le dernier terme}, puisque $\rho$ et la tendance
+        sont fixés. Pour $l=1$, $\sigma^2_{\delta^1}(\vx)=k^1_{n_1}(\vx,\vx)$.
+  \item $\hat\sigma^2_{\rho_{l-1}}$ \textbf{(un nombre sans rapport avec la sortie)} est le moment d'ordre 2 de
+        $\rho_{l-1}$ a posteriori : $\mathbb{E}[\rho^2]=\hat\rho^2+\Var(\rho)$. C'est un \emph{gain au carré},
+        pas une variance de sortie (§\,\ref{sec:lgroute}). À $\sigma_l^2$ connu, la loi a posteriori de
+        $(\rho_{l-1},\beta_l)$ est gaussienne de covariance $\sigma_l^2(\mathbf{H}_l'\mathbf{R}_l^{-1}\mathbf{H}_l)^{-1}$
+        (moindres carrés généralisés) ; l'article imprime $[(\mathbf{H}'\mathbf{R}^{-1}\mathbf{H})^{-1}]_{1,1}$
+        sans le facteur $\sigma_l^2$. Si $\rho$ est connu, $\hat\sigma^2_\rho=\rho^2$.
+  \item $k^l_{n_l}(\vx,\tilde\vx)$ est la covariance prédictive du co-krigeage au niveau $l$, conditionné à
+        toutes les données des niveaux $1..l$ (l'indice $n_l$ le rappelle). $k^l_{n_l}(\vx,\vx)$ est la
+        variance prédictive, ou MSE, du niveau $l$. Sa relation avec les précédentes est LG (4) :
+        \[
+          k^l_{n_l}(\vx,\vx)=\sum_{j=1}^{l}\sigma^2_{\delta^j}(\vx)\prod_{k=j}^{l-1}\hat\sigma^2_{\rho_k}.
+        \]
+        $k$ est le \emph{total}, les $\sigma^2_{\delta^j}(\vx)$ en sont les \emph{morceaux}, et les
+        $\hat\sigma^2_\rho$ les gains qui les propagent.
+\end{enumerate}
+\end{aretenir}
+
+% ---------------------------------------------------------------------------------------------
+\section{De (N1) à $Z_L=\sum_j P_j\,\delta_j$}\label{sec:deroule}
+% ---------------------------------------------------------------------------------------------
+On part de (N1) : $Z_1=\delta_1$ et $Z_l(\vx)=\rho_{l-1}Z_{l-1}(\vx)+\delta_l(\vx)$ pour $l\ge2$, avec des
+$\rho$ constants. On \emph{déroule} la récurrence :
+\[
+  Z_2=\rho_1\delta_1+\delta_2,\qquad
+  Z_3=\rho_2 Z_2+\delta_3=\rho_2\rho_1\,\delta_1+\rho_2\,\delta_2+\delta_3 .
+\]
+\textbf{Énoncé.} Pour tout $l$, $Z_l=\sum_{j=1}^{l}P_{j\to l}\,\delta_j$ avec
+$P_{j\to l}=\prod_{k=j}^{l-1}\rho_k$, et la convention $P_{l\to l}=1$ (produit vide).
+
+\textbf{Récurrence.} L'énoncé est vrai pour $l=1$. S'il l'est au rang $l-1$, alors
+\[
+  Z_l=\rho_{l-1}\sum_{j=1}^{l-1}P_{j\to l-1}\,\delta_j+\delta_l
+     =\sum_{j=1}^{l-1}\Big(\rho_{l-1}\prod_{k=j}^{l-2}\rho_k\Big)\delta_j+\delta_l
+     =\sum_{j=1}^{l-1}P_{j\to l}\,\delta_j+P_{l\to l}\,\delta_l .\qquad\square
+\]
+Pour $l=L$, on note $P_j=P_{j\to L}$. C'est une identité entre \emph{processus aléatoires}, vraie en chaque
+$\vx$ et avant toute observation. Physiquement, la correction $\delta_j$ traverse les niveaux $j+1,\dots,L$
+et elle est multipliée par $\rho$ à chaque traversée ; $P_j$ est le gain total de cette chaîne. (Avec un
+$\rho(\vx)$, on aurait simplement $P_j(\vx)=\prod_k\rho_k(\vx)$.)
+
+% ---------------------------------------------------------------------------------------------
+\section{De $Z_L=\sum_j P_j\delta_j$ à l'espérance et à la variance (N2)}\label{sec:decomp}
+% ---------------------------------------------------------------------------------------------
+\subsection{Ce que donne l'algèbre seule}
+Par linéarité de l'espérance conditionnelle, $\mathbb{E}[Z_L(\vx)|\vz]=\sum_j P_j\,\mathbb{E}[\delta_j(\vx)|\vz]$.
+Pour la variance d'une combinaison linéaire,
+\begin{equation}\label{eq:var}
+  \Var[Z_L(\vx)|\vz]=\sum_{j}P_j^2\Var[\delta_j(\vx)|\vz]
+  +2\sum_{j<k}P_jP_k\Cov[\delta_j(\vx),\delta_k(\vx)|\vz].
+\end{equation}
+Pour obtenir (N2), il faut deux choses : que les covariances croisées \emph{a posteriori} soient nulles, et
+que $\mathbb{E}[\delta_j|\vz]$ et $\Var[\delta_j|\vz]$ ne dépendent que des données du niveau $j$.
+
+\subsection{L'indépendance a priori ne suffit pas}
+Prenons deux corrections indépendantes $\delta_1,\delta_2\sim\mathcal{N}(0,1)$ en un point, $\rho=1$, et
+observons \emph{seulement} $z_2=\delta_1+\delta_2$. Le conditionnement gaussien donne
+$\Cov[\delta_1,\delta_2|z_2]=0-\frac{1\cdot1}{2}=-\tfrac12$. Savoir que la somme vaut $z_2$ couple les deux
+termes : si l'un est grand, l'autre est petit. Le terme croisé de~\eqref{eq:var} vaut alors $-1$, et il
+compense exactement $\Var[\delta_1|z_2]+\Var[\delta_2|z_2]=\tfrac12+\tfrac12$ : la variance totale est
+nulle, ce qui est correct puisque $Z_2$ est observé. Sans terme croisé, on obtiendrait 1, ce qui est faux.
+
+\subsection{L'imbrication rétablit l'indépendance}
+Si $\D_j\subset\D_{j-1}$, la valeur $z_{j-1}$ est connue en chaque point de $\D_j$. On définit les résidus
+\[
+  \vd_1=\vz_1,\qquad \vd_j=\vz_j-\rho_{j-1}\,\vz_{j-1}(\D_j)\quad(j\ge2).
+\]
+\begin{itemize}
+  \item \textbf{$\vd$ et $\vz$ contiennent la même information.} On repasse de $\vd$ à $\vz$ par
+        $\vz_j=\vd_j+\rho_{j-1}\vz_{j-1}(\D_j)$, de proche en proche. L'application $\vz\mapsto\vd$ est linéaire
+        et triangulaire par blocs, avec des identités sur la diagonale ; son déterminant vaut 1, elle est
+        inversible. Conditionner par $\vz$ ou par $\vd$, c'est donc la même chose.
+  \item \textbf{$\vd_j$ ne dépend que de $\delta_j$.} Sans bruit,
+        $\vd_j=Z_j(\D_j)-\rho_{j-1}Z_{j-1}(\D_j)=\delta_j(\D_j)$ d'après (N1).
+  \item \textbf{La loi a posteriori se factorise.} Les $\delta_j$ sont indépendants a priori, et chaque
+        $\vd_j$ n'est lié qu'à $\delta_j$. Par la formule de Bayes,
+        \[
+          p(\delta_1,\dots,\delta_L\mid\vd_1,\dots,\vd_L)\ \propto\ \prod_{j=1}^{L}p(\delta_j)\,p(\vd_j\mid\delta_j)
+          \ \propto\ \prod_{j=1}^{L}p(\delta_j\mid\vd_j).
+        \]
+\end{itemize}
+Les $\delta_j$ restent donc indépendants a posteriori, et chacun ne « voit » que ses propres résidus. Par
+conséquent, $\Cov[\delta_j,\delta_k|\vz]=0$ pour $j\ne k$, $\mathbb{E}[\delta_j(\vx)|\vz]=\mu_j(\vx)$ et
+$\Var[\delta_j(\vx)|\vz]=\sigma_j^2(\vx)$, où $\mu_j$ et $\sigma_j^2$ sont les formules du krigeage simple
+d'un \emph{seul} GP sur $\vd_j$ :
+\[
+  \mu_j(\vx)=m_j+\mathbf{k}_j(\vx)\tp\Kt_j^{-1}(\vd_j-m_j),\qquad
+  \sigma_j^2(\vx)=k_j(\vx,\vx)-\mathbf{k}_j(\vx)\tp\Kt_j^{-1}\mathbf{k}_j(\vx),\qquad
+  \Kt_j=\mathbf{K}_j+\tau_j^2\mathbf{I}.
+\]
+En reportant dans~\eqref{eq:var}, on obtient (N2) :
+$\mathbb{E}[Z_L|\vz]=\sum_jP_j\mu_j$ et $\Var[Z_L|\vz]=\sum_jP_j^2\sigma_j^2$. Le même argument donne la
+covariance, $\sum_jP_j^2k^n_j(\vx,\vx')$.
+
+\textbf{Avec du bruit.} On a alors
+$\vd_j=\delta_j(\D_j)+\varepsilon_j-\rho_{j-1}\varepsilon_{j-1}(\D_j)$ : $\vd_j$ et $\vd_{j-1}$ partagent le
+bruit $\varepsilon_{j-1}$. La factorisation n'est plus qu'approchée, à l'ordre
+$\rho^2\tau_{j-1}^2/\sigma_j^2$ ; c'est l'écart de $10^{-4}$ mesuré dans la note.
+
+\subsection{Le même résultat dans les notations de LG}\label{sec:lgroute}
+LG (1) place le conditionnement dans le modèle lui-même : $Y^l=\rho_{l-1}\tilde Y^{l-1}+\delta^l$, où
+$\tilde Y^{l-1}$ est \emph{déjà} le niveau $l-1$ conditionné à ses données. C'est la formulation récursive
+de~\cite{LGG14}, équivalente à celle de Kennedy \& O'Hagan sur plan imbriqué~\cite[prop.~3.1]{LG13}. On
+prend LG (3) en $\tilde\vx=\vx$ ; le second terme est $\sigma^2_{\delta^l}(\vx)$ par définition (§\,3.1 de
+l'article), d'où
+\[
+  k^l_{n_l}(\vx,\vx)=\hat\sigma^2_{\rho_{l-1}}\,k^{l-1}_{n_{l-1}}(\vx,\vx)+\sigma^2_{\delta^l}(\vx).
+\]
+On déroule cette récurrence exactement comme au §\,\ref{sec:deroule}, et on obtient LG (4).
+
+\textbf{Pourquoi un moment d'ordre 2 pour $\rho$.} Chez LG, $\rho$ est aléatoire, indépendant de
+$\tilde Y^{l-1}$. Pour un produit de deux variables indépendantes, la loi de la variance totale donne
+\[
+  \Var(\rho\,\tilde Y)=\underbrace{\mathbb{E}[\rho^2]}_{\hat\sigma^2_\rho}\Var(\tilde Y)
+  +\Var(\rho)\,\big(\mathbb{E}\tilde Y\big)^2 .
+\]
+Le premier terme donne $\hat\sigma^2_{\rho}\,k^{l-1}$. Le second est rangé dans le terme $\mathbf{u}$ de
+$\sigma^2_{\delta^l}(\vx)$, car $\mathbf{h}_l$ contient $\mu^{l-1}(\vx)=\mathbb{E}\tilde Y$. Avec $\rho$ fixé
+(mfego), $\Var(\rho)=0$ : $\hat\sigma^2_\rho\to\rho^2$ et $\sigma^2_{\delta^l}(\vx)\to\sigma^2_l(\vx)$, ce qui
+redonne (N2).
+
+% ---------------------------------------------------------------------------------------------
+\section{La proposition 2 en détail}\label{sec:loo}
+% ---------------------------------------------------------------------------------------------
+\subsection{LOO d'un seul GP (Dubrule)}
+Soit $\vw=\vd_j-m_j$ les résidus centrés : $\vw\sim\mathcal{N}(0,\Kt)$. On note $\Lam=\Kt^{-1}$ (la matrice
+de précision) et $\bm{\alpha}=\Lam\vw$. Vue comme fonction de la seule composante $w_i$, la densité
+$\propto\exp(-\tfrac12\vw\tp\Lam\vw)$ s'écrit
+$\exp\!\big(-\tfrac12\Lambda_{ii}w_i^2-w_i\sum_{k\ne i}\Lambda_{ik}w_k+\dots\big)$. C'est une gaussienne en
+$w_i$, de variance $1/\Lambda_{ii}$ et de moyenne $-\frac{1}{\Lambda_{ii}}\sum_{k\ne i}\Lambda_{ik}w_k$. Donc
+\[
+  e_i=w_i-\mathbb{E}[w_i|\vw_{-i}]=\frac{(\Lam\vw)_i}{\Lambda_{ii}}=\frac{\alpha_i}{\Lambda_{ii}},\qquad
+  s_i^2=\frac{1}{\Lambda_{ii}},\qquad z_i^2=\frac{\alpha_i^2}{\Lambda_{ii}}\qquad\text{(N3)}.
+\]
+Une seule inversion de $\Kt$ suffit pour les $n$ prédictions sans le point $i$. La matrice $\mathbf{K}_l$
+de LG, $[\mathbf{R}^{-1}]_{-i,-i}-[\mathbf{R}^{-1}]_{-i,i}[\mathbf{R}^{-1}]_{i,-i}/[\mathbf{R}^{-1}]_{ii}$,
+n'est autre que $(\mathbf{R}_{-i,-i})^{-1}$ : c'est l'inverse de la matrice privée du point $i$, déduit de
+l'inverse complet.
+
+\subsection{LOO du co-krigeage, niveau par niveau}
+On fixe $j\ge2$ et $\vx_i\in\D_j$. On retire les observations en $\vx_i$ de \emph{tous} les niveaux (données
+$\vz^{(-i)}$). C'est le LOO de LG (« built without the observations $y^1_{i_1},\dots,y^l_{i_l}$ ») et celui de
+\py{leave_one_out(by_location=True)}. Le plan réduit reste imbriqué, donc le §\,\ref{sec:decomp} s'y
+applique, au niveau $j$ comme au niveau $L$. Avec $Z_j=\rho_{j-1}Z_{j-1}+\delta_j$ et l'indépendance a
+posteriori :
+\begin{align*}
+  \text{(A)}\quad & \mathbb{E}[Z_j(\vx_i)|\vz^{(-i)}]=\rho_{j-1}\,\mathbb{E}[Z_{j-1}(\vx_i)|\vz^{(-i)}]
+                    +\mathbb{E}[\delta_j(\vx_i)|\vd_{j,-i}],\\
+  \text{(B)}\quad & z_j(\vx_i)=\rho_{j-1}\,z_{j-1}(\vx_i)+d_j(\vx_i)
+                    \quad\text{(définition de $d_j$ ; $\vx_i\in\D_{j-1}$ par imbrication).}
+\end{align*}
+On soustrait (A) de (B). Les erreurs LOO étant « valeur observée moins prédiction »,
+\[
+  e_j(\vx_i)=\rho_{j-1}\,e_{j-1}(\vx_i)+e_i^{(\delta_j)},\qquad
+  e_i^{(\delta_j)}=d_j(\vx_i)-\mathbb{E}[\delta_j(\vx_i)|\vd_{j,-i}] .
+\]
+Pour les variances, l'indépendance donne
+$\Var[Z_j(\vx_i)|\vz^{(-i)}]=\rho_{j-1}^2\Var[Z_{j-1}(\vx_i)|\vz^{(-i)}]+\Var[\delta_j(\vx_i)|\vd_{j,-i}]$.
+On ajoute $\tau_j^2$ pour passer à la variance de l'observation, avec $\tau_{j-1}=0$ :
+$s_j^2=\rho_{j-1}^2s_{j-1}^2+s_i^{2\,(\delta_j)}$. Enfin, $e_i^{(\delta_j)}$ et $s_i^{2\,(\delta_j)}$ sont le
+LOO du GP $\delta_j$ \emph{seul} sur $\vd_j$, donné par (N3). \hfill$\square$
+
+\begin{lgbox}[traduction terme à terme de LG (6)–(7)]
+\[
+  \underbrace{\varepsilon_{\mathrm{LOO},l}}_{e_l}=\underbrace{\hat\rho_{l-1,i_l}}_{\rho_{l-1}}\,
+  \underbrace{\varepsilon_{\mathrm{LOO},l-1}}_{e_{l-1}}
+  +\underbrace{\frac{\big[\mathbf{R}_l^{-1}(\mathbf{y}^l-\mathbf{H}_l(\hat\rho;\hat\beta)_{-i})\big]_{i_l}}
+  {[\mathbf{R}_l^{-1}]_{i_l,i_l}}}_{e_i^{(\delta_l)}=\alpha_i/\Lambda_{ii}},
+  \qquad
+  \underbrace{\sigma^2_{\mathrm{LOO},l}}_{s_l^2}=\underbrace{\hat\sigma^2_{\rho_{l-1,i_l}}}_{\rho_{l-1}^2}\,
+  \underbrace{\sigma^2_{\mathrm{LOO},l-1}}_{s_{l-1}^2}
+  +\underbrace{\frac{\sigma^2_{l,-i_l}}{[\mathbf{R}_l^{-1}]_{i_l,i_l}}}_{s_i^{2(\delta_l)}=1/\Lambda_{ii}}
+  +\underbrace{\varsigma_l}_{0}.
+\]
+\begin{itemize}
+  \item $\mathbf{y}^l-\mathbf{H}_l(\rho;\beta)=\mathbf{y}^l-\rho\,y^{l-1}(\mathbf{D}^l)-\mathbf{F}_l\beta$, ce
+        sont les résidus moins la tendance, donc notre $\vw$.
+  \item $\Lam=\mathbf{R}_l^{-1}/\sigma_l^2$ : le facteur $\sigma_l^2$ se simplifie dans le rapport.
+  \item Chez LG, $(\rho,\beta,\sigma^2)$ sont ré-estimés sans le point $i$, d'où les indices $i_l$ et
+        $-i_l$ ; $\varsigma_l$ est la part de variance due à cette ré-estimation.
+\end{itemize}
+La proposition 2 est donc \textbf{LG (6)–(7) à paramètres fixés}. Le rapport de LG (8) devient
+$\big(e_i^{(\delta_j)}\big)^2/s_i^{2(\delta_j)}=z^2_{j,i}$. C'est le carré de l'erreur LOO normalisée de la
+seule correction $j$ (« la part de l'erreur expliquée par le biais $\delta^j$ », dans les mots de LG), qu'on
+lit dans \py{gps[j-1]} sans réajuster.
+\end{lgbox}
+
+% ---------------------------------------------------------------------------------------------
+\section{D'où vient l'équation (N5)}\label{sec:gain}
+% ---------------------------------------------------------------------------------------------
+\textbf{Un calcul de plus, une mise à jour de rang un.} Pour deux variables conjointement gaussiennes
+$(A,W)$, on a $\Var(A|W)=\Var A-\Cov(A,W)^2/\Var W$, et ce résultat \emph{ne dépend pas de la valeur} de
+$W$. Calculer $\vx_0$ aux niveaux $1..l$ fournit les résidus $d_1(\vx_0),\dots,d_l(\vx_0)$, puisque
+$z_{j-1}(\vx_0)$ est connu pour former $d_j(\vx_0)$. Les niveaux $j>l$ ne reçoivent rien. Pour $j\le l$, on
+prend, sous la loi a posteriori courante, $A=\delta_j(\vx)$ et $W=d_j(\vx_0)=\delta_j(\vx_0)+\varepsilon_j$ :
+$\Cov(A,W)=k^n_j(\vx,\vx_0)$ et $\Var W=\sigma_j^2(\vx_0)+\tau_j^2$. D'où
+\[
+  \sigma_j^2(\vx)\ \longrightarrow\ \sigma_j^2(\vx)-\frac{k^n_j(\vx,\vx_0)^2}{\sigma_j^2(\vx_0)+\tau_j^2}.
+\]
+\textbf{Retour à la sortie HF.} Le nouveau plan est encore imbriqué. Le §\,\ref{sec:decomp} s'applique avant
+et après l'ajout, et la différence des deux variances vaut
+\[
+  \Delta\Var[Z_L(\vx)]=\sum_{j=1}^{l}P_j^2\,\frac{k^n_j(\vx,\vx_0)^2}{\sigma_j^2(\vx_0)+\tau_j^2},
+  \qquad
+  G_l(\vx_0)=\int_\Q\Delta\Var[Z_L(\vx)]\,d\vx .
+\]
+L'intégrale est estimée par la moyenne sur $N$ points de Sobol du cube unité, ce qui donne (N5). Le
+facteur $a_j(\vx_0)$ de (N5) est l'ajustement heuristique de LG (10), ajouté par-dessus ce résultat exact.
+
+\textbf{Lecture physique.} On note $c_j(\vx,\vx_0)=k^n_j(\vx,\vx_0)/(\sigma_j(\vx)\sigma_j(\vx_0))$ la
+corrélation a posteriori. Alors
+\[
+  \frac{k^n_j(\vx,\vx_0)^2}{\sigma_j^2(\vx_0)+\tau_j^2}
+  =\underbrace{\sigma_j^2(\vx)}_{\text{ignorance en }\vx}\times
+  \underbrace{c_j(\vx,\vx_0)^2}_{\text{lien entre }\vx\text{ et }\vx_0}\times
+  \underbrace{\frac{\sigma_j^2(\vx_0)}{\sigma_j^2(\vx_0)+\tau_j^2}}_{\text{part non bruitée du calcul}} .
+\]
+\textbf{Lien avec le proxy LG (5).} Supposons $k^n_j(\vx,\vx_0)\approx\sigma_j^2(\vx_0)\,r_j(\vx-\vx_0)$ : la
+covariance garde la forme de la corrélation a priori, ce qui vaut pour un point loin des autres, sans
+bruit et dans un domaine infini. On a alors
+$\int k^n_j(\vx,\vx_0)^2\,d\vx/\sigma_j^2(\vx_0)\approx\sigma_j^2(\vx_0)\int r_j^2
+=\pi^{d/2}\,\sigma_j^2(\vx_0)\prod_m\theta_{j,m}$, pour le noyau exponentiel carré de mfego. On retrouve
+$\sigma^2_{\delta^j}(\vx_0)\prod_m\theta_j^m$, au facteur $\pi^{d/2}$ près, commun à tous les niveaux. Le
+proxy se dégrade dans trois cas :
+\begin{itemize}
+  \item un voisin proche « masque » une partie du volume ;
+  \item $\theta>1$, alors que le domaine est borné ;
+  \item il y a du bruit.
+\end{itemize}
+
+% ---------------------------------------------------------------------------------------------
+\section{Pourquoi un facteur $\rho^2$ : la correction de la règle de LG}\label{sec:rho}
+% ---------------------------------------------------------------------------------------------
+\textbf{Quelle IMSE réduit $\mathrm{IMSE}^l_{\mathrm{red}}$ ?} Dans LG (5), les poids s'arrêtent à $l-1$ :
+$\prod_{k=j}^{l-1}\hat\sigma^2_{\rho_k}$. Comparé à LG (4), c'est la réduction de l'IMSE de la sortie
+\emph{du niveau $l$}, $\int k^l_{n_l}$, et non de la sortie HF. L'objectif est pourtant l'IMSE de $Y^s$.
+Calculer $\vx_0$ jusqu'au niveau $l$ réduit les $\sigma^2_{\delta^j}$ pour $j\le l$, et chacun pèse
+$\prod_{k=j}^{s-1}\hat\sigma^2_{\rho_k}$ dans $k^s$ :
+\[
+  \Delta\mathrm{IMSE}^s(\text{jusqu'à }l)=\sum_{j\le l}\Delta\bar\sigma^2_{\delta^j}\prod_{k=j}^{s-1}\hat\sigma^2_{\rho_k}
+  =W_l\ \mathrm{IMSE}^l_{\mathrm{red}},\qquad W_l=\prod_{k=l}^{s-1}\hat\sigma^2_{\rho_k}.
+\]
+\textbf{La comparaison cohérente.} LG lancent le niveau $l-1$ plutôt que $l$ si
+$B_{l/l-1}\,\mathrm{IMSE}^{l-1}_{\mathrm{red}}>\mathrm{IMSE}^l_{\mathrm{red}}$. En unités HF, il faut
+comparer $B\,W_{l-1}\,\mathrm{IMSE}^{l-1}_{\mathrm{red}}$ à $W_l\,\mathrm{IMSE}^l_{\mathrm{red}}$. Or
+$W_{l-1}=\hat\sigma^2_{\rho_{l-1}}W_l$, donc après simplification par $W_l$ :
+\[
+  \boxed{B_{l/l-1}\,\hat\sigma^2_{\rho_{l-1}}\,\mathrm{IMSE}^{l-1}_{\mathrm{red}}>\mathrm{IMSE}^l_{\mathrm{red}}}
+  \qquad\text{au lieu de}\qquad B_{l/l-1}\,\mathrm{IMSE}^{l-1}_{\mathrm{red}}>\mathrm{IMSE}^l_{\mathrm{red}} .
+\]
+\textbf{Deux niveaux, explicitement.} On note $R_1=\sigma^2_{\delta^1}V_1$ et $V_j=\prod_m\theta_j^m$ ; alors
+$\mathrm{IMSE}^1_{\mathrm{red}}=R_1$ et $\mathrm{IMSE}^2_{\mathrm{red}}=\rho^2R_1+\sigma^2_{\delta^2}V_2$.
+La BF est lancée si
+\begin{align*}
+  &\text{LG :} && (B-\rho^2)\,R_1>\sigma^2_{\delta^2}V_2,\\
+  &\text{corrigé, coût d'un seul calcul :} && (B-1)\,\rho^2R_1>\sigma^2_{\delta^2}V_2,\\
+  &\text{(N6), coût cumulé :} && B\,\rho^2R_1>\sigma^2_{\delta^2}V_2 .
+\end{align*}
+La dernière forme vient de $\rho^2R_1/c_1>(\rho^2R_1+\sigma^2_{\delta^2}V_2)/(c_1+c_2)$. Les deux
+corrections ne diffèrent que par la façon de compter le coût d'un calcul HF, qui oblige aussi à faire le
+calcul BF au même point.
+
+\begin{aretenir}[trois arguments pour la version corrigée]
+\begin{enumerate}
+  \item \textbf{Homogénéité.} $R_1$ s'exprime en $[y^1]^2\cdot[\vx]^d$ et $\sigma^2_{\delta^2}V_2$ en
+        $[y^2]^2\cdot[\vx]^d$. Comme $\rho$ s'exprime en $[y^2]/[y^1]$, seul $\rho^2R_1$ est homogène au
+        membre de droite. LG comparent des quantités de dimensions différentes.
+  \item \textbf{Invariance.} Changeons l'unité du code BF : $z_1\to a\,z_1$. Le \emph{même} modèle se
+        réécrit exactement avec $\rho\to\rho/a$ et $\sigma^2_{\delta^1}\to a^2\sigma^2_{\delta^1}$, et les
+        prédictions HF sont inchangées : la décision ne devrait pas changer non plus.
+        \begin{itemize}
+          \item Avec la règle de LG, $a^2BR_1>\rho^2R_1+\sigma^2_{\delta^2}V_2$ : la décision dépend de $a$.
+                Une BF exprimée en Pa avec une HF en MPa ($a=10^6$) conduirait à toujours lancer la BF.
+          \item Avec la règle corrigée, $B\rho^2R_1$ est invariant.
+        \end{itemize}
+  \item \textbf{Sens de variation.} Un $\rho$ grand signifie que la HF est très sensible à la BF :
+        l'incertitude BF est amplifiée par $\rho^2$, selon la propagation $\Var(\rho X)=\rho^2\Var X$. La BF
+        devrait donc devenir \emph{plus} intéressante. Chez LG, le facteur $(B-\rho^2)$ \emph{diminue}, et la
+        BF n'est plus jamais lancée dès que $\rho^2\ge B$. Exemple : $\hat\rho=2{,}4$, valeur trouvée dans
+        mfego sur Hartmann, avec $B=5$, donne $5-5{,}76<0$.
+\end{enumerate}
+L'exemple de LG ne pouvait pas le montrer : les deux codes calculent la même contrainte de von Mises en
+MPa, donc $\rho\approx1$, et les deux règles coïncident presque. Les deux autres corrections de la note
+s'ajoutent à celle-ci : le gain exact (§\,\ref{sec:gain}) au lieu du volume $V_j$, et le coût cumulé
+$C_l$ au lieu du rapport $t_l/t_{l-1}$.
+\end{aretenir}
+
+% ---------------------------------------------------------------------------------------------
+\section{Pourquoi le premier test de l'algorithme 1 devient inutile}\label{sec:test}
+% ---------------------------------------------------------------------------------------------
+\textbf{Ce qu'il fait.} Ligne 3 : si $\sigma^2_{\delta^l}(\vx_{\mathrm{new}})<\bar\sigma^2_{\delta^l}$, on ne
+lance pas le niveau $l$. Ici $\bar\sigma^2=\int_\Q\sigma^2_{\delta^l}\,d\vx$ est une \emph{intégrale}, égale
+à la moyenne seulement si $|\Q|=1$. L'idée : si la correction $l$ est mieux connue en $\vx_{\mathrm{new}}$
+qu'en moyenne, le code $l$ y apporte peu. C'est un seuil arbitraire, qui ignore le coût, $\rho$, le bruit et
+l'étendue spatiale du gain.
+
+\textbf{Ce que fait (N6) à sa place.} On note $g_l=G_l-G_{l-1}$ le gain \emph{marginal} du niveau $l$ et
+$c_l=C_l-C_{l-1}$ son coût marginal. Alors
+\[
+  \frac{G_l}{C_l}<\frac{G_{l-1}}{C_{l-1}}
+  \iff (G_{l-1}+g_l)\,C_{l-1}<G_{l-1}\,(C_{l-1}+c_l)
+  \iff \boxed{\ \frac{g_l}{G_{l-1}}<\frac{c_l}{C_{l-1}}\ }.
+\]
+Le niveau $l$ n'est retenu que si \emph{le gain qu'il ajoute, rapporté au gain déjà obtenu, dépasse le
+surcoût qu'il impose, rapporté au coût déjà engagé}. C'est la version quantitative du test de LG. Le seuil
+n'est plus « la moyenne », il est fixé par les coûts.
+
+\textbf{Pourquoi $g_l$ est petit dans le cas visé par LG.} L'inégalité de Cauchy–Schwarz sur la covariance a
+posteriori, $k^n_l(\vx,\vx_0)^2\le\sigma_l^2(\vx)\,\sigma_l^2(\vx_0)$, donne
+\[
+  g_l\le P_l^2\,a_l(\vx_0)\,\frac{\sigma_l^2(\vx_0)}{\sigma_l^2(\vx_0)+\tau_l^2}\int_\Q\sigma_l^2(\vx)\,d\vx .
+\]
+Si la correction $l$ est connue en $\vx_0$ à mieux que le bruit ($\sigma_l^2(\vx_0)\ll\tau_l^2$), le niveau
+$l$ n'apporte presque rien. C'est l'intuition de LG, avec le bon seuil : le bruit, pas la moyenne spatiale.
+Sans bruit, un point très proche d'un point existant peut encore apporter une information de type gradient ;
+le gain exact le mesure, alors que le test de LG le refuserait. Enfin, (N6) compare tous les niveaux d'un
+coup, par un $\arg\max$. L'hypothèse de monotonie de l'efficacité, qui justifie chez LG la boucle par paires
+successives (remarque du §\,3.1), n'est plus nécessaire.
+
+{\small
+\begin{thebibliography}{9}\setlength{\itemsep}{0.05em}
+\bibitem{LGC15} L. Le Gratiet, C. Cannamela, \emph{Cokriging-based sequential design strategies using fast
+  cross-validation techniques for multi-fidelity computer codes}, Technometrics 57(3):418–427, 2015.
+\bibitem{LGG14} L. Le Gratiet, J. Garnier, \emph{Recursive co-kriging model for design of computer experiments
+  with multiple levels of fidelity}, Int. J. Uncertainty Quantification 4(5):365–386, 2014.
+\bibitem{LG13} L. Le Gratiet, \emph{Multi-fidelity Gaussian process regression for computer experiments},
+  thèse, Université Paris Diderot, 2013.
+\bibitem{KO00} M. C. Kennedy, A. O'Hagan, \emph{Predicting the output from a complex computer code when fast
+  approximations are available}, Biometrika 87(1):1–13, 2000.
+\bibitem{Dub83} O. Dubrule, \emph{Cross validation of kriging in a unique neighborhood}, Mathematical Geology
+  15(6):687–699, 1983.
+\bibitem{RW06} C. E. Rasmussen, C. K. I. Williams, \emph{Gaussian Processes for Machine Learning}, MIT Press,
+  2006 (§\,2.7, §\,5.4.2, annexe A.2 pour le conditionnement gaussien).
+\end{thebibliography}}
+
+\end{document}
