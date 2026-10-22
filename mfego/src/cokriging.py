@@ -90,11 +90,17 @@ class CoKriging:
     def __init__(self, num_levels: int, kernel_class=Matern52Kernel,
                  use_map: bool = True, priors: dict = None, lengthscale_prior=None,
                  rho_bounds: tuple[float, float] = None, n_restarts: int = 3,
-                 seed: int = None, tol: float = 1e-8, rho_centering: bool = True):
+                 seed: int = None, tol: float = 1e-8, rho_centering: bool = True,
+                 share_lengthscales: bool = False):
         self.num_levels = num_levels
         self.kernel_class = kernel_class
         self.use_map = bool(use_map)
         self.rho_centering = bool(rho_centering)
+        # [SHARE] True: the GP of the correction delta_l takes the lengthscales of the GP of
+        # level l-1 (learned on more points) instead of learning its own on the points of level
+        # l only; its variances, noise and rho are still estimated. -7 % of error on the target
+        # region of the airfoil test, 8 seeds out of 10 (vpp_acceleration/examples/joint_study.py).
+        self.share_lengthscales = bool(share_lengthscales)
         self.priors = check_priors(priors)
         # [V3] default prior of the centred rho with MAP: rho learned under V3_RHO_PRIOR
         if self.rho_centering and self.use_map and "rho" not in self.priors:
@@ -161,9 +167,11 @@ class CoKriging:
                     "missing_points_for_nesting() at the lower levels.")
             # observed values of the level below at the points of level l ([LG] Prop. 3.1)
             f_prev = ys[l - 2][index]
+            # [SHARE] lengthscales of the level below (already fitted), or None (learned here)
+            shared = self.gps[l - 2].kernel.lengthscale if self.share_lengthscales else None
             self.rhos[l - 2] = self.gps[l - 1].fit(
                 self._unit(xs[l - 1]), ys[l - 1], n_restarts=self.n_restarts, f_prev=f_prev,
-                estimate_rho=True, rho_bounds=self.rho_bounds)
+                estimate_rho=True, rho_bounds=self.rho_bounds, fixed_lengthscale=shared)
         self.condition(xs, ys)
 
     def _unit(self, x: np.ndarray) -> np.ndarray:
@@ -342,6 +350,7 @@ class CoKriging:
                 "priors": saved_priors(self.gps[0].priors, self.priors),
                 "lengthscale_prior": [list(p) for p in self.lengthscale_priors],
                 "rho_centering": self.rho_centering, "rho_bounds": list(self.rho_bounds),
+                "share_lengthscales": self.share_lengthscales,
                 "input_bounds": None if self.input_bounds is None else self.input_bounds.tolist(),
                 "levels": levels}
 
@@ -356,7 +365,8 @@ class CoKriging:
                     use_map=state.get("use_map", True), priors=priors,
                     lengthscale_prior=state.get("lengthscale_prior"),
                     rho_bounds=state.get("rho_bounds"),
-                    rho_centering=state.get("rho_centering", False))
+                    rho_centering=state.get("rho_centering", False),
+                    share_lengthscales=state.get("share_lengthscales", False))
         model.rhos = [float(r) for r in state["rhos"]]
         bounds = state.get("input_bounds")
         model.input_bounds = None if bounds is None else np.asarray(bounds, dtype=float)

@@ -279,7 +279,8 @@ class GaussianProcess:
 
     def fit(self, x_train, y_train, n_restarts=3, f_prev: np.ndarray = None,
             rho_init: float = 1.0, estimate_rho: bool = False,
-            rho_bounds: tuple[float, float] = (-5.0, 5.0)) -> float:
+            rho_bounds: tuple[float, float] = (-5.0, 5.0),
+            fixed_lengthscale: np.ndarray = None) -> float:
         """
         Fit the Gaussian Process model to the training data and optimize hyperparameters.
 
@@ -294,6 +295,10 @@ class GaussianProcess:
         the kernel hyperparameters (log rho is the last parameter of L-BFGS-B, bounds
         [max(rho_bounds[0], RHO_LEARNED_MIN), rho_bounds[1]]),
         otherwise rho is fixed to rho_init.
+        [SHARE] fixed_lengthscale (d,): the lengthscales are FIXED to these values (lower bound =
+        upper bound for L-BFGS-B) and only t1, t2, the noise (and rho) are estimated. Used by
+        CoKriging(share_lengthscales=True): the correction of a level takes the lengthscales of
+        the level below, learned on more points (vpp_acceleration/examples/joint_study.py).
 
         Returns:
         - rho: the correlation coefficient used (None if f_prev is None).
@@ -309,6 +314,12 @@ class GaussianProcess:
         # [FIX-N2] log-space bounds (see the module constants)
         param_bounds = [LENGTHSCALE_BOUNDS] * d \
                        + [SIGNAL_VARIANCE_BOUNDS, BIAS_VARIANCE_BOUNDS, NOISE_BOUNDS]
+        if fixed_lengthscale is not None:
+            # [SHARE] lower bound = upper bound: L-BFGS-B keeps the lengthscales at these values
+            fixed = np.asarray(fixed_lengthscale, dtype=float).reshape(-1)
+            if fixed.shape != (d,) or np.any(fixed <= 0.0):
+                raise ValueError(f"fixed_lengthscale must be {d} positive values, got {fixed}")
+            param_bounds[:d] = [(float(value), float(value)) for value in fixed]
         if learn_rho:
             # [V3] learned rho: one more (log) parameter, positive
             if rho_bounds[1] <= RHO_LEARNED_MIN:

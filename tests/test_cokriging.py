@@ -341,3 +341,62 @@ def test_missing_points_propagate_down_three_levels():
     missing = missing_points_for_nesting(data, 3)
     np.testing.assert_allclose(missing[2], [[0.123]])
     np.testing.assert_allclose(missing[1], [[0.123]])
+
+
+# [SHARE] correction delta_l with the lengthscales of level l-1 (share_lengthscales) ----------------
+def test_shared_lengthscales_are_those_of_the_level_below():
+    """[SHARE] with share_lengthscales, every level has exactly the lengthscales of level 1
+    (three levels: level 3 takes those of level 2, which took those of level 1); rho, the
+    variances and the noise are still estimated, and the prediction is still good."""
+    data = ExperimentData(bounds=[(0.0, 1.0)], costs=[1.0, 5.0, 25.0])
+    data.generate_nested_design([14, 8, 4], seed=0)
+    fill_data(data, [forrester_lf, lambda x: 0.5 * (forrester_lf(x) + forrester_hf(x)),
+                     forrester_hf])
+    model = fitted(data, num_levels=3, share_lengthscales=True)
+    for gp in model.gps[1:]:
+        np.testing.assert_array_equal(gp.kernel.lengthscale, model.gps[0].kernel.lengthscale)
+    assert model.gps[2].kernel.signal_variance != model.gps[0].kernel.signal_variance
+    rmse = np.sqrt(np.mean((model.predict_batch(X_TEST)[0] - forrester_hf(X_TEST[:, 0])) ** 2))
+    assert rmse < 1.0
+
+
+def test_fixed_lengthscale_at_the_free_optimum_gives_the_same_fit(nested_data):
+    """[SHARE] fixing the lengthscales at the values found by a free fit gives back the same
+    rho, hyperparameters and predictions: fixing only removes the lengthscales from L-BFGS-B."""
+    free = fitted(nested_data, priors={"rho": ("normal", 1.0, 2.0)})
+    gp = free.gps[1]
+    x_hf, y_hf = nested_data.get_training_data(2)
+    x_lf, y_lf = nested_data.get_training_data(1)
+    f_prev = y_lf[nested_index(x_hf, x_lf)]
+    fixed = GaussianProcess(SquaredExponentialKernel(), seed=1, use_map=True,
+                            priors={"rho": ("normal", 1.0, 2.0)}, rho_centering=True)
+    rho = fixed.fit(free._unit(x_hf), y_hf, n_restarts=3, f_prev=f_prev, estimate_rho=True,
+                    rho_bounds=free.rho_bounds, fixed_lengthscale=gp.kernel.lengthscale)
+    np.testing.assert_array_equal(fixed.kernel.lengthscale, gp.kernel.lengthscale)
+    np.testing.assert_allclose(rho, free.rhos[0], rtol=1e-4)
+    # the posterior is flat along t1: L-BFGS-B stops within a few 0.1 % of the same value
+    np.testing.assert_allclose(fixed.kernel.signal_variance, gp.kernel.signal_variance, rtol=1e-2)
+    x_unit = free._unit(X_TEST)
+    (mean_fixed, var_fixed), (mean_free, var_free) = (fixed.predict_batch(x_unit),
+                                                      gp.predict_batch(x_unit))
+    np.testing.assert_allclose(mean_fixed, mean_free, rtol=1e-3, atol=1e-6)
+    np.testing.assert_allclose(var_fixed, var_free, rtol=1e-2, atol=1e-8)   # follows t1
+
+
+def test_fixed_lengthscale_is_checked(nested_data):
+    """[SHARE] wrong number of lengthscales or non-positive values are refused."""
+    x, y = nested_data.get_training_data(1)
+    with pytest.raises(ValueError, match="fixed_lengthscale"):
+        GaussianProcess(Matern52Kernel()).fit(x, y, fixed_lengthscale=[0.3, 0.3])
+    with pytest.raises(ValueError, match="fixed_lengthscale"):
+        GaussianProcess(Matern52Kernel()).fit(x, y, fixed_lengthscale=[-0.3])
+
+
+def test_share_lengthscales_survives_the_json(nested_data):
+    """[SHARE] the option is saved and reloaded; a file without it is reloaded with False
+    (behaviour before the option)."""
+    state = fitted(nested_data, share_lengthscales=True).to_dict()
+    assert CoKriging.from_dict(json.loads(json.dumps(state))).share_lengthscales is True
+    del state["share_lengthscales"]
+    assert CoKriging.from_dict(state).share_lengthscales is False
+    assert CoKriging(2).share_lengthscales is False
