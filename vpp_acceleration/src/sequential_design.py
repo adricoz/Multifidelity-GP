@@ -282,7 +282,7 @@ def imse_gains(model: CoKriging, z2: list, x0: np.ndarray, x_int: np.ndarray,
 
 
 def batched_imse_gains(model: CoKriging, x_cand: np.ndarray, x_int: np.ndarray,
-                       missing: np.ndarray) -> np.ndarray:
+                       missing: np.ndarray, int_weights: np.ndarray = None) -> np.ndarray:
     """
     The gains G_l of imse_gains (without the adjustment) for MANY candidate points at once: the
     same formulas, written with arrays that carry one extra axis for the candidates (this is
@@ -292,6 +292,9 @@ def batched_imse_gains(model: CoKriging, x_cand: np.ndarray, x_int: np.ndarray,
     - x_cand: numpy array (M, d), candidate points, raw units.
     - x_int: numpy array (N, d), integration points, raw units.
     - missing: boolean numpy array (M, L), True if the level is not yet evaluated at the candidate.
+    - int_weights: None (the plain mean over the integration points) or numpy array (N,), the
+      weight of every integration point: the gain is then sum_i int_weights[i] x reduction_i
+      (e.g. the probability of the condition of the point times (dV/dC)^2, vpp_optimize).
     Returns:
     - numpy array (M, L), gains[m, l - 1] = G_l(x_m) (cumulative).
     """
@@ -329,7 +332,8 @@ def batched_imse_gains(model: CoKriging, x_cand: np.ndarray, x_int: np.ndarray,
             c_sub = c[rows][:, added, :]                   # (R, A, N)
             solution = np.linalg.solve(s_sub, c_sub)       # S^-1 c, batched, (R, A, N)
             reduction = np.sum(c_sub * solution, axis=1)   # c^T S^-1 c at each x_int, (R, N)
-            gains[rows, l - 1] = np.mean(reduction, axis=1)
+            gains[rows, l - 1] = (np.mean(reduction, axis=1) if int_weights is None
+                                  else reduction @ np.asarray(int_weights, dtype=float))
     return gains
 
 

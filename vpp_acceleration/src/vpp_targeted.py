@@ -268,14 +268,24 @@ def choose(surrogate: TorsorCoKriging, weights: np.ndarray, x_cand: np.ndarray,
     The pair (candidate, level) with the largest yield sum_k w_k G_k(x, l) / C(x, l), C = cost
     of the missing levels <= l (nested design). Levels that do not fit in the budget are excluded.
 
+    weights: one weight per output (K,), the gain G_k being the plain mean over the integration
+    points; or one weight per integration point and output (N, K), the gain being the weighted
+    sum over the points (vpp_optimize: probability of the condition of the point x (dV/dC_k)^2).
+    The first form is the second with weights w_k / N.
+
     Returns:
     - dict: index, level (None if nothing fits), x, ratio, gains (M, 2) of the weighted sum.
     """
-    used = [k for k in range(len(surrogate.models)) if k < len(weights) and weights[k] > 0.0]
+    weights = np.asarray(weights, dtype=float)
+    if weights.ndim == 1:
+        weights = np.tile(weights / len(x_int), (len(x_int), 1))           # (N, K)
+    used = [k for k in range(len(surrogate.models))
+            if k < weights.shape[1] and weights[:, k].sum() > 0.0]
     gains = np.zeros((len(x_cand), 2))
-    for k, gain in zip(used, surrogate.map_models(
-            lambda k: batched_imse_gains(surrogate.models[k], x_cand, x_int, missing), used)):
-        gains += weights[k] * gain
+    for gain in surrogate.map_models(
+            lambda k: batched_imse_gains(surrogate.models[k], x_cand, x_int, missing,
+                                         int_weights=weights[:, k]), used):
+        gains += gain
     cumulative = np.cumsum(missing * surrogate.costs, axis=1)            # (M, 2)
     ratios = np.where(missing & (cumulative <= remaining_budget + 1e-12),
                       gains / np.maximum(cumulative, 1e-12), -np.inf)

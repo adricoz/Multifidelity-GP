@@ -10,21 +10,29 @@ surrogate: (z_1..z_k, Cant_Eff, Rake_Eff, Yaw_Eff), no Hvol. Outputs: Fx, Fy, Fz
 
 The objective. The mean, over the navigation conditions, of the boat speed given by the MDS VPP
 whose foil is the mean of the co-kriging (vpp_coupling), plus the deformation correction of the
-flexible foil when the VPP has one (vpp_coupling.FSICorrection, third run).
+flexible foil when the VPP has one (vpp_coupling.FSICorrection, third run). The conditions can be
+the nodes of an operating profile (src/operating_profile.py), each with its probability w_c: the
+mean is then weighted, sum_c w_c V_c, over the conditions solved for every compared section.
 
 The loop (VPPSectionOptimizer), every `update_every` batches:
-  1. screening: for n_screen sections of the family (new each time) and the incumbent, the speed
-     change predicted to FIRST ORDER at the attitude of the incumbent's states, condition c:
+  1. screening: for n_screen sections and the incumbent, the speed change predicted to FIRST
+     ORDER at the attitude of the incumbent's states, condition c:
          dV_c(z) = sum_k (dV/dC_k)_c [C_k(z, att_c) - C_k(z_inc, att_c)],
      C_k = mean of the co-kriging (+ FSI correction, which depends on the section through its
      stiffness), its standard deviation sigma(z) from the variances of the co-krigings, and the
-     score mean_c dV_c + kappa sigma (optimism under uncertainty: a section whose speed is
-     uncertain is worth a look);
+     score mu + kappa sigma, mu = sum_c w_c dV_c (optimism under uncertainty: a section whose
+     speed is uncertain is worth a look). The screened sections: a share local_fraction drawn in
+     a trust region around the incumbent (radius shrunk when the incumbent is kept, widened when
+     it changes: Conn, Gould & Toint 2000; TuRBO, Eriksson et al. 2019), the others anywhere in
+     the family, with a seed of their own per run (screen_seed);
   2. the n_top best scores and the incumbent are solved with the full VPP (every condition);
-     the best mean speed becomes the incumbent;
-  3. the integration points of the criterion are Sobol clouds around the VPP states of these
-     sections: the refinement goes where the decision "which section is best" is taken;
+     the best weighted speed becomes the incumbent;
+  3. the integration points of the criterion are Sobol clouds around the solved VPP states of
+     these sections (with a local search, half of them also move the section by the trust-region
+     radius): the refinement goes where the decision "which section is best" is taken. Each point
+     weighs w_c (dV/dC_k)_c^2 for coefficient k, c the condition of its state;
   4. every `sensitivities_every` updates, dV/dC_k at the incumbent by finite differences.
+The candidates of a batch are new points in clouds around the states (vpp_optimize.candidates).
 One batch = `batch_size` pairs (point, level), chosen one after the other by the best
 speed-variance reduction per unit of cost (vpp_targeted.choose, the ALC gains of
 sequential_design). After each choice the co-krigings are conditioned on the chosen point as if it
@@ -120,20 +128,52 @@ class RealFoilProblem:
                 + self.attitude_bounds
         return self._bounds
 
-    def cloud(self, points: np.ndarray, n_per_state: int, seed: int) -> np.ndarray:
-        """Sobol cloud around each point: section fixed, attitude +- spread, clipped."""
-        sobol = 2.0 * qmc.Sobol(d=len(self.spread), scramble=True, seed=seed).random(n_per_state) - 1.0
-        out = []
-        for point in np.atleast_2d(points):
-            attitude = np.clip(point[self.n_scores:] + sobol * self.spread, self.lo, self.hi)
-            out.append(np.column_stack([np.repeat(point[None, :self.n_scores], n_per_state, 0),
-                                        attitude]))
-        return np.vstack(out)
+    def local_sections(self, center: np.ndarray, radius: float, n_sections: int, seed: int,
+                       max_attempts: int = 20) -> np.ndarray:
+        """
+        Scores (<= n, k) of sections around `center`, the trust region of the local search
+        (VPPSectionOptimizer.screen): center + radius g / sqrt(k), g ~ N(0, I), i.e. a typical
+        distance `radius` in the whitened scores (1 = one standard deviation of the family),
+        kept when the decoded section belongs to the family.
+        """
+        rng = np.random.default_rng(seed)
+        kept, total = [], 0
+        for _ in range(max_attempts):
+            scores = center + radius * rng.standard_normal((2 * n_sections, self.n_scores)) \
+                / np.sqrt(self.n_scores)
+            kept.append(scores[self.family.contains(self.weights(scores))])
+            total += len(kept[-1])
+            if total >= n_sections:
+                break
+        return np.vstack(kept)[:n_sections]
 
-    def global_points(self, n_points: int, seed: int) -> np.ndarray:
-        attitude = self.lo + qmc.Sobol(d=len(self.lo), scramble=True,
-                                       seed=seed).random(n_points) * (self.hi - self.lo)
-        return np.column_stack([self.sample_sections(n_points, seed), attitude])
+    def cloud(self, points: np.ndarray, n_per_state: int, seed: int,
+              section_radius: float = 0.0) -> tuple:
+        """
+        Cloud of n_per_state points around each point (a VPP state): attitude +- spread (Sobol,
+        clipped to the box). With section_radius > 0, every second point also moves the section,
+        by an offset of typical length section_radius in the whitened scores (as local_sections),
+        and the points whose decoded section leaves the family are dropped: half of the cloud
+        serves the competition between the sections of the states, half their neighbourhood
+        (the local search). Returns the points (m, d) and the index of the state of each (m,).
+        """
+        points = np.atleast_2d(points)
+        sobol = 2.0 * qmc.Sobol(d=len(self.spread), scramble=True, seed=seed).random(n_per_state) - 1.0
+        rng = np.random.default_rng(seed)
+        out, owner = [], []
+        for i, point in enumerate(points):
+            attitude = np.clip(point[self.n_scores:] + sobol * self.spread, self.lo, self.hi)
+            scores = np.repeat(point[None, :self.n_scores], n_per_state, 0)
+            if section_radius > 0.0:
+                scores[1::2] += section_radius * rng.standard_normal(scores[1::2].shape) \
+                    / np.sqrt(self.n_scores)
+            out.append(np.column_stack([scores, attitude]))
+            owner.append(np.full(n_per_state, i))
+        x, owner = np.vstack(out), np.concatenate(owner)
+        if section_radius > 0.0:
+            keep = self.family.contains(self.weights(x[:, :self.n_scores]))
+            x, owner = x[keep], owner[keep]
+        return x, owner
 
 
 # 2/5 ---------------------------------------------------------------------------------------------
@@ -322,23 +362,43 @@ class VPPSectionOptimizer:
     `vpp`) or a VPPPool; `vpp` is used for its FSI correction in any case."""
 
     def __init__(self, problem, surrogate, runner, vpp, conditions, run, time_limit_s,
-                 n_per_state=16, n_local=512, n_global=256, refit_every=10, update_every=10,
+                 n_per_state=16, n_local=512, refit_every=10, update_every=10,
                  sensitivities_every=2, n_screen=256, n_top=3, kappa=1.0, seed=0,
                  start_scores=None, batch_size=1, vpp_pool=None, refit_growth=None,
-                 n_lf_only=None):
-        """refit_growth: new hyperparameters when the design has grown by this factor since the
-        last fit (e.g. 1.25; a fit costs O(n^3) and the batches add many points), instead of
-        every refit_every batches. n_lf_only: at most this many LF points without HF among the
-        candidates (the most recent ones, i.e. near the current states)."""
+                 condition_weights=None, screen_seed=None, local_fraction=0.0, radius=1.0,
+                 radius_bounds=(0.1, 3.0), radius_factors=(0.7, 1.5), max_refit_size=None):
+        """
+        - refit_growth: new hyperparameters when the design has grown by this factor since the
+          last fit (e.g. 1.25; a fit costs O(n^3) and the batches add many points), instead of
+          every refit_every batches.
+        - condition_weights: probability of each condition (the nodes of an operating profile,
+          src/operating_profile.py); None = the same weight for every condition.
+        - screen_seed: seed of the sections drawn by the screening (None = seed); a new one per
+          run, otherwise two runs screen the same sections (runs 2 and 3, 2026-10-22).
+        - local_fraction: share of the screened sections drawn around the incumbent, in a trust
+          region of typical radius `radius` (whitened scores); 0 = no local search. The radius is
+          multiplied by radius_factors[0] when the incumbent is kept, by radius_factors[1] when
+          it changes, within radius_bounds (trust-region rule). With a local search, the clouds of
+          the criterion also move the section by this radius (RealFoilProblem.cloud).
+        - max_refit_size: above this design size the hyperparameters are frozen (conditioning
+          only): a fit costs O(n^3), ~2.5 min at 1045 points in the third run, about an hour at
+          3000 (None = no limit).
+        """
         self.problem, self.surrogate, self.runner, self.vpp = problem, surrogate, runner, vpp
         self.conditions, self.run = list(conditions), run
+        weights = np.ones(len(self.conditions)) if condition_weights is None \
+            else np.asarray(condition_weights, dtype=float)
+        self.condition_weights = weights / weights.sum()
         self.time_limit_s = float(time_limit_s)
-        self.n_per_state, self.n_local, self.n_global = n_per_state, n_local, n_global
+        self.n_per_state, self.n_local = n_per_state, n_local
         self.refit_every, self.update_every = refit_every, update_every
         self.sensitivities_every = sensitivities_every
         self.n_screen, self.n_top, self.kappa, self.seed = n_screen, n_top, kappa, seed
+        self.screen_seed = seed if screen_seed is None else int(screen_seed)
+        self.local_fraction, self.radius = float(local_fraction), float(radius)
+        self.radius_bounds, self.radius_factors = radius_bounds, radius_factors
         self.batch_size, self.vpp_pool = int(batch_size), vpp_pool
-        self.refit_growth, self.n_lf_only = refit_growth, n_lf_only
+        self.refit_growth, self.max_refit_size = refit_growth, max_refit_size
         self.fitted_size = None                            # design size at the last refit
         self.iteration, self.n_batches, self.n_updates = 0, 0, 0
         # start of the search: the given section (e.g. the current C-foil section), or the mean
@@ -347,7 +407,10 @@ class VPPSectionOptimizer:
             else np.asarray(start_scores, dtype=float)
         self.incumbent_states = None
         self.derivatives = None                            # (n_conditions, 6)
-        self.states, self.x_int = None, None
+        # the solved states of the last update (m, d), the condition of each (m,), the integration
+        # points and the state of each
+        self.states, self.state_conditions = None, None
+        self.x_int, self.int_owner = None, None
         self.history, self.updates = [], []
         # points where a run failed: excluded from the candidates (the first real run chose the
         # same failing HF point 4 times in a row, 40 s each, 2026-10-22)
@@ -374,15 +437,21 @@ class VPPSectionOptimizer:
                          for s in states])
 
     def sensitivities(self) -> None:
+        """dV/dC_k at the solved states of the incumbent (the other conditions keep their
+        previous values: a state without equilibrium has no sensitivity)."""
         ratio = float(self.problem.stiffness_ratios(self.incumbent)[0])
-        if self.vpp_pool is not None:
-            derivatives = self.vpp_pool.sensitivities(self.incumbent, ratio, self.conditions,
-                                                      self.incumbent_states)
-        else:
-            derivatives = np.array([
+        solved = [j for j, s in enumerate(self.incumbent_states) if s["success"]]
+        conditions = [self.conditions[j] for j in solved]
+        states = [self.incumbent_states[j] for j in solved]
+        derivatives = np.full((len(self.conditions), 6), np.nan)
+        if solved and self.vpp_pool is not None:
+            derivatives[solved] = self.vpp_pool.sensitivities(self.incumbent, ratio, conditions,
+                                                              states)
+        elif solved:
+            derivatives[solved] = np.array([
                 self.vpp.speed_sensitivities(self.surrogate.predict, self.incumbent, twa, tws,
                                              state, stiffness_ratio=ratio)
-                for (twa, tws), state in zip(self.conditions, self.incumbent_states)])
+                for (twa, tws), state in zip(conditions, states)])
         bad = ~np.isfinite(derivatives)
         if bad.any():
             # a failed solve: keep the previous value of that derivative (0 the first time)
@@ -395,29 +464,48 @@ class VPPSectionOptimizer:
                      + np.array2string(self.derivatives, precision=2, suppress_small=True))
 
     def screen(self) -> np.ndarray:
-        """Scores (n_top, k) of the best candidates by mean_c dV_c + kappa sigma."""
-        candidates = np.vstack([self.incumbent[None],
-                                self.problem.sample_sections(self.n_screen,
-                                                             self.seed + 31 * self.n_updates)])
+        """
+        Scores (n_top, k) of the best sections by mu + kappa sigma, over the solved states c of
+        the incumbent, with the probabilities w_c of the conditions:
+            mu = sum_c w_c dV_c / sum_c w_c,   sigma^2 = sum_c w_c^2 Var V_c / (sum_c w_c)^2.
+        The screened sections: local_fraction of them around the incumbent (trust region of
+        radius self.radius), the others anywhere in the family.
+        """
+        seed = self.screen_seed + 31 * self.n_updates
+        n_local = int(round(self.local_fraction * self.n_screen))
+        parts = [self.incumbent[None]]
+        if n_local:
+            parts.append(self.problem.local_sections(self.incumbent, self.radius, n_local,
+                                                     seed + 1))
+        parts.append(self.problem.sample_sections(self.n_screen - n_local, seed))
+        candidates = np.vstack(parts)
         ratios = self.problem.stiffness_ratios(candidates)
         gain = np.zeros(len(candidates))
         variance = np.zeros(len(candidates))
+        total = 0.0
         for j, state in enumerate(self.incumbent_states):
+            if not state["success"]:
+                continue
+            w = self.condition_weights[j]
+            total += w
             attitude = np.array([state["Cant_Eff"], state["Rake_Eff"], state["Yaw_Eff"]])
             x = np.column_stack([candidates, np.repeat(attitude[None], len(candidates), 0)])
             means = self.surrogate.predict(x)[:, :6]
-            gain += (means - means[0]) @ self.derivatives[j]
+            gain += w * (means - means[0]) @ self.derivatives[j]
             if self.vpp.fsi is not None:
                 # the FSI correction of a section = its stiffness ratio x the one of the RS
                 delta = self.vpp.fsi(attitude[None], state["speed"])[0, :6]
-                gain += (ratios - ratios[0]) * (delta @ self.derivatives[j])
-            variance += self.surrogate.variances(x)[:, :6] @ self.derivatives[j] ** 2
-        gain /= len(self.conditions)
-        sigma = np.sqrt(variance) / len(self.conditions)
+                gain += w * (ratios - ratios[0]) * (delta @ self.derivatives[j])
+            variance += w ** 2 * self.surrogate.variances(x)[:, :6] @ self.derivatives[j] ** 2
+        total = total if total > 0.0 else 1.0           # no solved state: nothing to rank on
+        gain /= total
+        sigma = np.sqrt(variance) / total
         score = gain + self.kappa * sigma
         order = np.argsort(-score[1:])[:self.n_top] + 1
         self.last_screen = {"gain": gain[order].tolist(), "sigma": sigma[order].tolist(),
-                            "incumbent_sigma": float(sigma[0])}
+                            "incumbent_sigma": float(sigma[0]), "n_local": len(parts[1])
+                            if n_local else 0, "local_in_top": int(np.sum(order <= len(parts[1])))
+                            if n_local else 0}
         return candidates[order]
 
     def update(self) -> None:
@@ -433,42 +521,76 @@ class VPPSectionOptimizer:
         top = self.screen()
         sections = [self.incumbent] + list(top)
         guesses = [s["unknowns"] for s in self.incumbent_states]
+        all_states = self.solve_sections(sections, guesses)
+        # the speed of a section: probability-weighted mean over the conditions solved for ALL
+        # the sections of the update, so that they are compared on the same conditions
+        solved = np.array([[s["success"] for s in states] for states in all_states])
+        weights = self.condition_weights * solved.all(axis=0)
         results = []
-        for scores, states in zip(sections, self.solve_sections(sections, guesses)):
-            speeds = [s["speed"] if s["success"] else np.nan for s in states]
-            results.append((np.nanmean(speeds), scores, states, speeds))
+        for scores, states in zip(sections, all_states):
+            speeds = np.array([s["speed"] for s in states])
+            mean = float(np.sum(weights * speeds) / weights.sum()) if weights.sum() > 0 else np.nan
+            results.append((mean, scores, states,
+                            [s["speed"] if s["success"] else np.nan for s in states]))
         best = max(results, key=lambda r: r[0] if np.isfinite(r[0]) else -np.inf)
         changed = best[1] is not self.incumbent and not np.allclose(best[1], self.incumbent)
         self.incumbent, self.incumbent_states = best[1], best[2]
-        self.states = np.vstack([self.state_points(r[1], r[2]) for r in results])
-        self.x_int = self.problem.cloud(self.states, self.n_per_state, self.seed + self.iteration)
+        if self.local_fraction > 0.0:
+            # trust region of the local search: wider when the incumbent changes, narrower when
+            # it is confirmed
+            low, high = self.radius_bounds
+            shrink, grow = self.radius_factors
+            self.radius = min(high, self.radius * grow) if changed else max(low, self.radius * shrink)
+        # the solved states of the 4 sections, the condition of each, the integration points
+        rows = [(self.state_points(r[1], [s])[0], j) for r in results
+                for j, s in enumerate(r[2]) if s["success"]]
+        self.states = np.array([row for row, _ in rows])
+        self.state_conditions = np.array([j for _, j in rows])
+        self.x_int, self.int_owner = self.problem.cloud(
+            self.states, self.n_per_state, self.seed + self.iteration, self.section_radius())
         record = {"update": self.n_updates, "iteration": self.iteration,
                   "elapsed_min": self.run.elapsed() / 60, "cost": self.surrogate.cost,
                   "n_lf": self.surrogate.sizes[0], "n_hf": self.surrogate.sizes[1],
                   "incumbent_speed": float(best[0]), "incumbent_speeds": best[3],
+                  "probability_compared": float(weights.sum()), "radius": self.radius,
                   "changed": bool(changed), "candidate_speeds": [float(r[0]) for r in results],
                   "incumbent": self.incumbent.tolist(), **self.last_screen,
                   "time_s": time.perf_counter() - start}
         self.updates.append(record)
-        self.run.log(f"update {self.n_updates}: incumbent mean speed {best[0]:.4f} kt "
+        self.run.log(f"update {self.n_updates}: incumbent speed {best[0]:.4f} kt "
                      f"({'new' if changed else 'kept'}), candidates "
-                     f"{np.round(record['candidate_speeds'], 3)}, {record['time_s']:.0f} s")
+                     f"{np.round(record['candidate_speeds'], 3)}, on "
+                     f"{100 * weights.sum():.0f} % of the probability, radius {self.radius:.2f}, "
+                     f"{record['time_s']:.0f} s")
         self.n_updates += 1
+
+    def section_radius(self) -> float:
+        """How far the clouds of the criterion move the section: the trust-region radius with
+        a local search, 0 (section of the state only) without."""
+        return self.radius if self.local_fraction > 0.0 else 0.0
+
+    def point_weights(self) -> np.ndarray:
+        """
+        (N, 6) weight of every integration point for every coefficient:
+            w_c x (dV/dC_k)_c^2 / (number of points of its state),
+        c the condition of the state of the point: a state counts for the probability of its
+        condition, whatever the number of its points kept (vpp_targeted.choose).
+        """
+        conditions = self.state_conditions[self.int_owner]
+        counts = np.bincount(self.int_owner, minlength=len(self.states))[self.int_owner]
+        return (self.condition_weights[conditions] / counts)[:, None] \
+            * self.derivatives[conditions] ** 2
 
     # --- one batch and the loop ---
     def candidates(self) -> tuple:
-        """Candidates (M, d) and their missing levels (M, 2): clouds around the states, points of
-        the whole domain, the LF points without HF; minus the neighbours of failed runs."""
-        x_cand = np.vstack([self.problem.cloud(self.states, max(1, self.n_local // len(self.states)),
-                                               self.seed + 7 * self.iteration + 1),
-                            self.problem.global_points(self.n_global, self.seed + 7 * self.iteration + 2)])
+        """Candidates (M, d) and their missing levels (M, 2): new points in clouds around the
+        states (n_local in all; the section moves too with a local search), minus the neighbours
+        of failed runs. The points far from the states and the LF points without HF of earlier
+        batches are no longer candidates: in the third run, 100 % of the choices were near the
+        states and 2 HF out of 252 were on an earlier LF point (2026-10-23)."""
+        x_cand, _ = self.problem.cloud(self.states, max(1, self.n_local // len(self.states)),
+                                       self.seed + 7 * self.iteration + 1, self.section_radius())
         missing = np.ones((len(x_cand), 2), dtype=bool)
-        x_low, x_high = self.surrogate.x_lists
-        has_high = np.array([np.any(np.all(np.isclose(x, x_high), axis=1)) for x in x_low])
-        lf_only = x_low[~has_high][-self.n_lf_only:] if self.n_lf_only else x_low[~has_high]
-        x_cand = np.vstack([x_cand, lf_only])
-        missing = np.vstack([missing, np.column_stack([np.zeros(len(lf_only), bool),
-                                                       np.ones(len(lf_only), bool)])])
         if self.failed:
             # distance in the unit cube of the bounds, as sequential_design.EXCLUSION_RADIUS
             span = np.array([b[1] - b[0] for b in self.problem.bounds()])
@@ -491,13 +613,15 @@ class VPPSectionOptimizer:
             refit = self.fitted_size is None or size >= self.refit_growth * self.fitted_size
         else:
             refit = self.n_batches % self.refit_every == 0
+        if refit and self.fitted_size is not None and not self.refit_allowed(size):
+            refit = False                                  # hyperparameters frozen (docstring)
         self.surrogate.fit(refit=refit)
         if refit:
             self.fitted_size = size
             self.run.log(f"batch {self.n_batches}: hyperparameters refitted on {size} points")
         if self.n_batches % self.update_every == 0 or self.states is None:
             self.update()
-        weights = np.mean(self.derivatives ** 2, axis=0)               # (6,): Cpmin weight 0
+        weights = self.point_weights()                     # (N, 6): Cpmin weight 0
         x_cand, missing = self.candidates()
         sizes = self.surrogate.sizes
         choices = []
@@ -561,8 +685,11 @@ class VPPSectionOptimizer:
                 self.run.log(f"batch {last['batch']}: {len(records)} choices ({n_high} HF), LF/HF "
                              f"{last['n_lf']}/{last['n_hf']}, selection {last['select_s']:.1f} s, "
                              f"{last['time_s'] * len(records):.1f} s")
-        self.surrogate.fit(refit=True)
+        self.surrogate.fit(refit=self.refit_allowed(sum(self.surrogate.sizes)))
         self.update()                                      # final incumbent with the final model
+
+    def refit_allowed(self, size: int) -> bool:
+        return self.max_refit_size is None or size <= self.max_refit_size
 
 
 # 5/5 ---------------------------------------------------------------------------------------------

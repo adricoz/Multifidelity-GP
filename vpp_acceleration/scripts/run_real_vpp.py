@@ -88,23 +88,47 @@ def main():
     parser.add_argument("--profile", nargs="*", default=[],
                         help="operating profiles (JSON, src/operating_profile.py): behaviour of the "
                              "validated sections on each distribution, at the end of the run "
-                             "(scripts/profile_analysis.py; the search is unchanged)")
+                             "(scripts/profile_analysis.py)")
+    # 2026-10-23: the search on an operating profile, a screening seed per run, a local search
+    parser.add_argument("--search-profile", default=None,
+                        help="operating profile (JSON) whose nodes and probabilities replace the 5 "
+                             "conditions of equal weight IN THE SEARCH")
+    parser.add_argument("--screen-seed", type=int, default=None,
+                        help="seed of the screened sections (default: drawn at random, written "
+                             "in config.json)")
+    parser.add_argument("--local-fraction", type=float, default=0.0,
+                        help="share of the screened sections drawn around the incumbent (trust "
+                             "region); 0 = no local search")
+    parser.add_argument("--radius", type=float, default=1.0,
+                        help="initial trust-region radius, whitened PCA scores")
+    parser.add_argument("--max-refit-size", type=int, default=None,
+                        help="hyperparameters frozen above this design size (long runs)")
     args = parser.parse_args()
     if args.smoke:
         args.n_low, args.n_high, args.time_limit_min = 30, 8, 4.0
-    conditions = CONDITIONS[:2] if args.smoke else CONDITIONS
+    if args.screen_seed is None:
+        args.screen_seed = int.from_bytes(os.urandom(4), "little") % 2 ** 31
+    if args.search_profile:
+        nodes = OperatingProfile.from_json(args.search_profile).nodes()
+        conditions = [(node["twa"], node["tws"]) for node in nodes]
+        condition_weights = [node["weight"] for node in nodes]
+    else:
+        conditions = CONDITIONS[:2] if args.smoke else CONDITIONS
+        condition_weights = [1.0 / len(conditions)] * len(conditions)
     # sensitivities every 3 updates: they move little, and the updates took 42 % of the time
     # of the first run. In batches (third run), refit / update every so many BATCHES.
-    settings = {"n_per_state": 16, "n_local": 512, "n_global": 256, "refit_every": 10,
-                "update_every": 10, "sensitivities_every": 3, "n_screen": 256, "n_top": 3,
-                "kappa": 1.0}
+    settings = {"n_per_state": 16, "n_local": 512, "refit_every": 10, "update_every": 10,
+                "sensitivities_every": 3, "n_screen": 256, "n_top": 3, "kappa": 1.0,
+                "local_fraction": args.local_fraction, "radius": args.radius,
+                "max_refit_size": args.max_refit_size}
     if args.batch > 1:
-        settings.update({"update_every": 1, "refit_growth": 1.25, "n_lf_only": 512})
+        settings.update({"update_every": 1, "refit_growth": 1.25})
     levels = LEVELS_XFOIL if args.hf == "npllt_xfoil" else LEVELS
     level_names = ("1 = NPLLT x NeuralFoil xxxlarge, 2 = NPLLT x XFOIL, 3 = AVL x XFOIL "
                    "(validation only)" if args.hf == "npllt_xfoil" else
                    "1 = NPLLT x NeuralFoil xxxlarge, 2 = AVL x XFOIL") + " (src/foil_codes.py)"
-    config = {**vars(args), "conditions": conditions, "optimizer": settings,
+    config = {**vars(args), "conditions": conditions, "condition_weights": condition_weights,
+              "optimizer": settings,
               "levels": level_names, "criterion_costs": [1.0, args.hf_cost],
               "family": "Dim-Reduction box, no crossing, NF confident" if args.box == "dimred" else
               f"Dim-Reduction widths x {args.box_scale} centred on the current C-foil section, "
@@ -162,7 +186,8 @@ def main():
     optimizer = VPPSectionOptimizer(problem, surrogate, runner, vpp, conditions, run,
                                     time_limit_s=60.0 * args.time_limit_min, seed=args.seed,
                                     start_scores=start_scores, batch_size=args.batch,
-                                    vpp_pool=vpp_pool, **settings)
+                                    vpp_pool=vpp_pool, condition_weights=condition_weights,
+                                    screen_seed=args.screen_seed, **settings)
     optimizer.run_loop()
     run.log(f"loop done: {optimizer.iteration} choices in {optimizer.n_batches} batches, LF/HF "
             f"{surrogate.sizes}, runs {runner.n_runs}, code time {runner.time}")
