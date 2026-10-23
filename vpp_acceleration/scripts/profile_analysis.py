@@ -225,6 +225,9 @@ def make_figure(root: Path, table, names: list, profile_name: str) -> None:
     style(fig, f"Comportement sur la distribution d'usage « {profile_name} »",
           f"{root.name} ; VPP avec le surrogate final du run", height=520, legend_rows=2)
     save(fig, root / "figures", f"profile_{profile_name}")
+    from real_run_figures import write_index, write_runs_index  # noqa: PLC0415
+    write_index(root)
+    write_runs_index(root.parent)
 
 
 def print_summary(summary: dict) -> None:

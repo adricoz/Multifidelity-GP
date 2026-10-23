@@ -8,9 +8,13 @@ Figures of a real run folder (runs/<date>_<name>/): written to its figures/ fold
   4. validation.html: surrogate (mean +- 2 sigma) against the HF code (AVL x XFOIL or NPLLT x
      XFOIL), the LF code and AVL when it is a validation level, at the VPP states;
   5. speeds.html: speed per condition of every validated section, corrected to first order
-     against the HF code (and AVL).
+     against the HF code (and AVL);
+  6. index.html: one page that links every figure of the run (write_index), with its summary;
+     runs/index.html links the index of every run (write_runs_index).
 Run: ..\\.venv-mds\\Scripts\\python scripts\\real_run_figures.py runs\\<folder>
+     ..\\.venv-mds\\Scripts\\python scripts\\real_run_figures.py --index-all   (indexes only)
 """
+import html
 import json
 import sys
 from pathlib import Path
@@ -157,8 +161,95 @@ def make_figures(root) -> None:
           "VPP avec le surrogate final, corrigée au 1er ordre de l'écart mesuré aux états",
           height=480)
     save(fig, figures, "speeds")
+    write_index(root)
     print(f"figures written to {figures}")
 
 
+# what each figure shows (index pages); an unknown figure is listed with its file name
+FIGURE_NOTES = {
+    "convergence": ("Convergence", "vitesse de la titulaire et des concurrentes à chaque mise à "
+                    "jour, taille du plan BF / HF"),
+    "points": ("Points ajoutés", "où le raffinement a placé ses calculs (plans d'attitude), avec "
+               "les états VPP finaux"),
+    "sections": ("Sections", "la meilleure section contre la section de départ, et ses scores PCA"),
+    "validation": ("Validation", "surrogate contre les codes (HF, BF, AVL) aux états VPP"),
+    "speeds": ("Vitesses par condition", "sections validées, vitesse corrigée au premier ordre de "
+               "l'écart aux codes"),
+    "calibration": ("Recalage", "codes contre la RS de production (étape 0)"),
+}
+PAGE_STYLE = """
+:root { --bg: #ffffff; --fg: #1d1d1f; --muted: #6e6e73; --card: #f5f5f7; --link: #0b5cad; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #161618; --fg: #f2f2f2; --muted: #a1a1a6; --card: #232326; --link: #6cb4ff; } }
+body { background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif;
+       max-width: 980px; margin: 0 auto; padding: 24px 16px; }
+h1 { font-size: 22px; margin: 0 0 4px; } .sub { color: var(--muted); margin: 0 0 20px; }
+a { color: var(--link); } ul { padding-left: 0; list-style: none; }
+li { background: var(--card); border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+li span { color: var(--muted); } pre { background: var(--card); border-radius: 8px;
+       padding: 12px; overflow-x: auto; font-size: 12px; white-space: pre-wrap; }
+"""
+
+
+def _page(title: str, subtitle: str, body: str) -> str:
+    return (f"<!doctype html><html lang='fr'><head><meta charset='utf-8'>"
+            f"<meta name='viewport' content='width=device-width, initial-scale=1'>"
+            f"<title>{html.escape(title)}</title><style>{PAGE_STYLE}</style></head><body>"
+            f"<h1>{html.escape(title)}</h1><p class='sub'>{html.escape(subtitle)}</p>"
+            f"{body}</body></html>")
+
+
+def write_index(root) -> Path:
+    """figures/index.html of a run: a link to every figure, what it shows, and the summary."""
+    root = Path(root)
+    figures = root / "figures"
+    items = []
+    for path in sorted(figures.glob("*.html")):
+        if path.name == "index.html":
+            continue
+        name = path.stem
+        if name.startswith("profile_"):
+            title, note = (f"Distribution d'usage « {name[len('profile_'):]} »",
+                           "gain du meilleur profil à chaque nœud, vitesse par nœud")
+        else:
+            title, note = FIGURE_NOTES.get(name, (name, ""))
+        items.append(f"<li><a href='{html.escape(path.name)}'>{html.escape(title)}</a>"
+                     f"<br><span>{html.escape(note)}</span></li>")
+    body = f"<ul>{''.join(items)}</ul>"
+    readme = root / "README.md"
+    if readme.exists():
+        body += "<p><a href='../README.md'>Lecture du run (README.md)</a></p>"
+    summary = root / "results" / "summary.txt"
+    if summary.exists():
+        body += f"<h2>Résumé</h2><pre>{html.escape(summary.read_text(encoding='utf-8'))}</pre>"
+    figures.mkdir(exist_ok=True)
+    path = figures / "index.html"
+    path.write_text(_page(f"Figures du run {root.name}", "vpp_acceleration", body),
+                    encoding="utf-8")
+    return path
+
+
+def write_runs_index(runs_dir=VPP_DIR / "runs") -> Path:
+    """runs/index.html: the figure index of every run folder that has figures."""
+    runs_dir = Path(runs_dir)
+    items = []
+    for run in sorted(runs_dir.iterdir(), reverse=True):
+        if not (run / "figures").is_dir() or not any((run / "figures").glob("*.html")):
+            continue
+        index = write_index(run)
+        n_figures = len([p for p in (run / "figures").glob("*.html") if p.name != "index.html"])
+        items.append(f"<li><a href='{html.escape(run.name)}/figures/{index.name}'>"
+                     f"{html.escape(run.name)}</a><br><span>{n_figures} figures</span></li>")
+    path = runs_dir / "index.html"
+    path.write_text(_page("Runs de vpp_acceleration", "les figures de chaque run, du plus récent "
+                          "au plus ancien (détail dans runs/README.md)",
+                          f"<ul>{''.join(items)}</ul>"), encoding="utf-8")
+    return path
+
+
 if __name__ == "__main__":
-    make_figures(sys.argv[1])
+    if sys.argv[1:] == ["--index-all"]:
+        print(write_runs_index())
+    else:
+        make_figures(sys.argv[1])
+        write_runs_index()
