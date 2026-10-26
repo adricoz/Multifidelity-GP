@@ -1,0 +1,15 @@
+=== Sequential region test with shared lengthscales, 10 seeds ===
+S3: region RMSE 0.1424 [0.1092 ; 0.1855] | cov95 0.95 | global 0.1588 | LF/HF 165/40 | time 186 s
+S1: region RMSE 0.1353 [0.1204 ; 0.1868] | cov95 0.94 | global 0.1828 | LF/HF 170/39 | time 556 s
+T1: region RMSE 0.1197 [0.0948 ; 0.1787] | cov95 0.97 | global 0.1558 | LF/HF 155/40 | time 941 s
+B1: region RMSE 0.1998 [0.1588 ; 0.2476] | cov95 0.99 | global 0.1577 | LF/HF 160/40 | time 6 s
+
+S3 against S1: median error -5 % lower | wins 7 / 10 | two-sided Wilcoxon p = 0.23
+S3 against T1: median error -19 % lower | wins 3 / 10 | two-sided Wilcoxon p = 0.32
+S3 against B1: median error +29 % lower | wins 10 / 10 | two-sided Wilcoxon p = 0.002
+
+Criterion fixed before the computation:
+  [NO] median error at least 5 % lower than S1 (-5.3 %)
+  [OK] wins at least 7 / 10 against S1 (7 / 10)
+  [OK] coverage on the region at least 0.90 (0.95)
+  => FAILURE

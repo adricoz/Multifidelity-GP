@@ -1,0 +1,29 @@
+{
+  "key": "d9328faa8cad429419b2d355d2ad90689f2883d509e9b0a9acfe3a8a283d9f37",
+  "n_filled": 0,
+  "npane_used": 250,
+  "section_name": "ka2c7b029c016",
+  "section_path": "C:\\Users\\SIM\\AppData\\Local\\Temp\\vppc__zunjilu\\ka2c7b029c016.xf",
+  "section_sha256": "6b103c25da87ed8080f00d37de6f117f15d0b9ecb74ef89b3648a38393dbb1b0",
+  "spec": {
+    "alpha": [
+      -6.0,
+      12.0,
+      0.5
+    ],
+    "mach": 0.0,
+    "ncrit": 1.0,
+    "niter": 300,
+    "npane": 250,
+    "ppar_r": 0.02,
+    "ppar_t": 0.5,
+    "re": 5000000.0,
+    "xtr": [
+      0.1,
+      0.1
+    ]
+  },
+  "spec_json": "{\"alpha\":[-6.0,12.0,0.5],\"mach\":0.0,\"ncrit\":1.0,\"niter\":300,\"npane\":250,\"ppar_r\":0.02,\"ppar_t\":0.5,\"re\":5000000.0,\"xtr\":[0.1,0.1]}",
+  "xfoil_exe_sha256": "c17342f84ae260c2b11a74cd0e2fb8189a5f8954c6bb7a8467a0f27055c7faea",
+  "xfoil_script_version": "1"
+}

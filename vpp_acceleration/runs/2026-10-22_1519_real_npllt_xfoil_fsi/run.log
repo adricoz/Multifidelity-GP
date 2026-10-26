@@ -1,0 +1,207 @@
+15:19:41 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-10-22_1519_real_npllt_xfoil_fsi
+15:19:41 [  0.0 min] family: box centred on the current section, scale 0.5, Ixx >= 6.7174e-05
+15:19:52 [  0.2 min] PCA: rank 16, k = 10 modes carry 99.86 % of the geometric variance
+15:19:52 [  0.2 min] start of the search: current_section
+15:21:19 [  1.6 min] start design: LF 253 ok / 256, HF 61 ok / 64
+15:21:34 [  1.9 min] batch 0: hyperparameters refitted on 314 points
+15:21:59 [  2.3 min] speed sensitivities dV/dC (rows = conditions): [[ 82.44  -1.52   1.87  -0.09   0.17  -0.08]
+ [105.7   -0.19   4.79   2.55   0.5    0.14]
+ [106.16   0.93   6.02   3.71   0.5    0.15]
+ [109.1    0.8    7.53   5.32   0.53   0.11]
+ [281.59  14.58  14.71  -0.59  -0.04   1.51]]
+15:22:05 [  2.4 min] update 0: incumbent mean speed 18.9944 kt (new), candidates [18.832 18.994 18.967 18.959], 31 s
+15:22:29 [  2.8 min] batch 0: 16 choices (16 HF), LF/HF 269/77, selection 60.9 s, 64.1 s
+15:22:33 [  2.9 min] update 1: incumbent mean speed 19.0327 kt (kept), candidates [19.033 19.028 19.006 18.988], 4 s
+15:22:57 [  3.3 min] batch 1: 16 choices (16 HF), LF/HF 285/93, selection 24.9 s, 28.2 s
+15:23:02 [  3.4 min] update 2: incumbent mean speed 19.0335 kt (kept), candidates [19.034 18.985 18.999 18.984], 5 s
+15:23:39 [  4.0 min] batch 2: 16 choices (15 HF), LF/HF 300/108, selection 27.1 s, 41.9 s
+15:23:56 [  4.3 min] batch 3: hyperparameters refitted on 408 points
+15:24:00 [  4.3 min] speed sensitivities dV/dC (rows = conditions): [[ 83.81  -1.59   1.95  -0.08   0.17  -0.08]
+ [109.67   0.36   7.3    5.01   0.54   0.08]
+ [113.18   0.28   6.14   3.8    0.58   0.07]
+ [114.99  -0.69   7.13   5.7    0.74  -0.06]
+ [298.42  13.12  15.61  -0.65  -0.     1.23]]
+15:24:09 [  4.5 min] update 3: incumbent mean speed 19.0330 kt (kept), candidates [19.033 19.014 18.972 18.986], 13 s
+15:24:35 [  4.9 min] batch 3: 16 choices (6 HF), LF/HF 312/114, selection 53.3 s, 56.0 s
+15:24:41 [  5.0 min] update 4: incumbent mean speed 19.0330 kt (kept), candidates [19.033 18.994 18.999 18.991], 6 s
+15:25:07 [  5.4 min] batch 4: 16 choices (6 HF), LF/HF 325/120, selection 29.6 s, 32.6 s
+15:25:12 [  5.5 min] update 5: incumbent mean speed 19.0321 kt (kept), candidates [19.032 18.954 18.968 18.935], 5 s
+15:25:45 [  6.1 min] batch 5: 16 choices (6 HF), LF/HF 337/126, selection 29.6 s, 37.2 s
+15:25:50 [  6.2 min] speed sensitivities dV/dC (rows = conditions): [[ 83.93  -1.66   1.95  -0.08   0.17  -0.09]
+ [109.86   3.55  10.74   4.94   0.54   0.07]
+ [113.17   0.28   6.14   3.8    0.58   0.07]
+ [114.96  -0.67   7.13   5.7    0.74  -0.06]
+ [298.31  13.22  15.6   -0.65   0.     1.24]]
+15:25:55 [  6.2 min] update 6: incumbent mean speed 19.0321 kt (kept), candidates [19.032 18.992 18.961 18.955], 10 s
+15:26:23 [  6.7 min] batch 6: 16 choices (6 HF), LF/HF 350/132, selection 36.0 s, 38.5 s
+15:26:29 [  6.8 min] update 7: incumbent mean speed 19.0321 kt (kept), candidates [19.032 19.016 18.961 18.949], 5 s
+15:26:57 [  7.3 min] batch 7: 16 choices (6 HF), LF/HF 362/138, selection 31.7 s, 34.3 s
+15:27:12 [  7.5 min] update 8: incumbent mean speed 19.0321 kt (kept), candidates [19.032 18.972 18.942 18.938], 15 s
+15:27:46 [  8.1 min] batch 8: 16 choices (6 HF), LF/HF 374/144, selection 41.7 s, 48.6 s
+15:28:23 [  8.7 min] batch 9: hyperparameters refitted on 518 points
+15:28:29 [  8.8 min] speed sensitivities dV/dC (rows = conditions): [[ 84.16  -1.78   1.96  -0.08   0.17  -0.1 ]
+ [110.08   3.21   6.82   4.8    0.54   0.07]
+ [113.11   0.31   6.15   3.8    0.58   0.08]
+ [114.91  -0.6    7.14   5.69   0.74  -0.05]
+ [298.01  13.44  15.61  -0.64  -0.     1.26]]
+15:28:34 [  8.9 min] update 9: incumbent mean speed 19.0315 kt (kept), candidates [19.032 18.975 19.    18.973], 11 s
+15:29:21 [  9.7 min] batch 9: 16 choices (3 HF), LF/HF 390/147, selection 76.7 s, 95.4 s
+15:29:27 [  9.8 min] update 10: incumbent mean speed 19.0537 kt (new), candidates [19.032 19.054 18.989 18.954], 5 s
+15:29:59 [ 10.3 min] batch 10: 16 choices (4 HF), LF/HF 404/151, selection 34.8 s, 37.7 s
+15:30:05 [ 10.4 min] update 11: incumbent mean speed 19.0010 kt (new), candidates [18.738 18.999 19.001 18.993], 6 s
+15:30:37 [ 10.9 min] batch 11: 16 choices (4 HF), LF/HF 419/155, selection 35.5 s, 38.1 s
+15:30:43 [ 11.0 min] speed sensitivities dV/dC (rows = conditions): [[ 83.02  -1.62   1.91  -0.08   0.17  -0.09]
+ [108.86   3.32   6.82   4.81   0.55   0.07]
+ [111.92   0.21   6.08   3.77   0.58   0.07]
+ [114.19  -0.57   7.17   5.6    0.71  -0.04]
+ [294.35  12.97  15.43  -0.62  -0.02   1.24]]
+15:30:49 [ 11.1 min] update 12: incumbent mean speed 18.9903 kt (new), candidates [18.989 18.99  18.98  18.99 ], 12 s
+15:31:43 [ 12.0 min] batch 12: 16 choices (4 HF), LF/HF 434/159, selection 42.9 s, 65.8 s
+15:31:49 [ 12.1 min] update 13: incumbent mean speed 19.0487 kt (new), candidates [18.971 19.049 19.    18.895], 6 s
+15:32:30 [ 12.8 min] batch 13: 16 choices (4 HF), LF/HF 450/163, selection 39.0 s, 46.6 s
+15:32:36 [ 12.9 min] update 14: incumbent mean speed 19.0494 kt (new), candidates [19.    19.049 19.001 18.968], 6 s
+15:33:12 [ 13.5 min] batch 14: 16 choices (5 HF), LF/HF 464/168, selection 39.7 s, 42.2 s
+15:33:18 [ 13.6 min] speed sensitivities dV/dC (rows = conditions): [[ 84.53  -1.86   1.97  -0.08   0.17  -0.11]
+ [111.15   3.19  10.59   4.85   0.54   0.06]
+ [114.7    0.3    6.22   3.83   0.58   0.07]
+ [116.32  -0.73   7.12   5.76   0.76  -0.07]
+ [301.75  13.24  15.84  -0.65  -0.02   1.21]]
+15:33:25 [ 13.7 min] update 15: incumbent mean speed 19.0738 kt (kept), candidates [19.074 18.965 18.931 18.927], 13 s
+15:34:07 [ 14.4 min] batch 15: 16 choices (3 HF), LF/HF 480/171, selection 47.7 s, 55.5 s
+15:35:06 [ 15.4 min] batch 16: hyperparameters refitted on 651 points
+15:35:12 [ 15.5 min] update 16: incumbent mean speed 19.0752 kt (kept), candidates [19.075 18.963 18.929 18.941], 6 s
+15:36:02 [ 16.4 min] batch 16: 16 choices (7 HF), LF/HF 492/178, selection 100.9 s, 114.5 s
+15:36:09 [ 16.5 min] update 17: incumbent mean speed 19.0748 kt (kept), candidates [19.075 18.972 18.96  18.952], 7 s
+15:37:06 [ 17.4 min] batch 17: 16 choices (6 HF), LF/HF 504/184, selection 44.3 s, 63.9 s
+15:37:15 [ 17.6 min] speed sensitivities dV/dC (rows = conditions): [[ 84.46  -1.81   1.97  -0.08   0.17  -0.1 ]
+ [110.69   3.44  10.85   5.02   0.57   0.05]
+ [114.43   0.19   6.14   3.83   0.61   0.06]
+ [116.22  -0.86   7.07   5.77   0.78  -0.08]
+ [302.32  13.06  15.84  -0.66  -0.01   1.2 ]]
+15:37:28 [ 17.8 min] update 18: incumbent mean speed 19.0746 kt (kept), candidates [19.075 19.011 18.933 18.946], 22 s
+15:38:19 [ 18.6 min] batch 18: 16 choices (5 HF), LF/HF 517/189, selection 59.7 s, 73.3 s
+15:38:27 [ 18.8 min] update 19: incumbent mean speed 19.0740 kt (kept), candidates [19.074 18.936 18.955 18.931], 7 s
+15:39:14 [ 19.6 min] batch 19: 16 choices (6 HF), LF/HF 528/195, selection 46.8 s, 55.0 s
+15:39:26 [ 19.8 min] update 20: incumbent mean speed 19.0735 kt (kept), candidates [19.073 19.012 18.962 18.965], 12 s
+15:40:26 [ 20.8 min] batch 20: 16 choices (6 HF), LF/HF 541/201, selection 52.4 s, 72.4 s
+15:40:33 [ 20.9 min] speed sensitivities dV/dC (rows = conditions): [[ 84.45  -1.79   1.97  -0.08   0.17  -0.1 ]
+ [110.85  -0.15  10.69   4.93   0.57   0.05]
+ [114.45   0.21   6.15   3.83   0.61   0.06]
+ [116.26  -0.79   7.09   5.76   0.77  -0.07]
+ [301.95  13.1   15.82  -0.66  -0.01   1.2 ]]
+15:40:40 [ 21.0 min] update 21: incumbent mean speed 19.0740 kt (kept), candidates [19.074 18.999 18.962 18.94 ], 14 s
+15:41:24 [ 21.7 min] batch 21: 16 choices (3 HF), LF/HF 555/204, selection 55.6 s, 57.9 s
+15:41:32 [ 21.9 min] update 22: incumbent mean speed 19.0741 kt (kept), candidates [19.074 18.948 18.891 18.927], 7 s
+15:42:16 [ 22.6 min] batch 22: 16 choices (7 HF), LF/HF 566/211, selection 49.4 s, 52.1 s
+15:42:23 [ 22.7 min] update 23: incumbent mean speed 19.0740 kt (kept), candidates [19.074 18.976 18.951 18.952], 7 s
+15:43:10 [ 23.5 min] batch 23: 16 choices (2 HF), LF/HF 580/213, selection 50.8 s, 53.2 s
+15:43:16 [ 23.6 min] speed sensitivities dV/dC (rows = conditions): [[ 84.46  -1.79   1.97  -0.08   0.17  -0.1 ]
+ [110.93   3.13  10.64   4.9    0.57   0.05]
+ [114.5    0.23   6.16   3.83   0.6    0.07]
+ [116.27  -0.78   7.09   5.76   0.77  -0.07]
+ [301.93  13.07  15.81  -0.66   0.     1.2 ]]
+15:43:23 [ 23.7 min] update 24: incumbent mean speed 19.0739 kt (kept), candidates [19.074 19.027 18.965 18.963], 12 s
+15:44:15 [ 24.6 min] batch 24: 16 choices (7 HF), LF/HF 591/220, selection 57.5 s, 65.2 s
+15:44:22 [ 24.7 min] update 25: incumbent mean speed 19.0737 kt (kept), candidates [19.074 18.965 18.949 18.952], 7 s
+15:45:22 [ 25.7 min] batch 25: 16 choices (6 HF), LF/HF 604/226, selection 53.6 s, 67.3 s
+15:46:57 [ 27.3 min] batch 26: hyperparameters refitted on 830 points
+15:47:05 [ 27.4 min] update 26: incumbent mean speed 19.0743 kt (kept), candidates [19.074 18.97  18.962 18.954], 8 s
+15:47:54 [ 28.2 min] batch 26: 16 choices (6 HF), LF/HF 618/232, selection 149.6 s, 152.2 s
+15:48:01 [ 28.3 min] speed sensitivities dV/dC (rows = conditions): [[ 84.48  -1.78   1.98  -0.08   0.17  -0.1 ]
+ [111.09   3.19  10.72   4.92   0.56   0.05]
+ [114.49   0.27   6.17   3.83   0.59   0.07]
+ [116.24  -0.79   7.08   5.76   0.78  -0.08]
+ [301.92  13.03  15.78  -0.66   0.03   1.19]]
+15:48:09 [ 28.5 min] update 27: incumbent mean speed 19.0742 kt (kept), candidates [19.074 18.966 18.966 18.958], 14 s
+15:49:20 [ 29.7 min] batch 27: 16 choices (5 HF), LF/HF 632/237, selection 66.4 s, 85.5 s
+15:49:28 [ 29.8 min] update 28: incumbent mean speed 19.0736 kt (kept), candidates [19.074 19.005 18.979 18.909], 7 s
+15:50:20 [ 30.7 min] batch 28: 16 choices (5 HF), LF/HF 645/242, selection 58.1 s, 60.4 s
+15:50:32 [ 30.8 min] update 29: incumbent mean speed 19.0737 kt (kept), candidates [19.074 19.019 18.953 18.98 ], 11 s
+15:51:27 [ 31.8 min] batch 29: 16 choices (6 HF), LF/HF 657/248, selection 64.2 s, 66.9 s
+15:51:33 [ 31.9 min] speed sensitivities dV/dC (rows = conditions): [[ 84.46  -1.78   1.98  -0.08   0.17  -0.1 ]
+ [111.07   3.13   7.14   4.9    0.56   0.05]
+ [114.52   0.27   6.18   3.83   0.59   0.07]
+ [116.26  -0.8    7.08   5.76   0.78  -0.08]
+ [301.95  13.1   15.82  -0.66  -0.01   1.2 ]]
+15:51:40 [ 32.0 min] update 30: incumbent mean speed 19.0738 kt (kept), candidates [19.074 18.957 18.934 18.931], 12 s
+15:52:36 [ 32.9 min] batch 30: 16 choices (5 HF), LF/HF 672/253, selection 65.7 s, 68.9 s
+15:52:44 [ 33.1 min] update 31: incumbent mean speed 19.0736 kt (kept), candidates [19.074 18.965 18.953 18.925], 8 s
+15:53:42 [ 34.0 min] batch 31: 16 choices (3 HF), LF/HF 686/256, selection 63.2 s, 65.9 s
+15:53:51 [ 34.2 min] update 32: incumbent mean speed 19.0736 kt (kept), candidates [19.074 18.999 18.949 18.929], 8 s
+15:54:55 [ 35.2 min] batch 32: 16 choices (5 HF), LF/HF 699/261, selection 65.5 s, 73.2 s
+15:55:01 [ 35.3 min] speed sensitivities dV/dC (rows = conditions): [[ 84.49  -1.78   1.98  -0.08   0.17  -0.1 ]
+ [111.09   3.17   7.19   4.92   0.56   0.05]
+ [114.53   0.3    6.19   3.83   0.59   0.08]
+ [116.28  -0.79   7.09   5.75   0.78  -0.08]
+ [301.87  13.12  15.84  -0.65  -0.02   1.2 ]]
+15:55:08 [ 35.5 min] update 33: incumbent mean speed 19.0735 kt (kept), candidates [19.074 18.987 18.985 18.927], 13 s
+15:56:15 [ 36.6 min] batch 33: 16 choices (2 HF), LF/HF 715/263, selection 71.9 s, 79.8 s
+15:56:29 [ 36.8 min] update 34: incumbent mean speed 19.0737 kt (kept), candidates [19.074 19.014 18.964 18.957], 13 s
+15:57:30 [ 37.8 min] batch 34: 16 choices (3 HF), LF/HF 729/266, selection 72.9 s, 75.3 s
+15:57:40 [ 38.0 min] update 35: incumbent mean speed 19.0736 kt (kept), candidates [19.074 18.955 18.97  18.952], 9 s
+15:58:47 [ 39.1 min] batch 35: 16 choices (2 HF), LF/HF 743/268, selection 74.5 s, 77.4 s
+15:58:58 [ 39.3 min] speed sensitivities dV/dC (rows = conditions): [[ 84.42  -1.77   1.97  -0.08   0.17  -0.1 ]
+ [110.92  -0.48  10.49   4.83   0.58   0.04]
+ [114.38   0.25   6.16   3.83   0.6    0.07]
+ [116.    -0.8    7.04   5.75   0.8   -0.08]
+ [302.02  13.2   15.83  -0.66  -0.01   1.21]]
+15:59:06 [ 39.4 min] update 36: incumbent mean speed 19.0737 kt (kept), candidates [19.074 19.007 18.997 18.965], 17 s
+16:00:17 [ 40.6 min] batch 36: 16 choices (5 HF), LF/HF 755/273, selection 81.5 s, 89.5 s
+16:00:26 [ 40.8 min] update 37: incumbent mean speed 19.0737 kt (kept), candidates [19.074 19.034 18.977 18.975], 8 s
+16:01:33 [ 41.9 min] batch 37: 16 choices (4 HF), LF/HF 768/277, selection 72.4 s, 76.3 s
+16:04:21 [ 44.7 min] batch 38: hyperparameters refitted on 1045 points
+16:04:29 [ 44.8 min] update 38: incumbent mean speed 19.0736 kt (kept), candidates [19.074 18.93  18.932 18.926], 9 s
+16:05:43 [ 46.0 min] batch 38: 16 choices (3 HF), LF/HF 783/280, selection 242.0 s, 249.9 s
+16:05:53 [ 46.2 min] speed sensitivities dV/dC (rows = conditions): [[ 84.39  -1.77   1.97  -0.08   0.17  -0.1 ]
+ [201.3    2.99   7.01   4.86   0.58   0.04]
+ [114.38   0.26   6.16   3.83   0.6    0.07]
+ [116.04  -0.8    7.05   5.75   0.8   -0.08]
+ [302.01  13.22  15.84  -0.66  -0.01   1.21]]
+16:06:03 [ 46.4 min] update 39: incumbent mean speed 19.0735 kt (kept), candidates [19.073 18.998 18.943 18.925], 19 s
+16:07:19 [ 47.6 min] batch 39: 16 choices (3 HF), LF/HF 798/283, selection 88.6 s, 96.3 s
+16:07:32 [ 47.8 min] update 40: incumbent mean speed 19.0736 kt (kept), candidates [19.074 18.931 18.941 18.946], 11 s
+16:08:48 [ 49.1 min] batch 40: 16 choices (4 HF), LF/HF 811/287, selection 80.9 s, 88.6 s
+16:08:58 [ 49.3 min] update 41: incumbent mean speed 19.0736 kt (kept), candidates [19.074 18.937 18.955 18.943], 9 s
+16:10:18 [ 50.6 min] batch 41: 16 choices (4 HF), LF/HF 824/291, selection 81.3 s, 89.6 s
+16:10:24 [ 50.7 min] speed sensitivities dV/dC (rows = conditions): [[ 84.39  -1.76   1.97  -0.08   0.17  -0.1 ]
+ [110.93   2.91  10.47   4.82   0.58   0.04]
+ [114.4    0.25   6.16   3.83   0.6    0.07]
+ [116.02  -0.8    7.05   5.75   0.8   -0.08]
+ [302.04  13.22  15.83  -0.66  -0.01   1.21]]
+16:10:33 [ 50.9 min] update 42: incumbent mean speed 19.0737 kt (kept), candidates [19.074 18.994 18.961 18.934], 15 s
+16:11:56 [ 52.3 min] batch 42: 16 choices (2 HF), LF/HF 838/293, selection 88.0 s, 98.8 s
+16:12:07 [ 52.4 min] update 43: incumbent mean speed 19.0739 kt (kept), candidates [19.074 19.059 18.967 18.938], 9 s
+16:13:20 [ 53.6 min] batch 43: 16 choices (0 HF), LF/HF 854/293, selection 82.9 s, 83.2 s
+16:13:30 [ 53.8 min] update 44: incumbent mean speed 19.0739 kt (kept), candidates [19.074 18.948 18.921 18.898], 9 s
+16:14:47 [ 55.1 min] batch 44: 16 choices (3 HF), LF/HF 868/296, selection 84.5 s, 87.4 s
+16:15:00 [ 55.3 min] speed sensitivities dV/dC (rows = conditions): [[ 84.39  -1.76   1.97  -0.08   0.17  -0.1 ]
+ [110.94  -0.49   6.91   4.82   0.58   0.04]
+ [114.41   0.24   6.16   3.83   0.6    0.07]
+ [116.02  -0.81   7.05   5.75   0.8   -0.08]
+ [302.1   13.22  15.83  -0.66  -0.     1.21]]
+16:15:09 [ 55.5 min] update 45: incumbent mean speed 19.0741 kt (kept), candidates [19.074 18.962 18.956 18.959], 21 s
+16:16:38 [ 57.0 min] batch 45: 16 choices (3 HF), LF/HF 884/299, selection 99.5 s, 110.7 s
+16:16:48 [ 57.1 min] update 46: incumbent mean speed 19.0739 kt (kept), candidates [19.074 18.979 18.965 18.959], 9 s
+16:18:26 [ 58.7 min] batch 46: 16 choices (3 HF), LF/HF 898/302, selection 87.4 s, 107.8 s
+16:18:35 [ 58.9 min] update 47: incumbent mean speed 19.0740 kt (kept), candidates [19.074 18.99  18.984 18.933], 8 s
+16:19:57 [ 60.3 min] batch 47: 16 choices (4 HF), LF/HF 910/306, selection 88.4 s, 91.9 s
+16:20:06 [ 60.4 min] speed sensitivities dV/dC (rows = conditions): [[ 84.39  -1.76   1.97  -0.08   0.17  -0.1 ]
+ [110.94   2.93  10.49   3.23   0.58   0.04]
+ [114.42   0.24   6.16   3.83   0.6    0.07]
+ [116.05  -0.8    7.05   5.75   0.8   -0.08]
+ [302.03  13.22  15.83  -0.66  -0.     1.21]]
+16:20:16 [ 60.6 min] update 48: incumbent mean speed 19.0739 kt (kept), candidates [19.074 18.999 18.985 18.989], 17 s
+16:21:38 [ 62.0 min] batch 48: 16 choices (2 HF), LF/HF 924/308, selection 98.0 s, 100.6 s
+16:21:49 [ 62.1 min] update 49: incumbent mean speed 19.0738 kt (kept), candidates [19.074 18.994 18.943 18.948], 10 s
+16:23:14 [ 63.5 min] batch 49: 16 choices (2 HF), LF/HF 939/310, selection 93.0 s, 95.6 s
+16:23:24 [ 63.7 min] update 50: incumbent mean speed 19.0741 kt (kept), candidates [19.074 18.976 18.959 18.961], 9 s
+16:25:04 [ 65.4 min] batch 50: 16 choices (3 HF), LF/HF 952/313, selection 93.0 s, 110.0 s
+16:29:16 [ 69.6 min] speed sensitivities dV/dC (rows = conditions): [[ 84.41  -1.76   1.97  -0.08   0.17  -0.1 ]
+ [110.96  -1.14   4.9    2.63   0.57   0.04]
+ [114.39   0.24   6.16   3.83   0.6    0.07]
+ [116.04  -0.81   7.05   5.75   0.8   -0.08]
+ [302.04  13.2   15.82  -0.66   0.     1.21]]
+16:29:26 [ 69.7 min] update 51: incumbent mean speed 19.0738 kt (kept), candidates [19.074 19.046 18.979 18.971], 18 s
+16:29:26 [ 69.7 min] loop done: 816 choices in 51 batches, LF/HF (952, 313), runs {1: 955, 2: 316, 3: 0}, code time {1: 366.0593682003091, 2: 2127.6912623001263, 3: 0.0}
+16:29:46 [ 70.1 min] validation done
+16:29:51 [ 70.2 min] done

@@ -1,0 +1,43 @@
+<!doctype html><html lang='fr'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Figures du run 2026-10-22_1507_smoke_npllt_xfoil_fsi</title><style>
+:root { --bg: #ffffff; --fg: #1d1d1f; --muted: #6e6e73; --card: #f5f5f7; --link: #0b5cad; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #161618; --fg: #f2f2f2; --muted: #a1a1a6; --card: #232326; --link: #6cb4ff; } }
+body { background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif;
+       max-width: 980px; margin: 0 auto; padding: 24px 16px; }
+h1 { font-size: 22px; margin: 0 0 4px; } .sub { color: var(--muted); margin: 0 0 20px; }
+a { color: var(--link); } ul { padding-left: 0; list-style: none; }
+li { background: var(--card); border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+li span { color: var(--muted); } pre { background: var(--card); border-radius: 8px;
+       padding: 12px; overflow-x: auto; font-size: 12px; white-space: pre-wrap; }
+</style></head><body><h1>Figures du run 2026-10-22_1507_smoke_npllt_xfoil_fsi</h1><p class='sub'>vpp_acceleration</p><ul><li><a href='convergence.html'>Convergence</a><br><span>vitesse de la titulaire et des concurrentes à chaque mise à jour, taille du plan BF / HF</span></li><li><a href='points.html'>Points ajoutés</a><br><span>où le raffinement a placé ses calculs (plans d&#x27;attitude), avec les états VPP finaux</span></li><li><a href='sections.html'>Sections</a><br><span>la meilleure section contre la section de départ, et ses scores PCA</span></li><li><a href='speeds.html'>Vitesses par condition</a><br><span>sections validées, vitesse corrigée au premier ordre de l&#x27;écart aux codes</span></li><li><a href='validation.html'>Validation</a><br><span>surrogate contre les codes (HF, BF, AVL) aux états VPP</span></li></ul><h2>Résumé</h2><pre>run 2026-10-22_1507_smoke_npllt_xfoil_fsi: 144 steps in 4.8 min
+code runs: LF 148 (58 s), HF 46 (247 s); final design LF/HF (142, 39)
+mean speed predicted: start section 15.2629 kt -&gt; incumbent 15.3516 kt
+speeds of the incumbent: 45/12: 12.137, 45/16: 18.566
+validation best: first-order speed error of the surrogate against NPLLT x XFOIL RMS 0.0161 kt, max 0.0178 kt; predicted sigma RMS 0.0330 kt; |z| &lt;= 2 on 100 %
+   against AVL x XFOIL (not a level of the surrogate): speed error mean -0.0411 kt, RMS 0.0534 kt
+   Fx     |surrogate - HF| / |HF| median 1.17 %
+   Fy     |surrogate - HF| / |HF| median 0.07 %
+   Fz     |surrogate - HF| / |HF| median 0.07 %
+   Mx     |surrogate - HF| / |HF| median 0.06 %
+   My     |surrogate - HF| / |HF| median 0.27 %
+   Mz     |surrogate - HF| / |HF| median 0.05 %
+   Cpmin  |surrogate - HF| / |HF| median 19.74 %
+validation best_2026-10-22_1131_real_1h30_current_box: first-order speed error of the surrogate against NPLLT x XFOIL RMS 0.0108 kt, max 0.0123 kt; predicted sigma RMS 0.0554 kt; |z| &lt;= 2 on 100 %
+   against AVL x XFOIL (not a level of the surrogate): speed error mean -0.0288 kt, RMS 0.0393 kt
+   Fx     |surrogate - HF| / |HF| median 0.78 %
+   Fy     |surrogate - HF| / |HF| median 0.11 %
+   Fz     |surrogate - HF| / |HF| median 0.10 %
+   Mx     |surrogate - HF| / |HF| median 0.14 %
+   My     |surrogate - HF| / |HF| median 0.40 %
+   Mz     |surrogate - HF| / |HF| median 0.37 %
+   Cpmin  |surrogate - HF| / |HF| median 20.27 %
+validation current_section: first-order speed error of the surrogate against NPLLT x XFOIL RMS 0.0143 kt, max 0.0180 kt; predicted sigma RMS 0.0079 kt; |z| &lt;= 2 on 100 %
+   against AVL x XFOIL (not a level of the surrogate): speed error mean -0.0409 kt, RMS 0.0554 kt
+   Fx     |surrogate - HF| / |HF| median 0.95 %
+   Fy     |surrogate - HF| / |HF| median 0.05 %
+   Fz     |surrogate - HF| / |HF| median 0.06 %
+   Mx     |surrogate - HF| / |HF| median 0.07 %
+   My     |surrogate - HF| / |HF| median 0.32 %
+   Mz     |surrogate - HF| / |HF| median 0.17 %
+   Cpmin  |surrogate - HF| / |HF| median 12.15 %
+</pre></body></html>

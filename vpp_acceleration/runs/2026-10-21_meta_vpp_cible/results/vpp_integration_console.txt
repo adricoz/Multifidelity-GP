@@ -1,0 +1,67 @@
+C:\Users\SIM\Desktop\Code-Adri\MDS\Code\Math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\Code\Math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\stats\_qmc.py:958: UserWarning: The balance properties of Sobol' points require n to be a power of 2.
+  sample = self._random(n, workers=workers)
+n_per_state    2 scramble 0: rel. error 0.043, efficiency 1.000, 4.2 s
+n_per_state    2 scramble 1: rel. error 0.062, efficiency 0.973, 4.0 s
+n_per_state    2 scramble 2: rel. error 0.031, efficiency 1.000, 3.7 s
+n_per_state    2 scramble 3: rel. error 0.039, efficiency 0.990, 4.0 s
+n_per_state    2 scramble 4: rel. error 0.047, efficiency 0.994, 3.9 s
+n_per_state    4 scramble 0: rel. error 0.004, efficiency 1.000, 4.7 s
+n_per_state    4 scramble 1: rel. error 0.022, efficiency 1.000, 4.5 s
+n_per_state    4 scramble 2: rel. error 0.006, efficiency 1.000, 4.6 s
+n_per_state    4 scramble 3: rel. error 0.008, efficiency 1.000, 4.4 s
+n_per_state    4 scramble 4: rel. error 0.006, efficiency 1.000, 4.5 s
+n_per_state    8 scramble 0: rel. error 0.004, efficiency 1.000, 5.3 s
+n_per_state    8 scramble 1: rel. error 0.004, efficiency 1.000, 5.2 s
+n_per_state    8 scramble 2: rel. error 0.003, efficiency 1.000, 5.5 s
+n_per_state    8 scramble 3: rel. error 0.007, efficiency 1.000, 5.3 s
+n_per_state    8 scramble 4: rel. error 0.005, efficiency 1.000, 5.4 s
+n_per_state   16 scramble 0: rel. error 0.002, efficiency 1.000, 7.2 s
+n_per_state   16 scramble 1: rel. error 0.002, efficiency 1.000, 7.3 s
+n_per_state   16 scramble 2: rel. error 0.001, efficiency 1.000, 7.4 s
+n_per_state   16 scramble 3: rel. error 0.002, efficiency 1.000, 7.2 s
+n_per_state   16 scramble 4: rel. error 0.001, efficiency 1.000, 7.2 s
+n_per_state   32 scramble 0: rel. error 0.001, efficiency 1.000, 10.7 s
+n_per_state   32 scramble 1: rel. error 0.000, efficiency 1.000, 11.2 s
+n_per_state   32 scramble 2: rel. error 0.000, efficiency 1.000, 10.7 s
+n_per_state   32 scramble 3: rel. error 0.001, efficiency 1.000, 10.8 s
+n_per_state   32 scramble 4: rel. error 0.001, efficiency 1.000, 11.1 s
+n_per_state   64 scramble 0: rel. error 0.001, efficiency 1.000, 18.9 s
+n_per_state   64 scramble 1: rel. error 0.000, efficiency 1.000, 18.0 s
+n_per_state   64 scramble 2: rel. error 0.000, efficiency 1.000, 18.2 s
+n_per_state   64 scramble 3: rel. error 0.000, efficiency 1.000, 18.8 s
+n_per_state   64 scramble 4: rel. error 0.000, efficiency 1.000, 19.0 s
+n_per_state  128 scramble 0: rel. error 0.000, efficiency 1.000, 32.8 s
+n_per_state  128 scramble 1: rel. error 0.000, efficiency 1.000, 33.3 s
+n_per_state  128 scramble 2: rel. error 0.000, efficiency 1.000, 32.8 s
+n_per_state  128 scramble 3: rel. error 0.000, efficiency 1.000, 33.6 s
+n_per_state  128 scramble 4: rel. error 0.000, efficiency 1.000, 23.0 s
+n_per_state  256 scramble 0: rel. error 0.000, efficiency 1.000, 28.7 s
+n_per_state  256 scramble 1: rel. error 0.000, efficiency 1.000, 34.5 s
+n_per_state  256 scramble 2: rel. error 0.000, efficiency 1.000, 35.2 s
+n_per_state  256 scramble 3: rel. error 0.000, efficiency 1.000, 30.6 s
+n_per_state  256 scramble 4: rel. error 0.000, efficiency 1.000, 46.2 s
+reference time 127.0 s
+ n_per_state  n_int  relative_error  spearman  same_choice  efficiency_median  efficiency_min  time_s
+           2     40           0.043     0.999        0.400              0.994           0.973   3.977
+           4     80           0.006     1.000        1.000              1.000           1.000   4.519
+           8    160           0.004     1.000        1.000              1.000           1.000   5.268
+          16    320           0.002     1.000        1.000              1.000           1.000   7.228
+          32    640           0.001     1.000        1.000              1.000           1.000  10.768
+          64   1280           0.000     1.000        1.000              1.000           1.000  18.790
+         128   2560           0.000     1.000        1.000              1.000           1.000  32.815
+         256   5120           0.000     1.000        1.000              1.000           1.000  34.521
+
+candidates
+ n_candidates  median   min
+           64   0.957 0.929
+          128   0.975 0.933
+          256   0.975 0.955
+          512   0.994 0.967
+         1024   0.989 0.975
+         2048   0.995 0.982
+         4096   0.995 0.988
+figure: C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\examples\figures\vpp_integration_study.html

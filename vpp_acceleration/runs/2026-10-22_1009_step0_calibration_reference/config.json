@@ -1,0 +1,117 @@
+{
+ "purpose": "conventions of the codes against the production RS",
+ "planform": {
+  "type": "cfoil_arc",
+  "radius": 9.8,
+  "span": 3.25,
+  "chord": 0.7,
+  "taper": 1.0,
+  "root_twist": 0.0,
+  "tip_twist": 0.0,
+  "cant_geom": 20.168,
+  "tip_side": -1,
+  "ori_y": 0.0,
+  "ori_z": 0.0,
+  "n_stations": 41,
+  "kind": "FOIL"
+ },
+ "section": "reference of the C-foil studies (MC2 thickness + camber delta 0.108139)",
+ "production_rs": "C:\\Users\\SIM\\Desktop\\Code-Adri\\MDS\\Systems\\Ships\\Sail\\IntensSY\\Data\\Foil\\CFoil_R9800_S3250_C700_fsi_rs_vpp.json",
+ "attitudes_cant_rake_yaw": [
+  [
+   0.0,
+   0.0,
+   -3.0
+  ],
+  [
+   0.0,
+   1.0,
+   -3.0
+  ],
+  [
+   0.0,
+   0.0,
+   0.0
+  ],
+  [
+   0.0,
+   1.0,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   3.0
+  ],
+  [
+   0.0,
+   1.0,
+   3.0
+  ],
+  [
+   4.0,
+   0.0,
+   -3.0
+  ],
+  [
+   4.0,
+   1.0,
+   -3.0
+  ],
+  [
+   4.0,
+   0.0,
+   0.0
+  ],
+  [
+   4.0,
+   1.0,
+   0.0
+  ],
+  [
+   4.0,
+   0.0,
+   3.0
+  ],
+  [
+   4.0,
+   1.0,
+   3.0
+  ],
+  [
+   8.0,
+   0.0,
+   -3.0
+  ],
+  [
+   8.0,
+   1.0,
+   -3.0
+  ],
+  [
+   8.0,
+   0.0,
+   0.0
+  ],
+  [
+   8.0,
+   1.0,
+   0.0
+  ],
+  [
+   8.0,
+   0.0,
+   3.0
+  ],
+  [
+   8.0,
+   1.0,
+   3.0
+  ]
+ ],
+ "speeds_kt": [
+  7.0,
+  12.0,
+  20.0
+ ]
+}

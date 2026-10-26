@@ -1,0 +1,48 @@
+--- level 1 against the production RS at 7 kt
+Fx    : RS / code median +1.7727 [+1.3711 ; +2.0656], correlation +0.9849 | RS -0.0165, code -0.0090
+Fy    : RS / code median +5.0400 [+2.1967 ; +39246891.9902], correlation +0.9939 | RS -0.3654, code -0.1009
+Fz    : RS / code median +5.0112 [+2.2129 ; +39448502.5233], correlation +0.9652 | RS +0.2423, code +0.0683
+Mx    : RS / code median +5.1101 [+2.3041 ; +41108297.5829], correlation +1.0000 | RS -0.6935, code -0.1868
+My    : RS / code median +3.8531 [+2.7922 ; +6.2735], correlation +0.9604 | RS +0.0933, code +0.0260
+Mz    : RS / code median -3.8089 [-55.8520 ; +4.6914], correlation +0.9651 | RS +0.1105, code +0.0118
+Cpmin : RS / code median +0.9030 [+0.6907 ; +1.4766], correlation +0.9896 | RS -0.8223, code -0.9746
+--- level 2 against the production RS at 7 kt
+Fx    : RS / code median +1.5416 [+0.7422 ; +2.0977], correlation +0.4833 | RS -0.0120, code -0.0093
+Fy    : RS / code median +0.8182 [+nan ; +7.5870], correlation +0.9974 | RS -0.2913, code -0.0176
+Fz    : RS / code median +0.8262 [+nan ; +7.5920], correlation +0.9853 | RS +0.1873, code +0.0098
+Mx    : RS / code median +0.8480 [+nan ; +7.8358], correlation +1.0000 | RS -0.5413, code -0.0312
+My    : RS / code median +4.1567 [-5.4279 ; +nan], correlation +0.9785 | RS +0.0740, code +0.0015
+Mz    : RS / code median +3.4650 [-3.6359 ; +nan], correlation +0.9743 | RS +0.0930, code +0.0026
+Cpmin : RS / code median +1.0964 [+0.8167 ; +1.4572], correlation +0.8665 | RS -0.9344, code -0.9490
+--- level 1 against the production RS at 12 kt
+Fx    : RS / code median +1.7603 [+1.3537 ; +2.0606], correlation +0.9854 | RS -0.0164, code -0.0090
+Fy    : RS / code median +4.9674 [+2.1735 ; +38544859.2212], correlation +0.9937 | RS -0.3604, code -0.1009
+Fz    : RS / code median +5.0156 [+2.2396 ; +39220895.9772], correlation +0.9692 | RS +0.2437, code +0.0683
+Mx    : RS / code median +5.0577 [+2.2940 ; +40430088.8083], correlation +0.9999 | RS -0.6871, code -0.1868
+My    : RS / code median +3.8679 [+2.8214 ; +6.2636], correlation +0.9637 | RS +0.0939, code +0.0260
+Mz    : RS / code median -3.7635 [-55.3855 ; +4.6463], correlation +0.9654 | RS +0.1094, code +0.0118
+Cpmin : RS / code median +0.8904 [+0.6881 ; +1.4648], correlation +0.9891 | RS -0.8123, code -0.9746
+--- level 2 against the production RS at 12 kt
+Fx    : RS / code median +1.5242 [+0.7319 ; +2.0869], correlation +0.4869 | RS -0.0119, code -0.0093
+Fy    : RS / code median +0.8246 [+nan ; +7.4772], correlation +0.9974 | RS -0.2867, code -0.0176
+Fz    : RS / code median +0.8563 [+nan ; +7.5892], correlation +0.9867 | RS +0.1865, code +0.0098
+Mx    : RS / code median +0.8638 [+nan ; +7.7480], correlation +1.0000 | RS -0.5338, code -0.0312
+My    : RS / code median +4.1983 [-5.3971 ; +nan], correlation +0.9800 | RS +0.0740, code +0.0015
+Mz    : RS / code median +3.4376 [-3.6072 ; +nan], correlation +0.9746 | RS +0.0922, code +0.0026
+Cpmin : RS / code median +1.1455 [+0.8138 ; +1.4468], correlation +0.8215 | RS -0.9352, code -0.9490
+--- level 1 against the production RS at 20 kt
+Fx    : RS / code median +1.7254 [+1.3050 ; +2.0483], correlation +0.9867 | RS -0.0160, code -0.0090
+Fy    : RS / code median +4.7700 [+2.1091 ; +36616390.1813], correlation +0.9931 | RS -0.3467, code -0.1009
+Fz    : RS / code median +5.0155 [+2.3110 ; +38416727.8367], correlation +0.9778 | RS +0.2468, code +0.0683
+Mx    : RS / code median +4.9101 [+2.2646 ; +38512810.5446], correlation +0.9998 | RS -0.6690, code -0.1868
+My    : RS / code median +3.8973 [+2.8966 ; +6.2187], correlation +0.9714 | RS +0.0952, code +0.0260
+Mz    : RS / code median -3.6418 [-54.1322 ; +4.5236], correlation +0.9653 | RS +0.1065, code +0.0118
+Cpmin : RS / code median +0.8894 [+0.6852 ; +1.4718], correlation +0.9877 | RS -0.8101, code -0.9746
+--- level 2 against the production RS at 20 kt
+Fx    : RS / code median +1.4760 [+0.7033 ; +2.0749], correlation +0.4966 | RS -0.0115, code -0.0093
+Fy    : RS / code median +0.8398 [+nan ; +7.1789], correlation +0.9974 | RS -0.2739, code -0.0176
+Fz    : RS / code median +0.9326 [+nan ; +7.5607], correlation +0.9897 | RS +0.1843, code +0.0098
+Mx    : RS / code median +0.9086 [+nan ; +7.5011], correlation +0.9999 | RS -0.5124, code -0.0312
+My    : RS / code median +4.3013 [-5.2815 ; +nan], correlation +0.9835 | RS +0.0739, code +0.0015
+Mz    : RS / code median +3.3632 [-3.5283 ; +nan], correlation +0.9750 | RS +0.0899, code +0.0026
+Cpmin : RS / code median +1.2658 [+0.8119 ; +1.4509], correlation +0.7154 | RS -0.9652, code -0.9490

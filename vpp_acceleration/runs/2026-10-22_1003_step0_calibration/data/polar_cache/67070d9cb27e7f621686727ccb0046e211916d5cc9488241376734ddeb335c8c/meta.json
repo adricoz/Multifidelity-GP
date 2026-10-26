@@ -1,0 +1,29 @@
+{
+  "key": "67070d9cb27e7f621686727ccb0046e211916d5cc9488241376734ddeb335c8c",
+  "n_filled": 0,
+  "npane_used": 250,
+  "section_name": "MC2_60_6101_1",
+  "section_path": "C:\\Users\\SIM\\AppData\\Local\\Temp\\vppc_hfh9pt8j\\MC2_60_6101_1.xf",
+  "section_sha256": "c60feae0c6f59b5e9240726f78a818ccdce85f1575a648ad9d352321ea4752ed",
+  "spec": {
+    "alpha": [
+      -6.0,
+      12.0,
+      0.5
+    ],
+    "mach": 0.0,
+    "ncrit": 1.0,
+    "niter": 300,
+    "npane": 250,
+    "ppar_r": 0.02,
+    "ppar_t": 0.5,
+    "re": 5000000.0,
+    "xtr": [
+      0.1,
+      0.1
+    ]
+  },
+  "spec_json": "{\"alpha\":[-6.0,12.0,0.5],\"mach\":0.0,\"ncrit\":1.0,\"niter\":300,\"npane\":250,\"ppar_r\":0.02,\"ppar_t\":0.5,\"re\":5000000.0,\"xtr\":[0.1,0.1]}",
+  "xfoil_exe_sha256": "c17342f84ae260c2b11a74cd0e2fb8189a5f8954c6bb7a8467a0f27055c7faea",
+  "xfoil_script_version": "1"
+}

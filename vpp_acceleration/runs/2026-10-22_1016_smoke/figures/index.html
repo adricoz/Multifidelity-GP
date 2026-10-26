@@ -1,0 +1,32 @@
+<!doctype html><html lang='fr'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Figures du run 2026-10-22_1016_smoke</title><style>
+:root { --bg: #ffffff; --fg: #1d1d1f; --muted: #6e6e73; --card: #f5f5f7; --link: #0b5cad; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #161618; --fg: #f2f2f2; --muted: #a1a1a6; --card: #232326; --link: #6cb4ff; } }
+body { background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif;
+       max-width: 980px; margin: 0 auto; padding: 24px 16px; }
+h1 { font-size: 22px; margin: 0 0 4px; } .sub { color: var(--muted); margin: 0 0 20px; }
+a { color: var(--link); } ul { padding-left: 0; list-style: none; }
+li { background: var(--card); border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+li span { color: var(--muted); } pre { background: var(--card); border-radius: 8px;
+       padding: 12px; overflow-x: auto; font-size: 12px; white-space: pre-wrap; }
+</style></head><body><h1>Figures du run 2026-10-22_1016_smoke</h1><p class='sub'>vpp_acceleration</p><ul><li><a href='convergence.html'>Convergence</a><br><span>vitesse de la titulaire et des concurrentes à chaque mise à jour, taille du plan BF / HF</span></li><li><a href='points.html'>Points ajoutés</a><br><span>où le raffinement a placé ses calculs (plans d&#x27;attitude), avec les états VPP finaux</span></li><li><a href='sections.html'>Sections</a><br><span>la meilleure section contre la section de départ, et ses scores PCA</span></li><li><a href='validation.html'>Validation</a><br><span>surrogate contre les codes (HF, BF, AVL) aux états VPP</span></li></ul><h2>Résumé</h2><pre>run 2026-10-22_1016_smoke: 55 steps in 4.8 min
+code runs: LF 87 (18 s), HF 14 (149 s); final design LF/HF (77, 10)
+mean speed predicted: mean section 15.4764 kt -&gt; incumbent 15.5419 kt
+speeds of the incumbent: 45/12: 12.127, 45/16: 18.957
+validation best: first-order speed error of the surrogate against AVL RMS 0.0093 kt, max 0.0114 kt; predicted sigma RMS 0.0204 kt; |z| &lt;= 2 on 100 %
+   Fx     |surrogate - AVL| / |AVL| median 0.93 %
+   Fy     |surrogate - AVL| / |AVL| median 0.21 %
+   Fz     |surrogate - AVL| / |AVL| median 0.35 %
+   Mx     |surrogate - AVL| / |AVL| median 0.52 %
+   My     |surrogate - AVL| / |AVL| median 1.95 %
+   Mz     |surrogate - AVL| / |AVL| median 1.59 %
+   Cpmin  |surrogate - AVL| / |AVL| median 41.54 %
+validation mean_section: first-order speed error of the surrogate against AVL RMS 0.0031 kt, max 0.0033 kt; predicted sigma RMS 0.0201 kt; |z| &lt;= 2 on 100 %
+   Fx     |surrogate - AVL| / |AVL| median 0.56 %
+   Fy     |surrogate - AVL| / |AVL| median 0.81 %
+   Fz     |surrogate - AVL| / |AVL| median 0.57 %
+   Mx     |surrogate - AVL| / |AVL| median 0.35 %
+   My     |surrogate - AVL| / |AVL| median 0.79 %
+   Mz     |surrogate - AVL| / |AVL| median 0.85 %
+   Cpmin  |surrogate - AVL| / |AVL| median 21.66 %
+</pre></body></html>

@@ -1,0 +1,29 @@
+{
+  "key": "4b763d4d1321b27f9ee472a5da3dff7bd7594a2766b574634cdd697335dac185",
+  "n_filled": 0,
+  "npane_used": 260,
+  "section_name": "k4df1f5cc8473",
+  "section_path": "C:\\Users\\SIM\\AppData\\Local\\Temp\\vppc_tasbtgy6\\k4df1f5cc8473.xf",
+  "section_sha256": "8252ecc7f42f03261fd5a1a898b0a62370a0e15cf7dc9232124a7989ec25dcaf",
+  "spec": {
+    "alpha": [
+      -6.0,
+      12.0,
+      0.5
+    ],
+    "mach": 0.0,
+    "ncrit": 1.0,
+    "niter": 300,
+    "npane": 250,
+    "ppar_r": 0.02,
+    "ppar_t": 0.5,
+    "re": 5000000.0,
+    "xtr": [
+      0.1,
+      0.1
+    ]
+  },
+  "spec_json": "{\"alpha\":[-6.0,12.0,0.5],\"mach\":0.0,\"ncrit\":1.0,\"niter\":300,\"npane\":250,\"ppar_r\":0.02,\"ppar_t\":0.5,\"re\":5000000.0,\"xtr\":[0.1,0.1]}",
+  "xfoil_exe_sha256": "c17342f84ae260c2b11a74cd0e2fb8189a5f8954c6bb7a8467a0f27055c7faea",
+  "xfoil_script_version": "1"
+}

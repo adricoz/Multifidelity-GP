@@ -1,0 +1,20 @@
+run 2026-10-22_1021_real_1h: 214 steps in 44.0 min
+code runs: LF 294 (61 s), HF 99 (1209 s); final design LF/HF (263, 85)
+mean speed predicted: mean section 19.4436 kt -> incumbent 19.4930 kt
+speeds of the incumbent: 45/12: 12.130, 45/16: 18.960, 60/16: 21.809, 75/16: 24.000, 90/14: 20.566
+validation best: first-order speed error of the surrogate against AVL RMS 0.0033 kt, max 0.0070 kt; predicted sigma RMS 0.0085 kt; |z| <= 2 on 100 %
+   Fx     |surrogate - AVL| / |AVL| median 0.10 %
+   Fy     |surrogate - AVL| / |AVL| median 0.16 %
+   Fz     |surrogate - AVL| / |AVL| median 0.18 %
+   Mx     |surrogate - AVL| / |AVL| median 0.11 %
+   My     |surrogate - AVL| / |AVL| median 0.30 %
+   Mz     |surrogate - AVL| / |AVL| median 0.09 %
+   Cpmin  |surrogate - AVL| / |AVL| median 5.46 %
+validation mean_section: first-order speed error of the surrogate against AVL RMS 0.0109 kt, max 0.0149 kt; predicted sigma RMS 0.0104 kt; |z| <= 2 on 80 %
+   Fx     |surrogate - AVL| / |AVL| median 0.64 %
+   Fy     |surrogate - AVL| / |AVL| median 0.14 %
+   Fz     |surrogate - AVL| / |AVL| median 0.20 %
+   Mx     |surrogate - AVL| / |AVL| median 0.21 %
+   My     |surrogate - AVL| / |AVL| median 0.27 %
+   Mz     |surrogate - AVL| / |AVL| median 0.27 %
+   Cpmin  |surrogate - AVL| / |AVL| median 5.14 %

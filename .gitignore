@@ -11,8 +11,13 @@ env/
 *.pyc
 
 .ipynb_checkpoints/
-# [FIX-L1] one directory per run (log, JSON, figures): runs are not versioned
+# [FIX-L1] one directory per run (log, JSON, figures). Runs of vpp_acceleration are versioned (2026-10-26,
+# to read them anywhere) without their surrogate pickles (up to 139 MB, over the GitHub limit);
+# runs elsewhere stay ignored
 **/runs/
+!vpp_acceleration/runs/
+vpp_acceleration/runs/**/*.pkl
+vpp_acceleration/runs/**/test_report/
 # outputs written by the scripts before the runs/ convention
 mfego/*.json
 mfego/*.log

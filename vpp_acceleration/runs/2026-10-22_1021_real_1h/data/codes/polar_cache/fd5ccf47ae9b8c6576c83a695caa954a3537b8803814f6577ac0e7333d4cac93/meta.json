@@ -1,0 +1,29 @@
+{
+  "key": "fd5ccf47ae9b8c6576c83a695caa954a3537b8803814f6577ac0e7333d4cac93",
+  "n_filled": 0,
+  "npane_used": 265,
+  "section_name": "k597b8845b6ef",
+  "section_path": "C:\\Users\\SIM\\AppData\\Local\\Temp\\vppc_geipwlta\\k597b8845b6ef.xf",
+  "section_sha256": "7627bca829ff5e29ec8085557a853ef1285307a4b537e2dafb6e8307d2f0db2a",
+  "spec": {
+    "alpha": [
+      -6.0,
+      12.0,
+      0.5
+    ],
+    "mach": 0.0,
+    "ncrit": 1.0,
+    "niter": 300,
+    "npane": 250,
+    "ppar_r": 0.02,
+    "ppar_t": 0.5,
+    "re": 5000000.0,
+    "xtr": [
+      0.1,
+      0.1
+    ]
+  },
+  "spec_json": "{\"alpha\":[-6.0,12.0,0.5],\"mach\":0.0,\"ncrit\":1.0,\"niter\":300,\"npane\":250,\"ppar_r\":0.02,\"ppar_t\":0.5,\"re\":5000000.0,\"xtr\":[0.1,0.1]}",
+  "xfoil_exe_sha256": "c17342f84ae260c2b11a74cd0e2fb8189a5f8954c6bb7a8467a0f27055c7faea",
+  "xfoil_script_version": "1"
+}

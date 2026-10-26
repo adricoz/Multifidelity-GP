@@ -1,0 +1,60 @@
+relativeSizes   false;
+thicknessModel  firstAndExpansion;
+firstLayerThickness 0.00027;
+expansionRatio  1.2026-10-24 03:07:50 G2_medium_yp50: done rc=0 (G2_medium_yp50,0,3808758,0.00335,75.2,9.370139117190e+01,1.864326586560e+03,-2.25445relativeSizes   false;
+thicknessModel  firstAndExpansion;
+firstLayerThickness 0.00027;
+expansionRatio  1.2;
+minThickness    0.00027;
+nSurfaceLayers  8;
+endTime         200;
+writeInterval   200;
+endTime         700;
+writeInterval   700;
+relativeSizes   false;
+thicknessModel  firstAndExpansion;
+firstLayerThickness 0.00027;
+expansionRatio  1.2;
+minThickness    0.00027;
+nSurfaceLayers  8;
+endTime         200;
+writeInterval   200;
+endTime         700;
+writeInterval   700;
+relativeSizes   false;
+thicknessModel  firstAndExpansion;
+firstLayerThickness 0.00054;
+expansionRatio  1.2;
+minThickness    0.00054;
+nSurfaceLayers  6;
+endTime         200;
+writeInterval   200;
+endTime         700;
+writeInterval   700;
+relativeSizes   false;
+thicknessModel  firstAndExpansion;
+firstLayerThickness 0.00016;
+expansionRatio  1.2;
+minThickness    0.00016;
+nSurfaceLayers  10;
+endTime         200;
+writeInterval   200;
+endTime         700;
+writeInterval   700;
+relativeSizes   false;
+thicknessModel  firstAndExpansion;
+firstLayerThickness 0.00027;
+expansionRatio  1.2;
+minThickness    0.00027;
+nSurfaceLayers  8;
+endTime         200;
+writeInterval   200;
+endTime         700;
+writeInterval   700;
+99126e+03,-2.244514798851e+03,-5.456263076565e+04,2.947372709154e+04,-1.253799619125e+03,-9.907151797264e+02,-9.140521381412e+04,1.435629295078e+04,1.817198418383e+04,1.42e-05,869,5456)
+2026-10-24 09:36:54 Y30_medium: start (background 54 x 39 x 25, first layer 1.6e-4 m x 10, domain x1)
+2026-10-24 11:31:26 Y30_medium: done rc=0 (Y30_medium,0,3993887,0.00312,75.2,8.263533957186e+01,1.911110135970e+03,-2.255067113306e+03,-5.441640532130e+04,2.939765244158e+04,-1.271363860231e+03,-9.837032530746e+02,-9.115371213567e+04,1.433791022164e+04,1.810367058175e+04,3.82e-05,492,6379)
+2026-10-24 11:31:26 D2_coarse_yp50: start (background 84 x 60 x 38, first layer 2.7e-4 m x 8, domain x2)
+2026-10-24 12:34:42 D2_coarse_yp50: done rc=0 (D2_coarse_yp50,0,2405569,0.00354,79.4,1.051467612683e+02,2.268488896497e+03,-2.297332273855e+03,-5.416123784182e+04,2.926201495030e+04,-1.320955628849e+03,-9.763766450057e+02,-9.077101092275e+04,1.436733559397e+04,1.802826603187e+04,6.04e-07,302,3493)
+2026-10-24 12:34:42 all cases done; report
+2026-10-24 12:34:45 end

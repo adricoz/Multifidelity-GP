@@ -1,0 +1,29 @@
+{
+  "key": "280b9ef14188d41512f4365312e93772bf2334489d8885b08fbba678bb21a525",
+  "n_filled": 0,
+  "npane_used": 250,
+  "section_name": "k172c44ddf4d5",
+  "section_path": "C:\\Users\\SIM\\AppData\\Local\\Temp\\vppc_o6a7zmzm\\k172c44ddf4d5.xf",
+  "section_sha256": "e5f39cbe9187329410da4e9fe16922d76441d76cb4cbe044bacc4e87bb1d771a",
+  "spec": {
+    "alpha": [
+      -6.0,
+      12.0,
+      0.5
+    ],
+    "mach": 0.0,
+    "ncrit": 1.0,
+    "niter": 300,
+    "npane": 250,
+    "ppar_r": 0.02,
+    "ppar_t": 0.5,
+    "re": 5000000.0,
+    "xtr": [
+      0.1,
+      0.1
+    ]
+  },
+  "spec_json": "{\"alpha\":[-6.0,12.0,0.5],\"mach\":0.0,\"ncrit\":1.0,\"niter\":300,\"npane\":250,\"ppar_r\":0.02,\"ppar_t\":0.5,\"re\":5000000.0,\"xtr\":[0.1,0.1]}",
+  "xfoil_exe_sha256": "c17342f84ae260c2b11a74cd0e2fb8189a5f8954c6bb7a8467a0f27055c7faea",
+  "xfoil_script_version": "1"
+}

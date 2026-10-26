@@ -1,0 +1,29 @@
+{
+  "key": "619a60ec691379ea391b9e74d3e5fb75f20e9b0fd706c5589892e454f0ef0e57",
+  "n_filled": 0,
+  "npane_used": 250,
+  "section_name": "k166a0a0501d8",
+  "section_path": "C:\\Users\\SIM\\AppData\\Local\\Temp\\vppc_bmva9h_c\\k166a0a0501d8.xf",
+  "section_sha256": "89e4e592481bfa9a084a2679e57b5ad2a73c3d84d7f399a769efed884b0e0d2e",
+  "spec": {
+    "alpha": [
+      -6.0,
+      12.0,
+      0.5
+    ],
+    "mach": 0.0,
+    "ncrit": 1.0,
+    "niter": 300,
+    "npane": 250,
+    "ppar_r": 0.02,
+    "ppar_t": 0.5,
+    "re": 5000000.0,
+    "xtr": [
+      0.1,
+      0.1
+    ]
+  },
+  "spec_json": "{\"alpha\":[-6.0,12.0,0.5],\"mach\":0.0,\"ncrit\":1.0,\"niter\":300,\"npane\":250,\"ppar_r\":0.02,\"ppar_t\":0.5,\"re\":5000000.0,\"xtr\":[0.1,0.1]}",
+  "xfoil_exe_sha256": "c17342f84ae260c2b11a74cd0e2fb8189a5f8954c6bb7a8467a0f27055c7faea",
+  "xfoil_script_version": "1"
+}

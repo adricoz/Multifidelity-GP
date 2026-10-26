@@ -1,0 +1,58 @@
+{
+ "profile": "guess_bimodal",
+ "start_section": "current_section",
+ "probability_common": 0.7222222222222223,
+ "sections": {
+  "best": {
+   "probability_solved": 0.7222222222222223,
+   "common": {
+    "probability": 0.7222222222222223,
+    "expected_speed_kt": 13.011553169273503,
+    "time_equivalent_speed_kt": 12.287682792003249,
+    "speed_sigma_kt": 0.01712280977877415
+   },
+   "modes": {
+    "pres": {
+     "probability": 0.5,
+     "expected_speed_kt": 14.20670127681619,
+     "time_equivalent_speed_kt": 13.500078416201687,
+     "speed_sigma_kt": 0.016350736578398417
+    },
+    "portant": {
+     "probability": 0.2222222222222222,
+     "expected_speed_kt": 10.32246992730245,
+     "time_equivalent_speed_kt": 10.222147061924593,
+     "speed_sigma_kt": 0.018744057134566026
+    }
+   },
+   "gain_vs_start_kt": 0.09391853604145214,
+   "gain_by_mode_kt": {
+    "pres": 0.07981702134507923,
+    "portant": 0.12564694410829125
+   }
+  },
+  "current_section": {
+   "probability_solved": 0.7222222222222223,
+   "common": {
+    "probability": 0.7222222222222223,
+    "expected_speed_kt": 12.917634633232051,
+    "time_equivalent_speed_kt": 12.197384137278021,
+    "speed_sigma_kt": 0.007005544399816284
+   },
+   "modes": {
+    "pres": {
+     "probability": 0.5,
+     "expected_speed_kt": 14.126884255471113,
+     "time_equivalent_speed_kt": 13.440979755293823,
+     "speed_sigma_kt": 0.005377434853213522
+    },
+    "portant": {
+     "probability": 0.2222222222222222,
+     "expected_speed_kt": 10.196822983194158,
+     "time_equivalent_speed_kt": 10.095700942749268,
+     "speed_sigma_kt": 0.009718001723430144
+    }
+   }
+  }
+ }
+}

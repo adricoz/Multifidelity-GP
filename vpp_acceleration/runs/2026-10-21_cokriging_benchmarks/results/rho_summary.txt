@@ -1,0 +1,21 @@
+=== Is a constant rho too rigid? (same designs for every model) ===
+
+--- design B1 (10 seeds), median [10 % ; 90 %]
+CK notre CoKriging (ρ constant, v2)    region 0.1998 [0.1588 ; 0.2476] cov 0.99 | global 0.1577 cov 0.93 | rho 0.83 to 0.83
+P0 prototype, ρ constant               region 0.1907 [0.1536 ; 0.2785] cov 0.97 | global 0.1395 cov 0.89 | rho 0.74 to 0.74
+P1 prototype, ρ(x) linéaire            region 0.1486 [0.1188 ; 0.2806] cov 0.93 | global 0.1215 cov 0.85 | rho 0.22 to 0.71
+BT BoTorch MF-GP                       region 0.1730 [0.1452 ; 0.1985] cov 0.98 | global 0.1437 cov 0.92
+P1 against P0 (region): median +22 % lower | wins 8 / 10 | Wilcoxon (P1 < P0) p = 0.053
+P1 against CK (region): median +26 % lower | wins 8 / 10 | Wilcoxon (P1 < CK) p = 0.053
+BT against P1 (region): median -16 % lower | wins 3 / 10 | Wilcoxon (BT < P1) p = 0.62
+BT against CK (region): median +13 % lower | wins 8 / 10 | Wilcoxon (BT < CK) p = 0.042
+
+--- design B3 (10 seeds), median [10 % ; 90 %]
+CK notre CoKriging (ρ constant, v2)    region 0.1301 [0.1199 ; 0.1484] cov 0.94 | global 0.7303 cov 0.64 | rho 0.74 to 0.74
+P0 prototype, ρ constant               region 0.1292 [0.1158 ; 0.1845] cov 0.88 | global 0.6132 cov 0.62 | rho 0.73 to 0.73
+P1 prototype, ρ(x) linéaire            region 0.1521 [0.1189 ; 0.2141] cov 0.88 | global 0.6179 cov 0.62 | rho 0.48 to 0.70
+BT BoTorch MF-GP                       region 0.1135 [0.0994 ; 0.1324] cov 0.93 | global 0.6983 cov 0.64
+P1 against P0 (region): median -18 % lower | wins 6 / 10 | Wilcoxon (P1 < P0) p = 0.69
+P1 against CK (region): median -17 % lower | wins 5 / 10 | Wilcoxon (P1 < CK) p = 0.84
+BT against P1 (region): median +25 % lower | wins 10 / 10 | Wilcoxon (BT < P1) p = 0.00098
+BT against CK (region): median +13 % lower | wins 9 / 10 | Wilcoxon (BT < CK) p = 0.002

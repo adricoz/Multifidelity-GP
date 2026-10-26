@@ -1,0 +1,88 @@
+{
+ "name": "smoke_search_profile_local",
+ "k": 10,
+ "n_low": 30,
+ "n_high": 8,
+ "time_limit_min": 4.0,
+ "workers": 28,
+ "seed": 0,
+ "smoke": true,
+ "box": "current",
+ "box_scale": 0.5,
+ "hf": "npllt_xfoil",
+ "hf_cost": 2.0,
+ "fsi": true,
+ "batch": 16,
+ "vpp_workers": 30,
+ "compare": [],
+ "profile": [],
+ "search_profile": "C:/Users/SIM/AppData/Local/Temp/claude/c--Users-SIM-Desktop-Code-Adri/dd838124-1fc8-4b4e-a518-c1c475056b79/scratchpad/guess_bimodal_small.json",
+ "screen_seed": 497194027,
+ "local_fraction": 0.5,
+ "radius": 1.0,
+ "conditions": [
+  [
+   42.54910585262171,
+   11.196776434783072
+  ],
+  [
+   42.54910585262171,
+   14.803223565216928
+  ],
+  [
+   47.45089414737829,
+   11.196776434783072
+  ],
+  [
+   47.45089414737829,
+   14.803223565216928
+  ],
+  [
+   130.36927076377745,
+   11.196776434783072
+  ],
+  [
+   130.36927076377745,
+   14.803223565216928
+  ],
+  [
+   139.2956522447962,
+   11.196776434783072
+  ],
+  [
+   139.2956522447962,
+   14.803223565216928
+  ]
+ ],
+ "condition_weights": [
+  0.125,
+  0.125,
+  0.125,
+  0.125,
+  0.125,
+  0.125,
+  0.125,
+  0.125
+ ],
+ "optimizer": {
+  "n_per_state": 16,
+  "n_local": 512,
+  "refit_every": 10,
+  "update_every": 1,
+  "sensitivities_every": 3,
+  "n_screen": 256,
+  "n_top": 3,
+  "kappa": 1.0,
+  "local_fraction": 0.5,
+  "radius": 1.0,
+  "refit_growth": 1.25
+ },
+ "levels": "1 = NPLLT x NeuralFoil xxxlarge, 2 = NPLLT x XFOIL, 3 = AVL x XFOIL (validation only) (src/foil_codes.py)",
+ "criterion_costs": [
+  1.0,
+  2.0
+ ],
+ "family": "Dim-Reduction widths x 0.5 centred on the current C-foil section, no crossing, Ixx >= Ixx(current), NF confident (checked on the decoded sections)",
+ "inputs": "10 PCA scores + Cant_Eff, Rake_Eff, Yaw_Eff (no Hvol)",
+ "foil_variant_mds": "CFoilFSI (R 9.8 m), dyn RS replaced by the rigid surrogate + the FSI correction (Speed_kts input)"
+}

@@ -1,0 +1,29 @@
+{
+  "key": "b937c30ce8d0b7f6a1cc54a05dac780176ee0bcd7d595eabc4fa723fb3e2290b",
+  "n_filled": 0,
+  "npane_used": 265,
+  "section_name": "k3fb4623fa889",
+  "section_path": "C:\\Users\\SIM\\AppData\\Local\\Temp\\vppc_knrvy_bq\\k3fb4623fa889.xf",
+  "section_sha256": "2a794a389f1835c0e8d05369bc3ef16891a24277282582609a086a2bbd591729",
+  "spec": {
+    "alpha": [
+      -6.0,
+      12.0,
+      0.5
+    ],
+    "mach": 0.0,
+    "ncrit": 1.0,
+    "niter": 300,
+    "npane": 250,
+    "ppar_r": 0.02,
+    "ppar_t": 0.5,
+    "re": 5000000.0,
+    "xtr": [
+      0.1,
+      0.1
+    ]
+  },
+  "spec_json": "{\"alpha\":[-6.0,12.0,0.5],\"mach\":0.0,\"ncrit\":1.0,\"niter\":300,\"npane\":250,\"ppar_r\":0.02,\"ppar_t\":0.5,\"re\":5000000.0,\"xtr\":[0.1,0.1]}",
+  "xfoil_exe_sha256": "c17342f84ae260c2b11a74cd0e2fb8189a5f8954c6bb7a8467a0f27055c7faea",
+  "xfoil_script_version": "1"
+}
