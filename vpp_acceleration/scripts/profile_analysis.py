@@ -5,6 +5,9 @@ of the run, and its FSI correction when the run had one, is solved at every node
 distribution, for the best section, the start section and the sections compared at the end of
 the run. The search is not changed: this is an analysis of its result (decision of 2026-10-22).
 
+The VPP solves are multi-start (robust_solve): the solve is path dependent, and the fixed initial
+guess alone gave slow "successful" equilibria at 16 kt of wind (corrected 2026-10-26).
+
 For every section:
   * the expected speed E_p[V] = sum_nodes w V / sum_nodes w over the nodes the VPP solved for
     EVERY section (the same conditions for all), and the probability each section solved
@@ -94,6 +97,40 @@ def stiffness_ratios(config: dict, pca, scores: np.ndarray) -> np.ndarray:
     return reference / section_ixx(pca.decode(scores), pca.te_thickness)
 
 
+# other starting points of the VPP solve (SOLVE_VARS order: speed, leeway, heel, trim, CC_Dspl,
+# rudder, flat), besides its fixed initial guess (12 kt, flat 0.6): powered upwind, downwind
+GENERIC_GUESSES = [np.array([18.0, 1.0, 5.0, 1.0, 9500.0, 0.5, 1.0]),
+                   np.array([11.0, -2.0, 0.5, 0.0, 11000.0, 0.0, 1.0])]
+
+
+def robust_solve(vpp_pool, sections, ratios, conditions) -> list:
+    """
+    States [section][condition], the FASTEST converged equilibrium found. The SLSQP solve of the
+    VPP finds a local maximum of the speed, and from the fixed initial guess it can stop on a slow
+    "successful" equilibrium: on 2026-10-26, best section of the long run at 48/16, 15.7 kt (heel
+    2.7 deg, flat 0.35) from the fixed guess against 19.2 kt (heel 5.9 deg, flat 1) from the
+    incumbent's state. Two passes:
+      1. every (section, condition) from the fixed guess and GENERIC_GUESSES;
+      2. again, from the states found in pass 1 by EVERY section at the same condition
+         (neighbouring sections have neighbouring equilibria).
+    """
+    n = len(conditions)
+    first = vpp_pool.solve(sections, ratios, conditions,
+                           extra_guesses=[[GENERIC_GUESSES] * n] * len(sections))
+    found = [[states[j]["unknowns"] for states in first if states[j]["success"]]
+             for j in range(n)]
+    second = vpp_pool.solve(sections, ratios, conditions,
+                            extra_guesses=[[found[j] for j in range(n)]] * len(sections))
+    best = []
+    for states_1, states_2 in zip(first, second):
+        row = []
+        for a, b in zip(states_1, states_2):
+            candidates = [s for s in (a, b) if s["success"]]
+            row.append(max(candidates, key=lambda s: s["speed"]) if candidates else a)
+        best.append(row)
+    return best
+
+
 def analyse(root, profile: OperatingProfile, n_workers: int = 16, sigma: bool = True,
             vpp_pool=None, surrogate=None) -> dict:
     """The analysis of the module docstring; returns the summary (also written as JSON)."""
@@ -115,7 +152,7 @@ def analyse(root, profile: OperatingProfile, n_workers: int = 16, sigma: bool = 
         vpp_pool = VPPPool(_ScratchFolder(), n_workers, {"foil": "CFoilFSI", "with_hvol": False,
                                                          "fsi": bool(config.get("fsi"))})
     vpp_pool.publish(surrogate)
-    all_states = vpp_pool.solve(list(scores), ratios, conditions)
+    all_states = robust_solve(vpp_pool, list(scores), ratios, conditions)
     rows = []
     for name, section, ratio, states in zip(names, scores, ratios, all_states):
         points = np.array([np.concatenate([section, [s["Cant_Eff"], s["Rake_Eff"], s["Yaw_Eff"]]])

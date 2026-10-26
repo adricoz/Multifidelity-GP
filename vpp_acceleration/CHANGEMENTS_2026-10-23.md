@@ -147,6 +147,38 @@ choisies avec un bonus d'incertitude et moins raffinées que la titulaire, peuve
 la « malédiction du vainqueur ». Si la titulaire ne se stabilise pas, on exigera qu'une concurrente gagne plus que son
 incertitude pour la remplacer et élargir le rayon, comme le seuil d'amélioration de TuRBO.
 
+## Corrections du 26/10, après le week-end
+
+1. **L'analyse sur une distribution d'usage partait d'un seul point de départ, et c'était faux**
+   (`scripts/profile_analysis.py`).
+   - **Le problème.** Le solve VPP (SLSQP) trouve un maximum local de la vitesse. Depuis le point de départ fixe de la
+     VPP (12 nd, voiles à 0,6), il peut s'arrêter sur un équilibre lent mais « réussi ».
+   - **L'exemple.** Au meilleur profil du run long, à 48/16, on trouvait 15,7 nd (gîte 2,7°, voiles réduites à 0,35).
+     En partant de l'équilibre de la titulaire, on trouve 19,2 nd (gîte 5,9°, voiles pleines). Les nœuds à 16 nd de vent
+     étaient touchés, et l'analyse donnait −0,23 nd au lieu de +0,16 nd.
+   - **La correction** (`robust_solve`) se fait en deux passages, et garde le plus rapide des équilibres réussis :
+     1. chaque nœud est résolu depuis le point de départ fixe et deux départs génériques (près puissant, portant) ;
+     2. il est résolu à nouveau depuis les équilibres trouvés au premier passage par toutes les sections au même nœud.
+
+     Pour cela, `VPPPool.solve` accepte des départs supplémentaires. **La recherche elle-même n'est pas modifiée :** ses
+     solves partent déjà des équilibres de la titulaire.
+   - **Les analyses refaites :** celles des runs 3 et 4.
+2. **Le résumé automatique comparait des nombres incomparables** (`run_real_vpp.summarize`).
+   - **Le problème.** La ligne « start section → incumbent » mettait face à face la vitesse vue par le *premier*
+     surrogate et celle vue par le *dernier*, et avec la distribution, sur des conditions résolues différentes.
+   - **La correction.** Le résumé compare désormais les sections validées sur les mêmes conditions, résolues pour toutes,
+     avec leurs probabilités, et avec la vitesse corrigée contre le code HF. Le `summary.txt` du run long a été réécrit.
+3. **Le rapport CFD donnait des GCI pour des grandeurs qui ne convergent pas**
+   (`runs/2026-10-23_weekend/cfd_mesh_report.py`).
+   - **La correction.** Le rapport calcule maintenant R = ε₂₁/ε₃₂ (Celik et al., 2008), et ne donne le GCI que si
+     0 < R < 0,9.
+   - **Les avertissements ajoutés :** des rapports de raffinement réels sous 1,3, la compensation entre traînée de
+     pression et de frottement, et des y+ obtenus loin des y+ visés.
+
+**Une proposition pour la recherche, non appliquée sans ton accord.** Le premier solve de la titulaire part du point de
+départ fixe, comme l'analyse fautive. Lui donner les mêmes départs multiples éviterait qu'un équilibre lent se propage
+par les départs à chaud.
+
 ## Références
 
 - V. Picheny, D. Ginsbourger, O. Roustant, R. Haftka, N.-H. Kim, *Adaptive designs of experiments for accurate

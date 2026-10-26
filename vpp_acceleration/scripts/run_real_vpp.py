@@ -241,12 +241,23 @@ def main():
 
 
 def summarize(run, optimizer, runner, validation, conditions) -> str:
-    first, last = optimizer.updates[0], optimizer.updates[-1]
+    last = optimizer.updates[-1]
+    # the sections compared on the SAME conditions, those solved for all of them, with their
+    # probabilities, and the speed corrected to first order against the HF code (the first update
+    # and the last one have different models and solved conditions: not comparable, 2026-10-26)
+    weights = dict(zip([f"{a:.0f}/{s:.0f}" for a, s in conditions], optimizer.condition_weights))
+    solved = validation.pivot(index="condition", columns="section", values="success").all(axis=1)
+    common = [c for c in solved.index if solved[c]]
+    corrected = validation[validation.condition.isin(common)].assign(
+        v=lambda t: t.speed_kt - t.speed_error_kt, w=lambda t: t.condition.map(weights))
+    speeds = {name: float(np.sum(g.v * g.w) / g.w.sum()) for name, g in corrected.groupby("section")}
     lines = [f"run {run.root.name}: {optimizer.iteration} steps in {run.elapsed() / 60:.1f} min",
              f"code runs: LF {runner.n_runs[1]} ({runner.time[1]:.0f} s), HF {runner.n_runs[2]} "
              f"({runner.time[2]:.0f} s); final design LF/HF {optimizer.surrogate.sizes}",
-             f"mean speed predicted: start section {first['candidate_speeds'][0]:.4f} kt -> "
-             f"incumbent {last['incumbent_speed']:.4f} kt",
+             f"speed of the validated sections (final surrogate corrected against HF, weighted mean "
+             f"over the {len(common)} conditions solved for all, "
+             f"{100 * sum(weights[c] for c in common):.0f} % of the probability): "
+             + ", ".join(f"{name} {v:.4f} kt" for name, v in speeds.items()),
              "speeds of the incumbent: " + ", ".join(
                  f"{a:.0f}/{s:.0f}: {v:.3f}" for (a, s), v in zip(conditions,
                                                                    last["incumbent_speeds"]))]

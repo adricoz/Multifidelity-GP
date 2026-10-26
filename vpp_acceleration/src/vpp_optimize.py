@@ -287,7 +287,8 @@ def _init_vpp_worker(options):
 
 
 def _vpp_task(task):
-    """("solve", ...) -> state dict; ("sensitivity", ...) -> dV/dC_k."""
+    """("solve", ...) -> state dict; ("sensitivity", ...) -> dV/dC_k. For a solve, base_state
+    carries the extra starting points (IntensSYVPP.solve keeps the fastest converged state)."""
     kind, path, version, scores, ratio, twa, tws, guess, base_state, k = task
     if _VPP_WORKER["version"] != version:
         with open(path, "rb") as file:
@@ -296,7 +297,7 @@ def _vpp_task(task):
     vpp, predict = _VPP_WORKER["vpp"], _VPP_WORKER["surrogate"].predict
     vpp.set_foil(predict, scores, ratio)
     if kind == "solve":
-        return vpp.solve(twa, tws, guess=guess)
+        return vpp.solve(twa, tws, guess=guess, extra_guesses=base_state or ())
     # the base state is solved again in THIS process: the MDS state carries over from one solve
     # to the next (path dependence), so the finite difference must take two solves of the same
     # process (with the base state of another worker, the smoke test of 2026-10-22 gave dV/dFx
@@ -333,11 +334,15 @@ class VPPPool:
         if old is not None and old.exists():
             old.unlink()                  # the workers have read it (the maps are synchronous)
 
-    def solve(self, sections, ratios, conditions, guesses=None) -> list:
-        """States [section][condition] (vpp_coupling.IntensSYVPP.solve)."""
+    def solve(self, sections, ratios, conditions, guesses=None, extra_guesses=None) -> list:
+        """States [section][condition] (vpp_coupling.IntensSYVPP.solve). guesses: one starting
+        point per condition (None = the fixed initial guess of the VPP); extra_guesses: None or
+        [section][condition] lists of other starting points, the fastest converged state is kept
+        (the solve is path dependent: profile_analysis, 2026-10-26)."""
         tasks = [("solve", self.path, self.version, scores, float(ratio), twa, tws,
-                  None if guesses is None else guesses[j], None, None)
-                 for scores, ratio in zip(sections, ratios)
+                  None if guesses is None else guesses[j],
+                  None if extra_guesses is None else list(extra_guesses[i][j]), None)
+                 for i, (scores, ratio) in enumerate(zip(sections, ratios))
                  for j, (twa, tws) in enumerate(conditions)]
         states = list(self.pool.map(_vpp_task, tasks))
         n = len(conditions)

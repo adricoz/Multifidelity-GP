@@ -399,6 +399,30 @@ script [`scripts/real_step0_calibration.py`](scripts/real_step0_calibration.py).
 * **Le débit :** 816 choix en 65 min, contre 373 au 2e run ; 313 calculs HF dans le plan final, contre 121. Le choix
   des lots, en n², est devenu le goulot.
 
+**Le 4e run** (23/10, 8 h 10) :
+[`runs/2026-10-23_1702_real_search_profile_local/README.md`](runs/2026-10-23_1702_real_search_profile_local/README.md).
+
+* **Le cadre :** celui du 3e run, avec les changements du 23/10
+  ([`CHANGEMENTS_2026-10-23.md`](CHANGEMENTS_2026-10-23.md)).
+  * La recherche vise la **distribution d'usage supposée** (`profiles/guess_bimodal.json`) : un mode près, un mode
+    portant, soit 18 nœuds pondérés par leur probabilité.
+  * Une **région de confiance** autour de la titulaire : la moitié des sections criblées et des nuages y sont tirés.
+  * Une graine de criblage propre, et des hyperparamètres figés au-delà de 2 500 points.
+* **Le résultat :** un profil **encore moins cambré**, de 12,54 % d'épaisseur, avec un **Ixx exactement à la
+  contrainte**. Les vitesses sont prises en moyenne pondérée sur les 13 conditions résolues pour toutes les sections, soit
+  72 % de la probabilité.
+  * Le gain sur le profil actuel vaut **+0,16 nd**, vu par NPLLT × XFOIL comme par AVL ; il est de +0,056 nd sur le
+    profil des runs 2 et 3.
+  * Il est positif dans les 13 conditions : faible au près par petit temps (+0,01 à +0,03 nd), et de +0,17 à +0,42 nd
+    au portant et à 16 nd au près.
+* **La convergence :** la titulaire ne bouge plus de plus de 0,006 nd après 1 h 15. Le rayon de la région de confiance
+  atteint son minimum à 3 h 43. Le plan final compte 2 029 BF et 1 408 HF.
+* **La leçon :** l'optimum est sur la contrainte de raideur. Le niveau de cette contrainte est donc un choix de
+  conception qui fixe le résultat.
+* **Un piège corrigé le 26/10.** Résoudre la VPP depuis un seul point de départ peut aboutir à un équilibre lent mais
+  « réussi ». L'analyse sur la distribution donnait ainsi −0,23 nd au lieu de +0,15. Elle utilise maintenant des départs
+  multiples.
+
 ## 10. Fichiers
 
 | Fichier | Rôle |
