@@ -1,7 +1,7 @@
 % =============================================================================================
 %  Recherche de la section du C-foil par co-krigeage séquentiel ciblé par la VPP :
-%  description exacte de l'algorithme et de l'architecture (état du code du 22/10/2026,
-%  branche feat/vpp-acceleration, 3e vrai run).
+%  description exacte de l'algorithme et de l'architecture (état du code du 26/10/2026,
+%  branche feat/vpp-acceleration, 4e vrai run ; première version du 22/10, 3e run).
 %  Compilation : tectonic -X compile algorithme_vpp_cible.tex --outdir build
 % =============================================================================================
 \documentclass[10pt,a4paper]{article}
@@ -91,7 +91,7 @@ ciblé par la VPP\par}
 {\large Description exacte de l'algorithme et de l'architecture\par}
 \vspace{0.3em}
 {\small \py{Multifidelity-GP-Clean/vpp_acceleration} · branche \py{feat/vpp-acceleration} · état du
-code du 3e vrai run (\py{runs/2026-10-22_1519_real_npllt_xfoil_fsi}) · 22/10/2026\par}
+code du 4e vrai run (\py{runs/2026-10-23_1702_real_search_profile_local}) · 26/10/2026\par}
 \vspace{0.2em}}
 
 \tableofcontents
@@ -100,8 +100,9 @@ code du 3e vrai run (\py{runs/2026-10-22_1519_real_npllt_xfoil_fsi}) · 22/10/20
 \section{Ce que fait l'algorithme, en une page}
 % ---------------------------------------------------------------------------------------------
 \textbf{Le but.} On cherche la section (le profil) du C-foil de l'Intens SY qui maximise la vitesse du
-bateau donnée par la VPP de MDS, moyennée sur cinq conditions de vent. La forme en plan du foil est fixée,
-et seule la section change.
+bateau donnée par la VPP de MDS, moyennée sur des conditions de vent pondérées par leur probabilité : cinq
+conditions de même poids aux trois premiers runs, les 18 nœuds d'une distribution d'usage au
+4\textsuperscript{e}. La forme en plan du foil est fixée, et seule la section change.
 
 \textbf{La difficulté.} La VPP appelle le modèle du foil des centaines de fois par point de polaire. Les codes
 aérodynamiques (NPLLT, AVL avec XFOIL) sont trop lents pour cela. On remplace donc le foil, dans la VPP, par
@@ -115,10 +116,11 @@ pour la vitesse} (chaque coefficient est pondéré par $(\partial V/\partial C_k
   \item \textbf{La mise à jour de l'optimiseur.}
         \begin{itemize}
           \item On crible 256 sections nouvelles au premier ordre, avec le surrogate et les sensibilités de
-                vitesse de la meilleure section du moment (le \enquote{titulaire}).
+                vitesse de la meilleure section du moment (le \enquote{titulaire}). Depuis le 23/10, la
+                moitié est tirée dans une région de confiance autour du titulaire (recherche locale).
           \item On résout la VPP complète sur les 3 meilleures et sur le titulaire, puis le titulaire devient
                 la meilleure des quatre.
-          \item Les états d'équilibre de ces 4 sections, aux 5 conditions, donnent les points
+          \item Les états d'équilibre de ces 4 sections, à chaque condition, donnent les points
                 d'intégration du critère de raffinement.
         \end{itemize}
   \item \textbf{Un lot de raffinement.} On choisit 16 couples (point, niveau de code), l'un après l'autre,
@@ -126,7 +128,7 @@ pour la vitesse} (chaque coefficient est pondéré par $(\partial V/\partial C_k
         tournent en parallèle, et leurs résultats entrent dans le co-krigeage.
 \end{enumerate}
 
-\textbf{Les niveaux de code} (3e run).
+\textbf{Les niveaux de code} (3\textsuperscript{e} et 4\textsuperscript{e} runs).
 \begin{itemize}
   \item \textbf{Niveau 1 (BF) :} ligne portante non plane NPLLT avec les polaires NeuralFoil xxxlarge.
   \item \textbf{Niveau 2 (HF) :} la même ligne portante, avec les polaires XFOIL.
@@ -171,10 +173,11 @@ jamais en même temps : la boucle est synchrone.}
         sections admissibles.
   \item \textbf{Ce que voit la VPP :} la moyenne du co-krigeage, plus la correction FSI.
   \item \textbf{Ce qui est raffiné :} le co-krigeage, autour des états VPP des sections en compétition.
-  \item \textbf{Ce qui décide :} la vitesse moyenne sur 5 conditions, calculée par la VPP complète sur 4
-        sections à chaque mise à jour.
-  \item \textbf{Ce qui s'analyse ensuite :} le comportement des sections retenues sur une distribution
-        d'usage (TWA, TWS), donnée à chaque run (§\,\ref{sec:profil}). Elle ne change pas la recherche.
+  \item \textbf{Ce qui décide :} la vitesse moyenne pondérée sur les conditions, calculée par la VPP complète
+        sur 4 sections à chaque mise à jour.
+  \item \textbf{La distribution d'usage} (TWA, TWS) se donne à chaque run (§\,\ref{sec:profil}). Elle sert à
+        analyser les sections retenues (\py{--profile}) et, depuis le 23/10, peut aussi remplacer les
+        conditions de la recherche (\py{--search-profile}).
 \end{itemize}
 \end{aretenir}
 
@@ -188,11 +191,11 @@ $\vx=(\vz,\va)\in\mathbb{R}^{13}$ & entrée du surrogate \\
 $C_k(\vx)$, $k=1..7$ & sorties : $F_x,F_y,F_z,M_x,M_y,M_z$ (coefficients, moments en m) et $C_{p,\min}$ \\
 $f_l$, $l=1,2,3$ & codes : NPLLT × NeuralFoil, NPLLT × XFOIL, AVL × XFOIL \\
 $\mu_k(\vx)$, $s_k^2(\vx)$ & moyenne et variance a posteriori du co-krigeage de la sortie $k$ (niveau 2) \\
-$c=(\mathrm{TWA}_c,\mathrm{TWS}_c)$ & condition de navigation, $c=1..5$ \\
+$c=(\mathrm{TWA}_c,\mathrm{TWS}_c)$, $w_c$ & condition de navigation, $c=1..n_c$, et sa probabilité ($\sum_c w_c=1$) \\
 $\vu\in\mathbb{R}^7$ & inconnues de la VPP : vitesse, dérive, gîte, assiette, déplacement de carène, safran,
 réduction de voilure (\py{Flat}) \\
 $V^\star(\vz;c)$ & vitesse d'équilibre maximale de la section $\vz$ à la condition $c$ \\
-$J(\vz)$ & objectif : $\frac15\sum_c V^\star(\vz;c)$ \\
+$J(\vz)$ & objectif : $\sum_c w_c V^\star(\vz;c)\,/\sum_c w_c$, sur les conditions résolues \\
 $d_{kc}$ & sensibilité $\partial V^\star/\partial C_k$ à l'état du titulaire, condition $c$ [nd par unité] \\
 \bottomrule
 \end{tabularx}
@@ -201,14 +204,22 @@ $d_{kc}$ & sensibilité $\partial V^\star/\partial C_k$ à l'état du titulaire,
 \section{Le problème d'optimisation}
 % ---------------------------------------------------------------------------------------------
 \[
-  \max_{\vz}\; J(\vz) = \frac{1}{5}\sum_{c=1}^{5} V^\star(\vz;c)
+  \max_{\vz}\; J(\vz) = \frac{\sum_{c\in\mathcal{S}} w_c\,V^\star(\vz;c)}{\sum_{c\in\mathcal{S}} w_c}
   \qquad\text{sous la contrainte}\qquad \mathcal{D}(\vz)\in\mathcal{F},
 \]
-où $\mathcal{F}$ est la famille des sections admissibles (§\,\ref{sec:section}).
+où $\mathcal{F}$ est la famille des sections admissibles (§\,\ref{sec:section}), et $\mathcal{S}$ l'ensemble
+des conditions où la VPP trouve un équilibre pour \emph{toutes} les sections comparées : on compare toujours
+les sections sur les mêmes conditions.
 
 \begin{itemize}
-  \item \textbf{Les conditions.} Ce sont les couples (TWA, TWS) : (45°, 12 nd), (45°, 16 nd), (60°, 16 nd),
-        (75°, 16 nd) et (90°, 14 nd). Elles ont le même poids.
+  \item \textbf{Les conditions, deux cas.}
+        \begin{itemize}
+          \item Par défaut (runs 1 à 3), ce sont les couples (TWA, TWS) : (45°, 12 nd), (45°, 16 nd),
+                (60°, 16 nd), (75°, 16 nd) et (90°, 14 nd), de même poids $w_c=\frac15$.
+          \item Avec \py{--search-profile} (4\textsuperscript{e} run), ce sont les nœuds de la distribution
+                d'usage, avec leurs poids (§\,\ref{sec:profil}). Avec \py{profiles/guess_bimodal.json}, cela
+                fait 18 nœuds, tous de poids $\frac1{18}$ : la probabilité est portée par leur position.
+        \end{itemize}
   \item \textbf{La vitesse $V^\star(\vz;c)$} est celle de la VPP de MDS (§\,\ref{sec:vpp}), dont le foil a pour
         coefficients $\mu_k(\vz,\va)$ plus la correction FSI.
   \item \textbf{Le référentiel du gain :} la recherche part du profil actuel du C-foil, admissible une fois
@@ -216,8 +227,10 @@ où $\mathcal{F}$ est la famille des sections admissibles (§\,\ref{sec:section}
 \end{itemize}
 
 \begin{danslecode}
-\py{scripts/run_real_vpp.py} : \py{CONDITIONS}, puis \py{VPPSectionOptimizer.update} : la vitesse
-d'une section est \py{np.nanmean(speeds)} sur les 5 états (une condition non résolue est ignorée).
+\py{scripts/run_real_vpp.py} : \py{CONDITIONS}, ou les nœuds de \py{OperatingProfile.nodes()}, et
+\py{condition_weights}. Puis \py{VPPSectionOptimizer.update} : les poids sont mis à zéro aux conditions non
+résolues pour l'une des 4 sections (\py{weights = condition_weights * solved.all(axis=0)}), puis la vitesse
+de chaque section est la moyenne pondérée sur les conditions restantes.
 \end{danslecode}
 
 % ---------------------------------------------------------------------------------------------
@@ -296,6 +309,12 @@ une fois et 17,58 nd après d'autres solves. D'où trois règles :
         la plus haute ;
   \item une différence finie compare deux solves \textbf{du même processus} (§\,\ref{sec:sensibilites}).
 \end{itemize}
+\textbf{Un équilibre lent mais \enquote{réussi}} (26/10). Partie du seul départ fixe, la VPP peut converger
+vers un équilibre valide mais lent. Au 4\textsuperscript{e} run, à 48°/16 nd, le meilleur profil a ainsi
+donné 15,7 nd (gîte 2,7°, \py{Flat} 0,35) au lieu de 19,2 nd (gîte 5,9°, voiles pleines). L'analyse sur la
+distribution (§\,\ref{sec:profil}) part donc de plusieurs départs (\py{profile_analysis.robust_solve}). Dans
+la recherche, \textbf{le tout premier solve du titulaire part encore du seul départ fixe} ; les suivants
+partent de ses états. Lui donner aussi plusieurs départs est proposé, mais pas fait.
 \end{subtilite}
 
 \begin{subtilite}[pas d'extrapolation en attitude]
@@ -403,8 +422,10 @@ lieu de $+83$, à cause de la dépendance au chemin.
   \item Une dérivée non calculable (NaN) reprend sa valeur précédente, ou 0 la première fois.
   \item Les sensibilités sont recalculées une mise à jour sur trois.
 \end{itemize}
-Au 3\textsuperscript{e} run, $d_{F_x}$ allait de 84 (45/12) à 302 (90/14) nd par unité de $F_x$. Les autres
-dérivées sont plus petites d'un à deux ordres.
+Au 3\textsuperscript{e} run, $d_{F_x}$ allait de 84 (45/12) à 302 (90/14) nd par unité de $F_x$. À la fin
+du 4\textsuperscript{e}, il allait de 27 (portant, 135/13) à 170 (près, 48/13). Les autres dérivées sont
+plus petites d'un à deux ordres. Une condition sans équilibre garde $d=0$ : elle ne pèse rien dans le
+critère.
 \end{danslecode}
 
 % ---------------------------------------------------------------------------------------------
@@ -578,8 +599,11 @@ $P(1,2)=\rho$.
         Les 7 modèles tournent dans 7 fils (\py{TorsorCoKriging.map_models}), et le résultat est identique
         au calcul en série.
   \item \textbf{Le rythme des réajustements :} de nouveaux hyperparamètres dès que le plan a grossi de 25 \%
-        depuis le dernier ajustement (\py{refit_growth} = 1,25). Au 3\textsuperscript{e} run, cela s'est
-        produit à 314, 408, 518, 651, 830 et 1045 points. Sinon, on reconditionne seulement.
+        depuis le dernier ajustement (\py{refit_growth} = 1,25), et plus du tout au-delà de
+        \py{--max-refit-size} points (2\,500 au 4\textsuperscript{e} run). Un ajustement coûte $O(n^3)$ :
+        environ 2,5 min à 1\,045 points au 3\textsuperscript{e} run, de l'ordre de l'heure vers 3\,000. Au 3\textsuperscript{e} run, cela s'est produit à 314, 408, 518, 651, 830 et 1045 points ;
+        au 4\textsuperscript{e}, de 314 à 2\,098 points, puis les hyperparamètres sont restés figés. Sinon, on
+        reconditionne seulement.
   \item \textbf{Pour la VPP, la moyenne seule :} \py{TorsorCoKriging.predict} appelle \py{latent_mean}, soit
         $m_2+\bm{k}(\vx)\tp\alpha$, en $O(n)$. La variance demanderait une résolution triangulaire en
         $O(n^2)$ par point, et la VPP appelle le foil des centaines de fois par solve.
@@ -600,31 +624,54 @@ $d_k\Delta C_k$ environ. Les modèles sont indépendants, donc au premier ordre
 On cherche à réduire cette variance \textbf{en moyenne sur les points d'intégration}, qui entourent les
 états VPP des sections en compétition. Cpmin a un poids nul : il n'agit pas sur la vitesse.
 
-\textbf{Le poids des sorties.} $w_k=\frac15\sum_c d_{kc}^2$ (moyenne sur les conditions des sensibilités du
-titulaire).
+\textbf{Les points d'intégration $\{\vx^{\text{int}}_i\}_{i=1}^N$} (\py{RealFoilProblem.cloud}). À chaque
+mise à jour, on prend les états des 4 sections aux conditions résolues : 20 au 3\textsuperscript{e} run
+(5 conditions), jusqu'à 72 au 4\textsuperscript{e} (18 nœuds). Autour de chaque état $s=(\vz_s,\va_s)$, on
+tire un nuage de Sobol de 16 points :
+\[
+  \vx=\Big(\vz_s\ \big[+R\,\bm g/\sqrt{k}\ \text{un point sur deux}\big],\;
+  \operatorname{clip}\big(\va_s+\bm\xi\odot(1°;\,0{,}3°;\,1°)\big)\Big),\qquad
+  \bm\xi\in[-1,1]^3,\ \bm g\sim\mathcal N(0,I).
+\]
+Sans recherche locale, la section reste fixée. Avec elle (\py{--local-fraction} $>0$), un point sur deux
+déplace aussi la section d'une distance typique $R$, le rayon de la région de confiance
+(§\,\ref{sec:optimiseur}), et l'on retire les points hors de la famille. Au 3\textsuperscript{e} run,
+$N=320$ ; au 4\textsuperscript{e}, $N\approx1\,150$.
 
-\textbf{Les points d'intégration $\{\vx^{\text{int}}_i\}_{i=1}^N$.} À chaque mise à jour, on prend les 20
-états (4 sections × 5 conditions). Autour de chacun, on tire un nuage de Sobol de 16 points, où la section
-reste fixée et l'attitude varie de $\pm(1°;\,0{,}3°;\,1°)$ en (cant, rake, yaw), dans la boîte. Cela fait
-$N=320$ points.
+\textbf{Le poids de chaque point} (\py{point_weights}, depuis le 23/10). Avec $c(i)$ la condition de l'état du
+point $i$ et $n_{s(i)}$ le nombre de points gardés pour cet état :
+\[
+  \omega_{ik}=\frac{w_{c(i)}\;d_{k\,c(i)}^2}{n_{s(i)}} .
+\]
+Chaque état compte pour la probabilité de sa condition, quel que soit le nombre de ses points. Les
+sensibilités sont celles du titulaire à cette condition, appliquées aussi aux états des concurrentes.
+Jusqu'au 3\textsuperscript{e} run, le poids était le même pour toutes les conditions :
+$w_k=\frac15\sum_c d_{kc}^2$.
 
 \textbf{Le gain exact d'une observation} (ALC/IMSE, \py{batched_imse_gains}). Soit un candidat $\vx_m$ et un
 niveau $l$. Le plan doit rester imbriqué : on ajoute les observations $(\vx_m,j)$ pour tous les niveaux
 $j\le l$ qui manquent en $\vx_m$. Avec $\bm{c}_i$ la covariance a posteriori entre $Z_2(\vx^{\text{int}}_i)$
 et ces observations, et $S$ leur covariance a posteriori (bruit compris), la réduction exacte de la
-variance de $Z_2$ en $\vx^{\text{int}}_i$ est $\bm{c}_i\tp S^{-1}\bm{c}_i$. D'où
+variance de $Z_2$ en $\vx^{\text{int}}_i$ est $\bm{c}_i\tp S^{-1}\bm{c}_i$. D'où, pour le co-krigeage $k$,
 \[
-  G_k(\vx_m,l)=\frac1N\sum_{i=1}^{N}\bm{c}_i\tp S^{-1}\bm{c}_i .
+  G_k(\vx_m,l)=\sum_{i=1}^{N}\omega_{ik}\,\bm{c}_i\tp S^{-1}\bm{c}_i ,
+  \qquad G(\vx_m,l)=\sum_{k\le6}G_k(\vx_m,l)\quad[\text{nd}^2].
 \]
 Le calcul se fait pour tous les candidats d'un coup (tableaux à un axe de plus), avec les blocs
 $W=L^{-1}C(\D,\cdot)$.
 
+\textbf{C'est un critère ALC, pas ALM.} L'ALM (MacKay) calcule là où la variance prédite est maximale :
+c'est la règle de Le Gratiet \& Cannamela pour le point. L'ALC (Cohn) calcule là où l'observation fait le
+plus baisser la variance sur des points de référence, ici les points d'intégration pondérés. Le code a les
+deux (\py{SequentialCoKriging(point_criterion="variance"|"alc")}), et la boucle VPP n'utilise que l'ALC.
+
 \textbf{Le rendement et le choix.}
 \[
-  (\vx^\star,l^\star)=\argmax_{m,\,l}\;\frac{\sum_{k\le6} w_k\,G_k(\vx_m,l)}{C(\vx_m,l)},\qquad
+  (\vx^\star,l^\star)=\argmax_{m,\,l}\;\frac{G(\vx_m,l)}{C(\vx_m,l)},\qquad
   C(\vx_m,l)=\sum_{j\le l,\ j\text{ manquant}} c_j,\qquad c=(1,2).
 \]
-Pour un point nouveau, le niveau 2 coûte $1+2=3$. Pour un point BF sans HF, il coûte 2.
+Pour un point nouveau, le niveau 2 coûte $1+2=3$. Pour un point déjà calculé en BF, il coûte 2 : depuis le
+23/10, cela n'arrive qu'à l'intérieur d'un lot, quand un candidat pris en BF est repris en HF.
 
 \begin{subtilite}[le rapport de coût 1 : 2]
 Les codes d'un lot tournent en même temps. Un choix coûte surtout le temps de sélection, de 1 à 6 s, à peu
@@ -634,11 +681,13 @@ XFOIL). Au 2\textsuperscript{e} run, en séquentiel avec AVL, le rapport valait 
 
 \textbf{Les candidats} (\py{VPPSectionOptimizer.candidates}).
 \begin{itemize}
-  \item 500 points des nuages autour des états (25 par état).
-  \item 256 points de tout le domaine : des sections admissibles nouvelles, avec une attitude de Sobol dans la
-        boîte.
-  \item Au plus 512 points BF sans HF, les plus récents, pour lesquels seul le niveau 2 est possible.
+  \item D'autres nuages autour des états, tirés comme les points d'intégration avec une autre graine :
+        $\lfloor512/N_{\text{états}}\rfloor$ par état, soit 25 au 3\textsuperscript{e} run et 7 au
+        4\textsuperscript{e}.
   \item On retire les candidats à moins de $10^{-3}$ (cube unité, norme infinie) d'un calcul raté.
+  \item Jusqu'au 3\textsuperscript{e} run, il y avait aussi 256 points de tout le domaine et au plus 512 points
+        BF sans HF. Ils ont été retirés le 23/10 : au 3\textsuperscript{e} run, 100 \% des choix étaient près
+        des états, et 2 HF sur 252 seulement sur un ancien point BF.
 \end{itemize}
 
 % ---------------------------------------------------------------------------------------------
@@ -661,9 +710,9 @@ inchangées (test \py{test_kriging_believer_placeholder}). Le lot s'étale tout 
 \begin{algorithm}[h]
 \caption{Un lot (\py{VPPSectionOptimizer.step})}
 \begin{algorithmic}[1]
-\State $n\gets$ taille du plan ; \textbf{si} $n\ge1{,}25\,n_{\text{dernier ajustement}}$ \textbf{alors} nouveaux hyperparamètres \textbf{sinon} reconditionnement
+\State $n\gets$ taille du plan ; \textbf{si} $n\ge1{,}25\,n_{\text{dernier ajustement}}$ et $n\le n_{\max}$ \textbf{alors} nouveaux hyperparamètres \textbf{sinon} reconditionnement
 \State mise à jour de l'optimiseur (§\,\ref{sec:optimiseur}) : titulaire, états, points d'intégration, $d_{kc}$
-\State $w_k\gets\frac15\sum_c d_{kc}^2$ ; candidats $\{\vx_m\}$ et niveaux manquants
+\State poids $\omega_{ik}\gets w_{c(i)}d_{k\,c(i)}^2/n_{s(i)}$ ; candidats $\{\vx_m\}$ et niveaux manquants
 \For{$b=1..16$}
   \State $(\vx_b,l_b)\gets$ meilleur rendement (§\,\ref{sec:critere}) ; marquer ses niveaux $\le l_b$ comme faits
   \If{$b<16$}
@@ -687,27 +736,52 @@ Il y a une mise à jour avant chaque lot (\py{update_every} = 1, \py{VPPSectionO
 \begin{enumerate}
   \item \textbf{La publication} du surrogate courant pour les workers VPP.
   \item \textbf{Les sensibilités} $d_{kc}$, une mise à jour sur trois.
-  \item \textbf{Le criblage} (\py{screen}). On tire 256 sections admissibles nouvelles, avec la graine
-        $\text{seed}+31\,n_{\text{mises à jour}}$, et on y ajoute le titulaire. On garde fixe l'attitude
-        $\va_c$ des états du titulaire et sa vitesse $V_c$. Le changement de vitesse au premier ordre vaut
-        alors
+  \item \textbf{Le criblage} (\py{screen}). On tire 256 sections admissibles nouvelles, et on y ajoute le
+        titulaire $\vz_{\text{tit}}$ :
+        \begin{itemize}
+          \item une part \py{local_fraction} (0,5 au 4\textsuperscript{e} run, soit 128 sections) dans la
+                région de confiance, $\vz_{\text{tit}}+R\,\bm g/\sqrt{k}$ avec $\bm g\sim\mathcal N(0,I)$,
+                gardées si la section décodée est dans la famille (\py{local_sections}) ;
+          \item les autres dans toute la famille, avec la graine $\text{screen\_seed}+31\,n_{\text{mises à
+                jour}}$. \py{screen_seed} est propre au run (tirée au hasard par défaut, \py{--screen-seed}) :
+                avant le 23/10, elle valait la graine du run, et les runs 2 et 3 ont criblé les mêmes sections.
+        \end{itemize}
+        On garde fixe l'attitude $\va_c$ des états résolus du titulaire et sa vitesse $V_c$. Le changement de
+        vitesse au premier ordre vaut alors
         \[
           \Delta V_c(\vz)=\sum_{k\le6} d_{kc}\big[\mu_k(\vz,\va_c)-\mu_k(\vz_{\text{tit}},\va_c)\big]
           + \big(r(\vz)-r(\vz_{\text{tit}})\big)\sum_{k\le6} d_{kc}\, b_k(\va_c)V_c^2,
         \]
-        où le second terme est la différence des corrections FSI. On calcule aussi
+        où le second terme est la différence des corrections FSI. On pondère par la probabilité des
+        conditions :
         \[
-          \sigma(\vz)=\tfrac15\Big(\sum_c\sum_{k\le6} d_{kc}^2\,s_k^2(\vz,\va_c)\Big)^{1/2},\qquad
-          \text{score}(\vz)=\tfrac15\sum_c\Delta V_c(\vz)+\kappa\,\sigma(\vz),\quad\kappa=1 .
+          \mu(\vz)=\frac{\sum_c w_c\,\Delta V_c(\vz)}{\sum_c w_c},\qquad
+          \sigma(\vz)=\frac{\big(\sum_c w_c^2\sum_{k\le6} d_{kc}^2\,s_k^2(\vz,\va_c)\big)^{1/2}}{\sum_c w_c},\qquad
+          \text{score}(\vz)=\mu(\vz)+\kappa\,\sigma(\vz),\quad\kappa=1 .
         \]
         Le terme $\kappa\sigma$ est un optimisme face à l'incertitude : une section dont la vitesse est
         incertaine mérite d'être regardée. On retient les 3 meilleurs scores.
-  \item \textbf{La VPP complète} sur ces 3 sections et sur le titulaire, aux 5 conditions, soit 20 solves en
-        parallèle, avec départ aux états du titulaire. La section de meilleure vitesse moyenne devient le
-        titulaire.
-  \item \textbf{Les points d'intégration} : nuages de Sobol autour des 20 états des 4 sections
-        (§\,\ref{sec:critere}).
+  \item \textbf{La VPP complète} sur ces 3 sections et sur le titulaire, à toutes les conditions (20 solves
+        au 3\textsuperscript{e} run, 72 au 4\textsuperscript{e}), en parallèle, avec départ aux états du
+        titulaire. La section de meilleure vitesse moyenne pondérée $J$ (§\,2) devient le titulaire.
+  \item \textbf{La région de confiance} (recherche locale) :
+        \[
+          R\leftarrow\min(R_{\max},\,1{,}5\,R)\ \text{si le titulaire change},\qquad
+          R\leftarrow\max(R_{\min},\,0{,}7\,R)\ \text{sinon},\qquad [R_{\min},R_{\max}]=[0{,}1;\,3],
+        \]
+        en partant de $R=1$ (\py{--radius}, en écarts types des scores blanchis). C'est la règle des
+        méthodes de région de confiance (Conn, Gould \& Toint, 2000) et de TuRBO (Eriksson et al., 2019).
+  \item \textbf{Les points d'intégration} : nuages de Sobol autour des états des 4 sections, dont la moitié
+        déplace aussi la section du rayon $R$ (§\,\ref{sec:critere}).
 \end{enumerate}
+
+\begin{subtilite}[$w_c$ dans le critère, $w_c^2$ dans le criblage]
+Le critère réduit $\sum_c w_c\Var V_c$, une moyenne des variances : chaque condition probable doit être
+connue. Le $\sigma$ du criblage est l'écart type de la \emph{moyenne} pondérée, en supposant les erreurs
+indépendantes d'une condition à l'autre. Elles sont en fait corrélées (un même défaut de traînée vaut à
+toutes les conditions), et ce $\sigma$ est trop petit : l'exploration est un peu plus timide que $\kappa=1$
+ne le laisse croire.
+\end{subtilite}
 
 \textbf{Le départ et la fin.}
 \begin{itemize}
@@ -715,19 +789,26 @@ Il y a une mise à jour avant chaque lot (\py{update_every} = 1, \py{VPPSectionO
         première mise à jour.
   \item \textbf{La boucle} s'arrête quand le temps écoulé depuis le début du run dépasse la limite. Le lot en
         cours se termine.
-  \item \textbf{La fin :} un dernier ajustement des hyperparamètres, puis une dernière mise à jour. Celle-ci
-        fixe le titulaire final avec le modèle final.
+  \item \textbf{La fin :} un dernier ajustement des hyperparamètres (sauf au-delà de \py{--max-refit-size}),
+        puis une dernière mise à jour. Celle-ci fixe le titulaire final avec le modèle final.
 \end{itemize}
 
 \begin{subtilite}[ce que la recherche explore vraiment]
-Le titulaire ne bouge que vers une section \emph{tirée} au criblage : la recherche trie des réserves de
-sections aléatoires, environ 13\,000 en 52 mises à jour au 3\textsuperscript{e} run. Ce n'est pas un optimum
-local au sens strict.
-
-Les réserves dépendent de la graine. Les 2\textsuperscript{e} et 3\textsuperscript{e} runs, de même graine,
-même famille et même PCA, ont donc criblé les mêmes sections. Ils ont choisi le même profil à la même mise à
-jour (la 14\textsuperscript{e}), alors que leurs modèles différaient : AVL rigide d'un côté, NPLLT × XFOIL
-flexible de l'autre.
+Le titulaire ne bouge que vers une section \emph{tirée} au criblage : la recherche trie des sections
+aléatoires, environ 13\,000 en 52 mises à jour au 3\textsuperscript{e} run. Ce n'est pas un optimum local au
+sens strict.
+\begin{itemize}
+  \item \textbf{Jusqu'au 3\textsuperscript{e} run}, les tirages dépendaient de la seule graine du run. Les
+        2\textsuperscript{e} et 3\textsuperscript{e} runs, de même graine, même famille et même PCA, ont donc
+        criblé les mêmes sections. Ils ont choisi le même profil à la même mise à jour (la
+        14\textsuperscript{e}), alors que leurs modèles différaient : AVL rigide d'un côté, NPLLT × XFOIL
+        flexible de l'autre.
+  \item \textbf{Au 4\textsuperscript{e} run}, avec la région de confiance, les sections locales ont pris les 3
+        places de concurrentes dans 116 mises à jour sur 121, dès la deuxième. Le
+        rayon est monté à 3 tant que le titulaire progressait, puis il est descendu jusqu'à 0,1, atteint à
+        223 min. Il y a eu 48 changements de titulaire ; après les 30 premières mises à jour (74 min), aucun
+        n'a apporté plus de 0,006 nd.
+\end{itemize}
 \end{subtilite}
 
 % ---------------------------------------------------------------------------------------------
@@ -740,7 +821,7 @@ flexible de l'autre.
         le cube unité (\py{greedy_maximin}). Le premier est le plus proche du centre, puis on ajoute à chaque
         fois le point le plus loin des points déjà pris. Le plan est donc imbriqué.
   \item \textbf{Les échecs} sont écartés. Au 3\textsuperscript{e} run, il y a eu 253/256 BF et 61/64 HF
-        réussis, en 1,4 min de calcul parallèle.
+        réussis, en 1,4 min de calcul parallèle. Le 4\textsuperscript{e} run a le même plan de départ.
 \end{itemize}
 
 % ---------------------------------------------------------------------------------------------
@@ -764,7 +845,7 @@ validation, résultats et figures \\
 \py{src/vpp_optimize.py} & \py{RealFoilProblem}, \py{CodeRunner}, \py{VPPPool}, \py{VPPSectionOptimizer}, \py{validate} \\
 \py{src/run_dir.py}, \py{scripts/real_run_figures.py} & dossier de run, figures \\
 \py{src/operating_profile.py}, \py{profiles/*.json} & distribution d'usage : mélange de modes, nœuds et poids \\
-\py{scripts/profile_analysis.py} & comportement des sections sur une distribution d'usage (§\,\ref{sec:profil}) \\
+\py{scripts/profile_analysis.py} & comportement des sections sur une distribution d'usage, solves à départs multiples (§\,\ref{sec:profil}) \\
 \bottomrule
 \end{tabularx}
 
@@ -803,14 +884,18 @@ validation, résultats et figures \\
 Pour chaque section validée (le meilleur profil, le profil de départ et les meilleurs profils des runs
 antérieurs, donnés par \py{--compare}) :
 \begin{enumerate}
-  \item on résout la VPP aux 5 conditions avec le surrogate final et la FSI ;
-  \item on lance les codes de niveaux 1, 2 et 3 aux 5 états, en parallèle ;
+  \item on résout la VPP aux conditions du run avec le surrogate final et la FSI ;
+  \item on lance les codes de niveaux 1, 2 et 3 à ces états, en parallèle ;
   \item on corrige la vitesse au premier ordre de l'écart mesuré entre le surrogate et le code :
         \[
           V_{\text{code}}\approx V_{\text{surrogate}}-\sum_{k\le6} d_{kc}\big(\mu_k-C_k^{\text{code}}\big).
         \]
         Le code est soit le niveau 2, soit AVL. On compare aussi l'erreur à l'écart type annoncé,
-        $\big(\sum_k d_{kc}^2 s_k^2\big)^{1/2}$.
+        $\big(\sum_k d_{kc}^2 s_k^2\big)^{1/2}$ ;
+  \item on compare les sections par leur vitesse corrigée, en moyenne pondérée par $w_c$ sur les conditions
+        résolues pour \emph{toutes} les sections validées (\py{run_real_vpp.summarize}, corrigé le 26/10 :
+        avant, le résumé comparait la vitesse de départ vue par le premier surrogate à celle du titulaire
+        final).
 \end{enumerate}
 On n'a pas résolu la VPP avec un code dans la boucle : avec AVL, cela prendrait environ 30 min par condition.
 
@@ -823,15 +908,35 @@ On n'a pas résolu la VPP avec un code dans la boucle : avec AVL, cela prendrait
         profil.
 \end{itemize}
 
+\textbf{Le résultat du 4\textsuperscript{e} run} (18 nœuds de \py{guess_bimodal}, dont 13 résolus pour les
+trois sections validées, soit 72 \% de la probabilité).
+\begin{itemize}
+  \item \textbf{Le profil :} encore moins cambré que celui des runs 2 et 3 (poids de cambrure moyen 0,081,
+        contre 0,090 et 0,108 pour le profil actuel), de 12,54 \% d'épaisseur, avec $I_{xx}$
+        \textbf{exactement à la contrainte}. L'optimum est sur cette frontière : le niveau de la contrainte
+        est un choix de conception qui fixe le résultat.
+  \item \textbf{Le gain} sur le profil actuel vaut +0,161 nd vu par NPLLT × XFOIL et +0,156 nd vu par AVL. Il
+        vaut +0,056 nd sur le meilleur profil des runs 2 et 3. Il est positif aux 13 conditions : de +0,01 à
+        +0,03 nd au près par petit temps, de +0,17 à +0,42 nd au portant et à 16 nd au près.
+  \item \textbf{La précision :} 0,0001 nd RMS contre NPLLT × XFOIL au meilleur profil, très raffiné, et
+        0,008 nd au profil actuel ; 0,018 à 0,022 nd contre AVL. L'écart type annoncé est un peu optimiste :
+        $|z|\le2$ sur 78 à 83 \% des états, au lieu de 95 \%.
+\end{itemize}
+
 % ---------------------------------------------------------------------------------------------
 \section{L'analyse sur une distribution d'usage}
 \label{sec:profil}
 % ---------------------------------------------------------------------------------------------
-\textbf{Le principe.} La recherche optimise la vitesse moyenne sur les conditions du run, et le
-co-krigeage reste celui des sections précédentes (décision du 22/10). Le bateau, lui, navigue selon une
-distribution de (TWA, TWS), en général bimodale : un mode au près, un mode au portant. On ne la connaît pas
-encore. Elle se donne donc \textbf{à chaque run}, dans un fichier JSON, et elle sert à \textbf{analyser} les
-sections retenues : le meilleur profil, le profil de départ et les profils comparés.
+\textbf{Le principe.} Le bateau navigue selon une distribution de (TWA, TWS), en général bimodale : un mode
+au près, un mode au portant. On ne la connaît pas encore. Elle se donne donc \textbf{à chaque run}, dans un
+fichier JSON, et elle sert deux fois :
+\begin{itemize}
+  \item \textbf{pour analyser} les sections retenues (le meilleur profil, le profil de départ et les profils
+        comparés), avec \py{--profile} ou \py{scripts/profile_analysis.py} (décision du 22/10) ;
+  \item \textbf{pour chercher}, avec \py{--search-profile} (23/10) : ses nœuds deviennent les conditions du
+        run, et leurs poids $w_c$ pondèrent l'objectif (§\,2), le criblage (§\,\ref{sec:optimiseur}) et le
+        critère (§\,\ref{sec:critere}). Le co-krigeage, lui, ne change pas.
+\end{itemize}
 
 \textbf{La distribution} (\py{src/operating_profile.py}) est un mélange de modes. Chaque mode $m$ a un poids
 $\pi_m$, une loi normale tronquée de TWA et une loi normale tronquée de TWS, indépendantes dans le mode :
@@ -862,7 +967,10 @@ fait en quatre étapes :
   \item on recharge le surrogate final du run ; un reconditionnement, sans changer les hyperparamètres, lui
         rend ses variances ;
   \item on résout la VPP (avec la FSI si le run l'avait) à chaque nœud, pour chaque section, dans le pool
-        VPP ;
+        VPP, \textbf{avec des départs multiples} (\py{robust_solve}, 26/10). Une première passe part du
+        départ fixe et de deux départs génériques, l'un au près toute la toile dehors, l'autre au portant.
+        Une seconde passe part des équilibres trouvés par toutes les sections au même nœud : des sections
+        voisines ont des équilibres voisins. On garde le solve réussi le plus rapide ;
   \item on calcule à chaque nœud les sensibilités, puis l'écart type de la vitesse prédite
         $\big(\sum_k d_k^2 s_k^2\big)^{1/2}$. Le surrogate a été raffiné autour des états des conditions du
         run, et un nœud loin d'eux (au portant) est moins sûr ;
@@ -879,35 +987,42 @@ fort (45/20, 90/20 : vitesse à sa borne de 24 nd ou \py{Flat} au minimum). Ces 
 cachés. Ils relèvent du réglage de la VPP (bornes, configuration de foil au portant), pas du surrogate.
 \end{subtilite}
 
-\textbf{Le résultat sur le 3\textsuperscript{e} run.} L'analyse s'est faite après coup, sur le surrogate
-\py{data/surrogate_v52.pkl}.
+\textbf{Les résultats} (refaits le 26/10 avec les départs multiples).
 \begin{itemize}
-  \item \textbf{Les nœuds résolus :} les deux profils ensemble en résolvent 72 \% de la probabilité, tout le
-        près et 22 \% sur les 50 \% du portant.
-  \item \textbf{Le gain} du meilleur profil sur le profil actuel vaut \textbf{+0,099 nd} : +0,085 nd au près et
-        +0,13 nd au portant. Sur les 5 conditions du run, centrées sur le reaching, il valait +0,24 nd.
-  \item \textbf{L'écart type} du surrogate est d'environ 0,006 nd. C'est l'estimation du modèle lui-même : le
-        portant n'a pas été validé contre les codes.
+  \item \textbf{Le 3\textsuperscript{e} run}, analysé après coup sur le surrogate
+        \py{data/surrogate_v52.pkl}. Les deux profils ensemble résolvent 72 \% de la probabilité, tout le
+        près et 22 \% sur les 50 \% du portant. Le gain du meilleur profil sur le profil actuel vaut
+        \textbf{+0,093 nd} : +0,076 nd au près et +0,13 nd au portant. Sur les 5 conditions du run, centrées
+        sur le reaching, il valait +0,24 nd. L'écart type du surrogate est d'environ 0,006 nd, une estimation
+        du modèle seul : ce run n'a pas validé le portant contre les codes.
+  \item \textbf{Le 4\textsuperscript{e} run}, dont la recherche visait cette distribution. Le gain vaut
+        \textbf{+0,152 nd} : +0,103 nd au près, +0,262 nd au portant, positif aux 13 nœuds résolus (de +0,006
+        à +0,42 nd). Le meilleur profil des runs 2 et 3 y gagne +0,100 nd.
+  \item \textbf{Une erreur corrigée.} Avec le seul départ fixe, l'analyse du 4\textsuperscript{e} run donnait
+        $-0{,}23$ nd, contre +0,16 nd à la validation : à 48/16, le meilleur profil tombait sur l'équilibre
+        lent du §\,\ref{sec:vpp}.
 \end{itemize}
 
 % ---------------------------------------------------------------------------------------------
-\section{Les réglages du 3\textsuperscript{e} run}
+\section{Les réglages des 3\textsuperscript{e} et 4\textsuperscript{e} runs}
 % ---------------------------------------------------------------------------------------------
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
 Réglage & Valeur \\
 \midrule
-commande & \py{run_real_vpp.py --box current --box-scale 0.5 --hf npllt_xfoil --hf-cost 2 --fsi --batch 16 --workers 28 --vpp-workers 30 --n-low 256 --n-high 64 --time-limit-min 65 --compare <best_section.json du 2e run>} \\
+commande, 3\textsuperscript{e} run & \py{run_real_vpp.py --box current --box-scale 0.5 --hf npllt_xfoil --hf-cost 2 --fsi --batch 16 --workers 28 --vpp-workers 30 --n-low 256 --n-high 64 --time-limit-min 65 --compare <best_section.json du 2e run>} \\
+commande, 4\textsuperscript{e} run & la même, avec \py{--time-limit-min 480 --search-profile profiles/guess_bimodal.json --local-fraction 0.5 --radius 1.0 --max-refit-size 2500 --profile profiles/guess_bimodal.json} et \py{--compare <best_section.json du 3e run>} (lancée par \py{runs/2026-10-23_weekend/orchestrate.ps1}) \\
+conditions & 3\textsuperscript{e} : 5 conditions, $w_c=\frac15$ ; 4\textsuperscript{e} : 18 nœuds de \py{guess_bimodal}, $w_c=\frac1{18}$ \\
 PCA & $k=10$, ajustée sur 4000 sections, graine 0 \\
 plan de départ & 256 BF, 64 HF \\
 lots & 16 choix, rapport de coût 1 : 2 \\
-mise à jour & à chaque lot ; sensibilités une fois sur trois ; criblage de 256 sections, 3 retenues, $\kappa=1$ \\
-points d'intégration & 16 par état, demi-largeurs $(1°;\,0{,}3°;\,1°)$ \\
-candidats & 25 par état (500), 256 dans tout le domaine, $\le512$ BF sans HF \\
-réajustement & croissance de 25 \% du plan \\
+mise à jour & à chaque lot ; sensibilités une fois sur trois ; criblage de 256 sections, 3 retenues, $\kappa=1$ ; 4\textsuperscript{e} : la moitié dans la région de confiance, \py{screen_seed} 875768254 \\
+points d'intégration & 16 par état, demi-largeurs $(1°;\,0{,}3°;\,1°)$ ; 4\textsuperscript{e} : un point sur deux déplace la section du rayon $R$ \\
+candidats & 3\textsuperscript{e} : 25 par état (500), 256 dans tout le domaine, $\le512$ BF sans HF ; 4\textsuperscript{e} : 7 par état, nuages seulement \\
+réajustement & croissance de 25 \% du plan ; 4\textsuperscript{e} : plus au-delà de 2\,500 points \\
 co-krigeage & Matérn 5/2 à longueurs par dimension + constante, MAP, $\rho\sim\mathcal{N}(1,2^2)$ sur $[-5,5]$, 3 relances \\
 FSI & RS \py{CFoil_R9800_S3250_C700_fsi_rs_vpp.json}, rapport $I_{xx}$ \\
-arrêt & 65 min depuis le début du run (fin réelle : 69,7 min) \\
+arrêt & 3\textsuperscript{e} : 65 min (fin réelle 69,7 min) ; 4\textsuperscript{e} : 480 min (boucle de 489 min, 120 lots, 1\,920 choix) \\
 \bottomrule
 \end{tabularx}
 
@@ -915,30 +1030,31 @@ arrêt & 65 min depuis le début du run (fin réelle : 69,7 min) \\
 \section{Limites connues et évolutions prévues}
 % ---------------------------------------------------------------------------------------------
 \begin{enumerate}
-  \item \textbf{La recherche par tirages.} Il faudrait un raffinement local autour du titulaire (des
-        candidats dans un voisinage qui se resserre, ou un gradient sur le surrogate), et un run avec une
-        autre graine des réserves.
-  \item \textbf{La distribution d'usage} sert aujourd'hui à l'analyse seulement (§\,\ref{sec:profil}). Si un
-        jour on voulait chercher directement sur elle, quatre endroits du code changeraient :
-        \begin{itemize}
-          \item la vitesse d'une section (\py{update}), qui deviendrait une moyenne pondérée par les poids
-                $\omega_c$ des nœuds ;
-          \item le gain du criblage (\py{screen}) ;
-          \item les sensibilités, à calculer à chaque nœud ;
-          \item la moyenne sur les points d'intégration de \py{batched_imse_gains}, à pondérer par
-                $\omega_{c(i)}\,d_{k\,c(i)}^2$.
-        \end{itemize}
-        Une analyse qui montre un gain très différent selon le mode, comme au 3\textsuperscript{e} run
-        (+0,085 nd au près contre +0,13 nd au portant), est un signe que cela vaudrait la peine. Il faudrait aussi
-        donner aux conditions du run les poids de la distribution, et rendre la VPP résoluble sur tout son
-        domaine.
+  \item \textbf{La recherche locale reste par tirages} (fait le 23/10 : région de confiance, graine de
+        criblage propre). Elle tire des sections au hasard dans le voisinage, sans gradient. Au
+        4\textsuperscript{e} run, cela a suffi : la titulaire ne gagnait plus rien après 75 min. Un gradient
+        sur le surrogate irait plus vite, sans doute sans aller plus loin.
+  \item \textbf{L'optimum est sur la contrainte} $I_{xx}\ge I_{xx}^{\text{actuel}}$ au 4\textsuperscript{e}
+        run. Son niveau est un choix de conception, à arrêter avant un prochain run.
+  \item \textbf{La distribution d'usage est une hypothèse} (\py{guess_bimodal}, cherchée depuis le 23/10), et
+        28 \% de sa probabilité n'a pas d'équilibre VPP (portant profond par petit temps). Il faudra la
+        vraie distribution, et une VPP résoluble sur tout son domaine.
+  \item \textbf{Le premier solve du titulaire} part du seul départ fixe de la VPP (§\,\ref{sec:vpp}). Lui
+        donner les départs multiples de \py{robust_solve} est proposé, mais pas fait.
+  \item \textbf{Le $\sigma$ du criblage est optimiste} (erreurs supposées indépendantes entre conditions,
+        §\,\ref{sec:optimiseur}).
   \item \textbf{Le coût de la sélection.} Le choix d'un lot, en $O(n^2)$, est devenu le goulot : de 25 à
-        100 s par lot de 16 au 3\textsuperscript{e} run, pour un plan de 300 à 1300 points.
+        100 s par lot de 16 au 3\textsuperscript{e} run, pour un plan de 300 à 1300 points. Au
+        4\textsuperscript{e}, avec la mise à jour comprise (VPP des 4 sections aux 18 nœuds), un lot passait
+        de 1,4 à 3 min au début à environ 6,5 min à la fin, pour un plan de 3\,400 points.
   \item \textbf{Les sensibilités ponctuelles aberrantes} : une fois au 3\textsuperscript{e} run, $d_{F_x}$ a
         valu 201 au lieu de 111 pendant trois mises à jour. On pourrait prendre la médiane de deux solves, ou
         rejeter une valeur trop loin de la précédente.
   \item \textbf{La FSI de premier ordre} et \textbf{la validation entre modèles potentiels} : quelques calculs
-        CFD aux états VPP des profils comparés trancheraient.
+        CFD aux états VPP des profils comparés trancheraient. L'étude de maillage du week-end du 23/10
+        (\py{runs/2026-10-23_weekend/cfd/report.md}) a montré une traînée convergée mais une portance qui ne
+        l'est pas, des couches de prismes mal couvertes et un domaine trop petit. Elle est à refaire avant
+        tout calcul de validation.
 \end{enumerate}
 
 \end{document}

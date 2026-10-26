@@ -147,17 +147,17 @@ environ 0,01 nd : **c'est la traînée qu'il faut apprendre**, et le critère po
 
   G(x, l) = (1/N) Σ_j [ σ²_avant(u_j) − σ²_après(u_j | on observe x au niveau l) ]
 
-dans [`batched_imse_gains`](src/sequential_design.py#L284). C'est la [ligne 332](src/sequential_design.py#L332), où la
+dans [`batched_imse_gains`](src/sequential_design.py#L284). C'est la [ligne 335](src/sequential_design.py#L335), où la
 moyenne porte sur les points d'intégration u_j. Le critère lance ensuite le couple qui a le meilleur G / coût. Pour un
 GP, σ²_après ne dépend pas de la valeur qu'on observera, donc G se calcule avant de lancer le code.
 
 **Trois ingrédients changent :**
 
-| | ALC simple ([`sequential_design.py`](src/sequential_design.py#L601-L606)) | Ciblé VPP ([`vpp_targeted.py`](src/vpp_targeted.py#L269-L285), [`vpp_optimize.py`](src/vpp_optimize.py)) |
+| | ALC simple ([`sequential_design.py`](src/sequential_design.py#L605-L609)) | Ciblé VPP ([`vpp_targeted.py`](src/vpp_targeted.py#L265-L297), [`vpp_optimize.py`](src/vpp_optimize.py)) |
 | --- | --- | --- |
-| **Où**, les points u_j | 1 024 points de Sobol répartis sur tout le domaine | des nuages de Sobol autour des **états d'équilibre de la VPP** ([`integration_cloud`](src/vpp_targeted.py#L157)) |
-| **Quoi**, la variance réduite | celle d'**une** sortie du code | celle de la **vitesse** : Σ_k w_k σ²_k, avec w_k = (∂V/∂C_k)², calculé dans MDS par différences finies ([`speed_weights`](src/vpp_targeted.py#L185), [ligne 230](src/vpp_targeted.py#L230)) |
-| **Quand**, le lieu | fixé une fois pour toutes | recalculé tous les 10 pas : le surrogate du moment va dans la VPP, on résout, les états bougent ([`update_states`](src/vpp_targeted.py#L269)) |
+| **Où**, les points u_j | 1 024 points de Sobol répartis sur tout le domaine | des nuages de Sobol autour des **états d'équilibre de la VPP** ([`integration_cloud`](src/vpp_targeted.py#L204)) |
+| **Quoi**, la variance réduite | celle d'**une** sortie du code | celle de la **vitesse** : Σ_k w_k σ²_k, avec w_k = (∂V/∂C_k)², calculé dans MDS par différences finies ([`speed_weights`](src/vpp_targeted.py#L232), [ligne 238](src/vpp_targeted.py#L238)) |
+| **Quand**, le lieu | fixé une fois pour toutes | recalculé tous les 10 pas : le surrogate du moment va dans la VPP, on résout, les états bougent ([`update_states`](src/vpp_targeted.py#L327)) |
 
 En maths, l'ALC simple intègre la variance contre la mesure uniforme du domaine. Le ciblé l'intègre contre la mesure
 empirique des états VPP, chaque sortie pesant ce qu'elle coûte en vitesse. C'est la réduction intégrée de la variance de
@@ -183,6 +183,18 @@ l'optimiseur juge les meilleurs à l'instant t :
 
 Le surrogate devient donc précis **là où se prend la décision « quel profil est le meilleur »**, et non sur tout
 l'espace des profils.
+
+**Depuis le 23/10** (4e run, [`CHANGEMENTS_2026-10-23.md`](CHANGEMENTS_2026-10-23.md)), deux choses changent dans
+la version réelle :
+
+* **chaque point de contrôle a son poids**, ω_ik = w_c (∂V/∂C_k)²_c / n_s, au lieu d'un poids par coefficient moyenné
+  sur les conditions. w_c est la probabilité de la condition c de son état, et n_s le nombre de points de cet état
+  ([`point_weights`](src/vpp_optimize.py#L577)) ;
+* **la recherche est locale :** la moitié des sections criblées sont tirées dans une région de confiance autour du
+  meilleur profil, et un point de contrôle sur deux déplace aussi la section de ce rayon.
+
+Le détail et les formules sont dans [`doc/algorithme_vpp_cible.tex`](doc/algorithme_vpp_cible.tex) (§ 7 et 9) et
+[`doc/selection_points_vpp.tex`](doc/selection_points_vpp.tex).
 
 ## 4. Le cadre commun des études
 

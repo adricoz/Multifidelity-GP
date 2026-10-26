@@ -1,8 +1,11 @@
 """
 Operating profile of the boat: the probability distribution of the navigation conditions (TWA, TWS)
-it really meets, given per run in a JSON file. It is used to ANALYSE a section (its expected speed
-over that distribution, scripts/profile_analysis.py), not by the search itself: the co-kriging and
-its objective (mean speed over the conditions of the run) are unchanged (decision of 2026-10-22).
+it really meets, given per run in a JSON file. It serves twice:
+- to ANALYSE sections: their expected speed over that distribution (scripts/profile_analysis.py, or
+  run_real_vpp.py --profile; decision of 2026-10-22);
+- in the SEARCH, with run_real_vpp.py --search-profile (2026-10-23): the nodes become the conditions
+  of the run and their weights w_c weigh the objective, the screening and the criterion
+  (vpp_optimize.VPPSectionOptimizer, CHANGEMENTS_2026-10-23.md).
 
 The distribution is a mixture of modes, typically two (upwind and downwind), each with a weight,
 a truncated normal law of TWA and a truncated normal law of TWS (independent within a mode):
