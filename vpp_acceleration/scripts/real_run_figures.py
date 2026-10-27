@@ -182,6 +182,8 @@ FIGURE_NOTES = {
     "speeds": ("Vitesses par condition", "sections validées, vitesse corrigée au premier ordre de "
                "l'écart aux codes"),
     "calibration": ("Recalage", "codes contre la RS de production (étape 0)"),
+    "comparison": ("Comparaison avec un run de référence", "durée des lots selon la taille du "
+                   "plan, gain cumulé de la titulaire par région (scripts/compare_runs.py)"),
 }
 PAGE_STYLE = """
 :root { --bg: #ffffff; --fg: #1d1d1f; --muted: #6e6e73; --card: #f5f5f7; --link: #0b5cad; }

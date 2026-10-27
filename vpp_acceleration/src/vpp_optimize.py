@@ -724,6 +724,7 @@ class VPPSectionOptimizer:
         if best != len(entries) - 1:
             self.incumbent, self.incumbent_states = entries[best]["scores"], all_states[best]
             self.new_region, self.sensitivity_history = True, []
+            self.region = entries[best]["region"]          # the final update is that region's
         else:
             self.incumbent_states = all_states[best]
 

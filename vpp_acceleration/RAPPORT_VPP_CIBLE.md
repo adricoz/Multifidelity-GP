@@ -193,6 +193,17 @@ la version réelle :
 * **la recherche est locale :** la moitié des sections criblées sont tirées dans une région de confiance autour du
   meilleur profil, et un point de contrôle sur deux déplace aussi la section de ce rayon.
 
+**Depuis le 27/10** ([`CHANGEMENTS_2026-10-27.md`](CHANGEMENTS_2026-10-27.md)), quatre changements :
+
+* **une région de la recherche converge,** quand ses 10 dernières mises à jour ont gagné moins de 0,01 nd. Son
+  optimum est gardé, et une nouvelle région part à au moins 2 (scores blanchis) des optima trouvés, avec toutes les
+  données. À la fin, les optima sont départagés avec le surrogate final
+  ([`converged`, `restart`, `compare_optima`](src/vpp_optimize.py)) ;
+* **le choix des lots prolonge le facteur de Cholesky,** au lieu de reconditionner sur tout le plan. Il donne les mêmes
+  choix, 2,8 fois plus vite à 3 437 points ([`append_observations`](src/sequential_design.py)) ;
+* **les sensibilités sont la médiane des 3 dernières évaluations ;**
+* **le premier solve d'un titulaire part de plusieurs points de départ.**
+
 Le détail et les formules sont dans [`doc/algorithme_vpp_cible.tex`](doc/algorithme_vpp_cible.tex) (§ 7 et 9) et
 [`doc/selection_points_vpp.tex`](doc/selection_points_vpp.tex).
 
@@ -434,6 +445,23 @@ script [`scripts/real_step0_calibration.py`](scripts/real_step0_calibration.py).
 * **Un piège corrigé le 26/10.** Résoudre la VPP depuis un seul point de départ peut aboutir à un équilibre lent mais
   « réussi ». L'analyse sur la distribution donnait ainsi −0,23 nd au lieu de +0,15. Elle utilise maintenant des départs
   multiples.
+
+**Le 5e run** (27/10, 2 h), contrôle des changements du 27/10 :
+[`runs/2026-10-27_1224_control_restarts/README.md`](runs/2026-10-27_1224_control_restarts/README.md).
+
+* **Le cadre :** les réglages et la graine de criblage du 4e run, plus la convergence d'une région et 2 redémarrages
+  possibles, le minimum de gain pour le rayon, la médiane des sensibilités
+  ([`CHANGEMENTS_2026-10-27.md`](CHANGEMENTS_2026-10-27.md)). Limite de 110 min.
+* **Le résultat :** le même profil, à peu de chose près, **en 2 h au lieu de 8 h**.
+  * La vitesse validée vaut 13,080 nd, contre 13,084 pour le meilleur du 4e run (−0,005 nd).
+  * Le gain sur le profil actuel est de +0,157 nd ; l'analyse sur la distribution donne +0,146 nd, contre +0,158.
+  * Les deux profils sont à 1,2 l'un de l'autre en scores blanchis, tous deux avec un Ixx à la contrainte.
+* **La convergence :** la région 0 converge à 92 min. Le redémarrage part d'une section à 3,6, prédite plus lente de
+  0,059 ± 0,003 nd. En 20 min, il remonte à 13,065 nd et revient vers le même coin de la famille. C'est un indice d'un
+  seul bassin, pas une preuve : la région 1 n'a pas eu le temps de converger.
+* **Le débit :** il n'a pas gagné ici. Le plan est resté sous 1 100 points, où le choix des points coûte peu, et la
+  mise à jour VPP domine (125 s par lot, contre 107 s au 4e run à taille égale, sans cause établie). Le prolongement de
+  Cholesky sert aux longs runs : à 3 437 points, il fait passer le choix d'un lot de 269 à 97 s.
 
 ## 10. Fichiers
 

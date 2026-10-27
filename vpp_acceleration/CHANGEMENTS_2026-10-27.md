@@ -129,6 +129,15 @@ erreur, sur 2 conditions, avec des lots de 4 et une règle de convergence volont
 
 Ces chiffres ne disent rien de la qualité : le plan n'a que 46 points BF et 7 HF.
 
+## Le run de contrôle
+
+Le dossier est [`runs/2026-10-27_1224_control_restarts`](runs/2026-10-27_1224_control_restarts/README.md). Il reprend
+les réglages et la graine du 4e run, et dure 2 h.
+- **Le même résultat en 2 h au lieu de 8 h** : 13,080 nd contre 13,084 nd en vitesse validée.
+- **La région 0 converge à 92 min.** Le redémarrage revient vers le même coin de la famille en 20 min.
+- **Le débit n'a pas gagné**, car le plan reste sous 1 100 points. C'est maintenant la mise à jour VPP qui limite un
+  run court.
+
 ## Références
 
 - D. Eriksson, M. Pearce, J. Gardner, R. Turner, M. Poloczek, *Scalable global optimization via local Bayesian

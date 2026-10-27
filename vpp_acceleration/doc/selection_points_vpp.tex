@@ -238,7 +238,7 @@ Dans~\eqref{eq:gain}, seule la mesure $\mu$ change : au lieu du domaine entier, 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.88\textwidth]{figures/fig_selection.pdf}
+\includegraphics[width=0.84\textwidth]{figures/fig_selection.pdf}
 \caption{Exemple 1D à deux niveaux, calculé avec le code du dépôt : Forrester, BF à 7 points, HF à 3 points
 imbriqués, $\hat\rho=\valRhoExemple$, coûts 1 et 2. La bande jaune est le voisinage d'un \enquote{état VPP}.
 \textbf{(a)} Le co-krigeage HF et ses $\pm2\sigma$.
@@ -278,11 +278,13 @@ jour :
         l'incertitude, comme le critère UCB~\cite{Srinivas10}.
   \item \textbf{Les 3 meilleures passent à la VPP complète,} avec le titulaire. La meilleure vitesse moyenne
         pondérée, $\sum_c w_cV_c/\sum_c w_c$ sur les conditions résolues pour les 4, donne le titulaire.
-  \item \textbf{La région de confiance s'adapte :} $R\leftarrow\min(3;\,1{,}5R)$ si le titulaire change,
-        $R\leftarrow\max(0{,}1;\,0{,}7R)$ s'il est confirmé (\textbf{H12} ; Conn et al.~\cite{CGT00},
-        TuRBO~\cite{TuRBO19}).
+  \item \textbf{La région de confiance s'adapte :} $R\leftarrow\min(3;\,1{,}5R)$ si le titulaire change en
+        gagnant au moins 0,002 nd, $R\leftarrow\max(0{,}1;\,0{,}7R)$ sinon (\textbf{H12} ; Conn
+        et al.~\cite{CGT00}, TuRBO~\cite{TuRBO19}).
   \item \textbf{Les états de ces 4 sections deviennent les nouveaux points d'intégration.}
 \end{enumerate}
+\textbf{Depuis le 27/10} (\textbf{H13}), une région dont les 10 dernières mises à jour ont gagné moins de
+0,01 nd a convergé : on garde son optimum, et une nouvelle région part à au moins 2 de tous les optima.
 Une section mal connue mais prometteuse entre donc dans le trio, attire des calculs, puis gagne ou est
 écartée. C'est le mécanisme d'exploration. Le reste du domaine n'est raffiné que par corrélation : sa
 précision globale n'est pas recherchée (le revers de H7).
@@ -338,7 +340,8 @@ prédite (Ginsbourger et al.~\cite{GLC10}).
 a posteriori. La formule $k_n(\bm a,\bm b)=k(\bm a,\bm b)-\bm k(\bm a,X)K^{-1}\bm k(X,\bm b)$ ne contient pas
 les valeurs observées. Le choix suivant voit donc exactement la variance que les choix précédents vont
 retirer. La valeur provisoire, elle, laisse les moyennes inchangées : elle ne sert qu'à faire tourner le code,
-et elle est remplacée par la vraie valeur après le calcul.
+et elle est remplacée par la vraie valeur après le calcul. Depuis le 27/10, on prolonge le facteur de
+Cholesky au lieu de tout refactoriser : même lot, 97 s au lieu de 269 s.
 
 \textbf{Sur la figure~1(c)}, le lot ciblé de 4 donne \valLot.
 \begin{itemize}
@@ -378,7 +381,8 @@ H8 & coûts 1 : 2 en temps réel par choix & calculs parallèles & mal réglé, 
 H9 & hyperparamètres et sensibilités figés pendant un lot & le gain doit être calculable sans relancer les codes & un lot de 16 un peu moins bien placé \\
 H10 & maximum sur un ensemble fini de candidats & le calcul vectorisé du gain & un meilleur point entre les candidats \\
 H11 & criblage au premier ordre, à l'attitude du titulaire, erreurs indépendantes entre conditions & trier 256 sections sans 256 VPP & $\sigma$ optimiste ; une bonne section mal classée \\
-H12 & région de confiance : $\times1{,}5$ / $\times0{,}7$, $R\in[0{,}1;3]$ & resserrer quand le titulaire tient & un optimum local si $R$ se resserre trop tôt \\
+H12 & région de confiance : $\times1{,}5$ si le gain $\ge0{,}002$ nd, $\times0{,}7$ sinon, $R\in[0{,}1;3]$ & resserrer quand le titulaire tient & un optimum local si $R$ se resserre trop tôt \\
+H13 & convergence d'une région (10 mises à jour, 0,01 nd) puis redémarrage à distance $\ge2$ & ne pas raffiner un optimum acquis ; chercher un autre bassin & un départ mal jugé au premier ordre coûte une région \\
 \bottomrule
 \end{xltabular}}
 

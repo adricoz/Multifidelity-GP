@@ -313,8 +313,9 @@ une fois et 17,58 nd après d'autres solves. D'où trois règles :
 vers un équilibre valide mais lent. Au 4\textsuperscript{e} run, à 48°/16 nd, le meilleur profil a ainsi
 donné 15,7 nd (gîte 2,7°, \py{Flat} 0,35) au lieu de 19,2 nd (gîte 5,9°, voiles pleines). L'analyse sur la
 distribution (§\,\ref{sec:profil}) part donc de plusieurs départs (\py{profile_analysis.robust_solve}). Dans
-la recherche, \textbf{le tout premier solve du titulaire part encore du seul départ fixe} ; les suivants
-partent de ses états. Lui donner aussi plusieurs départs est proposé, mais pas fait.
+la recherche, depuis le 27/10, \textbf{le premier solve d'un titulaire sans état} (début de la recherche,
+redémarrage) part aussi du départ fixe et des deux départs génériques (\py{GENERIC_GUESSES}). On garde
+l'équilibre réussi le plus rapide. Les solves suivants partent des états du titulaire.
 \end{subtilite}
 
 \begin{subtilite}[pas d'extrapolation en attitude]
@@ -421,6 +422,11 @@ lieu de $+83$, à cause de la dépendance au chemin.
 \begin{itemize}
   \item Une dérivée non calculable (NaN) reprend sa valeur précédente, ou 0 la première fois.
   \item Les sensibilités sont recalculées une mise à jour sur trois.
+  \item Depuis le 27/10 (\py{--sensitivity-median 3}), chaque $d_{kc}$ retenu est la \textbf{médiane de ses
+        3 dernières évaluations}. Un solve décalé qui tombe sur un autre équilibre double une différence finie :
+        au 4\textsuperscript{e} run, $d_{F_x}$ valait 224 au lieu de 117 à la condition 48/16, trois fois,
+        chaque fois pendant 3 mises à jour. La médiane ignore ce saut isolé, et suit une vraie évolution
+        avec une évaluation de retard. L'historique repart de zéro à chaque nouvelle région.
 \end{itemize}
 Au 3\textsuperscript{e} run, $d_{F_x}$ allait de 84 (45/12) à 302 (90/14) nd par unité de $F_x$. À la fin
 du 4\textsuperscript{e}, il allait de 27 (portant, 135/13) à 170 (près, 48/13). Les autres dérivées sont
@@ -707,20 +713,37 @@ ne dépend que des \emph{positions} des observations, et non de leurs valeurs. L
 la réduction de variance apportée par les choix précédents. La valeur provisoire laisse les moyennes
 inchangées (test \py{test_kriging_believer_placeholder}). Le lot s'étale tout seul.
 
+\textbf{Le prolongement du facteur de Cholesky} (27/10). Code : \py{append_observations}
+(\py{sequential_design}), appelée par \py{TorsorCoKriging.believe}. Jusqu'au 4\textsuperscript{e} run, chaque
+valeur provisoire était ajoutée aux
+données, puis les 7 modèles étaient reconditionnés sur tout le plan : 12,4 s par choix à 3\,437 points, dont
+2,7 s par modèle pour reconstruire $V$. On prolonge maintenant le facteur $V=LL^\top$ des lignes des
+nouvelles observations :
+\[
+  V'=\begin{pmatrix}V & \bm c\\ \bm c^\top & c_{\text{nouv}}+\text{bruit}\end{pmatrix}=L'L'^\top,\qquad
+  L'=\begin{pmatrix}L&0\\ \bm w^\top & E\end{pmatrix},\qquad
+  \bm w=L^{-1}\bm c,\quad EE^\top=c_{\text{nouv}}+\text{bruit}-\bm w^\top\bm w .
+\]
+Le coût est en $n^2$ par point. Comme la valeur provisoire est la moyenne prédite,
+$y_{\text{nouv}}-m_{\text{nouv}}=\bm c^\top V^{-1}(\bm z-\bm m)=\bm c^\top\bm\alpha$, d'où $\bm\alpha'=(\bm\alpha,0)$
+exactement : les moyennes ne bougent pas, et les covariances sont celles d'un reconditionnement complet. Sur le
+surrogate final du 4\textsuperscript{e} run, un lot de 16 donne les mêmes 16 choix, à $4\cdot10^{-9}$ près sur
+les rendements, en 97 s au lieu de 269 s.
+
 \begin{algorithm}[h]
 \caption{Un lot (\py{VPPSectionOptimizer.step})}
 \begin{algorithmic}[1]
 \State $n\gets$ taille du plan ; \textbf{si} $n\ge1{,}25\,n_{\text{dernier ajustement}}$ et $n\le n_{\max}$ \textbf{alors} nouveaux hyperparamètres \textbf{sinon} reconditionnement
+\State \textbf{si} la région a convergé (§\,\ref{sec:optimiseur}) : redémarrage s'il en reste, \textbf{sinon} fin de la boucle
 \State mise à jour de l'optimiseur (§\,\ref{sec:optimiseur}) : titulaire, états, points d'intégration, $d_{kc}$
 \State poids $\omega_{ik}\gets w_{c(i)}d_{k\,c(i)}^2/n_{s(i)}$ ; candidats $\{\vx_m\}$ et niveaux manquants
 \For{$b=1..16$}
   \State $(\vx_b,l_b)\gets$ meilleur rendement (§\,\ref{sec:critere}) ; marquer ses niveaux $\le l_b$ comme faits
   \If{$b<16$}
-     \For{chaque niveau $j\le l_b$ manquant en $\vx_b$} ajouter $(\vx_b,j)$ avec la valeur $\mu^{(j)}(\vx_b)$ \EndFor
-     \State reconditionner les 7 modèles (hyperparamètres fixes)
+     \State conditionner les 7 modèles sur $(\vx_b,j)$, $j\le l_b$ manquants, de valeur $\mu^{(j)}(\vx_b)$, en prolongeant leur facteur de Cholesky
   \EndIf
 \EndFor
-\State retirer les valeurs provisoires (\py{truncate})
+\State (les valeurs provisoires disparaissent au reconditionnement du lot suivant)
 \State lancer en parallèle tous les calculs (point, niveau) du lot (28 processus)
 \For{chaque choix $b$}
    \State ajouter ses résultats, niveau 1 d'abord. Un résultat NaN, ou un HF dont le BF manque, est rejeté, et le point rejoint la liste des échecs
@@ -764,13 +787,21 @@ Il y a une mise à jour avant chaque lot (\py{update_every} = 1, \py{VPPSectionO
   \item \textbf{La VPP complète} sur ces 3 sections et sur le titulaire, à toutes les conditions (20 solves
         au 3\textsuperscript{e} run, 72 au 4\textsuperscript{e}), en parallèle, avec départ aux états du
         titulaire. La section de meilleure vitesse moyenne pondérée $J$ (§\,2) devient le titulaire.
+  \item \textbf{Le gain de la mise à jour} (27/10) : $g=J(\text{nouveau titulaire})-J(\text{ancien})$, les
+        deux résolus dans cette mise à jour, avec le même surrogate et sur les mêmes conditions ; $g=0$ si le
+        titulaire est gardé. La vitesse $J$ elle-même n'est pas comparable d'une mise à jour à l'autre : le
+        modèle change, et les conditions résolues pour les 4 sections couvraient 67, 72 ou 78 \% de la
+        probabilité selon la mise à jour du 4\textsuperscript{e} run.
   \item \textbf{La région de confiance} (recherche locale) :
         \[
-          R\leftarrow\min(R_{\max},\,1{,}5\,R)\ \text{si le titulaire change},\qquad
-          R\leftarrow\max(R_{\min},\,0{,}7\,R)\ \text{sinon},\qquad [R_{\min},R_{\max}]=[0{,}1;\,3],
+          R\leftarrow\min(R_{\max},\,1{,}5\,R)\ \text{si le titulaire change avec } g\ge g_{\min},\qquad
+          R\leftarrow\max(R_{\min},\,0{,}7\,R)\ \text{sinon},
         \]
-        en partant de $R=1$ (\py{--radius}, en écarts types des scores blanchis). C'est la règle des
+        avec $[R_{\min},R_{\max}]=[0{,}1;\,3]$, en partant de $R=1$ (\py{--radius}, en écarts types des scores
+        blanchis). C'est la règle des
         méthodes de région de confiance (Conn, Gould \& Toint, 2000) et de TuRBO (Eriksson et al., 2019).
+        Jusqu'au 4\textsuperscript{e} run, $g_{\min}=0$ : chacun des micro-changements tardifs élargissait $R$,
+        qui n'a atteint $R_{\min}$ qu'à 223 min. Depuis le 27/10, $g_{\min}=0{,}002$ nd (\py{--min-gain}).
   \item \textbf{Les points d'intégration} : nuages de Sobol autour des états des 4 sections, dont la moitié
         déplace aussi la section du rayon $R$ (§\,\ref{sec:critere}).
 \end{enumerate}
@@ -783,14 +814,55 @@ toutes les conditions), et ce $\sigma$ est trop petit : l'exploration est un peu
 ne le laisse croire.
 \end{subtilite}
 
+\textbf{La convergence et les redémarrages} (27/10, \py{converged}, \py{restart}). Au
+4\textsuperscript{e} run, la recherche a convergé vers 70 min, et les 6 h 40 suivantes n'ont apporté que
+0,012 nd. Une région de la recherche a maintenant convergé dans l'un de ces deux cas :
+\begin{itemize}
+  \item ses 10 dernières mises à jour ont gagné moins de 0,01 nd au total (\py{--converge 10 0.01}). Rejouée
+        sur les gains du 4\textsuperscript{e} run, cette règle se déclenche à la 28\textsuperscript{e} mise
+        à jour, vers 70 min ;
+  \item son titulaire passe à moins de 1 (scores blanchis) d'un optimum déjà trouvé : c'est le même bassin.
+\end{itemize}
+Quand il reste un redémarrage (\py{--restarts}), le titulaire est gardé comme \textbf{optimum local}. On crible
+alors 1\,024 sections de toute la famille par le score $\mu+\kappa\sigma$. La meilleure de celles qui sont à au
+moins 2 de tous les optima (\py{--restart-distance}) devient le titulaire d'une nouvelle région. Le rayon repart de
+$R=1$, les sensibilités sont recalculées, et \textbf{toutes les données restent}. C'est le redémarrage de
+TuRBO (Eriksson et al., 2019). Sans redémarrage restant, la boucle s'arrête.
+
+\begin{subtilite}[pourquoi chercher un autre bassin]
+Le meilleur profil du 4\textsuperscript{e} run est dans un coin de la famille : son premier score PCA vaut
+$-5{,}1$, alors que les sections tirées dans la famille restent entre $-3{,}1$ et $+3{,}0$. Seule la recherche
+locale l'a atteint. Le criblage global n'a jamais placé de section lointaine dans le trio des concurrentes : il
+la juge au premier ordre, depuis les états d'un titulaire éloigné. Des redémarrages qui reviennent au même
+optimum donneraient confiance qu'il est le meilleur de la famille ; un autre bassin plus rapide serait un gain
+direct.
+\end{subtilite}
+
+\textbf{Le 5\textsuperscript{e} run} (27/10, 2 h, \py{runs/2026-10-27_1224_control_restarts}) reprend les
+réglages et la graine de criblage du 4\textsuperscript{e}, avec ces règles.
+\begin{itemize}
+  \item \textbf{La région 0 converge à 92 min.} Son optimum vaut 13,080 nd en vitesse validée (corrigée contre
+        NPLLT × XFOIL, sur les 13 conditions résolues pour toutes les sections), contre 13,084 nd pour le meilleur
+        du 4\textsuperscript{e} run, obtenu en 8 h. Les deux profils sont à 1,2 l'un de l'autre, Ixx à la contrainte.
+  \item \textbf{Le redémarrage} part d'une section à 3,6, prédite plus lente de $0{,}059\pm0{,}003$ nd. En 20 min,
+        il remonte à 13,065 nd et revient vers le même coin (premier score $-4{,}5$). C'est un indice d'un seul
+        bassin ; il faudrait le laisser converger pour conclure.
+  \item \textbf{Le débit} ne gagne rien à cette taille : le plan reste sous 1\,100 points, et la mise à jour VPP
+        domine (125 s par lot).
+\end{itemize}
+
 \textbf{Le départ et la fin.}
 \begin{itemize}
   \item \textbf{Le départ :} le premier titulaire est le profil actuel projeté, et ses états sont résolus à la
-        première mise à jour.
-  \item \textbf{La boucle} s'arrête quand le temps écoulé depuis le début du run dépasse la limite. Le lot en
-        cours se termine.
-  \item \textbf{La fin :} un dernier ajustement des hyperparamètres (sauf au-delà de \py{--max-refit-size}),
-        puis une dernière mise à jour. Celle-ci fixe le titulaire final avec le modèle final.
+        première mise à jour, avec plusieurs départs (§\,\ref{sec:vpp}).
+  \item \textbf{La boucle} s'arrête quand la dernière région a convergé, ou quand le temps écoulé depuis le
+        début du run dépasse la limite. Le lot en cours se termine.
+  \item \textbf{La fin :} un dernier ajustement des hyperparamètres (sauf au-delà de \py{--max-refit-size}).
+        S'il y a eu des redémarrages, les optima et le dernier titulaire sont résolus de nouveau avec le modèle
+        final (\py{compare_optima}). Chaque solve part de tous les équilibres connus à la condition et des départs
+        génériques, et le meilleur $J$ sur les conditions résolues pour tous devient le titulaire. Suit une
+        dernière mise à jour, qui fixe le titulaire final avec le modèle final. Les autres optima sont validés
+        comme lui contre les codes.
 \end{itemize}
 
 \begin{subtilite}[ce que la recherche explore vraiment]
@@ -1004,7 +1076,7 @@ cachés. Ils relèvent du réglage de la VPP (bornes, configuration de foil au p
 \end{itemize}
 
 % ---------------------------------------------------------------------------------------------
-\section{Les réglages des 3\textsuperscript{e} et 4\textsuperscript{e} runs}
+\section{Les réglages des runs 3 à 5}
 % ---------------------------------------------------------------------------------------------
 \begin{tabularx}{\linewidth}{@{}lX@{}}
 \toprule
@@ -1012,6 +1084,7 @@ Réglage & Valeur \\
 \midrule
 commande, 3\textsuperscript{e} run & \py{run_real_vpp.py --box current --box-scale 0.5 --hf npllt_xfoil --hf-cost 2 --fsi --batch 16 --workers 28 --vpp-workers 30 --n-low 256 --n-high 64 --time-limit-min 65 --compare <best_section.json du 2e run>} \\
 commande, 4\textsuperscript{e} run & la même, avec \py{--time-limit-min 480 --search-profile profiles/guess_bimodal.json --local-fraction 0.5 --radius 1.0 --max-refit-size 2500 --profile profiles/guess_bimodal.json} et \py{--compare <best_section.json du 3e run>} (lancée par \py{runs/2026-10-23_weekend/orchestrate.ps1}) \\
+commande, 5\textsuperscript{e} run & celle du 4\textsuperscript{e}, avec \py{--time-limit-min 110 --screen-seed 875768254 --converge 10 0.01 --restarts 2 --min-gain 0.002 --sensitivity-median 3} et les meilleurs profils des runs 3 et 4 en \py{--compare} \\
 conditions & 3\textsuperscript{e} : 5 conditions, $w_c=\frac15$ ; 4\textsuperscript{e} : 18 nœuds de \py{guess_bimodal}, $w_c=\frac1{18}$ \\
 PCA & $k=10$, ajustée sur 4000 sections, graine 0 \\
 plan de départ & 256 BF, 64 HF \\
@@ -1039,17 +1112,18 @@ arrêt & 3\textsuperscript{e} : 65 min (fin réelle 69,7 min) ; 4\textsuperscrip
   \item \textbf{La distribution d'usage est une hypothèse} (\py{guess_bimodal}, cherchée depuis le 23/10), et
         28 \% de sa probabilité n'a pas d'équilibre VPP (portant profond par petit temps). Il faudra la
         vraie distribution, et une VPP résoluble sur tout son domaine.
-  \item \textbf{Le premier solve du titulaire} part du seul départ fixe de la VPP (§\,\ref{sec:vpp}). Lui
-        donner les départs multiples de \py{robust_solve} est proposé, mais pas fait.
   \item \textbf{Le $\sigma$ du criblage est optimiste} (erreurs supposées indépendantes entre conditions,
-        §\,\ref{sec:optimiseur}).
-  \item \textbf{Le coût de la sélection.} Le choix d'un lot, en $O(n^2)$, est devenu le goulot : de 25 à
-        100 s par lot de 16 au 3\textsuperscript{e} run, pour un plan de 300 à 1300 points. Au
-        4\textsuperscript{e}, avec la mise à jour comprise (VPP des 4 sections aux 18 nœuds), un lot passait
-        de 1,4 à 3 min au début à environ 6,5 min à la fin, pour un plan de 3\,400 points.
-  \item \textbf{Les sensibilités ponctuelles aberrantes} : une fois au 3\textsuperscript{e} run, $d_{F_x}$ a
-        valu 201 au lieu de 111 pendant trois mises à jour. On pourrait prendre la médiane de deux solves, ou
-        rejeter une valeur trop loin de la précédente.
+        §\,\ref{sec:optimiseur}). Il sert aussi à choisir le départ d'un redémarrage.
+  \item \textbf{Le coût de la sélection} (en partie traité le 27/10). Au 4\textsuperscript{e} run, un lot
+        passait de 1,4 à 3 min au début à environ 7 min à la fin, pour un plan de 3\,400 points : 2,5 min de
+        mise à jour et 4 min de choix. Le prolongement du facteur de Cholesky (§\,\ref{sec:lots}) ramène le
+        choix de 269 à 97 s à cette taille. Le reste vient du recalcul des covariances blanchies des points de
+        contrôle et des candidats à chaque choix ; elles pourraient se prolonger de la même façon (environ
+        80 s de moins par lot), ce qui n'est pas fait.
+  \item \textbf{Les redémarrages} partent d'une section jugée au premier ordre depuis les états d'un titulaire
+        lointain : un mauvais départ coûte une région. Les règles de convergence (10 mises à jour, 0,01 nd) et
+        les distances (2 pour redémarrer, 1 pour reconnaître un bassin) sont calées sur le seul
+        4\textsuperscript{e} run.
   \item \textbf{La FSI de premier ordre} et \textbf{la validation entre modèles potentiels} : quelques calculs
         CFD aux états VPP des profils comparés trancheraient. L'étude de maillage du week-end du 23/10
         (\py{runs/2026-10-23_weekend/cfd/report.md}) a montré une traînée convergée mais une portance qui ne
