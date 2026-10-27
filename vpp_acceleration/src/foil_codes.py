@@ -61,7 +61,14 @@ CP_MIN_PERCENTILE = 20.0
 # shared by the levels (module docstring): hull wall at z = 0, free surface 0.654 m above it
 CASE_OPTIONS = {"cp_min_percentile": CP_MIN_PERCENTILE, "wave_drag": False,
                 "free_surface_height": 0.654, "temperature": 15.0}
-LEVELS = [{"solver": "npllt", "cost": 1.0, "options": {"polars": "neuralfoil", **CASE_OPTIONS}},
+# NeuralFoil polars without bdfoil_v1's confidence cut (0.90): with it, 24 % of the NP-LLT x
+# NeuralFoil runs failed in the smoke of 2026-10-27 (strips at a slightly negative incidence, where
+# NeuralFoil's confidence is 0.4-0.5), the old pipeline had no cut (user decision 2026-10-27; effect
+# on the results: pipelines/CHANGEMENTS_2026-10-27_bdfoil_v1.md)
+NEURALFOIL_MIN_CONFIDENCE = 0.0
+LEVELS = [{"solver": "npllt", "cost": 1.0,
+           "options": {"polars": "neuralfoil", "neuralfoil_min_confidence": NEURALFOIL_MIN_CONFIDENCE,
+                       **CASE_OPTIONS}},
           {"solver": "avl", "cost": 15.0,
            "options": {"polars": "xfoil", "polar_timeout": 120, "timeout": 120,
                        **CASE_OPTIONS}}]

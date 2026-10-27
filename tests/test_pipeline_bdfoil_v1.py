@@ -151,8 +151,24 @@ def test_failures_become_solver_failures(monkeypatch):
         evaluate_with(monkeypatch, backend, error=model.ExeError("avl missing"))
 
 
+def test_neuralfoil_confidence_threshold_of_the_process(monkeypatch):
+    """neuralfoil_min_confidence sets bdfoil_v1's NeuralFoil threshold for this process and drops
+    its in-memory NeuralFoil polars when it changes; it needs NeuralFoil polars."""
+    from bdfoil_v1 import neuralfoil_polars  # pylint: disable=import-outside-toplevel
+    monkeypatch.setattr(neuralfoil_polars, "MIN_CONFIDENCE", 0.90)
+    monkeypatch.setattr(neuralfoil_polars, "_MEMO", {"old": "polar"})
+    backend = BdfoilV1Backend("npllt", FLOW, reference_chord=0.7, polars="neuralfoil",
+                              neuralfoil_min_confidence=0.0)
+    evaluate_with(monkeypatch, backend, fake_result("npllt"))
+    assert neuralfoil_polars.MIN_CONFIDENCE == 0.0 and neuralfoil_polars._MEMO == {}  # pylint: disable=protected-access
+    default = BdfoilV1Backend("npllt", FLOW, reference_chord=0.7, polars="neuralfoil")
+    assert default.neuralfoil_min_confidence is None
+    with pytest.raises(ValueError, match="neuralfoil"):
+        BdfoilV1Backend("avl", FLOW, reference_chord=0.7, neuralfoil_min_confidence=0.5)
+
+
 @pytest.mark.slow
-@pytest.mark.parametrize("solver, polars", [("npllt", "neuralfoil"), ("npllt", "xfoil"),
+@pytest.mark.parametrize("solver, polars",[("npllt", "neuralfoil"), ("npllt", "xfoil"),
                                             ("avl", "xfoil")])
 def test_one_real_evaluation_per_level(tmp_path, solver, polars):
     """One attitude of the C-foil (cant 3, rake 0.5, yaw 2 deg): finite coefficients, lift to

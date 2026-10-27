@@ -63,6 +63,57 @@ Les écarts sont relatifs, nouveau moteur moins ancien.
 **Conséquence pour vpp_acceleration.** Le surrogate du 5e run a été construit avec l'ancien moteur. Un nouveau run
 partira donc d'un plan neuf, calculé avec bdfoil_v1. Les résultats des runs 1 à 5 restent valables pour l'ancien moteur.
 
+## La coupure de confiance de NeuralFoil (décision du 27/10)
+
+**Le problème.** bdfoil_v1 coupe ses polaires NeuralFoil là où la confiance de NeuralFoil est sous 0,90 : c'est le seuil
+`MIN_CONFIDENCE` de `neuralfoil_polars.py`, décision J7-2 d'Antoine.
+- **Sur les sections du C-foil à Re 5·10⁶,** cette confiance tombe à 0,4–0,5 vers −4°. La polaire commence alors à −1,5°
+  ou −0,5°.
+- **Conséquence au smoke du 27/10** (`vpp_acceleration/runs/2026-10-27_1636_smoke_bdfoil_v1`) : les bandes à incidence
+  légèrement négative sortaient de la polaire, et **16 évaluations NP-LLT × NeuralFoil sur 66 (24 %) ont échoué** pour
+  « décrochage ».
+- **Ces points ne décrochaient pas :** à cant 5, rake 1, yaw 0, l'incidence médiane des panneaux est de −0,2°.
+- **L'ancien pipeline** n'avait pas de coupure et aucun échec.
+
+**La décision.** `BdfoilV1Backend(..., neuralfoil_min_confidence=0.0)` pour le niveau BF de `foil_codes.py`. Le seuil
+est changé pour le processus seulement : bdfoil_v1 n'est pas modifié, et ses polaires NeuralFoil en mémoire sont
+vidées quand le seuil change. Sans l'option, le seuil reste celui de bdfoil_v1.
+
+**Ce que cela change, mesuré.** 30 points du smoke : les 16 qui échouaient et 14 qui passaient. Pour chacun, le BF sans
+coupure, et le HF NP-LLT × XFOIL comme référence. L'écart de vitesse est l'écart des coefficients multiplié par les
+sensibilités ∂V/∂C de la VPP, à 45/12 et 45/16.
+
+| | 14 points où la coupure passait | 16 points où elle échouait |
+| --- | --- | --- |
+| BF sans coupure contre BF à 0,90 | **identiques** (écart 0,000 %) | — (pas de valeur à 0,90) |
+| écart BF – HF, médiane : Fx / Fy, Fz, Mx / My / Mz | 0,36 % / 0,2 % / 0,2 % / 0,1 % | **2,6 %** / 0,2 % / **1,0 %** / 0,4 % |
+| écart de vitesse BF – HF au premier ordre | médiane 0,005 nd, max 0,015 nd | médiane **0,036 nd**, max **0,39 nd** |
+| Cpmin BF contre HF | 40 % | 61 % |
+
+**Ce qu'il faut en retenir.**
+1. **Là où la coupure passait, rien ne change.** Abaisser le seuil ne modifie que les points qui échouaient.
+2. **Là où elle échouait, le BF est moins juste, surtout en traînée.** NeuralFoil sous-estime la traînée de 4 à 25 % aux
+   yaws négatifs (−1 à −4°), alors que la portance et les moments latéraux restent à 0,2–0,4 % du HF. Or **les états
+   portants de la VPP sont dans cette zone** : au 4e run, Yaw_Eff y vaut de −2,2 à −3,8° avec un cant proche de 0. C'est
+   là que le 4e run avait trouvé ses plus gros gains (+0,17 à +0,42 nd).
+3. **La corrélation BF/HF, sur laquelle repose le co-krigeage, reste forte.** La droite HF = ρ·BF + b ajuste encore
+   Fx avec R² = 0,989, et les forces latérales avec R² = 0,99999. Le reste, que le terme δ du co-krigeage doit apprendre,
+   est 2,4 fois plus grand en traînée aux points qui échouaient (0,14 écart type contre 0,06).
+4. **Pour les résultats, cela veut dire :**
+   - **Les vitesses finales ne sont pas biaisées par le BF.** Le surrogate prédit le niveau HF, et la validation compare
+     au HF.
+   - **Le BF est moins utile au portant.** Le critère de raffinement y verra une variance plus grande, et il y placera
+     plus de HF. Le coût d'un run pour la même précision au portant sera donc un peu plus élevé.
+   - **Un éventuel défaut se verrait.** Si le portant restait sous-raffiné, l'erreur du surrogate y serait de l'ordre de
+     ce reste, et la validation finale contre le HF (RMS par état) l'afficherait.
+   - **Garder la coupure serait pire.** On n'aurait aucune information BF au portant, et tout le travail y reposerait
+     sur le HF.
+5. **Le Cpmin du BF reste faible de toute façon** (40 à 60 % d'écart à XFOIL). Le Cpmin du surrogate tient à ses points
+   HF.
+
+**Si le portant pose problème au prochain run**, l'alternative est de prendre NP-LLT × XFOIL comme BF au portant, ou
+partout (coût 2 au lieu de 1). C'est à décider sur les chiffres de validation.
+
 ## Ce qui reste à savoir
 
 - **La racine contre la paroi.** bdfoil_v1 avertit que, sur le C-foil, les efforts de la ligne portante dérivent de 0,1 à

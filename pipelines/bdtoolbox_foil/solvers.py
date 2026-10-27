@@ -160,7 +160,9 @@ class BdfoilV1Backend:
     Options of the solvers: nchord, n_mesh, nspan (AVL), n_panels (NP-LLT), npane, niter,
     polar_timeout (XFOIL), timeout (AVL), cache_dir (polar cache, env BDFOIL_V1_CACHE of
     bdfoil_v1, <= 182 characters), fail_on_clamp, root_zone (fraction of the span excluded from
-    the stall check, default ROOT_ZONE_FRACTION with a wall).
+    the stall check, default ROOT_ZONE_FRACTION with a wall), neuralfoil_min_confidence (polars
+    "neuralfoil": the confidence threshold of the NeuralFoil polars, default None = bdfoil_v1's
+    0.90; see _set_neuralfoil_confidence).
 
     evaluate_planform(csv, section_dir) returns the foil.py-format coefficients of bdfoil_v1
     ("Cx [-]" ... "Cmz [-]": moments M / (q Sref) in metres about (0, 0, sink), BD frame x
@@ -177,7 +179,8 @@ class BdfoilV1Backend:
                  cp_min_percentile: float = 20.0, nchord: int = 8, n_mesh: int = None,
                  nspan: int = None, n_panels: int = None, npane: int = 250, niter: int = 100,
                  polar_timeout: float = 120.0, timeout: float = 60.0, cache_dir: str = None,
-                 fail_on_clamp: bool = True, root_zone: float = None):
+                 fail_on_clamp: bool = True, root_zone: float = None,
+                 neuralfoil_min_confidence: float = None):
         if solver not in ("avl", "npllt"):
             raise ValueError(f"BdfoilV1Backend: solver must be 'avl' or 'npllt', got {solver!r}")
         if polars not in POLAR_PROVIDERS:
@@ -222,6 +225,32 @@ class BdfoilV1Backend:
         self.fail_on_clamp = bool(fail_on_clamp)
         self.root_zone = (ROOT_ZONE_FRACTION if image == "wall" else 0.0) \
             if root_zone is None else float(root_zone)
+        if neuralfoil_min_confidence is not None and polars != "neuralfoil":
+            raise ValueError("BdfoilV1Backend: neuralfoil_min_confidence needs polars 'neuralfoil'")
+        self.neuralfoil_min_confidence = None if neuralfoil_min_confidence is None \
+            else float(neuralfoil_min_confidence)
+
+    def _set_neuralfoil_confidence(self) -> None:
+        """
+        bdfoil_v1 cuts its NeuralFoil polars where NeuralFoil's analysis confidence is under
+        neuralfoil_polars.MIN_CONFIDENCE (0.90, Antoine's decision J7-2 of 2026-10-21): on the
+        C-foil sections at Re 5e6 the confidence falls to 0.4-0.5 at -4 deg, the polar starts at
+        -1.5 or -0.5 deg, and the strips at a slightly negative incidence (yaw ~ 0, downwind) are
+        clamped: 24 % of the NP-LLT x NeuralFoil runs of the smoke of 2026-10-27 failed. With
+        neuralfoil_min_confidence the threshold of this PROCESS is set to that value (0 = no cut,
+        the NeuralFoil level of the old bdFoil pipeline), and bdfoil_v1's in-memory NeuralFoil
+        polars are dropped when it changes (their cache key does not hold the threshold).
+        bdfoil_v1 itself is not modified (decision of the user, 2026-10-27; its effect on the
+        results: pipelines/CHANGEMENTS_2026-10-27_bdfoil_v1.md).
+        """
+        if self.neuralfoil_min_confidence is None:
+            return
+        from bdfoil_v1 import neuralfoil_polars  # noqa: PLC0415  pylint: disable=import-outside-toplevel
+        # pylint: disable=protected-access
+        with neuralfoil_polars._LOCK:
+            if neuralfoil_polars.MIN_CONFIDENCE != self.neuralfoil_min_confidence:
+                neuralfoil_polars.MIN_CONFIDENCE = self.neuralfoil_min_confidence
+                neuralfoil_polars._MEMO.clear()
 
     def coefficients(self, parameters: dict, workdir: Path) -> dict:
         """Planform design variables (template path) are not supported by the real backend."""
@@ -250,6 +279,7 @@ class BdfoilV1Backend:
         angles = {**self.attitude, **{k: float(v) for k, v in (attitude or {}).items()}}
         if self.cache_dir is not None:
             os.environ["BDFOIL_V1_CACHE"] = str(self.cache_dir.resolve())
+        self._set_neuralfoil_confidence()
         session = self.session(csv_path, section_dir)
         try:
             result = session.evaluate(self.model.Attitude(**angles, speed=self.speed))
