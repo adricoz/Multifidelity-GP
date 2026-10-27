@@ -1,0 +1,33 @@
+17:27:42 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-10-27_1727_smoke_3levels
+17:27:42 [  0.0 min] family: box centred on the current section, scale 0.5, Ixx >= 6.7174e-05
+17:28:08 [  0.4 min] PCA: rank 16, k = 10 modes carry 99.86 % of the geometric variance
+17:28:08 [  0.4 min] start of the search: current_section
+17:29:48 [  2.1 min] start design: level 1 30 ok / 30, level 2 8 ok / 8, level 3 4 ok / 4
+17:29:59 [  2.3 min] batch 0: hyperparameters refitted on 42 points
+17:30:26 [  2.7 min] speed sensitivities dV/dC (rows = conditions): [[ 82.6   -1.48   1.86  -0.09   0.19  -0.08]
+ [108.29   1.05   8.33   2.58   0.61   0.03]]
+17:30:33 [  2.9 min] update 0: incumbent speed 15.3157 kt (new, gain 0.0305 kt), candidates [15.285 15.316 15.284 15.285], on 100 % of the probability, radius 1.50, region 0, 34 s
+17:30:36 [  2.9 min] batch 0: 4 choices (levels 1/2/3: 4/0/0), design 34/8/4, selection 37.8 s (update 34 s), 38.4 s
+17:30:42 [  3.0 min] update 1: incumbent speed 15.3125 kt (kept, gain 0.0000 kt), candidates [15.313 15.3   15.239 15.288], on 100 % of the probability, radius 1.05, region 0, 6 s
+17:30:44 [  3.0 min] batch 1: 4 choices (levels 1/2/3: 4/0/0), design 38/8/4, selection 7.9 s (update 6 s), 8.2 s
+17:30:49 [  3.1 min] update 2: incumbent speed 15.3392 kt (new, gain 0.0288 kt), candidates [15.31  15.282 15.309 15.339], on 100 % of the probability, radius 1.57, region 0, 4 s
+17:30:52 [  3.2 min] batch 2: 4 choices (levels 1/2/3: 4/0/0), design 42/8/4, selection 6.9 s (update 4 s), 7.2 s
+17:30:53 [  3.2 min] batch 3: hyperparameters refitted on 54 points
+17:31:01 [  3.3 min] speed sensitivities: 2 values more than 30 % from the median of the last 3 evaluations, median kept
+17:31:01 [  3.3 min] speed sensitivities dV/dC (rows = conditions): [[ 82.84  -1.68   1.87  -0.08   0.18  -0.1 ]
+ [113.76  -0.04   7.35   2.7    0.6    0.01]]
+17:31:07 [  3.4 min] update 3: incumbent speed 15.3432 kt (kept, gain 0.0000 kt), candidates [15.343 15.273 15.315 15.326], on 100 % of the probability, radius 1.10, region 0, 14 s
+17:31:10 [  3.5 min] batch 3: 4 choices (levels 1/2/3: 4/0/0), design 46/8/4, selection 17.9 s (update 14 s), 18.3 s
+17:31:15 [  3.6 min] update 4: incumbent speed 15.3602 kt (new, gain 0.0175 kt), candidates [15.343 15.346 15.36  15.351], on 100 % of the probability, radius 1.65, region 0, 6 s
+17:31:18 [  3.6 min] batch 4: 4 choices (levels 1/2/3: 4/0/0), design 50/8/4, selection 7.7 s (update 6 s), 8.1 s
+17:31:25 [  3.7 min] update 5: incumbent speed 15.3797 kt (new, gain 0.0141 kt), candidates [15.366 15.344 15.38  15.379], on 100 % of the probability, radius 2.48, region 0, 7 s
+17:31:27 [  3.8 min] batch 5: 4 choices (levels 1/2/3: 4/0/0), design 54/8/4, selection 8.6 s (update 7 s), 9.1 s
+17:31:35 [  3.9 min] speed sensitivities: 1 values more than 30 % from the median of the last 3 evaluations, median kept
+17:31:35 [  3.9 min] speed sensitivities dV/dC (rows = conditions): [[ 83.07  -1.89   1.89  -0.08   0.19  -0.11]
+ [119.23  -1.12   6.37   2.83   0.61  -0.01]]
+17:31:42 [  4.0 min] update 6: incumbent speed 15.3827 kt (new, gain 0.0024 kt), candidates [15.38  15.368 15.383 15.375], on 100 % of the probability, radius 3.00, region 0, 15 s
+17:31:44 [  4.0 min] batch 6: 4 choices (levels 1/2/3: 4/0/0), design 58/8/4, selection 16.5 s (update 15 s), 17.1 s
+17:31:53 [  4.2 min] update 7: incumbent speed 15.3979 kt (new, gain 0.0146 kt), candidates [15.383 15.394 15.398 15.387], on 100 % of the probability, radius 3.00, region 0, 7 s
+17:31:53 [  4.2 min] loop done: 28 choices in 7 batches, design per level (58, 8, 4), runs {1: 58, 2: 8, 3: 4}, code time {1: 32.186005999999, 2: 156.11738179999975, 3: 5.7117897999996785}
+17:32:14 [  4.5 min] validation done
+17:32:18 [  4.6 min] done

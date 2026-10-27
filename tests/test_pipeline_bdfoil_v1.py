@@ -149,6 +149,13 @@ def test_failures_become_solver_failures(monkeypatch):
         evaluate_with(monkeypatch, backend, fake_result("npllt", ok=False))
     with pytest.raises(model.ExeError):
         evaluate_with(monkeypatch, backend, error=model.ExeError("avl missing"))
+    # an AVL lift coupling loop (J8) that did not converge
+    avl = BdfoilV1Backend("avl", FLOW, reference_chord=0.7)
+    assert avl.case["solver"]["avl"]["coupling"] == "induced_angle"
+    unconverged = fake_result("avl")
+    unconverged.si["converged"] = False
+    with pytest.raises(SolverFailure, match="not converged"):
+        evaluate_with(monkeypatch, avl, unconverged)
 
 
 def test_neuralfoil_confidence_threshold_of_the_process(monkeypatch):

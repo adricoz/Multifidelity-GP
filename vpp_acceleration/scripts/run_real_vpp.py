@@ -48,7 +48,7 @@ from src.meta_foil import confident  # noqa: E402
 from src.run_dir import RunDir  # noqa: E402
 from src.section_pca import (CFoilFamily, KulfanBoxFamily, SectionPCA,  # noqa: E402
                              notebook_bounds, section_ixx)
-from src.foil_codes import LEVELS, LEVELS_XFOIL  # noqa: E402
+from src.foil_codes import CODE_LEVELS  # noqa: E402
 from src.operating_profile import OperatingProfile  # noqa: E402
 from src.vpp_coupling import FSICorrection, IntensSYVPP  # noqa: E402
 from src.vpp_optimize import (OUTPUT_NAMES, CodeRunner, RealFoilProblem,  # noqa: E402
@@ -61,8 +61,24 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--name", default="real_1h")
     parser.add_argument("--k", type=int, default=10, help="number of PCA modes of the section")
-    parser.add_argument("--n-low", type=int, default=120)
-    parser.add_argument("--n-high", type=int, default=30)
+    parser.add_argument("--n-low", type=int, default=120,
+                        help="2 levels: points of the start design at level 1 (see --n-design)")
+    parser.add_argument("--n-high", type=int, default=30,
+                        help="2 levels: points of the start design at level 2 (see --n-design)")
+    # 2026-10-27: any number of fidelity levels
+    parser.add_argument("--levels", nargs="+", choices=sorted(CODE_LEVELS), default=None,
+                        help="fidelity levels, cheapest first, the last one being the reference "
+                             "the VPP uses (src/foil_codes.CODE_LEVELS), e.g. nf_llt xfoil_llt "
+                             "avl; default: nf_llt and the --hf code")
+    parser.add_argument("--n-design", type=int, nargs="+", default=None,
+                        help="points of the nested start design at each level (default: --n-low "
+                             "--n-high with 2 levels)")
+    parser.add_argument("--costs", type=float, nargs="+", default=None,
+                        help="cost of a run at each level for the criterion (default: 1 and "
+                             "--hf-cost with 2 levels)")
+    parser.add_argument("--validate-with", nargs="*", choices=sorted(CODE_LEVELS), default=None,
+                        help="codes run at the validation only, outside the surrogate (default: "
+                             "avl when it is not a level)")
     parser.add_argument("--time-limit-min", type=float, default=42.0,
                         help="the loop stops at this time since the start of the run")
     parser.add_argument("--workers", type=int, default=6)
@@ -125,8 +141,27 @@ def main():
     args = parser.parse_args()
     if args.restarts and args.converge is None:
         parser.error("--restarts needs --converge")
+    if args.levels is None:
+        args.levels = ["nf_llt", "xfoil_llt" if args.hf == "npllt_xfoil" else "avl"]
+    n_levels = len(args.levels)
+    if n_levels < 2 or len(set(args.levels)) != n_levels:
+        parser.error("--levels needs at least 2 different codes")
     if args.smoke:
         args.n_low, args.n_high, args.time_limit_min = 30, 8, 4.0
+        if args.n_design is None and n_levels > 2:
+            args.n_design = [30, 8, 4, 2, 2][:n_levels]
+    if args.n_design is None:
+        if n_levels != 2:
+            parser.error("--n-design needs one size per level with more than 2 levels")
+        args.n_design = [args.n_low, args.n_high]
+    if args.costs is None:
+        if n_levels != 2:
+            parser.error("--costs needs one cost per level with more than 2 levels")
+        args.costs = [1.0, args.hf_cost]
+    if len(args.n_design) != n_levels or len(args.costs) != n_levels:
+        parser.error(f"--n-design and --costs need {n_levels} values (one per level)")
+    if args.validate_with is None:
+        args.validate_with = [] if "avl" in args.levels else ["avl"]
     if args.screen_seed is None:
         args.screen_seed = int.from_bytes(os.urandom(4), "little") % 2 ** 31
     if args.search_profile:
@@ -148,13 +183,16 @@ def main():
                 "sensitivity_memory": args.sensitivity_median}
     if args.batch > 1:
         settings.update({"update_every": 1, "refit_growth": 1.25})
-    levels = LEVELS_XFOIL if args.hf == "npllt_xfoil" else LEVELS
-    level_names = ("1 = NPLLT x NeuralFoil xxxlarge, 2 = NPLLT x XFOIL, 3 = AVL x XFOIL "
-                   "(validation only)" if args.hf == "npllt_xfoil" else
-                   "1 = NPLLT x NeuralFoil xxxlarge, 2 = AVL x XFOIL") + " (src/foil_codes.py)"
+    # the codes of the runner: the levels of the surrogate (1..L), then the validation codes
+    codes = list(args.levels) + [c for c in args.validate_with if c not in args.levels]
+    levels = [CODE_LEVELS[name][0] for name in codes]
+    extra_levels = {name: n_levels + i + 1 for i, name in enumerate(codes[n_levels:])}
+    level_names = ", ".join(f"{i} = {CODE_LEVELS[name][1]}"
+                            + (" (validation only)" if i > n_levels else "")
+                            for i, name in enumerate(codes, start=1)) + " (src/foil_codes.py)"
     config = {**vars(args), "conditions": conditions, "condition_weights": condition_weights,
               "optimizer": settings,
-              "levels": level_names, "criterion_costs": [1.0, args.hf_cost],
+              "levels_description": level_names, "criterion_costs": list(args.costs),
               "family": "Dim-Reduction box, no crossing, NF confident" if args.box == "dimred" else
               f"Dim-Reduction widths x {args.box_scale} centred on the current C-foil section, "
               "no crossing, Ixx >= Ixx(current), NF confident (checked on the decoded sections)",
@@ -200,8 +238,8 @@ def main():
 
     # 2. start design
     runner = CodeRunner(problem, run, n_workers=args.workers, levels=levels)
-    surrogate = start_design(problem, runner, args.n_low, args.n_high, args.seed,
-                             costs=(1.0, args.hf_cost), n_threads=7)
+    surrogate = start_design(problem, runner, args.n_design, args.seed, costs=args.costs,
+                             n_threads=7)
 
     # 3. the loop
     vpp = IntensSYVPP(foil="CFoilFSI", with_hvol=False,
@@ -214,8 +252,8 @@ def main():
                                     vpp_pool=vpp_pool, condition_weights=condition_weights,
                                     screen_seed=args.screen_seed, **settings)
     optimizer.run_loop()
-    run.log(f"loop done: {optimizer.iteration} choices in {optimizer.n_batches} batches, LF/HF "
-            f"{surrogate.sizes}, runs {runner.n_runs}, code time {runner.time}")
+    run.log(f"loop done: {optimizer.iteration} choices in {optimizer.n_batches} batches, design "
+            f"per level {surrogate.sizes}, runs {runner.n_runs}, code time {runner.time}")
 
     # 4. validation: the best section, the start section, the other local optima (restarts) and
     # the best sections of earlier runs
@@ -227,8 +265,7 @@ def main():
         earlier = json.loads(Path(path).read_text(encoding="utf-8"))
         weights = np.array(earlier["kulfan_upper"] + earlier["kulfan_lower"])
         sections[f"best_{Path(path).parents[1].name}"] = pca.encode(weights)[0]
-    rows = validate(optimizer, sections, extra_levels={"avl": 3} if args.hf == "npllt_xfoil"
-                    else None)
+    rows = validate(optimizer, sections, extra_levels=extra_levels or None)
     run.log("validation done")
     runner.close()
     # the final surrogate (means only, ~60 MB; its variances come back by conditioning it again):
@@ -253,7 +290,8 @@ def main():
         "speeds_by_condition": dict(zip([f"{a:.0f}/{s:.0f}" for a, s in conditions],
                                         optimizer.updates[-1]["incumbent_speeds"])),
         "mean_speed": optimizer.updates[-1]["incumbent_speed"]})
-    summary = summarize(run, optimizer, runner, validation, conditions)
+    summary = summarize(run, optimizer, runner, validation, conditions,
+                        [CODE_LEVELS[name][1] for name in codes])
     (run.path("results", "summary.txt")).write_text(summary + "\n", encoding="utf-8")
     print(summary)
     from real_run_figures import make_figures  # noqa: PLC0415
@@ -271,7 +309,8 @@ def main():
     run.log("done")
 
 
-def summarize(run, optimizer, runner, validation, conditions) -> str:
+def summarize(run, optimizer, runner, validation, conditions, code_labels) -> str:
+    """The summary of a run; code_labels: the label of every code of the runner, level 1 first."""
     last = optimizer.updates[-1]
     # the sections compared on the SAME conditions, those solved for all of them, with their
     # probabilities, and the speed corrected to first order against the HF code (the first update
@@ -283,8 +322,9 @@ def summarize(run, optimizer, runner, validation, conditions) -> str:
         v=lambda t: t.speed_kt - t.speed_error_kt, w=lambda t: t.condition.map(weights))
     speeds = {name: float(np.sum(g.v * g.w) / g.w.sum()) for name, g in corrected.groupby("section")}
     lines = [f"run {run.root.name}: {optimizer.iteration} steps in {run.elapsed() / 60:.1f} min",
-             f"code runs: LF {runner.n_runs[1]} ({runner.time[1]:.0f} s), HF {runner.n_runs[2]} "
-             f"({runner.time[2]:.0f} s); final design LF/HF {optimizer.surrogate.sizes}",
+             "code runs: " + ", ".join(f"level {l} {runner.n_runs[l]} ({runner.time[l]:.0f} s)"
+                                       for l in sorted(runner.n_runs))
+             + f"; final design per level {optimizer.surrogate.sizes}",
              f"speed of the validated sections (final surrogate corrected against HF, weighted mean "
              f"over the {len(common)} conditions solved for all, "
              f"{100 * sum(weights[c] for c in common):.0f} % of the probability): "
@@ -296,7 +336,9 @@ def summarize(run, optimizer, runner, validation, conditions) -> str:
         lines.append("local optima of the regions, final surrogate (results/optima.json): "
                      + ", ".join(f"region {e['region']} {e['final_speed']:.4f} kt"
                                  + (" (best)" if e["best"] else "") for e in optimizer.compared))
-    hf = "AVL" if runner.levels[1]["solver"] == "avl" else "NPLLT x XFOIL"
+    hf = code_labels[optimizer.surrogate.n_levels - 1]
+    others = [c[len("speed_error_"):-len("_kt")] for c in validation.columns
+              if c.startswith("speed_error_") and c != "speed_error_kt"]
     for name, group in validation.groupby("section"):
         err = group["speed_error_kt"].to_numpy()
         sig = group["speed_sigma_kt"].to_numpy()
@@ -304,10 +346,10 @@ def summarize(run, optimizer, runner, validation, conditions) -> str:
                      f"RMS {np.sqrt(np.mean(err ** 2)):.4f} kt, max {np.max(np.abs(err)):.4f} kt;"
                      f" predicted sigma RMS {np.sqrt(np.mean(sig ** 2)):.4f} kt; |z| <= 2 on "
                      f"{np.mean(np.abs(err) <= 2 * sig) * 100:.0f} %")
-        if "speed_error_avl_kt" in group:
-            err_avl = group["speed_error_avl_kt"].to_numpy()
-            lines.append(f"   against AVL x XFOIL (not a level of the surrogate): speed error "
-                         f"mean {np.mean(err_avl):+.4f} kt, RMS {np.sqrt(np.mean(err_avl ** 2)):.4f} kt")
+        for key in others:
+            err_k = group[f"speed_error_{key}_kt"].to_numpy()
+            lines.append(f"   against the {key} code: speed error mean {np.mean(err_k):+.4f} kt, "
+                         f"RMS {np.sqrt(np.mean(err_k ** 2)):.4f} kt")
         for name_k in OUTPUT_NAMES:
             rel = np.abs(group[f"{name_k}_sur"] - group[f"{name_k}_hf"]) \
                 / np.maximum(np.abs(group[f"{name_k}_hf"]), 1e-6)

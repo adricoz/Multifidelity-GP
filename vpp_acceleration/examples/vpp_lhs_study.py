@@ -55,9 +55,9 @@ def run_task(task):
     test = common.global_test_set(meta)
     start = time.perf_counter()
     if kind == "co-kriging":
-        surrogate = nested_design(meta, n_low, n_high, seed)
+        surrogate = nested_design(meta, n_low, n_high, seed=seed)
     else:
-        multi = nested_design(meta, n_high, n_high, seed)      # same sampler, HF at every point
+        multi = nested_design(meta, n_high, n_high, seed=seed)      # same sampler, HF at every point
         surrogate = TorsorKriging(multi.bounds, seed=seed)
         surrogate.x_lists, surrogate.y_lists = multi.x_lists, multi.y_lists
     surrogate.fit()

@@ -57,24 +57,33 @@ SPREAD = np.array([1.0, 0.3, 1.0, 0.05])
 # -------------------------------------------------------------------------------------------------
 class TorsorCoKriging:
     """
-    Six (or seven) CoKriging (mfego) sharing one nested design: x_lists[l] (n_l, d), y_lists[l]
-    (n_l, 7). n_models = 6: the force / moment coefficients (Cpmin stored, not modelled, predicted
-    as 0: the meta studies); n_models = 7: Cpmin modelled too (the real run of 2026-10-22).
+    n_models CoKriging (mfego) of L fidelity levels (L = len(costs), level 1 the cheapest, level L
+    the reference the VPP uses) sharing one nested design: x_lists[l - 1] (n_l, d), y_lists[l - 1]
+    (n_l, n_outputs), the points of level l being points of level l - 1. n_models = 6: the force /
+    moment coefficients (Cpmin stored, not modelled, predicted as 0: the meta studies); n_models =
+    7: Cpmin modelled too (the real runs since 2026-10-22).
     """
 
     def __init__(self, bounds, costs=(1.0, 10.0), share_lengthscales=False, seed=0,
-                 n_models: int = N_FORCES, n_threads: int = 1):
-        """n_threads: the models are fitted, conditioned and evaluated in that many threads
+                 n_models: int = N_FORCES, n_threads: int = 1, n_outputs: int = 7):
+        """costs: cost of a run at each level (its length is the number of levels L).
+        n_threads: the models are fitted, conditioned and evaluated in that many threads
         (numpy releases the GIL in its linear algebra); same results as 1 thread."""
         self.bounds = list(bounds)
         self.costs = np.asarray(costs, dtype=float)
+        if self.costs.ndim != 1 or len(self.costs) < 2:
+            raise ValueError("TorsorCoKriging: costs needs one value per level, at least 2 levels")
         self.share_lengthscales = share_lengthscales
         self.seed = seed
-        self.n_models = int(n_models)
+        self.n_models, self.n_outputs = int(n_models), int(n_outputs)
         self.n_threads = int(n_threads)
-        self.x_lists = [np.zeros((0, len(bounds))), np.zeros((0, len(bounds)))]
-        self.y_lists = [np.zeros((0, 7)), np.zeros((0, 7))]
+        self.x_lists = [np.zeros((0, len(bounds))) for _ in range(self.n_levels)]
+        self.y_lists = [np.zeros((0, self.n_outputs)) for _ in range(self.n_levels)]
         self.models = None
+
+    @property
+    def n_levels(self) -> int:
+        return len(self.costs)
 
     def map_models(self, function, items) -> list:
         """[function(item) for item in items], in n_threads threads."""
@@ -84,7 +93,7 @@ class TorsorCoKriging:
             return list(pool.map(function, items))
 
     def add(self, level: int, x: np.ndarray, y: np.ndarray) -> None:
-        """Adds observations (m, 16) -> (m, 7) at a level (1 or 2)."""
+        """Adds observations (m, d) -> (m, n_outputs) at a level (1 to L)."""
         self.x_lists[level - 1] = np.vstack([self.x_lists[level - 1], np.atleast_2d(x)])
         self.y_lists[level - 1] = np.vstack([self.y_lists[level - 1], np.atleast_2d(y)])
 
@@ -109,16 +118,17 @@ class TorsorCoKriging:
 
     def _data(self, k: int) -> ExperimentData:
         data = ExperimentData(bounds=self.bounds, costs=list(self.costs))
-        data.x_dict = {1: self.x_lists[0], 2: self.x_lists[1]}
-        data.y_dict = {1: self.y_lists[0][:, k], 2: self.y_lists[1][:, k]}
-        data.metrics_dict = {1: [{}] * len(self.x_lists[0]), 2: [{}] * len(self.x_lists[1])}
+        levels = range(1, self.n_levels + 1)
+        data.x_dict = {l: self.x_lists[l - 1] for l in levels}
+        data.y_dict = {l: self.y_lists[l - 1][:, k] for l in levels}
+        data.metrics_dict = {l: [{}] * len(self.x_lists[l - 1]) for l in levels}
         return data
 
     def fit(self, refit: bool = True) -> None:
         """refit: new hyperparameters (MAP); otherwise the current ones, conditioned on the data."""
         if refit or self.models is None:
             def fit_one(k):
-                model = CoKriging(2, priors=RHO_PRIOR, seed=self.seed + k,
+                model = CoKriging(self.n_levels, priors=RHO_PRIOR, seed=self.seed + k,
                                   share_lengthscales=self.share_lengthscales)
                 model.fit(self._data(k))
                 return model
@@ -129,10 +139,10 @@ class TorsorCoKriging:
             self.map_models(condition_one, range(self.n_models))
 
     def predict(self, x: np.ndarray, level: int = None) -> np.ndarray:
-        """Means (m, 7) of a level (default the top one): the 6 coefficients, and Cpmin (0 when
-        it is not modelled)."""
+        """Means (m, n_outputs) of a level (default the top one): the modelled outputs, 0 for the
+        others (Cpmin of the meta studies)."""
         x = np.atleast_2d(x)
-        means = np.zeros((len(x), 7))
+        means = np.zeros((len(x), self.n_outputs))
         for k, model in enumerate(self.models):
             means[:, k] = latent_mean(model, x, level)
         return means
@@ -156,11 +166,18 @@ class TorsorCoKriging:
 
     @property
     def cost(self) -> float:
-        return float(len(self.x_lists[0]) * self.costs[0] + len(self.x_lists[1]) * self.costs[1])
+        return float(sum(len(x) * c for x, c in zip(self.x_lists, self.costs)))
 
     @property
     def sizes(self) -> tuple:
-        return len(self.x_lists[0]), len(self.x_lists[1])
+        """Number of points of each level, level 1 first."""
+        return tuple(len(x) for x in self.x_lists)
+
+
+def nested_subset(points: np.ndarray, n: int, bounds) -> np.ndarray:
+    """n of the points chosen by greedy maximin in the unit cube of the bounds (all of them if
+    n >= their number): the points of the next level of a nested design."""
+    return greedy_maximin(points, n, bounds) if n < len(points) else np.array(points, copy=True)
 
 
 def latent_mean(model: CoKriging, x: np.ndarray, level: int = None) -> np.ndarray:
@@ -176,22 +193,26 @@ def latent_mean(model: CoKriging, x: np.ndarray, level: int = None) -> np.ndarra
     return model._mean(levels) + k_mat @ model.alpha
 
 
-def nested_design(meta, n_low: int, n_high: int, seed: int) -> TorsorCoKriging:
+def nested_design(meta, *sizes: int, seed: int) -> TorsorCoKriging:
     """
-    Nested initial design, evaluated with the meta-surrogate: n_low points (sections drawn in the
-    family, attitude by a Latin hypercube in its box), then n_high of them chosen by greedy
-    maximin (in the unit cube of the bounds) for the high fidelity.
+    Nested initial design, evaluated with the meta-surrogate: sizes[0] points (sections drawn in
+    the family, attitude by a Latin hypercube in its box), then sizes[l] of the points of level l
+    chosen by greedy maximin (in the unit cube of the bounds) for level l + 1. The meta-surrogate
+    has 2 levels: nested_design(meta, n_low, n_high, seed=...).
     """
     bounds = meta.bounds()
-    scores = meta.sample_sections(n_low, seed)
+    scores = meta.sample_sections(sizes[0], seed)
     lo = np.array([b[0] for b in ATTITUDE_BOUNDS])
     hi = np.array([b[1] for b in ATTITUDE_BOUNDS])
-    attitude = lo + qmc.LatinHypercube(d=4, seed=seed).random(n_low) * (hi - lo)
-    x_low = np.column_stack([scores, attitude])
-    x_high = greedy_maximin(x_low, n_high, bounds) if n_high < n_low else x_low.copy()
+    attitude = lo + qmc.LatinHypercube(d=4, seed=seed).random(sizes[0]) * (hi - lo)
+    x = np.column_stack([scores, attitude])
     surrogate = TorsorCoKriging(bounds, seed=seed)
-    surrogate.add(1, x_low, meta(x_low, 1))
-    surrogate.add(2, x_high, meta(x_high, 2))
+    if len(sizes) != surrogate.n_levels:
+        raise ValueError(f"nested_design: one size per level ({surrogate.n_levels})")
+    for level, n in enumerate(sizes, start=1):
+        if level > 1:
+            x = nested_subset(x, n, bounds)
+        surrogate.add(level, x, meta(x, level))
     return surrogate
 
 
@@ -257,8 +278,9 @@ def speed_weights(vpp, predict, scores, conditions, states) -> np.ndarray:
 def candidates(surrogate: TorsorCoKriging, meta, state_points, n_local: int, n_global: int,
                seed: int) -> tuple:
     """
-    Candidates and their missing levels (M, 2): Sobol clouds around the states (n_local in all),
-    points of the whole domain (n_global), and the LF points without HF.
+    Candidates and their missing levels (M, L): Sobol clouds around the states (n_local in all),
+    points of the whole domain (n_global), and the points of every level l < L that the level
+    l + 1 does not have (missing from l + 1 on).
     """
     parts = []
     if state_points is not None and len(state_points) and n_local:
@@ -266,13 +288,19 @@ def candidates(surrogate: TorsorCoKriging, meta, state_points, n_local: int, n_g
         parts.append(integration_cloud(state_points, per_state, seed + 1))
     if n_global:
         parts.append(global_points(meta, n_global, seed + 2))
-    x_new = np.vstack(parts)
-    missing_new = np.ones((len(x_new), 2), dtype=bool)
-    x_low, x_high = surrogate.x_lists
-    has_high = np.array([np.any(np.all(np.isclose(x, x_high), axis=1)) for x in x_low])
-    x_lf_only = x_low[~has_high]
-    missing_lf = np.column_stack([np.zeros(len(x_lf_only), bool), np.ones(len(x_lf_only), bool)])
-    return np.vstack([x_new, x_lf_only]), np.vstack([missing_new, missing_lf])
+    n_levels = surrogate.n_levels
+    x_parts = [np.vstack(parts)]
+    missing_parts = [np.ones((len(x_parts[0]), n_levels), dtype=bool)]
+    for level in range(1, n_levels):
+        x_level, x_next = surrogate.x_lists[level - 1], surrogate.x_lists[level]
+        upper = np.array([np.any(np.all(np.isclose(x, x_next), axis=1)) for x in x_level],
+                         dtype=bool).reshape(-1)
+        stop = x_level[~upper]
+        missing = np.zeros((len(stop), n_levels), dtype=bool)
+        missing[:, level:] = True
+        x_parts.append(stop)
+        missing_parts.append(missing)
+    return np.vstack(x_parts), np.vstack(missing_parts)
 
 
 def choose(surrogate: TorsorCoKriging, weights: np.ndarray, x_cand: np.ndarray,
@@ -287,19 +315,19 @@ def choose(surrogate: TorsorCoKriging, weights: np.ndarray, x_cand: np.ndarray,
     The first form is the second with weights w_k / N.
 
     Returns:
-    - dict: index, level (None if nothing fits), x, ratio, gains (M, 2) of the weighted sum.
+    - dict: index, level (None if nothing fits), x, ratio, gains (M, L) of the weighted sum.
     """
     weights = np.asarray(weights, dtype=float)
     if weights.ndim == 1:
         weights = np.tile(weights / len(x_int), (len(x_int), 1))           # (N, K)
     used = [k for k in range(len(surrogate.models))
             if k < weights.shape[1] and weights[:, k].sum() > 0.0]
-    gains = np.zeros((len(x_cand), 2))
+    gains = np.zeros((len(x_cand), surrogate.n_levels))
     for gain in surrogate.map_models(
             lambda k: batched_imse_gains(surrogate.models[k], x_cand, x_int, missing,
                                          int_weights=weights[:, k]), used):
         gains += gain
-    cumulative = np.cumsum(missing * surrogate.costs, axis=1)            # (M, 2)
+    cumulative = np.cumsum(missing * surrogate.costs, axis=1)            # (M, L)
     ratios = np.where(missing & (cumulative <= remaining_budget + 1e-12),
                       gains / np.maximum(cumulative, 1e-12), -np.inf)
     if not np.isfinite(ratios).any():
@@ -308,6 +336,13 @@ def choose(surrogate: TorsorCoKriging, weights: np.ndarray, x_cand: np.ndarray,
     return {"index": int(index), "level": int(level) + 1, "x": x_cand[index].copy(),
             "ratio": float(ratios[index, level]), "gains": gains,
             "missing": missing[index].copy(), "cost": float(cumulative[index, level])}
+
+
+def levels_to_run(choice) -> list:
+    """The levels a choice (choose) runs: the missing levels up to the chosen one (nested
+    design: a level l is never run where the level l - 1 is missing)."""
+    return [level for level in range(1, len(choice["missing"]) + 1)
+            if level <= choice["level"] and choice["missing"][level - 1]]
 
 
 # 4/4 ---------------------------------------------------------------------------------------------
@@ -353,7 +388,7 @@ class VPPTargetedDesign:
         else:
             self.x_int = global_points(self.meta, self.n_global_int, self.seed + self.iteration)
             # classic multi-output ALC: every coefficient counts by its variance (scale-free)
-            self.weights = 1.0 / np.var(self.surrogate.y_lists[1][:, :self.surrogate.n_models],
+            self.weights = 1.0 / np.var(self.surrogate.y_lists[-1][:, :self.surrogate.n_models],
                                         axis=0)
 
     def step(self, remaining_budget: float) -> dict:
@@ -376,13 +411,12 @@ class VPPTargetedDesign:
                   "weights": None if self.weights is None else self.weights.tolist()}
         if choice["level"] is not None:
             x = choice["x"]
-            for level in (1, 2):
-                if level <= choice["level"] and choice["missing"][level - 1]:
-                    self.surrogate.add(level, x, self.meta(x[None, :], level))
+            levels_run = levels_to_run(choice)
+            for level in levels_run:
+                self.surrogate.add(level, x, self.meta(x[None, :], level))
             self.cost_spent += choice["cost"]
             record["x"] = x.tolist()
-            record["levels_run"] = [l for l in (1, 2) if l <= choice["level"]
-                                    and choice["missing"][l - 1]]
+            record["levels_run"] = levels_run
             # distance (attitude, scaled by SPREAD) to the nearest state of the same section
             state_points = np.array([s["point"] for s in self.states])
             same = np.all(np.isclose(state_points[:, :N_SCORES], x[:N_SCORES]), axis=1)

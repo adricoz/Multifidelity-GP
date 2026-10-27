@@ -78,6 +78,11 @@ LEVELS = [{"solver": "npllt", "cost": 1.0,
 NPLLT_XFOIL = {"solver": "npllt", "cost": 2.0,
                "options": {"polars": "xfoil", "polar_timeout": 120, **CASE_OPTIONS}}
 LEVELS_XFOIL = [LEVELS[0], NPLLT_XFOIL, LEVELS[1]]
+# the codes by name, to build a list of fidelity levels of any length (scripts/run_real_vpp.py
+# --levels, cheapest first): name -> (level definition, label)
+CODE_LEVELS = {"nf_llt": (LEVELS[0], "NPLLT x NeuralFoil xxxlarge"),
+               "xfoil_llt": (NPLLT_XFOIL, "NPLLT x XFOIL"),
+               "avl": (LEVELS[1], "AVL x XFOIL")}
 TE_THICKNESS = 0.00197
 NEURALFOIL_MODEL = "xxxlarge"         # the NeuralFoil polars of bdfoil_v1 (its MODEL_SIZE)
 N_SECTION_POINTS = 121                # coordinates per side of a Kulfan section (AVL limit)

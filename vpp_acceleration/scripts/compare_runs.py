@@ -24,10 +24,13 @@ def batch_table(root: Path) -> pd.DataFrame:
     history = pd.read_csv(root / "results" / "history.csv")
     updates = json.loads((root / "results" / "updates.json").read_text(encoding="utf-8"))
     update_time = {u["iteration"]: u["time_s"] for u in updates}
+    # design size: every level (n_l1 ... n_lL since 2026-10-27; n_lf + n_hf before)
+    size_columns = [c for c in history.columns if c.startswith("n_l") and c[3:].isdigit()] \
+        or ["n_lf", "n_hf"]
     rows = []
     for batch, group in history.groupby("batch"):
         rows.append({"batch": batch, "end_min": group.elapsed_min.max(), "n": len(group),
-                     "size": int(group.n_lf.iloc[-1] + group.n_hf.iloc[-1]),
+                     "size": int(sum(group[c].iloc[-1] for c in size_columns)),
                      "update_s": float(group.update_s.iloc[0]) if "update_s" in group
                      else update_time.get(int(group.iteration.min()), np.nan)})
     table = pd.DataFrame(rows).sort_values("batch")

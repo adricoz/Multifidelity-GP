@@ -162,7 +162,11 @@ class BdfoilV1Backend:
     bdfoil_v1, <= 182 characters), fail_on_clamp, root_zone (fraction of the span excluded from
     the stall check, default ROOT_ZONE_FRACTION with a wall), neuralfoil_min_confidence (polars
     "neuralfoil": the confidence threshold of the NeuralFoil polars, default None = bdfoil_v1's
-    0.90; see _set_neuralfoil_confidence).
+    0.90; see _set_neuralfoil_confidence), avl_coupling ("induced_angle", default since
+    bdfoil_v1 J8 of 2026-10-27, "AVL_itération_angle_induit": a fictitious twist per AVL section
+    iterated until the cl of every strip is the one of its polar at AVL's effective angle; "cl" =
+    AVL's lift as it is, the chain before), coupling_max_iter, fail_on_unconverged (a coupling
+    loop or an NP-LLT Newton that did not converge is a failed evaluation, default True).
 
     evaluate_planform(csv, section_dir) returns the foil.py-format coefficients of bdfoil_v1
     ("Cx [-]" ... "Cmz [-]": moments M / (q Sref) in metres about (0, 0, sink), BD frame x
@@ -180,7 +184,8 @@ class BdfoilV1Backend:
                  nspan: int = None, n_panels: int = None, npane: int = 250, niter: int = 100,
                  polar_timeout: float = 120.0, timeout: float = 60.0, cache_dir: str = None,
                  fail_on_clamp: bool = True, root_zone: float = None,
-                 neuralfoil_min_confidence: float = None):
+                 neuralfoil_min_confidence: float = None, avl_coupling: str = "induced_angle",
+                 coupling_max_iter: int = 25, fail_on_unconverged: bool = True):
         if solver not in ("avl", "npllt"):
             raise ValueError(f"BdfoilV1Backend: solver must be 'avl' or 'npllt', got {solver!r}")
         if polars not in POLAR_PROVIDERS:
@@ -209,7 +214,9 @@ class BdfoilV1Backend:
             "appendage": {"kind": kind, "planform": {"csv": "planform.csv", "length_unit": "m"}},
             "solver": {"backend": solver,
                        "avl": {"nchord": int(nchord), "n_mesh": n_mesh, "nspan": nspan,
-                               "timeout": float(timeout)},
+                               "timeout": float(timeout), "coupling": avl_coupling,
+                               "coupling_speed": self.speed,
+                               "coupling_max_iter": int(coupling_max_iter)},
                        "npllt": {"n_mesh": n_mesh, "n_panels": n_panels}},
             "polars": {"provider": polars, "ncrit": float(flow.get("n_crit", 1.0)),
                        "xtr": [float(v) for v in flow.get("xtr", (0.1, 0.1))],
@@ -229,6 +236,7 @@ class BdfoilV1Backend:
             raise ValueError("BdfoilV1Backend: neuralfoil_min_confidence needs polars 'neuralfoil'")
         self.neuralfoil_min_confidence = None if neuralfoil_min_confidence is None \
             else float(neuralfoil_min_confidence)
+        self.fail_on_unconverged = bool(fail_on_unconverged)
 
     def _set_neuralfoil_confidence(self) -> None:
         """
@@ -306,8 +314,13 @@ class BdfoilV1Backend:
             if isinstance(value, (int, float, np.integer, np.floating)) \
                     and not isinstance(value, bool):
                 out[key] = float(value)
-        if self.name == "npllt":
-            out["converged"] = bool(si.get("converged", True))
+        # NP-LLT Newton, or the AVL / polar lift coupling loop: a case kept by bdfoil_v1 but not
+        # converged is a failed evaluation for the surrogate (fail_on_unconverged)
+        converged = si.get("converged")
+        out["converged"] = True if converged is None or converged != converged else bool(converged)
+        if self.fail_on_unconverged and not out["converged"]:
+            raise SolverFailure(f"bdfoil_v1 {self.name}: not converged after "
+                                f"{si.get('n iterations')} iterations")
         # stall check outside the root zone of a wall image: strips whose cl leaves the monotone
         # branch of their polar (AVL and NP-LLT post), NP-LLT panels whose incidence leaves it
         strips = result.strips

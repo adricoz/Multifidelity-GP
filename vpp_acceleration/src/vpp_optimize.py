@@ -79,9 +79,8 @@ from concurrent.futures import ProcessPoolExecutor
 import numpy as np
 from scipy.stats import qmc
 
-from src.data_management import greedy_maximin
 from src.section_pca import section_ixx
-from src.vpp_targeted import TorsorCoKriging, choose
+from src.vpp_targeted import TorsorCoKriging, choose, levels_to_run, nested_subset
 
 ATTITUDE_BOUNDS = [(0.0, 8.0), (-1.5, 1.5), (-6.0, 6.0)]       # box of the C-foil RS
 SPREAD = np.array([1.0, 0.3, 1.0])                              # cloud half-width [deg]
@@ -272,27 +271,31 @@ class CodeRunner:
             self.pool = None
 
 
-def start_design(problem: RealFoilProblem, runner: CodeRunner, n_low: int, n_high: int,
-                 seed: int, n_models: int = 7, costs=(1.0, 6.0),
-                 n_threads: int = 1) -> TorsorCoKriging:
-    """Nested design: sections of the family, attitude by Latin hypercube, HF by maximin among
-    the LF points that succeeded; failed runs are left out (recorded in the run folder)."""
-    scores = problem.sample_sections(n_low, seed)
-    attitude = problem.lo + qmc.LatinHypercube(d=len(problem.lo), seed=seed).random(n_low) \
+def start_design(problem: RealFoilProblem, runner: CodeRunner, sizes, seed: int,
+                 n_models: int = 7, costs=(1.0, 6.0), n_threads: int = 1) -> TorsorCoKriging:
+    """Nested design of L = len(sizes) levels (one cost per level): sizes[0] sections of the
+    family with an attitude by Latin hypercube at level 1, then for each level l > 1 sizes[l - 1]
+    points chosen by maximin among the points of level l - 1 that succeeded; failed runs are left
+    out (recorded in the run folder). Level l of the surrogate is level l of the runner."""
+    sizes = [int(n) for n in sizes]
+    if len(sizes) != len(costs):
+        raise ValueError(f"start_design: {len(sizes)} sizes for {len(costs)} levels (costs)")
+    scores = problem.sample_sections(sizes[0], seed)
+    attitude = problem.lo + qmc.LatinHypercube(d=len(problem.lo), seed=seed).random(sizes[0]) \
         * (problem.hi - problem.lo)
-    x_low = np.column_stack([scores, attitude])
-    y_low, _ = runner.evaluate(x_low, 1, tag="start")
-    ok = np.all(np.isfinite(y_low), axis=1)
-    x_low, y_low = x_low[ok], y_low[ok]
-    x_high = greedy_maximin(x_low, n_high, problem.bounds())
-    y_high, _ = runner.evaluate(x_high, 2, tag="start")
-    ok_high = np.all(np.isfinite(y_high), axis=1)
+    x = np.column_stack([scores, attitude])
     surrogate = TorsorCoKriging(problem.bounds(), costs=costs, seed=seed, n_models=n_models,
                                 n_threads=n_threads)
-    surrogate.add(1, x_low, y_low)
-    surrogate.add(2, x_high[ok_high], y_high[ok_high])
-    runner.run.log(f"start design: LF {len(x_low)} ok / {n_low}, HF {ok_high.sum()} ok / "
-                   f"{len(x_high)}")
+    counts = []
+    for level, n in enumerate(sizes, start=1):
+        if level > 1:
+            x = nested_subset(x, n, problem.bounds())
+        y, _ = runner.evaluate(x, level, tag="start")
+        ok = np.all(np.isfinite(y), axis=1)
+        x, y = x[ok], y[ok]
+        surrogate.add(level, x, y)
+        counts.append(f"level {level} {int(ok.sum())} ok / {len(ok)}")
+    runner.run.log("start design: " + ", ".join(counts))
     return surrogate
 
 
@@ -620,7 +623,7 @@ class VPPSectionOptimizer:
             self.states, self.n_per_state, self.seed + self.iteration, self.section_radius())
         record = {"update": self.n_updates, "iteration": self.iteration,
                   "elapsed_min": self.run.elapsed() / 60, "cost": self.surrogate.cost,
-                  "n_lf": self.surrogate.sizes[0], "n_hf": self.surrogate.sizes[1],
+                  **self.size_columns(),
                   "incumbent_speed": float(best[0]), "incumbent_speeds": best[3],
                   "probability_compared": float(weights.sum()), "radius": self.radius,
                   "changed": bool(changed), "gain": gain, "region": self.region,
@@ -730,14 +733,14 @@ class VPPSectionOptimizer:
 
     # --- one batch and the loop ---
     def candidates(self) -> tuple:
-        """Candidates (M, d) and their missing levels (M, 2): new points in clouds around the
+        """Candidates (M, d) and their missing levels (M, L): new points in clouds around the
         states (n_local in all; the section moves too with a local search), minus the neighbours
         of failed runs. The points far from the states and the LF points without HF of earlier
         batches are no longer candidates: in the third run, 100 % of the choices were near the
         states and 2 HF out of 252 were on an earlier LF point (2026-10-23)."""
         x_cand, _ = self.problem.cloud(self.states, max(1, self.n_local // len(self.states)),
                                        self.seed + 7 * self.iteration + 1, self.section_radius())
-        missing = np.ones((len(x_cand), 2), dtype=bool)
+        missing = np.ones((len(x_cand), self.surrogate.n_levels), dtype=bool)
         if self.failed:
             # distance in the unit cube of the bounds, as sequential_design.EXCLUSION_RADIUS
             span = np.array([b[1] - b[0] for b in self.problem.bounds()])
@@ -746,11 +749,14 @@ class VPPSectionOptimizer:
             x_cand, missing = x_cand[keep], missing[keep]
         return x_cand, missing
 
-    @staticmethod
-    def levels_to_run(choice) -> list:
-        """The missing levels up to the chosen one (nested design)."""
-        return [level for level in (1, 2)
-                if level <= choice["level"] and choice["missing"][level - 1]]
+    levels_to_run = staticmethod(levels_to_run)     # vpp_targeted.levels_to_run
+
+    def size_columns(self) -> dict:
+        """Design size of every level for the records: n_l1 ... n_lL, plus n_lf (level 1) and
+        n_hf (level L, the reference) kept for the figures and analyses of the earlier runs."""
+        sizes = self.surrogate.sizes
+        return {"n_lf": sizes[0], "n_hf": sizes[-1],
+                **{f"n_l{l}": n for l, n in enumerate(sizes, start=1)}}
 
     def step(self) -> list:
         """One batch (module docstring): choices, codes in parallel, data. Returns the records."""
@@ -798,12 +804,14 @@ class VPPSectionOptimizer:
             x, ok = choice["x"], True
             for level in self.levels_to_run(choice):
                 values, info = results[(i, level)]
-                in_lf = level == 1 or np.any(np.all(np.isclose(self.surrogate.x_lists[0], x), axis=1))
-                if not np.all(np.isfinite(values)) or not in_lf:
+                # nested design: a level is kept only where the level below it is
+                below = level == 1 or np.any(np.all(
+                    np.isclose(self.surrogate.x_lists[level - 2], x), axis=1))
+                if not np.all(np.isfinite(values)) or not below:
                     ok = False
                     self.failed.append(x.copy())
                     self.run.log(f"batch {self.n_batches}: level {level} failed "
-                                 f"({info['error'][:80] or 'its level 1 failed'})")
+                                 f"({info['error'][:80] or f'its level {level - 1} failed'})")
                     break
                 self.surrogate.add(level, x, values)
             distances = np.linalg.norm((self.states[:, self.problem.n_scores:]
@@ -818,8 +826,7 @@ class VPPSectionOptimizer:
                             if same_section.any() else float("nan"),
                             "x": x.tolist(), "time_s": (time.perf_counter() - start) / len(choices),
                             "select_s": select_s, "update_s": update_s,
-                            "n_lf": self.surrogate.sizes[0], "n_hf": self.surrogate.sizes[1],
-                            "region": self.region})
+                            **self.size_columns(), "region": self.region})
             self.iteration += 1
         self.history.extend(records)
         self.n_batches += 1
@@ -832,10 +839,12 @@ class VPPSectionOptimizer:
                 break
             if self.batch_size > 1 or self.iteration % 5 == 0:
                 last = records[-1]
-                n_high = sum(r["level"] == 2 for r in records)
-                self.run.log(f"batch {last['batch']}: {len(records)} choices ({n_high} HF), LF/HF "
-                             f"{last['n_lf']}/{last['n_hf']}, selection {last['select_s']:.1f} s "
-                             f"(update {last['update_s']:.0f} s), "
+                levels = range(1, self.surrogate.n_levels + 1)
+                chosen = "/".join(str(sum(r["level"] == l for r in records)) for l in levels)
+                sizes = "/".join(str(n) for n in self.surrogate.sizes)
+                self.run.log(f"batch {last['batch']}: {len(records)} choices (levels "
+                             f"{'/'.join(map(str, levels))}: {chosen}), design {sizes}, "
+                             f"selection {last['select_s']:.1f} s (update {last['update_s']:.0f} s), "
                              f"{last['time_s'] * len(records):.1f} s")
         self.surrogate.fit(refit=self.refit_allowed(sum(self.surrogate.sizes)))
         if self.optima:
@@ -850,17 +859,20 @@ class VPPSectionOptimizer:
 # Validation of the final surrogate with the codes at the VPP states
 # -------------------------------------------------------------------------------------------------
 def validate(optimizer: VPPSectionOptimizer, sections: dict, extra_levels=None) -> list:
-    """The codes at the VPP states of the given sections (name -> scores): HF (level 2, the
-    reference of the surrogate) and LF, plus extra_levels {name: level} (e.g. {"avl": 3});
-    surrogate mean and sigma against HF, and the first-order speed error per state."""
+    """The codes at the VPP states of the given sections (name -> scores): every level of the
+    surrogate, "hf" = level L (its reference), "lf" = level 1, "l<l>" = the levels in between,
+    plus extra_levels {name: level of the runner} outside the surrogate (e.g. {"avl": 3} with a
+    2-level surrogate); surrogate mean and sigma against HF, and the first-order speed error per
+    state (against HF, and against every other code)."""
     rows = []
     names = list(sections)
     guesses = [s["unknowns"] for s in optimizer.incumbent_states]
     all_states = optimizer.solve_sections([sections[n] for n in names], guesses)
+    top = optimizer.surrogate.n_levels
+    codes = {"hf": top, "lf": 1, **{f"l{l}": l for l in range(2, top)}, **(extra_levels or {})}
     for name, states in zip(names, all_states):
         scores = sections[name]
         points = optimizer.state_points(scores, states)
-        codes = {"hf": 2, "lf": 1, **(extra_levels or {})}
         values = {key: optimizer.runner.evaluate(points, level, tag=f"validation_{name}")[0]
                   for key, level in codes.items()}
         mean = optimizer.surrogate.predict(points)
@@ -877,7 +889,7 @@ def validate(optimizer: VPPSectionOptimizer, sections: dict, extra_levels=None) 
                    **{f"att{i}": float(v) for i, v in enumerate(point[optimizer.problem.n_scores:])}}
             for key, array in values.items():
                 row.update({f"{n}_{key}": float(v) for n, v in zip(OUTPUT_NAMES, array[j])})
-                if key not in ("hf", "lf"):
+                if key != "hf":
                     row[f"speed_error_{key}_kt"] = float(
                         (mean[j, :6] - array[j, :6]) @ optimizer.derivatives[j])
             rows.append(row)

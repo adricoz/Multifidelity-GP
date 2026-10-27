@@ -16,6 +16,7 @@ Run: ..\\.venv-mds\\Scripts\\python scripts\\real_run_figures.py runs\\<folder>
 """
 import html
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -25,6 +26,23 @@ import pandas as pd
 VPP_DIR = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(VPP_DIR.parent / "benchmarks"))
 sys.path.insert(0, str(VPP_DIR))
+
+
+CODE_NAMES = {"nf_llt": "NPLLT × NeuralFoil", "xfoil_llt": "NPLLT × XFOIL", "avl": "AVL × XFOIL"}
+
+
+def code_labels(config: dict) -> dict:
+    """Label of every code of the validation table of a run: "hf" (the reference level), "lf",
+    "l<l>" (the levels in between), and the validation-only codes by name. The runs before
+    2026-10-27 have 2 levels and the key "hf" ("avl" or "npllt_xfoil") instead of the list
+    "levels"."""
+    levels = config.get("levels")
+    if not isinstance(levels, list):
+        levels = ["nf_llt", "xfoil_llt" if config.get("hf") == "npllt_xfoil" else "avl"]
+    labels = {"hf": CODE_NAMES[levels[-1]], "lf": CODE_NAMES[levels[0]]}
+    labels.update({f"l{l}": CODE_NAMES[name] for l, name in enumerate(levels[1:-1], start=2)})
+    labels.update({name: label for name, label in CODE_NAMES.items() if name not in levels})
+    return labels
 
 
 def make_figures(root) -> None:
@@ -59,10 +77,13 @@ def make_figures(root) -> None:
                                  y=u["candidate_speeds"][1:], mode="markers",
                                  marker={"color": SERIES[1], "size": 6, "symbol": "circle-open"},
                                  name="candidats du tri", showlegend=(i == 0)), row=1, col=1)
-    fig.add_trace(go.Scatter(x=history["elapsed_min"], y=history["n_lf"], name="points BF",
-                             line={"color": SERIES[2]}), row=1, col=2)
-    fig.add_trace(go.Scatter(x=history["elapsed_min"], y=history["n_hf"], name="points HF",
-                             line={"color": SERIES[3]}), row=1, col=2)
+    # design size of every level (n_l1 ... n_lL since 2026-10-27; n_lf / n_hf before)
+    size_columns = sorted((c for c in history.columns if re.fullmatch(r"n_l\d+", c)),
+                          key=lambda c: int(c[3:])) or ["n_lf", "n_hf"]
+    for i, column in enumerate(size_columns):
+        label = {"n_lf": "points BF", "n_hf": "points HF"}.get(column, f"points niveau {column[3:]}")
+        fig.add_trace(go.Scatter(x=history["elapsed_min"], y=history[column], name=label,
+                                 line={"color": SERIES[(2 + i) % len(SERIES)]}), row=1, col=2)
     fig.update_xaxes(title_text="temps du run [min]")
     fig.update_yaxes(title_text="vitesse moyenne [nd]", row=1, col=1)
     fig.update_yaxes(title_text="nombre de points", row=1, col=2)
@@ -113,8 +134,13 @@ def make_figures(root) -> None:
     save(fig, figures, "sections")
 
     # 4. validation
-    hf_name = "NPLLT × XFOIL" if config.get("hf") == "npllt_xfoil" else "AVL × XFOIL"
-    has_avl = "Fx_avl" in validation
+    labels = code_labels(config)
+    hf_name = labels["hf"]
+    # the other codes run at the states: the levels under the reference (lf, l2, ...) and the
+    # validation-only codes (e.g. avl)
+    others = [c[len("speed_error_"):-len("_kt")] for c in validation.columns
+              if c.startswith("speed_error_") and c != "speed_error_kt"]
+    extra = [k for k in others if k != "lf" and not re.fullmatch(r"l\d+", k)]
     names = ["Fx", "Fy", "Fz", "Mx", "My", "Mz", "Cpmin"]
     symbols = ("circle", "square", "diamond", "triangle-up")
     fig = make_subplots(rows=2, cols=4, subplot_titles=names + ["Erreur de vitesse (1er ordre)"])
@@ -127,16 +153,13 @@ def make_figures(root) -> None:
                 error_y={"type": "data", "array": 2 * g[f"{name}_sigma"]},
                 marker={"symbol": symbol, "color": SERIES[0]}, name=f"surrogate, {section}",
                 showlegend=(idx == 0)), row=row, col=col)
-            fig.add_trace(go.Scatter(x=g[f"{name}_hf"], y=g[f"{name}_lf"], mode="markers",
-                                     marker={"symbol": symbol, "color": SERIES[2], "size": 6},
-                                     name=f"NPLLT × NeuralFoil, {section}", showlegend=(idx == 0)),
-                          row=row, col=col)
-            if has_avl:
-                fig.add_trace(go.Scatter(x=g[f"{name}_hf"], y=g[f"{name}_avl"], mode="markers",
-                                         marker={"symbol": symbol, "color": SERIES[1], "size": 6},
-                                         name=f"AVL × XFOIL, {section}", showlegend=(idx == 0)),
-                              row=row, col=col)
-        columns = [f"{name}_hf", f"{name}_sur"] + ([f"{name}_avl"] if has_avl else [])
+            for j, key in enumerate(others):
+                fig.add_trace(go.Scatter(x=g[f"{name}_hf"], y=g[f"{name}_{key}"], mode="markers",
+                                         marker={"symbol": symbol, "size": 6,
+                                                 "color": SERIES[(1 + j) % len(SERIES)]},
+                                         name=f"{labels.get(key, key)}, {section}",
+                                         showlegend=(idx == 0)), row=row, col=col)
+        columns = [f"{name}_hf", f"{name}_sur"] + [f"{name}_{k}" for k in extra]
         lo = float(np.nanmin(validation[columns].to_numpy()))
         hi = float(np.nanmax(validation[columns].to_numpy()))
         fig.add_trace(go.Scatter(x=[lo, hi], y=[lo, hi], mode="lines", showlegend=False,
@@ -151,9 +174,10 @@ def make_figures(root) -> None:
 
     # 5. speeds of the validated sections, corrected to first order against the codes:
     #    V_code = V_surrogate - sum_k dV/dC_k (C_k surrogate - C_k code)
-    fig = make_subplots(rows=1, cols=2 if has_avl else 1, subplot_titles=(
-        [f"Vitesse corrigée {hf_name}"] + (["Vitesse corrigée AVL × XFOIL"] if has_avl else [])))
-    corrections = [("speed_error_kt", 1)] + ([("speed_error_avl_kt", 2)] if has_avl else [])
+    fig = make_subplots(rows=1, cols=1 + len(extra), subplot_titles=(
+        [f"Vitesse corrigée {hf_name}"] + [f"Vitesse corrigée {labels.get(k, k)}" for k in extra]))
+    corrections = [("speed_error_kt", 1)] + [(f"speed_error_{k}_kt", 2 + i)
+                                             for i, k in enumerate(extra)]
     for i, section in enumerate(validation["section"].unique()):
         g = validation[validation["section"] == section]
         for column, col in corrections:
