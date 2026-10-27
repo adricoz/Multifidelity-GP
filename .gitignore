@@ -18,6 +18,8 @@ env/
 !vpp_acceleration/runs/
 vpp_acceleration/runs/**/*.pkl
 vpp_acceleration/runs/**/test_report/
+# bdfoil_v1 XFOIL polar cache of a run (content-addressed, safe to delete)
+vpp_acceleration/runs/**/polar_cache/
 # outputs written by the scripts before the runs/ convention
 mfego/*.json
 mfego/*.log

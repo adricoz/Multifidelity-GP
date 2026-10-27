@@ -1,0 +1,567 @@
+17:39:47 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-10-27_1739_long_3levels_avl_iter
+17:39:47 [  0.0 min] family: box centred on the current section, scale 0.5, Ixx >= 6.7174e-05
+17:39:58 [  0.2 min] PCA: rank 16, k = 10 modes carry 99.86 % of the geometric variance
+17:39:58 [  0.2 min] start of the search: current_section
+17:42:04 [  2.3 min] start design: level 1 256 ok / 256, level 2 64 ok / 64, level 3 32 ok / 32
+17:42:20 [  2.6 min] batch 0: hyperparameters refitted on 352 points
+17:46:22 [  6.6 min] speed sensitivities: 32 failed solves, previous values kept
+17:46:22 [  6.6 min] speed sensitivities dV/dC (rows = conditions): [[ 42.99  -1.09   0.49  -0.03   0.09  -0.03]
+ [ 95.12  -1.94   2.4   -0.1    0.21  -0.06]
+ [100.44  -0.4    4.35   2.29   0.46   0.17]
+ [ 49.06  -1.07   0.67  -0.04   0.11  -0.06]
+ [127.41  -1.68   3.84  -0.15   0.24  -0.08]
+ [105.47  -0.16   4.78   2.5    0.49   0.14]
+ [ 56.21  -1.05   0.89  -0.05   0.12  -0.08]
+ [162.5   -0.96   5.57  -0.21   0.26  -0.04]
+ [108.29   0.13   5.15   2.71   0.5    0.14]
+ [ 29.32   2.33   0.     0.     0.02   0.12]
+ [ 27.55   2.44   0.29  -0.02   0.05   0.35]
+ [ 39.88   4.56   0.92  -0.04   0.06   0.66]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 29.11   2.84   0.44  -0.03   0.05   0.41]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+17:49:41 [  9.9 min] update 0: incumbent speed 12.9985 kt (new, gain 0.0701 kt), candidates [12.928 12.99  12.995 12.999], on 72 % of the probability, radius 1.50, region 0, 441 s
+17:50:39 [ 10.9 min] batch 0: 16 choices (levels 1/2/3: 1/15/0), design 271/79/32, selection 495.1 s (update 441 s), 509.2 s
+17:54:07 [ 14.3 min] update 1: incumbent speed 13.0083 kt (new, gain 0.0385 kt), candidates [12.97  13.008 12.992 13.   ], on 72 % of the probability, radius 2.25, region 0, 208 s
+17:55:01 [ 15.2 min] batch 1: 16 choices (levels 1/2/3: 5/11/0), design 282/90/32, selection 241.0 s (update 208 s), 261.6 s
+17:58:51 [ 19.1 min] update 2: incumbent speed 12.9935 kt (new, gain 0.0295 kt), candidates [12.964 12.987 12.989 12.993], on 72 % of the probability, radius 3.00, region 0, 230 s
+17:59:52 [ 20.1 min] batch 2: 16 choices (levels 1/2/3: 2/14/0), design 296/104/32, selection 261.9 s (update 230 s), 291.6 s
+18:00:15 [ 20.5 min] speed sensitivities: 30 failed solves, previous values kept
+18:00:15 [ 20.5 min] speed sensitivities: 8 values more than 30 % from the median of the last 3 evaluations, median kept
+18:00:15 [ 20.5 min] speed sensitivities dV/dC (rows = conditions): [[ 43.12  -1.08   0.5   -0.03   0.09  -0.03]
+ [ 95.42  -1.9    2.44  -0.1    0.21  -0.05]
+ [101.38  -0.7    4.81   2.31   0.47   0.16]
+ [ 49.22  -1.06   0.68  -0.04   0.1   -0.05]
+ [127.78  -1.64   3.89  -0.14   0.24  -0.07]
+ [111.2   -0.23   5.57   2.62   0.49   0.11]
+ [ 56.42  -1.03   0.91  -0.05   0.12  -0.07]
+ [162.95  -0.94   5.64  -0.2    0.25  -0.04]
+ [113.93  -3.08   2.13   2.83   0.49   0.11]
+ [ 30.23   3.37  -0.99  -0.31   0.01   0.2 ]
+ [ 27.98   2.48   0.3   -0.02   0.05   0.35]
+ [ 40.74   4.76   0.93  -0.04   0.06   0.67]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 29.51   2.93   0.45  -0.03   0.05   0.41]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+18:03:48 [ 24.0 min] update 3: incumbent speed 13.0035 kt (new, gain 0.0190 kt), candidates [12.984 13.003 12.988 12.994], on 72 % of the probability, radius 3.00, region 0, 235 s
+18:05:11 [ 25.4 min] batch 3: 16 choices (levels 1/2/3: 1/15/0), design 311/119/32, selection 266.9 s (update 235 s), 319.1 s
+18:05:50 [ 26.1 min] batch 4: hyperparameters refitted on 462 points
+18:09:41 [ 29.9 min] update 4: incumbent speed 13.0453 kt (new, gain 0.0395 kt), candidates [13.006 13.041 13.045 13.037], on 72 % of the probability, radius 3.00, region 0, 231 s
+18:10:34 [ 30.8 min] batch 4: 16 choices (levels 1/2/3: 12/3/1), design 326/122/33, selection 303.8 s (update 231 s), 322.8 s
+18:14:25 [ 34.6 min] update 5: incumbent speed 13.0500 kt (new, gain 0.0348 kt), candidates [13.015 13.05  13.043 13.043], on 72 % of the probability, radius 3.00, region 0, 230 s
+18:15:16 [ 35.5 min] batch 5: 16 choices (levels 1/2/3: 11/5/0), design 341/127/33, selection 259.2 s (update 230 s), 281.8 s
+18:15:43 [ 35.9 min] speed sensitivities: 30 failed solves, previous values kept
+18:15:43 [ 35.9 min] speed sensitivities: 6 values more than 30 % from the median of the last 3 evaluations, median kept
+18:15:43 [ 35.9 min] speed sensitivities dV/dC (rows = conditions): [[ 43.13  -1.09   0.5   -0.03   0.09  -0.03]
+ [ 95.12  -1.94   2.45  -0.09   0.2   -0.06]
+ [102.18  -1.     4.51   2.33   0.47   0.15]
+ [ 49.26  -1.07   0.69  -0.04   0.1   -0.06]
+ [127.64  -1.68   3.93  -0.13   0.23  -0.08]
+ [116.68  -0.29   6.32   2.73   0.49   0.09]
+ [ 56.55  -1.05   0.92  -0.05   0.12  -0.08]
+ [163.4   -0.96   5.71  -0.18   0.24  -0.04]
+ [119.36  -0.14   5.15   2.94   0.48   0.08]
+ [ 31.14   4.41  -1.97  -0.62   0.01   0.28]
+ [ 28.42   2.52   0.3   -0.02   0.05   0.35]
+ [ 41.59   4.95   0.95  -0.04   0.06   0.69]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 29.91   3.01   0.45  -0.03   0.05   0.42]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+18:19:42 [ 39.9 min] update 6: incumbent speed 13.0169 kt (new, gain 0.0446 kt), candidates [12.972 13.014 13.016 13.017], on 72 % of the probability, radius 3.00, region 0, 265 s
+18:20:37 [ 40.8 min] batch 6: 16 choices (levels 1/2/3: 10/5/1), design 355/132/34, selection 300.7 s (update 265 s), 320.8 s
+18:25:12 [ 45.4 min] update 7: incumbent speed 13.0295 kt (new, gain 0.0385 kt), candidates [12.991 13.03  13.02  13.018], on 72 % of the probability, radius 3.00, region 0, 275 s
+18:26:05 [ 46.3 min] batch 7: 16 choices (levels 1/2/3: 13/3/0), design 371/135/34, selection 310.9 s (update 275 s), 328.0 s
+18:29:52 [ 50.1 min] update 8: incumbent speed 13.0274 kt (new, gain 0.0583 kt), candidates [12.969 13.027 13.014 13.003], on 72 % of the probability, radius 3.00, region 0, 227 s
+18:30:41 [ 50.9 min] batch 8: 16 choices (levels 1/2/3: 13/3/0), design 386/138/34, selection 264.5 s (update 227 s), 275.8 s
+18:31:08 [ 51.4 min] speed sensitivities: 31 failed solves, previous values kept
+18:31:08 [ 51.4 min] speed sensitivities: 9 values more than 30 % from the median of the last 3 evaluations, median kept
+18:31:08 [ 51.4 min] speed sensitivities dV/dC (rows = conditions): [[ 43.18  -1.08   0.51  -0.03   0.09  -0.03]
+ [ 95.63  -1.86   2.47  -0.09   0.2   -0.05]
+ [102.18  -1.     5.27   2.33   0.47   0.15]
+ [ 49.33  -1.05   0.69  -0.04   0.1   -0.05]
+ [127.88  -1.59   3.94  -0.13   0.22  -0.06]
+ [116.68  -0.29   6.32   2.73   0.49   0.09]
+ [ 56.58  -1.02   0.92  -0.05   0.11  -0.07]
+ [163.4   -0.92   5.71  -0.18   0.23  -0.04]
+ [119.36  -6.3   -0.89   2.94   0.48   0.08]
+ [ 31.14   4.41  -1.97  -0.62   0.01   0.28]
+ [ 28.42   2.52   0.3   -0.02   0.05   0.35]
+ [ 41.59   4.95   0.95  -0.04   0.06   0.69]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 29.91   3.01   0.45  -0.03   0.05   0.42]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+18:35:49 [ 56.0 min] update 9: incumbent speed 12.9941 kt (new, gain 0.0450 kt), candidates [12.949 12.994 12.992 12.985], on 72 % of the probability, radius 3.00, region 0, 308 s
+18:36:48 [ 57.0 min] batch 9: 16 choices (levels 1/2/3: 12/4/0), design 401/142/34, selection 349.2 s (update 308 s), 367.9 s
+18:41:59 [ 62.2 min] update 10: incumbent speed 13.3428 kt (new, gain 0.0635 kt), candidates [13.279 13.343 13.322 13.329], on 67 % of the probability, radius 3.00, region 0, 310 s
+18:43:03 [ 63.3 min] batch 10: 16 choices (levels 1/2/3: 12/4/0), design 416/146/34, selection 351.1 s (update 310 s), 374.9 s
+18:44:34 [ 64.8 min] batch 11: hyperparameters refitted on 596 points
+18:49:02 [ 69.3 min] update 11: incumbent speed 13.0201 kt (new, gain 0.0443 kt), candidates [12.976 13.02  13.002 12.995], on 72 % of the probability, radius 3.00, region 0, 268 s
+18:50:09 [ 70.4 min] batch 11: 16 choices (levels 1/2/3: 11/4/1), design 431/150/35, selection 399.7 s (update 268 s), 425.4 s
+18:51:37 [ 71.8 min] speed sensitivities: 32 failed solves, previous values kept
+18:51:37 [ 71.8 min] speed sensitivities: 4 values more than 30 % from the median of the last 3 evaluations, median kept
+18:51:37 [ 71.8 min] speed sensitivities dV/dC (rows = conditions): [[ 43.16  -1.09   0.5   -0.03   0.09  -0.03]
+ [ 95.18  -1.92   2.45  -0.1    0.2   -0.06]
+ [100.72  -0.41   4.51   2.3    0.47   0.15]
+ [ 49.26  -1.07   0.69  -0.04   0.1   -0.06]
+ [127.64  -1.61   3.93  -0.13   0.22  -0.07]
+ [116.68  -0.09   6.32   2.73   0.49   0.11]
+ [ 56.55  -1.03   0.92  -0.05   0.11  -0.07]
+ [162.53  -0.82   5.68  -0.19   0.23  -0.03]
+ [117.15  -6.78  -1.73   2.92   0.48   0.09]
+ [ 29.21   2.56  -1.97  -0.62   0.02   0.14]
+ [ 27.64   2.43   0.3   -0.02   0.05   0.34]
+ [ 39.94   4.54   0.92  -0.04   0.06   0.65]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 29.21   2.81   0.45  -0.03   0.05   0.4 ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+18:56:22 [ 76.6 min] update 12: incumbent speed 13.0041 kt (new, gain 0.0733 kt), candidates [12.931 13.004 12.992 12.983], on 72 % of the probability, radius 3.00, region 0, 372 s
+18:57:30 [ 77.7 min] batch 12: 16 choices (levels 1/2/3: 11/3/2), design 444/154/37, selection 414.4 s (update 372 s), 441.3 s
+19:01:57 [ 82.2 min] update 13: incumbent speed 13.0158 kt (new, gain 0.0352 kt), candidates [12.981 13.016 13.009 13.009], on 72 % of the probability, radius 3.00, region 0, 266 s
+19:03:08 [ 83.4 min] batch 13: 16 choices (levels 1/2/3: 11/4/1), design 458/158/38, selection 309.9 s (update 266 s), 337.9 s
+19:07:36 [ 87.8 min] update 14: incumbent speed 13.0246 kt (new, gain 0.0143 kt), candidates [13.01  13.022 13.025 13.024], on 72 % of the probability, radius 3.00, region 0, 267 s
+19:08:38 [ 88.9 min] batch 14: 16 choices (levels 1/2/3: 11/4/1), design 471/162/39, selection 310.6 s (update 267 s), 330.3 s
+19:09:07 [ 89.3 min] speed sensitivities: 30 failed solves, previous values kept
+19:09:07 [ 89.3 min] speed sensitivities: 15 values more than 30 % from the median of the last 3 evaluations, median kept
+19:09:07 [ 89.3 min] speed sensitivities dV/dC (rows = conditions): [[ 43.18  -1.09   0.51  -0.03   0.09  -0.03]
+ [ 95.63  -1.92   2.47  -0.1    0.2   -0.06]
+ [100.72  -0.41   5.77   2.3    0.49   0.15]
+ [ 49.33  -1.07   0.69  -0.04   0.1   -0.06]
+ [127.88  -1.61   3.94  -0.13   0.23  -0.07]
+ [118.83  -0.09   6.42   2.77   0.51   0.11]
+ [ 56.58  -1.03   0.92  -0.05   0.12  -0.07]
+ [162.53  -0.82   5.68  -0.19   0.23  -0.03]
+ [117.15  -6.78  -1.73   2.92   0.51   0.09]
+ [ 29.21   2.56  -1.97  -0.62   0.02   0.14]
+ [ 27.64   2.43   0.3   -0.02   0.05   0.34]
+ [ 39.94   4.54   0.92  -0.04   0.06   0.65]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 29.21   2.81   0.45  -0.03   0.05   0.4 ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+19:13:47 [ 94.0 min] update 15: incumbent speed 13.0292 kt (new, gain 0.0174 kt), candidates [13.012 13.029 13.028 13.013], on 72 % of the probability, radius 3.00, region 0, 307 s
+19:15:07 [ 95.3 min] batch 15: 16 choices (levels 1/2/3: 9/4/3), design 484/167/42, selection 354.1 s (update 307 s), 388.5 s
+19:18:22 [ 98.6 min] update 16: incumbent speed 12.8097 kt (new, gain 0.0286 kt), candidates [12.781 12.81  12.8   12.794], on 78 % of the probability, radius 3.00, region 0, 194 s
+19:19:23 [ 99.6 min] batch 16: 16 choices (levels 1/2/3: 9/5/2), design 496/172/44, selection 242.9 s (update 194 s), 255.7 s
+19:23:06 [103.3 min] update 17: incumbent speed 12.8063 kt (kept, gain 0.0000 kt), candidates [12.806 12.783 12.79  12.785], on 78 % of the probability, radius 2.10, region 0, 222 s
+19:24:11 [104.4 min] batch 17: 16 choices (levels 1/2/3: 11/5/0), design 512/177/44, selection 275.2 s (update 222 s), 288.5 s
+19:24:39 [104.9 min] speed sensitivities: 24 failed solves, previous values kept
+19:24:39 [104.9 min] speed sensitivities: 17 values more than 30 % from the median of the last 3 evaluations, median kept
+19:24:39 [104.9 min] speed sensitivities dV/dC (rows = conditions): [[ 43.5   -1.2    0.51  -0.03   0.09  -0.03]
+ [ 96.64  -2.17   2.51  -0.09   0.2   -0.07]
+ [106.15  -0.99   4.08   2.4    0.49   0.1 ]
+ [ 49.77  -1.2    0.7   -0.04   0.1   -0.06]
+ [130.64  -2.02   4.05  -0.13   0.23  -0.1 ]
+ [118.83   0.93   6.42   3.8    0.53   0.05]
+ [ 57.21  -1.2    0.94  -0.05   0.12  -0.09]
+ [167.47  -1.44   5.91  -0.19   0.23  -0.09]
+ [116.11  -0.31   4.34   2.98   0.52   0.04]
+ [ 34.3    5.37  -3.21  -1.01  -0.01   0.47]
+ [ 28.97   2.57   0.31  -0.02   0.06   0.35]
+ [ 42.81   5.16   0.97  -0.05   0.08   0.71]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.46   3.12   0.46  -0.03   0.05   0.42]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+19:28:23 [108.6 min] update 18: incumbent speed 12.8117 kt (new, gain 0.0051 kt), candidates [12.807 12.812 12.801 12.805], on 78 % of the probability, radius 3.00, region 0, 250 s
+19:29:37 [109.8 min] batch 18: 16 choices (levels 1/2/3: 9/4/3), design 525/183/47, selection 300.1 s (update 250 s), 325.5 s
+19:32:03 [112.3 min] batch 19: hyperparameters refitted on 755 points
+19:35:35 [115.8 min] update 19: incumbent speed 12.8140 kt (new, gain 0.0066 kt), candidates [12.807 12.814 12.811 12.799], on 78 % of the probability, radius 3.00, region 0, 212 s
+19:36:53 [117.1 min] batch 19: 16 choices (levels 1/2/3: 6/9/1), design 537/192/48, selection 409.2 s (update 212 s), 436.2 s
+19:40:11 [120.4 min] update 20: incumbent speed 12.8153 kt (new, gain 0.0002 kt), candidates [12.815 12.804 12.815 12.813], on 78 % of the probability, radius 2.10, region 0, 196 s
+19:41:27 [121.7 min] batch 20: 16 choices (levels 1/2/3: 4/11/1), design 551/203/49, selection 250.7 s (update 196 s), 273.9 s
+19:41:54 [122.1 min] speed sensitivities: 24 failed solves, previous values kept
+19:41:54 [122.1 min] speed sensitivities: 3 values more than 30 % from the median of the last 3 evaluations, median kept
+19:41:54 [122.1 min] speed sensitivities dV/dC (rows = conditions): [[ 43.5   -1.25   0.51  -0.03   0.09  -0.03]
+ [ 96.71  -2.31   2.51  -0.09   0.2   -0.07]
+ [106.15  -2.88   2.83   2.4    0.49   0.1 ]
+ [ 49.77  -1.24   0.7   -0.04   0.1   -0.06]
+ [130.76  -2.19   4.07  -0.13   0.23  -0.1 ]
+ [111.87   0.93   5.33   3.8    0.53   0.05]
+ [ 57.21  -1.23   0.94  -0.05   0.12  -0.09]
+ [168.05  -1.65   5.97  -0.18   0.23  -0.1 ]
+ [121.43  -0.31   7.03   3.01   0.51   0.03]
+ [ 86.92   5.37 -13.41  -4.45  -0.28   2.22]
+ [ 30.18   2.57   0.32  -0.02   0.06   0.35]
+ [ 45.37   5.27   1.01  -0.05   0.08   0.71]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 25.71   1.59   0.17  -0.01   0.04   0.2 ]
+ [ 31.62   3.14   0.47  -0.03   0.05   0.42]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+19:46:20 [126.6 min] update 21: incumbent speed 12.8121 kt (new, gain 0.0018 kt), candidates [12.81  12.812 12.802 12.8  ], on 78 % of the probability, radius 1.47, region 0, 291 s
+19:47:39 [127.9 min] batch 21: 16 choices (levels 1/2/3: 7/8/1), design 561/211/50, selection 350.6 s (update 291 s), 372.2 s
+19:51:23 [131.6 min] update 22: incumbent speed 12.8237 kt (new, gain 0.0119 kt), candidates [12.812 12.82  12.824 12.819], on 78 % of the probability, radius 2.20, region 0, 222 s
+19:52:29 [132.7 min] batch 22: 16 choices (levels 1/2/3: 10/4/2), design 572/215/52, selection 278.3 s (update 222 s), 290.5 s
+19:56:25 [136.6 min] update 23: incumbent speed 12.8220 kt (new, gain 0.0019 kt), candidates [12.82  12.822 12.821 12.82 ], on 78 % of the probability, radius 1.54, region 0, 233 s
+19:57:59 [138.2 min] batch 23: 16 choices (levels 1/2/3: 7/6/3), design 586/223/55, selection 292.2 s (update 233 s), 330.0 s
+19:58:28 [138.7 min] speed sensitivities: 24 failed solves, previous values kept
+19:58:28 [138.7 min] speed sensitivities: 7 values more than 30 % from the median of the last 3 evaluations, median kept
+19:58:28 [138.7 min] speed sensitivities dV/dC (rows = conditions): [[ 43.51  -1.27   0.51  -0.03   0.09  -0.03]
+ [ 96.71  -2.32   2.51  -0.09   0.2   -0.07]
+ [106.15  -3.04   2.83   2.4    0.49   0.1 ]
+ [ 49.77  -1.27   0.7   -0.04   0.1   -0.06]
+ [130.92  -2.26   4.07  -0.13   0.23  -0.11]
+ [111.87   1.18   5.26   3.93   0.53   0.05]
+ [ 57.24  -1.27   0.94  -0.05   0.12  -0.09]
+ [168.68  -1.81   5.98  -0.18   0.23  -0.12]
+ [123.31  -0.49   7.05   3.02   0.53   0.02]
+ [ 86.92   4.56 -13.6   -4.45  -0.28   2.22]
+ [ 30.38   2.58   0.33  -0.02   0.05   0.35]
+ [ 45.59   5.42   1.03  -0.05   0.08   0.72]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 25.89   1.66   0.18  -0.01   0.04   0.2 ]
+ [ 31.83   3.25   0.48  -0.03   0.05   0.43]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+20:02:14 [142.5 min] update 24: incumbent speed 12.8289 kt (new, gain 0.0074 kt), candidates [12.822 12.829 12.823 12.82 ], on 78 % of the probability, radius 2.32, region 0, 252 s
+20:03:29 [143.7 min] batch 24: 16 choices (levels 1/2/3: 8/5/3), design 596/228/58, selection 308.6 s (update 252 s), 330.0 s
+20:06:43 [146.9 min] update 25: incumbent speed 12.8290 kt (kept, gain 0.0000 kt), candidates [12.829 12.826 12.823 12.815], on 78 % of the probability, radius 1.62, region 0, 191 s
+20:08:02 [148.3 min] batch 25: 16 choices (levels 1/2/3: 8/8/0), design 610/236/58, selection 251.6 s (update 191 s), 272.8 s
+20:12:11 [152.4 min] update 26: incumbent speed 12.8301 kt (new, gain 0.0008 kt), candidates [12.829 12.83  12.83  12.828], on 78 % of the probability, radius 1.13, region 0, 247 s
+20:13:45 [154.0 min] batch 26: 16 choices (levels 1/2/3: 10/4/2), design 624/241/60, selection 308.4 s (update 247 s), 342.3 s
+20:14:17 [154.5 min] speed sensitivities: 24 failed solves, previous values kept
+20:14:17 [154.5 min] speed sensitivities: 6 values more than 30 % from the median of the last 3 evaluations, median kept
+20:14:17 [154.5 min] speed sensitivities dV/dC (rows = conditions): [[ 43.51  -1.28   0.51  -0.03   0.09  -0.03]
+ [ 96.72  -2.36   2.52  -0.09   0.2   -0.06]
+ [106.39  -3.04   4.07   2.4    0.49   0.1 ]
+ [ 49.77  -1.27   0.7   -0.04   0.1   -0.06]
+ [130.99  -2.29   4.08  -0.13   0.22  -0.11]
+ [112.07   1.18   5.33   3.93   0.54   0.05]
+ [ 57.24  -1.27   0.94  -0.05   0.12  -0.09]
+ [168.68  -1.81   5.98  -0.18   0.23  -0.12]
+ [124.04  -0.65   7.03   3.02   0.53   0.  ]
+ [ 26.91   1.17 -13.6   -3.71   0.04   0.13]
+ [ 30.51   2.57   0.34  -0.02   0.05   0.34]
+ [ 46.04   5.52   1.05  -0.05   0.08   0.73]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 25.94   1.64   0.18  -0.01   0.04   0.2 ]
+ [ 31.91   3.32   0.49  -0.03   0.05   0.43]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+20:17:23 [157.6 min] update 27: incumbent speed 12.8307 kt (new, gain 0.0002 kt), candidates [12.83  12.83  12.831 12.829], on 78 % of the probability, radius 0.79, region 0, 216 s
+20:18:44 [159.0 min] batch 27: 16 choices (levels 1/2/3: 10/4/2), design 635/246/62, selection 277.8 s (update 216 s), 299.8 s
+20:22:27 [162.7 min] update 28: incumbent speed 12.8346 kt (new, gain 0.0039 kt), candidates [12.831 12.835 12.831 12.831], on 78 % of the probability, radius 1.19, region 0, 220 s
+20:23:41 [163.9 min] batch 28: 16 choices (levels 1/2/3: 7/6/3), design 648/254/65, selection 280.5 s (update 220 s), 296.4 s
+20:27:34 [167.8 min] batch 29: hyperparameters refitted on 967 points
+20:31:02 [171.3 min] update 29: incumbent speed 12.8343 kt (kept, gain 0.0000 kt), candidates [12.834 12.834 12.832 12.832], on 78 % of the probability, radius 0.83, region 0, 208 s
+20:32:23 [172.6 min] batch 29: 16 choices (levels 1/2/3: 11/5/0), design 663/259/65, selection 503.0 s (update 208 s), 522.4 s
+20:32:53 [173.1 min] speed sensitivities: 24 failed solves, previous values kept
+20:32:53 [173.1 min] speed sensitivities: 2 values more than 30 % from the median of the last 3 evaluations, median kept
+20:32:53 [173.1 min] speed sensitivities dV/dC (rows = conditions): [[ 43.54  -1.29   0.51  -0.03   0.09  -0.03]
+ [ 96.72  -2.36   2.52  -0.09   0.2   -0.06]
+ [106.96  -3.26   4.07   2.41   0.49   0.09]
+ [ 49.8   -1.29   0.7   -0.04   0.1   -0.06]
+ [131.03  -2.3    4.08  -0.13   0.22  -0.11]
+ [112.81   0.91   8.68   3.9    0.54   0.04]
+ [ 57.28  -1.29   0.94  -0.05   0.12  -0.09]
+ [168.99  -1.88   6.    -0.18   0.23  -0.12]
+ [124.92  -0.8    7.05   3.03   0.53  -0.01]
+ [ 26.91   1.14  -4.7   -0.01   0.04   0.13]
+ [ 30.84   2.57   0.34  -0.02   0.06   0.34]
+ [ 46.78   5.52   1.05  -0.05   0.08   0.73]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 26.13   1.64   0.18  -0.01   0.04   0.2 ]
+ [ 32.26   3.33   0.49  -0.03   0.06   0.43]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+20:36:03 [176.3 min] update 30: incumbent speed 12.8339 kt (kept, gain 0.0000 kt), candidates [12.834 12.833 12.833 12.833], on 78 % of the probability, radius 0.58, region 0, 217 s
+20:37:42 [177.9 min] batch 30: 16 choices (levels 1/2/3: 9/5/2), design 677/265/67, selection 282.2 s (update 217 s), 319.3 s
+20:41:12 [181.4 min] update 31: incumbent speed 12.8354 kt (new, gain 0.0018 kt), candidates [12.834 12.835 12.835 12.835], on 78 % of the probability, radius 0.41, region 0, 207 s
+20:42:58 [183.2 min] batch 31: 16 choices (levels 1/2/3: 4/9/3), design 690/275/70, selection 275.1 s (update 207 s), 315.4 s
+20:47:06 [187.3 min] update 32: incumbent speed 12.8367 kt (new, gain 0.0009 kt), candidates [12.836 12.837 12.836 12.836], on 78 % of the probability, radius 0.29, region 0, 245 s
+20:48:44 [189.0 min] batch 32: 16 choices (levels 1/2/3: 7/5/4), design 703/284/74, selection 317.5 s (update 245 s), 346.5 s
+20:49:22 [189.6 min] speed sensitivities: 24 failed solves, previous values kept
+20:49:22 [189.6 min] speed sensitivities: 5 values more than 30 % from the median of the last 3 evaluations, median kept
+20:49:22 [189.6 min] speed sensitivities dV/dC (rows = conditions): [[ 43.57  -1.3    0.51  -0.03   0.09  -0.03]
+ [ 96.74  -2.36   2.52  -0.09   0.2   -0.06]
+ [107.19  -3.59   4.04   2.41   0.49   0.09]
+ [ 49.83  -1.3    0.7   -0.04   0.1   -0.06]
+ [131.14  -2.3    4.09  -0.13   0.22  -0.11]
+ [113.09  -2.     8.68   3.9    0.54   0.04]
+ [ 57.32  -1.31   0.94  -0.05   0.12  -0.09]
+ [169.19  -1.89   6.02  -0.18   0.23  -0.12]
+ [125.37  -0.84   7.12   3.04   0.53  -0.02]
+ [ 26.97   1.12  -0.99  -0.01   0.04   0.13]
+ [ 30.93   2.57   0.34  -0.02   0.06   0.34]
+ [ 46.99   5.52   1.05  -0.05   0.09   0.72]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 26.19   1.63   0.18  -0.01   0.04   0.2 ]
+ [ 32.34   3.32   0.48  -0.03   0.06   0.43]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+20:53:56 [194.2 min] update 33: incumbent speed 12.8371 kt (new, gain 0.0009 kt), candidates [12.836 12.837 12.837 12.837], on 78 % of the probability, radius 0.20, region 0, 309 s
+20:55:29 [195.7 min] batch 33: 16 choices (levels 1/2/3: 6/8/2), design 716/292/76, selection 381.8 s (update 309 s), 404.2 s
+20:59:22 [199.6 min] update 34: incumbent speed 12.8380 kt (new, gain 0.0007 kt), candidates [12.837 12.838 12.838 12.838], on 78 % of the probability, radius 0.14, region 0, 230 s
+21:01:17 [201.5 min] batch 34: 16 choices (levels 1/2/3: 1/10/5), design 727/302/81, selection 308.2 s (update 230 s), 348.0 s
+21:03:50 [204.1 min] region 0 converged (update 34, incumbent speed 12.8380 kt): region 1 starts from a section at distance 3.75 of the optima, predicted gain -0.052 +- 0.003 kt
+21:09:13 [209.4 min] speed sensitivities: 30 failed solves, previous values kept
+21:09:13 [209.4 min] speed sensitivities dV/dC (rows = conditions): [[ 43.53  -1.18   0.51  -0.03   0.09  -0.03]
+ [ 96.76  -2.12   2.51  -0.09   0.2   -0.06]
+ [103.85  -2.7    3.4    2.36   0.49   0.12]
+ [ 49.73  -1.16   0.7   -0.04   0.1   -0.06]
+ [130.47  -1.93   4.05  -0.13   0.22  -0.09]
+ [118.57  -0.66   1.53   2.77   0.52   0.05]
+ [ 57.11  -1.14   0.94  -0.05   0.12  -0.08]
+ [167.02  -1.29   5.91  -0.19   0.23  -0.07]
+ [112.34   5.7    9.23   5.95   0.55   0.07]
+ [ 33.48   6.27  -2.84  -0.89  -0.01   0.41]
+ [ 28.83   2.62   0.32  -0.02   0.05   0.36]
+ [ 42.51   5.24   0.98  -0.05   0.07   0.72]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 26.19   1.63   0.18  -0.01   0.04   0.2 ]
+ [ 30.28   3.17   0.46  -0.03   0.05   0.43]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+21:13:53 [214.1 min] update 35: incumbent speed 13.0155 kt (new, gain 0.0106 kt), candidates [13.005 13.016 13.012 13.015], on 72 % of the probability, radius 1.50, region 1, 603 s
+21:15:35 [215.8 min] batch 35: 16 choices (levels 1/2/3: 11/4/1), design 740/306/82, selection 826.7 s (update 603 s), 858.1 s
+21:16:07 [216.3 min] speed sensitivities: 30 failed solves, previous values kept
+21:16:07 [216.3 min] speed sensitivities: 4 values more than 30 % from the median of the last 3 evaluations, median kept
+21:16:07 [216.3 min] speed sensitivities dV/dC (rows = conditions): [[ 43.51  -1.19   0.51  -0.03   0.09  -0.03]
+ [ 96.7   -2.13   2.51  -0.09   0.2   -0.06]
+ [104.06  -2.37   3.04   2.36   0.5    0.12]
+ [ 49.71  -1.17   0.7   -0.04   0.1   -0.06]
+ [130.4   -1.95   4.05  -0.13   0.22  -0.09]
+ [114.14  -0.88   3.72   3.55   0.53   0.06]
+ [ 57.08  -1.16   0.93  -0.05   0.12  -0.08]
+ [167.04  -1.34   5.91  -0.19   0.23  -0.08]
+ [112.64   3.77  10.92   5.89   0.56   0.05]
+ [ 35.32   7.79  -3.48  -1.09  -0.02   0.5 ]
+ [ 29.01   2.63   0.32  -0.02   0.05   0.36]
+ [ 42.88   5.3    0.99  -0.05   0.07   0.72]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 26.19   1.63   0.18  -0.01   0.04   0.2 ]
+ [ 30.44   3.21   0.47  -0.03   0.05   0.43]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+21:20:52 [221.1 min] update 36: incumbent speed 13.0354 kt (new, gain 0.0211 kt), candidates [13.014 13.033 13.035 13.03 ], on 72 % of the probability, radius 2.25, region 1, 314 s
+21:22:11 [222.4 min] batch 36: 16 choices (levels 1/2/3: 14/2/0), design 755/308/82, selection 386.2 s (update 314 s), 395.9 s
+21:26:10 [226.4 min] update 37: incumbent speed 12.8157 kt (new, gain 0.0291 kt), candidates [12.787 12.816 12.806 12.801], on 78 % of the probability, radius 3.00, region 1, 236 s
+21:27:42 [227.9 min] batch 37: 16 choices (levels 1/2/3: 13/2/1), design 769/311/83, selection 307.1 s (update 236 s), 331.1 s
+21:32:08 [232.4 min] update 38: incumbent speed 12.8196 kt (kept, gain 0.0000 kt), candidates [12.82  12.805 12.792 12.785], on 78 % of the probability, radius 2.10, region 1, 263 s
+21:33:30 [233.7 min] batch 38: 16 choices (levels 1/2/3: 12/3/1), design 781/314/84, selection 336.0 s (update 263 s), 347.8 s
+21:34:00 [234.2 min] speed sensitivities: 24 failed solves, previous values kept
+21:34:00 [234.2 min] speed sensitivities: 11 values more than 30 % from the median of the last 3 evaluations, median kept
+21:34:00 [234.2 min] speed sensitivities dV/dC (rows = conditions): [[ 43.53  -1.2    0.51  -0.03   0.09  -0.03]
+ [ 96.76  -2.15   2.51  -0.09   0.2   -0.06]
+ [104.27  -2.7    2.68   2.36   0.5    0.12]
+ [ 49.73  -1.19   0.7   -0.04   0.1   -0.06]
+ [130.47  -1.98   4.05  -0.13   0.22  -0.09]
+ [118.57  -1.1    5.92   2.82   0.54   0.05]
+ [ 57.11  -1.17   0.94  -0.05   0.12  -0.08]
+ [167.07  -1.39   5.91  -0.18   0.23  -0.08]
+ [112.94   4.21   9.23   5.82   0.57   0.03]
+ [ 33.48   6.27  -4.12  -1.3   -0.01   0.41]
+ [ 29.19   2.62   0.32  -0.02   0.05   0.36]
+ [ 43.25   5.37   1.    -0.05   0.07   0.72]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 26.19   1.63   0.18  -0.01   0.04   0.2 ]
+ [ 30.61   3.24   0.47  -0.03   0.05   0.43]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+21:37:48 [238.0 min] update 39: incumbent speed 12.8191 kt (kept, gain 0.0000 kt), candidates [12.819 12.815 12.815 12.813], on 78 % of the probability, radius 1.47, region 1, 255 s
+21:39:17 [239.5 min] batch 39: 16 choices (levels 1/2/3: 12/4/0), design 795/318/84, selection 330.7 s (update 255 s), 347.9 s
+21:44:02 [244.3 min] update 40: incumbent speed 12.8289 kt (new, gain 0.0094 kt), candidates [12.82  12.829 12.82  12.818], on 78 % of the probability, radius 2.20, region 1, 281 s
+21:45:21 [245.6 min] batch 40: 16 choices (levels 1/2/3: 13/1/2), design 808/321/86, selection 354.1 s (update 281 s), 364.1 s
+21:51:07 [251.3 min] batch 41: hyperparameters refitted on 1215 points
+21:55:47 [256.0 min] update 41: incumbent speed 12.8291 kt (kept, gain 0.0000 kt), candidates [12.829 12.816 12.811 12.813], on 78 % of the probability, radius 1.54, region 1, 281 s
+21:57:24 [257.6 min] batch 41: 16 choices (levels 1/2/3: 12/4/0), design 820/325/86, selection 698.5 s (update 281 s), 722.8 s
+21:57:52 [258.1 min] speed sensitivities: 24 failed solves, previous values kept
+21:57:52 [258.1 min] speed sensitivities: 6 values more than 30 % from the median of the last 3 evaluations, median kept
+21:57:52 [258.1 min] speed sensitivities dV/dC (rows = conditions): [[ 43.55  -1.27   0.51  -0.03   0.09  -0.03]
+ [ 96.82  -2.31   2.52  -0.09   0.2   -0.06]
+ [106.32  -2.96   1.43   2.37   0.5    0.09]
+ [ 49.81  -1.27   0.7   -0.04   0.1   -0.06]
+ [131.17  -2.23   4.09  -0.13   0.22  -0.11]
+ [121.21  -3.27   5.92   2.83   0.54  -0.  ]
+ [ 57.28  -1.27   0.94  -0.05   0.12  -0.09]
+ [169.08  -1.78   6.01  -0.18   0.23  -0.12]
+ [116.61   1.83   8.49   5.53   0.57   0.02]
+ [ 26.89   1.16  -6.12  -1.3    0.04   0.13]
+ [ 30.37   2.59   0.33  -0.02   0.06   0.34]
+ [ 45.74   5.45   1.03  -0.05   0.08   0.73]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 26.06   1.65   0.18  -0.01   0.04   0.2 ]
+ [ 31.8    3.27   0.48  -0.03   0.06   0.44]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+22:02:24 [262.6 min] update 42: incumbent speed 12.8295 kt (kept, gain 0.0000 kt), candidates [12.829 12.825 12.823 12.821], on 78 % of the probability, radius 1.08, region 1, 296 s
+22:03:46 [264.0 min] batch 42: 16 choices (levels 1/2/3: 11/5/0), design 833/330/86, selection 374.4 s (update 296 s), 381.8 s
+22:08:30 [268.7 min] update 43: incumbent speed 12.8332 kt (new, gain 0.0037 kt), candidates [12.829 12.833 12.832 12.831], on 78 % of the probability, radius 1.62, region 1, 280 s
+22:09:53 [270.1 min] batch 43: 16 choices (levels 1/2/3: 9/7/0), design 845/337/86, selection 354.5 s (update 280 s), 366.7 s
+22:15:01 [275.2 min] update 44: incumbent speed 12.8328 kt (kept, gain 0.0000 kt), candidates [12.833 12.826 12.822 12.824], on 78 % of the probability, radius 1.13, region 1, 304 s
+22:16:33 [276.8 min] batch 44: 16 choices (levels 1/2/3: 12/4/0), design 857/341/86, selection 385.3 s (update 304 s), 399.9 s
+22:17:04 [277.3 min] speed sensitivities: 24 failed solves, previous values kept
+22:17:04 [277.3 min] speed sensitivities: 3 values more than 30 % from the median of the last 3 evaluations, median kept
+22:17:04 [277.3 min] speed sensitivities dV/dC (rows = conditions): [[ 43.57  -1.29   0.51  -0.03   0.09  -0.03]
+ [ 96.84  -2.35   2.52  -0.09   0.2   -0.06]
+ [107.07  -4.74   1.43   2.41   0.5    0.09]
+ [ 49.84  -1.29   0.7   -0.04   0.1   -0.06]
+ [131.22  -2.29   4.09  -0.13   0.22  -0.11]
+ [122.04  -3.39   4.14   2.83   0.54  -0.  ]
+ [ 57.34  -1.29   0.94  -0.05   0.12  -0.09]
+ [169.33  -1.89   6.02  -0.18   0.23  -0.12]
+ [116.94   0.59   8.37   5.39   0.56   0.01]
+ [ 26.89   1.14  -6.12  -0.01   0.04   0.13]
+ [ 30.73   2.58   0.33  -0.02   0.06   0.34]
+ [ 46.6    5.52   1.04  -0.05   0.09   0.73]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 26.06   1.65   0.18  -0.01   0.04   0.2 ]
+ [ 32.13   3.33   0.48  -0.03   0.06   0.43]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+22:21:07 [281.3 min] update 45: incumbent speed 12.8328 kt (kept, gain 0.0000 kt), candidates [12.833 12.83  12.828 12.828], on 78 % of the probability, radius 0.79, region 1, 270 s
+22:22:52 [283.1 min] batch 45: 16 choices (levels 1/2/3: 6/9/1), design 869/350/87, selection 350.2 s (update 270 s), 379.3 s
+22:27:27 [287.7 min] update 46: incumbent speed 12.8330 kt (new, gain 0.0001 kt), candidates [12.833 12.833 12.832 12.831], on 78 % of the probability, radius 0.56, region 1, 271 s
+22:28:56 [289.2 min] batch 46: 16 choices (levels 1/2/3: 9/7/0), design 880/357/87, selection 350.9 s (update 271 s), 364.4 s
+22:32:29 [292.7 min] update 47: incumbent speed 12.8341 kt (new, gain 0.0008 kt), candidates [12.833 12.834 12.834 12.834], on 78 % of the probability, radius 0.39, region 1, 208 s
+22:34:10 [294.4 min] batch 47: 16 choices (levels 1/2/3: 10/5/1), design 891/362/88, selection 291.8 s (update 208 s), 314.1 s
+22:34:44 [294.9 min] speed sensitivities: 24 failed solves, previous values kept
+22:34:44 [294.9 min] speed sensitivities: 4 values more than 30 % from the median of the last 3 evaluations, median kept
+22:34:44 [294.9 min] speed sensitivities dV/dC (rows = conditions): [[ 43.58  -1.3    0.51  -0.03   0.09  -0.03]
+ [ 96.84  -2.36   2.52  -0.09   0.2   -0.06]
+ [107.23  -4.74   2.14   2.42   0.49   0.09]
+ [ 49.86  -1.3    0.7   -0.04   0.1   -0.06]
+ [131.25  -2.31   4.1   -0.13   0.22  -0.11]
+ [122.28  -3.27   4.11   2.83   0.53  -0.01]
+ [ 57.36  -1.3    0.94  -0.05   0.12  -0.09]
+ [169.43  -1.91   6.03  -0.18   0.23  -0.13]
+ [116.94   0.59   8.34   3.86   0.56   0.01]
+ [ 26.98   1.13  -2.07  -0.01   0.04   0.13]
+ [ 30.92   2.57   0.34  -0.02   0.06   0.34]
+ [ 46.95   5.53   1.05  -0.05   0.09   0.73]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 26.19   1.63   0.18  -0.01   0.04   0.2 ]
+ [ 32.32   3.33   0.48  -0.03   0.06   0.43]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+22:39:09 [299.4 min] update 48: incumbent speed 12.8356 kt (new, gain 0.0013 kt), candidates [12.834 12.836 12.835 12.835], on 78 % of the probability, radius 0.27, region 1, 294 s
+22:40:57 [301.2 min] batch 48: 16 choices (levels 1/2/3: 6/8/2), design 901/370/90, selection 377.8 s (update 294 s), 406.3 s
+22:44:08 [304.4 min] region 1 converged (update 48, incumbent speed 12.8356 kt): region 2 starts from a section at distance 3.42 of the optima, predicted gain -0.055 +- 0.002 kt
+22:50:19 [310.5 min] speed sensitivities: 30 failed solves, previous values kept
+22:50:19 [310.5 min] speed sensitivities dV/dC (rows = conditions): [[ 43.53  -1.2    0.51  -0.03   0.09  -0.03]
+ [ 96.94  -2.16   2.52  -0.09   0.2   -0.07]
+ [104.06  -1.91   2.89   2.36   0.48   0.12]
+ [ 49.77  -1.19   0.7   -0.04   0.1   -0.06]
+ [130.62  -1.97   4.06  -0.13   0.22  -0.09]
+ [109.37   2.42   9.47   2.56   0.53   0.08]
+ [ 57.19  -1.17   0.94  -0.05   0.11  -0.08]
+ [167.13  -1.34   5.91  -0.19   0.23  -0.08]
+ [112.47   1.92   8.89   5.81   0.56   0.07]
+ [ 34.69   7.61  -3.4   -1.06  -0.02   0.49]
+ [ 28.94   2.59   0.31  -0.02   0.06   0.35]
+ [ 42.73   5.2    0.97  -0.05   0.08   0.71]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 26.19   1.63   0.18  -0.01   0.04   0.2 ]
+ [ 30.4    3.14   0.45  -0.03   0.05   0.43]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+22:55:23 [315.6 min] update 49: incumbent speed 13.0278 kt (new, gain 0.0204 kt), candidates [13.007 13.026 13.028 13.02 ], on 72 % of the probability, radius 1.50, region 2, 674 s
+22:57:16 [317.5 min] batch 49: 16 choices (levels 1/2/3: 10/6/0), design 911/376/90, selection 958.7 s (update 674 s), 979.2 s
+23:03:00 [323.2 min] update 50: incumbent speed 12.8066 kt (new, gain 0.0258 kt), candidates [12.781 12.807 12.8   12.799], on 78 % of the probability, radius 2.25, region 2, 340 s
+23:04:48 [325.0 min] batch 50: 16 choices (levels 1/2/3: 10/6/0), design 924/382/90, selection 425.6 s (update 340 s), 451.7 s
+23:05:42 [325.9 min] speed sensitivities: 25 failed solves, previous values kept
+23:05:42 [325.9 min] speed sensitivities: 12 values more than 30 % from the median of the last 3 evaluations, median kept
+23:05:42 [325.9 min] speed sensitivities dV/dC (rows = conditions): [[ 43.53  -1.22   0.51  -0.03   0.09  -0.03]
+ [ 96.9   -2.21   2.52  -0.09   0.2   -0.06]
+ [104.96  -2.68   2.96   1.55   0.49   0.11]
+ [ 49.79  -1.21   0.7   -0.04   0.1   -0.06]
+ [130.84  -2.06   4.07  -0.13   0.22  -0.1 ]
+ [114.98  -0.64   5.91   2.68   0.53   0.05]
+ [ 57.24  -1.2    0.94  -0.05   0.12  -0.09]
+ [167.87  -1.5    5.95  -0.18   0.23  -0.09]
+ [117.96  -0.5    6.68   4.41   0.54   0.04]
+ [ 47.07   9.87  -6.6   -2.12  -0.09   0.98]
+ [ 29.44   2.59   0.31  -0.02   0.06   0.35]
+ [ 43.81   5.31   0.99  -0.05   0.08   0.72]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 25.87   1.66   0.18  -0.01   0.04   0.2 ]
+ [ 30.89   3.2    0.46  -0.03   0.06   0.43]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+23:10:37 [330.8 min] update 51: incumbent speed 12.8143 kt (new, gain 0.0087 kt), candidates [12.806 12.814 12.811 12.813], on 78 % of the probability, radius 3.00, region 2, 344 s
+23:12:25 [332.6 min] batch 51: 16 choices (levels 1/2/3: 8/8/0), design 935/390/90, selection 434.5 s (update 344 s), 457.6 s
+23:17:32 [337.8 min] update 52: incumbent speed 12.8160 kt (new, gain 0.0023 kt), candidates [12.814 12.816 12.798 12.794], on 78 % of the probability, radius 3.00, region 2, 302 s
+23:19:06 [339.3 min] batch 52: 16 choices (levels 1/2/3: 8/8/0), design 946/398/90, selection 388.3 s (update 302 s), 401.1 s
+23:23:32 [343.8 min] update 53: incumbent speed 12.8161 kt (kept, gain 0.0000 kt), candidates [12.816 12.798 12.798 12.793], on 78 % of the probability, radius 2.10, region 2, 260 s
+23:25:02 [345.3 min] batch 53: 16 choices (levels 1/2/3: 9/7/0), design 957/405/90, selection 349.1 s (update 260 s), 356.1 s
+23:25:42 [345.9 min] speed sensitivities: 24 failed solves, previous values kept
+23:25:42 [345.9 min] speed sensitivities: 8 values more than 30 % from the median of the last 3 evaluations, median kept
+23:25:42 [345.9 min] speed sensitivities dV/dC (rows = conditions): [[ 43.53  -1.24   0.51  -0.03   0.09  -0.03]
+ [ 96.86  -2.26   2.52  -0.09   0.2   -0.06]
+ [105.85  -2.92   2.93   2.36   0.49   0.11]
+ [ 49.77  -1.24   0.7   -0.04   0.1   -0.06]
+ [130.72  -2.15   4.08  -0.13   0.22  -0.1 ]
+ [111.74   1.35   5.39   2.81   0.53   0.06]
+ [ 57.19  -1.23   0.94  -0.05   0.12  -0.09]
+ [168.1   -1.66   5.97  -0.18   0.23  -0.1 ]
+ [115.15   0.9    8.89   3.01   0.56   0.04]
+ [ 34.69   7.61  -9.8   -3.18  -0.02   0.49]
+ [ 29.94   2.59   0.32  -0.02   0.06   0.35]
+ [ 44.88   5.43   1.01  -0.05   0.08   0.72]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 25.84   1.64   0.18  -0.01   0.04   0.2 ]
+ [ 31.37   3.26   0.47  -0.03   0.06   0.43]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+23:31:08 [351.4 min] update 54: incumbent speed 12.8181 kt (new, gain 0.0028 kt), candidates [12.815 12.818 12.815 12.815], on 78 % of the probability, radius 3.00, region 2, 360 s
+23:32:53 [353.1 min] batch 54: 16 choices (levels 1/2/3: 9/7/0), design 971/412/90, selection 447.8 s (update 360 s), 470.2 s
+23:38:36 [358.8 min] update 55: incumbent speed 12.8205 kt (new, gain 0.0028 kt), candidates [12.818 12.82  12.806 12.794], on 78 % of the probability, radius 3.00, region 2, 338 s
+23:40:17 [360.5 min] batch 55: 16 choices (levels 1/2/3: 11/5/0), design 983/417/90, selection 426.5 s (update 338 s), 444.9 s
+23:56:28 [376.7 min] local optima with the final surrogate, on 78 % of the probability: region 0 12.8393 kt, region 1 12.8387 kt, region 2 12.8201 kt -> region 0
+23:56:52 [377.1 min] speed sensitivities: 24 failed solves, previous values kept
+23:56:52 [377.1 min] speed sensitivities dV/dC (rows = conditions): [[ 43.58  -1.31   0.51  -0.03   0.09  -0.03]
+ [ 96.78  -2.38   2.53  -0.09   0.2   -0.06]
+ [107.37  -3.45   3.97   2.42   0.49   0.09]
+ [ 49.85  -1.32   0.7   -0.04   0.1   -0.06]
+ [131.19  -2.33   4.1   -0.13   0.22  -0.11]
+ [122.41  -1.3    6.55   2.83   0.54  -0.01]
+ [ 57.31  -1.32   0.94  -0.05   0.12  -0.09]
+ [169.37  -1.94   6.03  -0.18   0.23  -0.13]
+ [125.76  -0.95   4.71   2.42   0.54  -0.18]
+ [ 27.07   1.11   0.13  -0.01   0.04   0.13]
+ [ 31.1    2.56   0.34  -0.02   0.06   0.34]
+ [ 47.38   5.52   1.06  -0.05   0.09   0.72]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 26.29   1.62   0.18  -0.01   0.05   0.2 ]
+ [ 32.52   3.33   0.49  -0.03   0.06   0.43]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+00:01:25 [381.6 min] update 56: incumbent speed 12.8393 kt (kept, gain 0.0000 kt), candidates [12.839 12.815 12.805 12.807], on 78 % of the probability, radius 2.10, region 0, 297 s
+00:01:25 [381.6 min] loop done: 896 choices in 56 batches, design per level (983, 417, 90), runs {1: 983, 2: 417, 3: 90}, code time {1: 566.2997570999869, 2: 5885.98584390002, 3: 1402.6737558999894}
+00:10:52 [391.1 min] validation done
+00:47:51 [428.1 min] operating profile guess_bimodal: results/profile_guess_bimodal.json
+00:47:54 [428.1 min] done
