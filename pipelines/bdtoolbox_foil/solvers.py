@@ -4,25 +4,27 @@ available, cm / cpmin) of a section; the objective is computed from the polar (o
 
 2D (operational):
 * NeuralFoilBackend: NeuralFoil (model_size xxsmall ... xxxlarge), vectorized over the alpha grid.
-* XfoilCoreBackend: bdFoil core XFOIL engine (run_polar with re-panelling, PolarSpec).
-3D (a fixed planform CSV + one section file -> bdFoil coefficients, see planform.py):
-* NpLltBackend: bdFoil/NonPlanarSolver NonPlanarLiftingLine with NeuralFoil polars, or XFOIL
-  polars (option polar_source "xfoil": same PolarSpec and polar cache as the AVL level).
-* AvlCoreBackend: bdFoil core campaign.run_case (AVL) with XFOIL polars (core polar cache).
+* XfoilBackend: bdfoil_v1 XFOIL engine (run_polar, PolarSpec).
+3D (a fixed planform CSV + one section file -> foil.py-format coefficients, see planform.py):
+* BdfoilV1Backend: one case of bdfoil_v1 (Session.evaluate) with the AVL backend or the
+  non-planar lifting line (NP-LLT), and XFOIL or NeuralFoil xxxlarge polars on the Reynolds
+  lattice of bdfoil_v1 (local Re of every strip). Since 2026-10-27, replacing the old bdFoil core
+  (AVL) and bdFoil/NonPlanarSolver (NPLLT) backends (git tag pre-bdfoil-v1).
 
 The flow conditions shared by every level ("flow" entry of the configuration: re, n_crit, xtr,
 alpha = [start, stop, step]) are the same for all the levels, so that the discrepancy between
 levels models the physics and not convention differences. The 3D levels also share the
-attitude, the image of the plane z = 0 and the profile drag definition (CD of the section
-polar at the strip cl).
+attitude, the image of the plane z = 0 and the post-processing of bdfoil_v1 (viscous drag and
+Cpmin of every strip at its cl and local Re).
 """
 import hashlib
+import json
 import logging
+import os
 import tempfile
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from types import SimpleNamespace
 
 import numpy as np
 
@@ -51,7 +53,7 @@ def alpha_grid(flow: dict) -> np.ndarray:
     return np.arange(start, stop + 0.5 * step, step)
 
 
-# 1/4 ---------------------------------------------------------------------------------------------
+# 1/3 ---------------------------------------------------------------------------------------------
 class NeuralFoilBackend:
     """NeuralFoil polar of a section (options: model_size)."""
     name = "neuralfoil"
@@ -80,33 +82,34 @@ class NeuralFoilBackend:
         return Polar(alpha=alpha, cl=cl, cd=cd, cm=cm)
 
 
-# 2/4 ---------------------------------------------------------------------------------------------
-class XfoilCoreBackend:
-    """bdFoil core XFOIL polar (options: npane, niter, timeout, workdir)."""
+# 2/3 ---------------------------------------------------------------------------------------------
+class XfoilBackend:
+    """bdfoil_v1 XFOIL polar of a section (options: npane, niter, timeout, workdir)."""
     name = "xfoil"
 
     def __init__(self, flow: dict, npane: int = 250, niter: int = 100, timeout: float = 120.0,
                  workdir: str = None):
-        core = bridge.bdfoil_core()
-        self.xfoil = core.xfoil
-        self.model = core.model
+        package = bridge.bdfoil_v1()
+        self.xfoil, self.model = package.xfoil, package.model
         start, stop, step = flow.get("alpha", (-4.0, 12.0, 0.5))
         self.spec = self.xfoil.PolarSpec(
             re=float(flow["re"]), ncrit=float(flow.get("n_crit", 1.0)),
-            xtr=tuple(flow.get("xtr", (0.1, 0.1))), alpha=(float(start), float(stop), float(step)),
-            npane=int(npane), niter=int(niter))
+            xtr=tuple(float(v) for v in flow.get("xtr", (0.1, 0.1))),
+            alpha=(float(start), float(stop), float(step)), npane=int(npane), niter=int(niter))
         self.timeout = float(timeout)
-        # short working directory (XFOIL / Windows path-length limits of bdFoil core)
+        # short working directory (XFOIL / Windows path-length limits)
         self.workdir = Path(workdir) if workdir else Path(tempfile.mkdtemp(prefix="mfego_xf_"))
 
     def polar(self, section: Section, workdir: Path = None) -> Polar:
         del workdir
-        path = write_xf(section, self.workdir / "sections")
+        path = write_xf(section, self.workdir / "sections").resolve()
         ref = self.model.SectionRef(path=path,
                                     sha256=hashlib.sha256(path.read_bytes()).hexdigest())
         try:
             polar = self.xfoil.run_polar(ref, self.spec, workdir=self.workdir / section.name,
                                          timeout=self.timeout)
+        except self.model.ExeError:
+            raise
         except self.model.CoreError as error:
             raise SolverFailure(f"XFOIL failed for {section.name}: {error}") from error
         return Polar(alpha=np.asarray(polar.alpha), cl=np.asarray(polar.cl),
@@ -114,391 +117,218 @@ class XfoilCoreBackend:
                      cpmin=np.asarray(polar.cpmin))
 
 
-# 3/4 ---------------------------------------------------------------------------------------------
-# Image of the plane z = 0 (bdFoil convention): "wall" = symmetry plane of a foil attached to the
-# hull (AVL iZsym +1, NPLLT surface_type 0: the mirrored horseshoes continue the bound vortex
-# across z = 0, no trailing vortex at the root), "free_surface" = high Froude free surface
-# (iZsym -1, surface_type 1, zero loading at z = 0), "none" = no image.
-IMAGES = {"wall": {"zsym": 1, "surface_type": 0},
-          "free_surface": {"zsym": -1, "surface_type": 1},
-          "none": {"zsym": 0, "surface_type": None}}
+# 3/3 ---------------------------------------------------------------------------------------------
+# Image of the plane z = 0 (bdfoil_v1 boundary.zsym): "wall" = symmetry plane of a foil attached
+# to the hull (+1: the mirrored vortices continue the bound vortex across z = 0), "free_surface" =
+# high Froude free surface (-1, zero loading at z = 0), "none" = no image (0).
+IMAGES = {"wall": 1, "free_surface": -1, "none": 0}
 
 # A lifting line / vortex lattice meeting a WALL image at an angle has a kink singularity at its
-# root: the first strip or control point next to the wall gets a meaningless local cl (cl ~ 8 on
-# a single AVL strip, alpha ~ 11 deg on one NPLLT control point) carrying a negligible force. The
-# stall check (a clamped polar lookup makes the evaluation fail) ignores this root zone, given as
-# a fraction of the immersed span; the clamped points are still counted ("n_clamped_total").
+# root: the first strip or panel next to the wall gets a meaningless local cl carrying a
+# negligible force. The stall check (a clamped polar lookup makes the evaluation fail) ignores
+# this root zone, given as a fraction of the immersed span; the clamped strips are still counted
+# ("n_clamped_total").
 ROOT_ZONE_FRACTION = 0.02
+POLAR_PROVIDERS = ("xfoil", "neuralfoil")
 
 
-def _check_image(image: str) -> dict:
+def _check_image(image: str) -> int:
     if image not in IMAGES:
         raise ValueError(f"image must be in {tuple(IMAGES)}, got {image!r}")
     return IMAGES[image]
 
 
-def xfoil_spec(core, flow: dict, npane: int = 250, niter: int = 100):
+class BdfoilV1Backend:
     """
-    XFOIL settings of the 3D levels with XFOIL polars (AVL x XFOIL, NPLLT x XFOIL): the flow of
-    the configuration (re, n_crit, xtr, alpha = [start, stop, step]; default range down to
-    -6 deg so that the polar covers the low cl of the tip strips). The polar cache key is the
-    sha256 of the section file and this spec: two levels with the same spec share the polars
-    (the second one reads the polar computed by the first one).
+    3D level: one bdfoil_v1 case per evaluation (Study.from_dict -> Session.evaluate), solver
+    "avl" (vortex lattice, Trefftz-plane induced drag) or "npllt" (non-planar lifting line,
+    near-field loads), polars "xfoil" or "neuralfoil" (xxxlarge, fitted Kulfan of the section).
+
+    Inputs of the case (the conventions of Antoine's bdfoil_v1 cases where nothing else is said):
+    - the planform CSV and its section files (planform.py), lengths in metres;
+    - the flow of the configuration: re = Reynolds number on the reference chord, n_crit, xtr,
+      alpha grid of the polars; the polars are computed on the Reynolds lattice of bdfoil_v1
+      that brackets the local Re of the strips (8 nodes per decade by default);
+    - speed: the speed of the case [m/s], by default the one that gives re on the reference
+      chord in seawater at `temperature` (V = re nu / chord; decision of 2026-10-27: a fixed
+      reference speed, the surrogate has no speed input);
+    - wave_drag False by default (decision of 2026-10-27: the VPP scales the coefficients by
+      V^2, a Froude-dependent term would be wrong at a fixed speed), free_surface_height (depth
+      of the strips for sigma and the wave drag);
+    - cp_min_percentile: the Cpmin of the foil = this percentile of the Cpmin of the strips
+      (bdfoil_v1 default 1; 20 = the production RS of the C-foil).
+    Options of the solvers: nchord, n_mesh, nspan (AVL), n_panels (NP-LLT), npane, niter,
+    polar_timeout (XFOIL), timeout (AVL), cache_dir (polar cache, env BDFOIL_V1_CACHE of
+    bdfoil_v1, <= 182 characters), fail_on_clamp, root_zone (fraction of the span excluded from
+    the stall check, default ROOT_ZONE_FRACTION with a wall).
+
+    evaluate_planform(csv, section_dir) returns the foil.py-format coefficients of bdfoil_v1
+    ("Cx [-]" ... "Cmz [-]": moments M / (q Sref) in metres about (0, 0, sink), BD frame x
+    forward, y port, z up; "Cpmin [-]", "Ref Surf [m^2]"...), plus the names the simulator uses:
+    "Cdprofile [-]" (viscous drag, = "Cdvisc [-]") and "Cdi [-]" (the induced drag in Cx:
+    Trefftz plane for AVL, near field for the NP-LLT), and diagnostics (clamped strips, filled
+    polar points, Reynolds range, NP-LLT convergence).
     """
-    start, stop, step = flow.get("alpha", (-6.0, 12.0, 0.5))
-    return core.xfoil.PolarSpec(
-        re=float(flow["re"]), ncrit=float(flow.get("n_crit", 1.0)),
-        xtr=tuple(float(v) for v in flow.get("xtr", (0.1, 0.1))),
-        alpha=(float(start), float(stop), float(step)), npane=int(npane), niter=int(niter))
 
-
-# name of the private XFOIL polar method of NonPlanarLiftingLine (self.__xfoil_polar, called by
-# its polar pre-computation): replaced below, so that the bdFoil clone is left untouched
-_NPLLT_XFOIL_POLAR = "_NonPlanarLiftingLine__xfoil_polar"
-
-
-def _xfoil_lifting_line(module, core, spec, settings: dict):
-    """
-    NonPlanarLiftingLine whose XFOIL polars use the PolarSpec of the configuration (re, n_crit,
-    xtr, alpha, npane, niter) and the polar cache of the study. The original method of bdFoil
-    builds its spec from re and alpha only (n_crit, xtr, npane and niter would silently take the
-    core defaults, niter 100 among them) and writes in the default cache of the bdFoil clone
-    (bdFoil/tmp). settings: {"cache_dir", "timeout"}, read at every call (a caller may point
-    the cache elsewhere, e.g. to time the polar computation). The returned polar arrays and the
-    confidence (0 on the points XFOIL did not converge, filled by the core interpolation) are
-    those of the original method. A set-up mismatch raises RuntimeError (it stops the run: it
-    is not a failed evaluation).
-    """
-    base = module.NonPlanarLiftingLine
-    if not hasattr(base, _NPLLT_XFOIL_POLAR):
-        raise RuntimeError(f"np_llt_solver.NonPlanarLiftingLine has no {_NPLLT_XFOIL_POLAR} "
-                           "method any more (bdFoil changed): NPLLT x XFOIL cannot be set up")
-
-    def xfoil_polar(self, section, reynolds: float, alpha_deg: np.ndarray):
-        if abs(float(reynolds) - spec.re) > 1e-9 * spec.re:
-            raise RuntimeError(f"NPLLT x XFOIL: polar Reynolds {reynolds:.6g} differs from the "
-                               f"flow Reynolds {spec.re:.6g} (local_reynolds must be False)")
-        start = time.perf_counter()
-        polar = core.xfoil.get_polars(SimpleNamespace(sections=(section,)), spec,
-                                      cache_dir=settings["cache_dir"], nproc=1,
-                                      timeout=settings["timeout"]).polar(section)
-        alpha = np.asarray(polar.alpha, dtype=float)
-        if alpha_deg[0] < alpha[0] - 1e-9 or alpha_deg[-1] > alpha[-1] + 1e-9:
-            raise RuntimeError("NPLLT x XFOIL: the polar table is wider than the XFOIL polar")
-        self.xfoil_filled_points = getattr(self, "xfoil_filled_points", 0) \
-            + int(np.sum(polar.filled))
-        self.time_polar_s = getattr(self, "time_polar_s", 0.0) + time.perf_counter() - start
-        return (np.interp(alpha_deg, alpha, polar.cl), np.interp(alpha_deg, alpha, polar.cd),
-                np.interp(alpha_deg, alpha, polar.cm),
-                np.interp(alpha_deg, alpha, (~np.asarray(polar.filled)).astype(float)))
-
-    return type("XfoilPolarLiftingLine", (base,), {_NPLLT_XFOIL_POLAR: xfoil_polar})
-
-
-class NpLltBackend:
-    """
-    3D level: bdFoil non-planar lifting line (bdFoil/NonPlanarSolver, Phillips & Snyder 2000)
-    with NeuralFoil section polars of the model of the level (options: neuralfoil_model,
-    nodes_count, core_radius, spacing and any other NonPlanarLiftingLine keyword), or XFOIL
-    polars with polar_source "xfoil" (options npane, niter, polar_timeout, cache_dir): the
-    PolarSpec of the AVL level (xfoil_spec, so the same polar cache entries), and a polar table
-    on the alpha grid of the flow (alpha_range_deg / alpha_step_deg are set from it).
-
-    The flow is the one shared by every level: a single polar Reynolds number (local_reynolds
-    False, operating_re = flow.re, like the AVL level), n_crit and xtr of the configuration.
-    The attitude (cant = heel + trunk_cant, rake, yaw, sink) and the image of the plane z = 0
-    come from the configuration. A wall image met at an angle has a kink singularity at the
-    root of the lifting line: the default vortex cut-off is then core_radius = 0.005 (fraction of
-    the local chord, as advised by np_llt_solver).
-
-    evaluate_planform(csv, section_dir) returns the bdFoil coefficients ("Cx [-]"...,
-    "Cdprofile [-]") and diagnostics: CL2d / CD2d of the section polars at check_alpha_deg at
-    EVERY control point (the 2D constraint seen by this level), polar confidence (NeuralFoil
-    analysis confidence, or 1 / 0 for the converged / filled XFOIL points), number of angles of
-    attack clamped at the ends of the polar table (a failure if fail_on_clamp, outside the root
-    zone of a wall image, see ROOT_ZONE_FRACTION).
-    """
-    name = "npllt"
-
-    def __init__(self, paths, flow: dict, attitude: dict = None, image: str = "wall",
-                 kind: str = "FOIL", neuralfoil_model: str = "xxlarge", nodes_count: int = 100,
-                 core_radius: float = None, fail_on_clamp: bool = True,
-                 check_alpha_deg: float = 0.0, root_zone: float = None,
-                 polar_source: str = "neuralfoil", npane: int = None, niter: int = None,
-                 polar_timeout: float = 300.0, cache_dir: str = None, **solver_options):
-        self.module = bridge.np_llt_solver(paths)
-        logging.getLogger(self.module.__name__).setLevel(logging.WARNING)
-        surface_type = _check_image(image)["surface_type"]
+    def __init__(self, solver: str, flow: dict, attitude: dict = None, image: str = "wall",
+                 kind: str = "FOIL", reference_chord: float = None, polars: str = "xfoil",
+                 speed: float = None, temperature: float = 15.0,
+                 free_surface_height: float = 0.0, wave_drag: bool = False,
+                 cp_min_percentile: float = 20.0, nchord: int = 8, n_mesh: int = None,
+                 nspan: int = None, n_panels: int = None, npane: int = 250, niter: int = 100,
+                 polar_timeout: float = 120.0, timeout: float = 60.0, cache_dir: str = None,
+                 fail_on_clamp: bool = True, root_zone: float = None):
+        if solver not in ("avl", "npllt"):
+            raise ValueError(f"BdfoilV1Backend: solver must be 'avl' or 'npllt', got {solver!r}")
+        if polars not in POLAR_PROVIDERS:
+            raise ValueError(f"BdfoilV1Backend: polars must be in {POLAR_PROVIDERS}, got "
+                             f"{polars!r}")
+        package = bridge.bdfoil_v1()
+        self.package, self.model = package, package.model
+        self.name, self.polars = solver, polars
+        zsym = _check_image(image)
         attitude = attitude or {}
-        xtr = flow.get("xtr", (0.1, 0.1))
-        if core_radius is None:
-            core_radius = 0.005 if image == "wall" else 0.0
-        self.polar_source = polar_source
-        self.solver_class = self.module.NonPlanarLiftingLine
-        self.core = None
-        if polar_source == "xfoil":
-            if {"alpha_range_deg", "alpha_step_deg"} & set(solver_options):
-                raise ValueError("NpLltBackend: with polar_source 'xfoil' the polar table is the "
-                                 "alpha grid of the flow (no alpha_range_deg / alpha_step_deg)")
-            self.core = bridge.bdfoil_core()
-            self.spec = xfoil_spec(self.core, flow, 250 if npane is None else npane,
-                                   100 if niter is None else niter)
-            start, stop, step = self.spec.alpha
-            solver_options.update({"alpha_range_deg": (start, stop), "alpha_step_deg": step})
-            self.xfoil_settings = {"cache_dir": Path(cache_dir) if cache_dir else None,
-                                   "timeout": float(polar_timeout)}
-            self.solver_class = _xfoil_lifting_line(self.module, self.core, self.spec,
-                                                    self.xfoil_settings)
-        elif npane is not None or niter is not None or cache_dir is not None:
-            raise ValueError("NpLltBackend: npane / niter / cache_dir are XFOIL options "
-                             "(polar_source 'xfoil')")
-        self.options = {
-            "nodes_count": int(nodes_count), "cant_deg": float(attitude.get("cant", 0.0)),
-            "rake_deg": float(attitude.get("rake", 0.0)),
-            "yaw_deg": float(attitude.get("yaw", 0.0)), "sink": float(attitude.get("sink", 0.0)),
-            "surface_type": surface_type, "operating_re": float(flow["re"]),
-            "local_reynolds": False, "polar_source": polar_source, "foil_kind": kind,
-            "length_factor": 1.0, "neuralfoil_model": neuralfoil_model,
-            "neuralfoil_n_crit": float(flow.get("n_crit", 1.0)),
-            "neuralfoil_xtr": (float(xtr[0]), float(xtr[1])), "core_radius": float(core_radius),
-            **solver_options}
-        if self.options["local_reynolds"] and polar_source == "xfoil":
-            raise ValueError("NpLltBackend: polar_source 'xfoil' needs local_reynolds False")
-        self.fail_on_clamp = bool(fail_on_clamp)
-        self.check_alpha = np.radians(float(check_alpha_deg))
-        self.root_zone = (ROOT_ZONE_FRACTION if image == "wall" else 0.0) \
-            if root_zone is None else float(root_zone)
-
-    def coefficients(self, parameters: dict, workdir: Path) -> dict:
-        """Planform design variables (template path) are not supported by the real backend."""
-        del parameters, workdir
-        raise SolverFailure("NpLltBackend: planform design variables are not supported, use a "
-                            "fixed planform with a section parametrization")
-
-    def evaluate_planform(self, csv_path: Path, section_dir: Path, with_strips: bool = False,
-                          attitude: dict = None) -> dict:
-        """
-        Coefficients and diagnostics of the planform CSV (sections in section_dir).
-        attitude: optional {cant, rake, yaw, sink} overriding the configured one (trim).
-        """
-        start = time.perf_counter()
-        options = dict(self.options)
-        if attitude:
-            options.update({f"{k}_deg": float(v) for k, v in attitude.items() if k != "sink"})
-            if "sink" in attitude:
-                options["sink"] = float(attitude["sink"])
-        if self.core is None:
-            solver = self.solver_class(str(csv_path), str(section_dir), **options)
-        else:
-            try:
-                solver = self.solver_class(str(csv_path), str(section_dir), **options)
-            except self.core.model.ExeError:
-                raise
-            except self.core.model.CoreError as error:
-                raise SolverFailure(f"NPLLT x XFOIL failed: {error}") from error
-        setup_time = time.perf_counter() - start
-        solver.solve_lifting_line()
-        if not solver.converged:
-            raise SolverFailure(f"NPLLT did not converge (max residual {solver.residual_max:.2e}, "
-                                f"{solver.n_iterations} iterations)")
-        out = {key: float(value) for key, value in solver.get_bdfoil_coefficients().items()
-               if value is not None}
-        lo, hi = solver.alpha_table_rad
-        alpha = np.asarray(solver.alpha_all, dtype=float)
-        out_of_table = (alpha < lo) | (alpha > hi)
-        s_cp = np.asarray(solver.s_cp_full, dtype=float)
-        checked = s_cp > self.root_zone * float(solver.L_arc)
-        clamped = int(np.sum(out_of_table & checked))
-        cl2d = np.array([float(spline(self.check_alpha)) for spline in solver.cl_splines])
-        cd2d = np.array([float(spline(self.check_alpha)) for spline in solver.cd_splines])
-        confidence_check = np.array([float(spline(self.check_alpha))
-                                     for spline in solver.unique_conf_splines])
-        local_conf = np.array([float(solver.unique_conf_splines[k](a)) for k, a in
-                               zip(solver.polar_key_index, np.clip(alpha, lo, hi))])
-        out.update({"n_clamped": clamped, "n_clamped_total": int(np.sum(out_of_table)),
-                    "cl2d_check_min": float(cl2d.min()),
-                    "cl2d_check_max": float(cl2d.max()), "cd2d_check_mean": float(cd2d.mean()),
-                    "n_sections_checked": int(len(cl2d)),
-                    "nf_confidence_min": float(local_conf.min()),
-                    "nf_confidence_check": float(confidence_check.min()),
-                    "n_iterations": int(solver.n_iterations),
-                    "time_setup_s": setup_time, "time_solve_s": time.perf_counter() - start
-                    - setup_time})
-        if self.core is not None:
-            out.update({"xfoil_filled_points": int(getattr(solver, "xfoil_filled_points", 0)),
-                        "time_polar_s": float(getattr(solver, "time_polar_s", 0.0))})
-        if self.fail_on_clamp and clamped:
-            raise SolverFailure(f"NPLLT: {clamped} angles of attack outside the polar table "
-                                "(stall), the clamped polar values would be exploited")
-        if with_strips:
-            cd_local = np.array([float(s(a)) for s, a in zip(solver.cd_splines,
-                                                               np.clip(alpha, lo, hi))])
-            out["strips"] = {"s": np.asarray(solver.s_cp_full, dtype=float).tolist(),
-                             "cl": np.asarray(solver.local_cl, dtype=float).tolist(),
-                             "cd": cd_local.tolist(),
-                             "alpha_deg": np.degrees(alpha).tolist(),
-                             "cl2d_check": cl2d.tolist(),
-                             "chord": np.asarray(solver.all_chords_cp, dtype=float).tolist()}
-        return out
-
-
-# 4/4 ---------------------------------------------------------------------------------------------
-class AvlCoreBackend:
-    """
-    3D level: bdFoil core AVL (vortex lattice, Trefftz-plane induced drag) with the profile
-    drag of XFOIL polars (bdFoil core XFOIL driver and polar cache), the bdFoil "profile"
-    viscous model: cd of each strip = CD of the section polar at the strip cl (the same
-    definition as the Cdprofile of the NPLLT levels).
-
-    Options: npane, niter (XFOIL), polar_timeout, timeout (AVL), settings (core Settings:
-    n_mesh, nspan, nchord... ; zsym comes from the image, viscous_model is always "profile"),
-    cache_dir (XFOIL polar cache, default: bdFoil core default), fail_on_clamp, root_zone
-    (fraction of the span excluded from the stall check, default ROOT_ZONE_FRACTION with a wall).
-    The XFOIL polar uses the flow of the configuration (re, n_crit, xtr, alpha = [start, stop,
-    step], 0 included for the 2D check).
-    """
-    name = "avl"
-
-    def __init__(self, paths, flow: dict, attitude: dict = None, image: str = "wall",
-                 kind: str = "FOIL", settings: dict = None, npane: int = 250, niter: int = 100,
-                 polar_timeout: float = 300.0, timeout: float = 120.0, cache_dir: str = None,
-                 fail_on_clamp: bool = True, check_alpha_deg: float = 0.0,
-                 root_zone: float = None):
-        del paths
-        core = bridge.bdfoil_core()
-        from bdFoil.Code.core import campaign, forces  # noqa: PLC0415
-        self.core, self.campaign, self.forces = core, campaign, forces
-        settings = dict(settings or {})
-        if settings.get("viscous_model", "profile") != "profile":
-            raise ValueError("AvlCoreBackend: viscous_model must be 'profile' (same profile drag "
-                             "definition as the NPLLT levels)")
-        settings.update({"zsym": _check_image(image)["zsym"], "viscous_model": "profile"})
-        self.settings = core.model.Settings(**settings)
-        self.spec = xfoil_spec(core, flow, npane, niter)
-        attitude = attitude or {}
-        self.attitude = core.model.Attitude(cant=float(attitude.get("cant", 0.0)),
-                                            rake=float(attitude.get("rake", 0.0)),
-                                            yaw=float(attitude.get("yaw", 0.0)),
-                                            sink=float(attitude.get("sink", 0.0)))
-        self.kind = kind
-        self.polar_timeout, self.timeout = float(polar_timeout), float(timeout)
+        self.attitude = {key: float(attitude.get(key, 0.0)) for key in ("cant", "rake", "yaw",
+                                                                         "sink")}
+        if speed is None:
+            if not reference_chord:
+                raise ValueError("BdfoilV1Backend: give speed or reference_chord (speed = re nu "
+                                 "/ chord)")
+            nu = package.fluid.seawater(float(temperature)).nu
+            speed = float(flow["re"]) * nu / float(reference_chord)
+        self.speed = float(speed)
+        start, stop, step = flow.get("alpha", (-12.0, 12.0, 0.5))
+        self.case = {
+            "schema_version": "1.0", "name": f"mfego_{solver}_{polars}",
+            "description": "one evaluation of pipelines/bdtoolbox_foil (Multifidelity-GP-Clean)",
+            "fluid": {"temperature": float(temperature)},
+            "boundary": {"zsym": zsym, "free_surface_height": float(free_surface_height)},
+            "appendage": {"kind": kind, "planform": {"csv": "planform.csv", "length_unit": "m"}},
+            "solver": {"backend": solver,
+                       "avl": {"nchord": int(nchord), "n_mesh": n_mesh, "nspan": nspan,
+                               "timeout": float(timeout)},
+                       "npllt": {"n_mesh": n_mesh, "n_panels": n_panels}},
+            "polars": {"provider": polars, "ncrit": float(flow.get("n_crit", 1.0)),
+                       "xtr": [float(v) for v in flow.get("xtr", (0.1, 0.1))],
+                       "alpha": [float(start), float(stop), float(step)], "npane": int(npane),
+                       "niter": int(niter), "timeout": float(polar_timeout)},
+            "post": {"cp_min_percentile": float(cp_min_percentile), "wave_drag": bool(wave_drag)},
+            "attitudes": {"list": [{**self.attitude, "speed": self.speed}]},
+            "outputs": {"strips": True}}
         self.cache_dir = Path(cache_dir) if cache_dir else None
+        if self.cache_dir is not None and len(str(self.cache_dir.resolve())) > 182:
+            raise ValueError(f"BdfoilV1Backend: cache_dir longer than 182 characters (Windows "
+                             f"MAX_PATH of the polar cache): {self.cache_dir}")
         self.fail_on_clamp = bool(fail_on_clamp)
-        self.check_alpha = float(check_alpha_deg)
         self.root_zone = (ROOT_ZONE_FRACTION if image == "wall" else 0.0) \
             if root_zone is None else float(root_zone)
 
     def coefficients(self, parameters: dict, workdir: Path) -> dict:
         """Planform design variables (template path) are not supported by the real backend."""
         del parameters, workdir
-        raise SolverFailure("AvlCoreBackend: planform design variables are not supported, use "
+        raise SolverFailure("BdfoilV1Backend: planform design variables are not supported, use "
                             "a fixed planform with a section parametrization")
 
+    def session(self, csv_path: Path, section_dir: Path):
+        """The bdfoil_v1 Session of the planform CSV (sections in section_dir and next to the
+        CSV); a StudyError (invalid case) stops the run: it is a set-up error."""
+        csv_path = Path(csv_path).resolve()
+        case = json.loads(json.dumps(self.case))
+        case["appendage"]["planform"].update({"csv": str(csv_path),
+                                              "section_dirs": [str(Path(section_dir).resolve())]})
+        study = self.package.study.from_dict(case, base_dir=csv_path.parent)
+        return self.package.session.Session(study)
+
     def evaluate_planform(self, csv_path: Path, section_dir: Path, with_strips: bool = False,
                           attitude: dict = None) -> dict:
         """
         Coefficients and diagnostics of the planform CSV (sections in section_dir).
-        attitude: optional {cant, rake, yaw, sink} overriding the configured one (trim); every
-        call runs AVL in its own work folder, the XFOIL polar comes from the cache after the
-        first call.
+        attitude: optional {cant, rake, yaw, sink} overriding the configured one (trim). The
+        polars come from the polar cache after the first call with a section.
         """
-        model = self.core.model
         start = time.perf_counter()
-        case_attitude = self.attitude if not attitude else model.Attitude(
-            cant=float(attitude.get("cant", self.attitude.cant)),
-            rake=float(attitude.get("rake", self.attitude.rake)),
-            yaw=float(attitude.get("yaw", self.attitude.yaw)),
-            sink=float(attitude.get("sink", self.attitude.sink)))
-        self._calls = getattr(self, "_calls", 0) + 1
+        angles = {**self.attitude, **{k: float(v) for k, v in (attitude or {}).items()}}
+        if self.cache_dir is not None:
+            os.environ["BDFOIL_V1_CACHE"] = str(self.cache_dir.resolve())
+        session = self.session(csv_path, section_dir)
         try:
-            planform = model.load_planform(csv_path, name="cfoil", kind=self.kind,
-                                           section_dirs=[section_dir])
-            polars = self.core.xfoil.get_polars(planform, self.spec, cache_dir=self.cache_dir,
-                                                nproc=1, timeout=self.polar_timeout)
-            polar_time = time.perf_counter() - start
-            result = self.campaign.run_case(planform, polars, case_attitude, self.settings,
-                                            workdir=Path(section_dir) / f"avl{self._calls}",
-                                            timeout=self.timeout)
-        except model.ExeError:
+            result = session.evaluate(self.model.Attitude(**angles, speed=self.speed))
+        except self.model.ExeError:
             raise
-        except model.CoreError as error:
-            raise SolverFailure(f"AVL x XFOIL failed: {error}") from error
+        except self.model.CoreError as error:
+            raise SolverFailure(f"bdfoil_v1 {self.name} x {self.polars} failed: "
+                                f"{type(error).__name__}: {error}") from error
         if not result.ok:
-            raise SolverFailure(f"AVL case failed: {result.error}")
+            raise SolverFailure(f"bdfoil_v1 {self.name} case failed: {result.error}")
         out = {key: float(value) for key, value in result.values.items()
                if isinstance(value, (int, float)) and not isinstance(value, bool)}
-        # same names as the NPLLT levels: the induced drag that enters Cx (Trefftz-plane CDff);
-        # AVL's near-field induced drag is kept for the comparison
+        out["Cdprofile [-]"] = out["Cdvisc [-]"]
+        # the induced drag that enters Cx: AVL's Trefftz plane (force_integral "trefftz", the
+        # default of bdfoil_v1), the near field of the NP-LLT (no Trefftz plane)
+        trefftz = out.get("Cd trefftz [-]", np.nan)
         out["Cdi_nearfield [-]"] = out.get("Cdi [-]", np.nan)
-        out["Cdi [-]"] = out.get("Cd trefftz [-]", np.nan)
+        if self.name == "avl" and np.isfinite(trefftz):
+            out["Cdi [-]"] = trefftz
+        si = dict(result.si or {})
+        for key in ("Re min [-]", "Re max [-]", "n Re clamped", "n cl clamped", "n filled",
+                    "near-field gap [-]", "n iterations", "residual max [-]", "n alpha clamped"):
+            value = si.get(key)
+            if isinstance(value, (int, float, np.integer, np.floating)) \
+                    and not isinstance(value, bool):
+                out[key] = float(value)
+        if self.name == "npllt":
+            out["converged"] = bool(si.get("converged", True))
+        # stall check outside the root zone of a wall image: strips whose cl leaves the monotone
+        # branch of their polar (AVL and NP-LLT post), NP-LLT panels whose incidence leaves it
         strips = result.strips
-        s_strips = strips["s [m]"].to_numpy(dtype=float)
-        checked = s_strips > self.root_zone * float(s_strips.max())
-        # profile drag without the root singularity: the first station takes the cl of the first
-        # AVL strip, which is meaningless next to a wall image met at an angle (cl ~ 8), and
-        # the core clamps it to the end of the polar (high-alpha cd of the section, i.e. a
-        # design-dependent artefact of ~0.25 % of CD). The stations of the root zone take the cd
-        # of the first checked station; Cx is rebuilt with this profile drag (core value kept).
-        cd_strips = strips["cd [-]"].to_numpy(dtype=float)
-        area = strips["dA [m^2]"].to_numpy(dtype=float)
-        sref = out["Ref Surf [m^2]"]
-        out["Cdprofile_core [-]"] = out.get("Cdvisc [-]", np.nan)
-        out["Cx_core [-]"] = out["Cx [-]"]
-        if np.any(~checked) and np.any(checked):
-            cd_strips = np.where(checked, cd_strips, cd_strips[np.argmax(checked)])
-            out["Cdprofile [-]"] = float(np.dot(cd_strips, area) / sref)
-            out["Cx [-]"] = out["Cx [-]"] + out["Cdprofile_core [-]"] - out["Cdprofile [-]"]
-        else:
-            out["Cdprofile [-]"] = out["Cdprofile_core [-]"]
-        # 2D check and polar quality, per section (one section on the whole planform here)
-        cl2d, filled = [], 0
-        clamped, clamped_total = 0, 0
-        for section in planform.sections:
-            polar = polars.polar(section)
-            cl2d.append(float(np.interp(self.check_alpha, polar.alpha, polar.cl)))
-            filled += int(np.sum(polar.filled))
-            branch_cl = np.asarray(polar.cl)[self.forces.monotone_branch(polar)]
-            on_section = strips["section"].to_numpy() == section.name
-            cl_strips = strips["cl [-]"].to_numpy(dtype=float)
-            outside = on_section & ((cl_strips < branch_cl[0]) | (cl_strips > branch_cl[-1]))
-            clamped += int(np.sum(outside & checked))
-            clamped_total += int(np.sum(outside))
-        out.update({"n_clamped": clamped, "n_clamped_total": clamped_total,
-                    "cl2d_check_min": float(min(cl2d)),
-                    "cl2d_check_max": float(max(cl2d)), "n_sections_checked": len(cl2d),
-                    "xfoil_filled_points": filled, "time_polar_s": polar_time,
-                    "time_avl_s": time.perf_counter() - start - polar_time})
-        if self.fail_on_clamp and clamped:
-            raise SolverFailure(f"AVL: {clamped} strips with a cl outside the monotone branch of "
-                                "the XFOIL polar (stall), the clamped drag would be exploited")
+        width = strips["width [m]"].to_numpy(dtype=float)
+        s_mid = np.cumsum(width) - 0.5 * width
+        checked = s_mid > self.root_zone * float(width.sum())
+        clamped = strips["cl_clamped"].to_numpy(dtype=bool)
+        n_clamped, n_total = int(np.sum(clamped & checked)), int(np.sum(clamped))
+        if self.name == "npllt" and result.panels is not None and len(result.panels):
+            panels = result.panels
+            s = panels["s [m]"].to_numpy(dtype=float)
+            frozen = panels["alpha_clamped"].to_numpy(dtype=bool)
+            n_clamped += int(np.sum(frozen & (s > self.root_zone * float(s.max()))))
+            n_total += int(np.sum(frozen))
+        out.update({"n_clamped": n_clamped, "n_clamped_total": n_total,
+                    "speed [m/s]": self.speed, "time_case_s": time.perf_counter() - start})
+        if self.fail_on_clamp and n_clamped:
+            raise SolverFailure(f"bdfoil_v1 {self.name}: {n_clamped} strips or panels outside "
+                                "the monotone branch of their polar (stall), the clamped values "
+                                "would be exploited")
         if with_strips:
-            out["strips"] = {"s": strips["s [m]"].tolist(), "cl": strips["cl [-]"].tolist(),
+            out["strips"] = {"s": s_mid.tolist(), "cl": strips["cl [-]"].tolist(),
                              "cd": strips["cd [-]"].tolist(), "y": strips["y [m]"].tolist(),
-                             "z": strips["z [m]"].tolist(), "ainc_deg": strips["ainc [°]"].tolist(),
-                             "chord": strips["c [m]"].tolist()}
+                             "z": strips["z [m]"].tolist(),
+                             "chord": strips["chord [m]"].tolist(),
+                             "Re": strips["Re [-]"].tolist(),
+                             "cpmin": strips["Cpmin [-]"].tolist()}
+            if self.name == "npllt" and result.panels is not None:
+                # effective incidence of every lifting-line panel (e.g. the NeuralFoil Cpmin of
+                # vpp_acceleration/src/foil_codes.py: bdfoil_v1 gives none with NeuralFoil)
+                out["strips"]["alpha_deg"] = result.panels["alpha [deg]"].tolist()
         return out
 
 
 def make_backend(level, problem, paths):
     """
     Backend instance of a fidelity level (config.Level) of a configuration: the flow shared by
-    every level and, for the 3D levels, the attitude, the image and the 2D check angle.
+    every level and, for the 3D levels, the attitude, the image, the kind and the chord of the
+    planform (reference chord of the Reynolds number).
     """
+    del paths
     options = dict(level.options)
     flow = problem.flow
     if level.solver == "neuralfoil":
         return NeuralFoilBackend(flow, **options)
     if level.solver == "xfoil":
-        return XfoilCoreBackend(flow, **options)
+        return XfoilBackend(flow, **options)
     from .planform import attitude_angles  # noqa: PLC0415
-    common = {"attitude": attitude_angles(problem.attitude or {}),
-              "image": problem.image or "wall",
-              "kind": (problem.planform or {}).get("kind", "FOIL"),
-              "check_alpha_deg": float((problem.section_constraint or {}).get("alpha_deg", 0.0))}
-    # XFOIL polars (AVL, NPLLT x XFOIL): the polar cache of the configuration
-    uses_xfoil = level.solver == "avl" or options.get("polar_source") == "xfoil"
-    if uses_xfoil and problem.paths.get("polar_cache") and "cache_dir" not in options:
+    planform = problem.planform or {}
+    if problem.paths.get("polar_cache") and "cache_dir" not in options:
         options["cache_dir"] = problem.paths["polar_cache"]
-    if level.solver == "npllt":
-        return NpLltBackend(paths, flow, **common, **options)
-    return AvlCoreBackend(paths, flow, **common, **options)
+    return BdfoilV1Backend(level.solver, flow, attitude=attitude_angles(problem.attitude or {}),
+                           image=problem.image or "wall", kind=planform.get("kind", "FOIL"),
+                           reference_chord=planform.get("chord"), **options)

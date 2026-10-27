@@ -1,6 +1,6 @@
 {
     "name": "kulfan_cd_at_cl04",
-    "description": "Minimum drag at CL = 0.4 of a Kulfan (CST) section with 3 + 3 weights (aerosandbox KulfanAirfoil; NeuralFoil receives its Kulfan parameters raised exactly to 8 weights per side by degree elevation). Levels: NeuralFoil xsmall, NeuralFoil xxxlarge, XFOIL (bdFoil core). GP hyperparameters: MAP, InvGamma(3, 2) lengthscale prior.",
+    "description": "Minimum drag at CL = 0.4 of a Kulfan (CST) section with 3 + 3 weights (aerosandbox KulfanAirfoil; NeuralFoil receives its Kulfan parameters raised exactly to 8 weights per side by degree elevation). Levels: NeuralFoil xsmall, NeuralFoil xxxlarge, XFOIL (bdfoil_v1). GP hyperparameters: MAP, InvGamma(3, 2) lengthscale prior.",
     "kind": "section2d",
     "parametrization": {"type": "kulfan", "n_points": 161, "fixed": {"leading_edge_weight": 0.0, "TE_thickness": 0.0}},
     "variables": [

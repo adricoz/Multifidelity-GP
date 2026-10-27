@@ -1,27 +1,34 @@
 """
-The real codes of the C-foil torsor: level 1 = NPLLT x NeuralFoil xxxlarge, level 2 = AVL x XFOIL,
-through pipelines/bdtoolbox_foil (bdFoil core), for the foil of the Intens SY VPP.
+The real codes of the C-foil torsor, through pipelines/bdtoolbox_foil on bdfoil_v1 (since
+2026-10-27; the old bdFoil core / NonPlanarSolver version is the git tag pre-bdfoil-v1), for the
+foil of the Intens SY VPP. Levels (LEVELS_XFOIL, the real runs since the third one):
+  1 = NPLLT x NeuralFoil xxxlarge, 2 = NPLLT x XFOIL, 3 = AVL x XFOIL (validation only);
+LEVELS (first two runs): 1 = NPLLT x NeuralFoil, 2 = AVL x XFOIL.
 
 The foil is the one of the production RS of MDS (bdFoil/Scripts/IntensSY/CFoil_geom/
 CFoil_generation.ipynb, read 2026-10-22): single circular arc CFoil_Arc_T1, radius 9.8 m, arc
-3.25 m, chord 0.70 m, root tangent cant_geom = 20.168 deg, tip inboard; wall image (zsym +1);
-Reynolds 5e6, n_crit 1, transition at 10 % (flow of the C-foil studies). bdFoil frame (pipelines/
-bdtoolbox_foil/planform.py): origin at the leading edge of the LOWER BEARING, x forward, y to
-port, z up; the moments are reduced at this origin, as in the production RS (torsor_ref = 0).
-Attitude: the inputs of the RS are passed as they are (the notebook passes its CANTS = heel
-0..8 deg, RAKES = trim, YAWS = leeway directly to bdFoil): cant = Cant_Eff, rake = Rake_Eff,
-yaw = Yaw_Eff, sink = 0 (no Hvol input, decision of 2026-10-22).
+3.25 m, chord 0.70 m, root tangent cant_geom = 20.168 deg, tip inboard; wall image (zsym +1),
+hull wall at z = 0 and free surface 0.654 m above it (Antoine's case cfoil_r9800_fsi.json; it
+only sets the depth of the strips, sigma, since the wave drag is off). Flow: Reynolds 5e6 on the
+chord, n_crit 1, transition at 10 %, polars -12..12 deg by 0.5 deg (bdfoil_v1 defaults, as
+Antoine's cases); bdfoil_v1 needs a speed: the fixed speed that gives Re 5e6 on the chord in
+seawater at 15 deg C (8.49 m/s; decision of 2026-10-27, the surrogate has no speed input), local
+Reynolds number of every strip, no wave drag (a Froude-dependent term would be wrong at a fixed
+speed). bdFoil frame (pipelines/bdtoolbox_foil/planform.py): origin at the leading edge of the
+LOWER BEARING, x forward, y to port, z up; the moments are reduced at this origin, as in the
+production RS (torsor_ref = 0). Attitude: the inputs of the RS are passed as they are (the
+notebook passes its CANTS = heel 0..8 deg, RAKES = trim, YAWS = leeway directly to bdFoil):
+cant = Cant_Eff, rake = Rake_Eff, yaw = Yaw_Eff, sink = 0 (no Hvol input, decision of 2026-10-22).
 
 Outputs (7, order of the MDS foil RS): Fx, Fy, Fz, Mx, My, Mz (MDS multiplies them by
-0.5 rho S V^2; moments in metres) and Cpmin. The bdFoil coefficients Cx..Cmz become the RS
-outputs with CONVERSION (sign and factor per component), fixed by the step-0 calibration against
-the production RS (scripts/real_step0_calibration.py).
-Cpmin: CP_MIN_PERCENTILE (20) percentile over the span of the section Cpmin at the local
-incidence, every strip counted (the bdFoil definition of the production RS):
-  level 1: Cpmin of NeuralFoil (1 - (ue/V)^2 on its boundary-layer stations, x/c >= 1.6 %) at
-           the local alpha of every NPLLT control point;
-  level 2: the Cpmin of bdFoil core AVL (XFOIL polar cpmin at the cl of every strip, monotone
-           branch), with cp_min_perc = 20, exactly as the production RS.
+0.5 rho S V^2; moments in metres) and Cpmin. The foil.py-format coefficients Cx..Cmz of bdfoil_v1
+become the RS outputs with CONVERSION (sign and factor per component), fixed by the step-0
+calibration against the production RS (scripts/real_step0_calibration.py). With bdfoil_v1 the
+moments include the viscous part (foil.py: induced only).
+Cpmin: CP_MIN_PERCENTILE (20, the production RS) percentile of the Cpmin of the strips:
+  XFOIL polars: the Cpmin of bdfoil_v1 (XFOIL polar cpmin of every strip at its cl and Re);
+  NeuralFoil polars: bdfoil_v1 gives none, so the Cpmin of NeuralFoil (1 - (ue/V)^2 on its
+           boundary-layer stations) at the local incidence of every NP-LLT panel.
 A failed run (SolverFailure, XFOIL or AVL error, stall) returns NaN outputs and the error.
 
 Run in the MDS environment (Multifidelity-GP-Clean/.venv-mds: conda bdToolbox packages).
@@ -45,25 +52,27 @@ BDFOIL_NAMES = ["Cx [-]", "Cy [-]", "Cz [-]", "Cmx [-]", "Cmy [-]", "Cmz [-]"]
 PLANFORM = {"type": "cfoil_arc", "radius": 9.8, "span": 3.25, "chord": 0.70, "taper": 1.0,
             "root_twist": 0.0, "tip_twist": 0.0, "cant_geom": 20.168, "tip_side": -1,
             "ori_y": 0.0, "ori_z": 0.0, "n_stations": 41, "kind": "FOIL"}
-FLOW = {"re": 5e6, "n_crit": 1.0, "xtr": [0.1, 0.1], "alpha": [-6.0, 12.0, 0.5]}
-# Cpmin of the foil = this percentile of the Cpmin of the strips, every strip counted: the
-# definition of bdFoil (core/forces.py strip_viscous) with the value of the production RS
-# (CFoil_generation.ipynb, CP_MIN_PERC = 20): a few singular strips (root next to the wall,
-# tip) do not decide it (the plain minimum gave -6 against -0.69 for the RS, 2026-10-22)
+FLOW = {"re": 5e6, "n_crit": 1.0, "xtr": [0.1, 0.1], "alpha": [-12.0, 12.0, 0.5]}
+# Cpmin of the foil = this percentile of the Cpmin of the strips, every strip counted: the value
+# of the production RS (CFoil_generation.ipynb, CP_MIN_PERC = 20): a few singular strips (root
+# next to the wall, tip) do not decide it (the plain minimum gave -6 against -0.69 for the RS,
+# 2026-10-22); bdfoil_v1's default is 1
 CP_MIN_PERCENTILE = 20.0
-LEVELS = [{"solver": "npllt", "cost": 1.0,
-           "options": {"neuralfoil_model": "xxxlarge", "nodes_count": 100}},
+# shared by the levels (module docstring): hull wall at z = 0, free surface 0.654 m above it
+CASE_OPTIONS = {"cp_min_percentile": CP_MIN_PERCENTILE, "wave_drag": False,
+                "free_surface_height": 0.654, "temperature": 15.0}
+LEVELS = [{"solver": "npllt", "cost": 1.0, "options": {"polars": "neuralfoil", **CASE_OPTIONS}},
           {"solver": "avl", "cost": 15.0,
-           "options": {"npane": 250, "niter": 300, "polar_timeout": 120, "timeout": 120,
-                       "settings": {"cp_min_perc": CP_MIN_PERCENTILE}}}]
+           "options": {"polars": "xfoil", "polar_timeout": 120, "timeout": 120,
+                       **CASE_OPTIONS}}]
 # third run (2026-10-22): high fidelity = NPLLT x XFOIL, the lifting line of level 1 with XFOIL
 # polars (the trim recommendation of the C-foil study of 2026-10-15: its lift sees the viscous
 # polar, AVL's only the camber line); AVL x XFOIL stays as level 3, for the validation only
 NPLLT_XFOIL = {"solver": "npllt", "cost": 2.0,
-               "options": {"polar_source": "xfoil", "nodes_count": 100, "npane": 250,
-                           "niter": 300, "polar_timeout": 120}}
+               "options": {"polars": "xfoil", "polar_timeout": 120, **CASE_OPTIONS}}
 LEVELS_XFOIL = [LEVELS[0], NPLLT_XFOIL, LEVELS[1]]
 TE_THICKNESS = 0.00197
+NEURALFOIL_MODEL = "xxxlarge"         # the NeuralFoil polars of bdfoil_v1 (its MODEL_SIZE)
 N_SECTION_POINTS = 121                # coordinates per side of a Kulfan section (AVL limit)
 # bdFoil coefficient -> RS output: output_k = sign_k * factor_k * bdFoil_k (set by step 0)
 CONVERSION = {"sign": [1.0] * 6, "factor": [1.0] * 6}
@@ -76,7 +85,7 @@ def section_name(weights: np.ndarray) -> str:
 
 class FoilCodes:
     """
-    The two levels of the module docstring.
+    The levels of the module docstring.
 
     Usage:
         codes = FoilCodes(work_dir)                 # work_dir holds the XFOIL polar cache
@@ -139,7 +148,7 @@ class FoilCodes:
           2 AVL x XFOIL; LEVELS_XFOIL: 1 NPLLT x NeuralFoil, 2 NPLLT x XFOIL, 3 AVL x XFOIL).
         Returns:
         - y: numpy array (7,), OUTPUT_NAMES (NaN if the run failed);
-        - info: dict (time_s, error, raw bdFoil coefficients, diagnostics).
+        - info: dict (time_s, error, raw bdfoil_v1 coefficients, diagnostics).
         """
         # pylint: disable=import-outside-toplevel
         from pipelines.bdtoolbox_foil.geometry import write_xf
@@ -161,19 +170,17 @@ class FoilCodes:
                                                 attitude={"cant": cant, "rake": rake,
                                                           "yaw": yaw, "sink": 0.0})
                 strips = out.pop("strips")
-                if backend.name == "avl":
-                    cpmin = float(out["Cpmin [-]"])
-                elif backend.polar_source == "xfoil":
-                    cpmin = self._cpmin_xfoil(backend, xf_path,
-                                              np.asarray(strips["alpha_deg"]))
-                else:
+                if backend.polars == "neuralfoil":
                     cpmin = self._cpmin_neuralfoil(section, np.asarray(strips["alpha_deg"]))
+                else:
+                    cpmin = float(out["Cpmin [-]"])
             raw = np.array([out[name] for name in BDFOIL_NAMES], dtype=float)
             y[:6] = np.asarray(self.conversion["sign"]) * np.asarray(self.conversion["factor"]) * raw
             y[6] = cpmin
             info.update({name: float(out[name]) for name in BDFOIL_NAMES})
             info.update({key: out.get(key, np.nan) for key in ("Cdi [-]", "Cdprofile [-]",
-                                                               "n_clamped_total")})
+                                                               "n_clamped_total", "Re min [-]",
+                                                               "Re max [-]")})
         except (SolverFailure, ValueError, FloatingPointError, KeyError,
                 np.linalg.LinAlgError, *self.simulator._core_errors) as error:  # noqa: SLF001
             info["error"] = f"{type(error).__name__}: {error}"[:300]
@@ -181,14 +188,16 @@ class FoilCodes:
         return y, info
 
     # --- Cpmin ---
-    def _cpmin_neuralfoil(self, section, alphas: np.ndarray) -> float:
-        """CP_MIN_PERCENTILE percentile over the control points of the NeuralFoil Cpmin at their
-        local alpha (the Cpmin of a section = min over its boundary-layer stations)."""
+    @staticmethod
+    def _cpmin_neuralfoil(section, alphas: np.ndarray) -> float:
+        """CP_MIN_PERCENTILE percentile over the NP-LLT panels of the NeuralFoil Cpmin at their
+        local alpha (the Cpmin of a section = min over its boundary-layer stations), at the
+        Reynolds number of the flow (the local Re of the strips stays within 0.02 % of it)."""
         import neuralfoil as nf  # noqa: PLC0415
         xtr = FLOW["xtr"]
         kwargs = {"alpha": np.asarray(alphas, dtype=float), "Re": FLOW["re"],
                   "n_crit": FLOW["n_crit"], "xtr_upper": xtr[0], "xtr_lower": xtr[1],
-                  "model_size": LEVELS[0]["options"]["neuralfoil_model"]}
+                  "model_size": NEURALFOIL_MODEL}
         if section.kulfan is not None:
             aero = nf.get_aero_from_kulfan_parameters(kulfan_parameters=section.kulfan, **kwargs)
         else:                                       # a section read from a .xf file
@@ -197,21 +206,6 @@ class FoilCodes:
                                     for side in ("upper", "lower")
                                     for i in range(len(nf.bl_x_points))])
         return float(np.percentile(np.min(1.0 - velocity ** 2, axis=1), CP_MIN_PERCENTILE))
-
-    @staticmethod
-    def _cpmin_xfoil(backend, xf_path, alphas: np.ndarray) -> float:
-        """NPLLT x XFOIL: CP_MIN_PERCENTILE percentile over the control points of the XFOIL
-        polar cpmin at their local alpha. The polar is the one NPLLT has just used: the cache key
-        is the sha256 of the same .xf file, so it is read from the cache, not recomputed."""
-        from types import SimpleNamespace  # noqa: PLC0415
-        core = backend.core
-        path = Path(xf_path).resolve()
-        ref = core.model.SectionRef(path=path, sha256=hashlib.sha256(path.read_bytes()).hexdigest())
-        polar = core.xfoil.get_polars(SimpleNamespace(sections=(ref,)), backend.spec,
-                                      cache_dir=backend.xfoil_settings["cache_dir"], nproc=1,
-                                      timeout=backend.xfoil_settings["timeout"]).polar(ref)
-        cpmin = np.interp(alphas, np.asarray(polar.alpha, float), np.asarray(polar.cpmin, float))
-        return float(np.percentile(cpmin, CP_MIN_PERCENTILE))
 
 
 def read_xf_section(path):

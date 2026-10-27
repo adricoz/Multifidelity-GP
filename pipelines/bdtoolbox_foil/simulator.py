@@ -9,7 +9,7 @@ mfego simulator of a foil optimization (mfego BaseSimulator contract: evaluate(x
        solved so that CL2d(alpha) = target (section_constraint.py) -> Kulfan section;
     2. known geometric constraints (constraints.py): a violation is a failed evaluation;
     3. the section .xf file and the planform CSV (metres) are written in a temporary folder;
-    4. the 3D solver of the level (npllt / avl) returns the bdFoil coefficients;
+    4. the 3D solver of the level (npllt / avl) returns the bdfoil_v1 coefficients (foil.py format);
     5. objective CD = -Cx (positive drag: induced + profile, no wave drag) or, with an
        "equal_lift_reference" section, the drag AT EQUAL LIFT
            CD* = Cdprofile + Cdi (CL_ref / CL)^2,   CL = |(Cy, Cz)| (total lift),
@@ -50,7 +50,7 @@ TRIM_MIN_STEP = 0.02
 
 
 def coefficient_name(key: str) -> str:
-    """Short metric name of a bdFoil column: "Cx [-]" -> "Cx", "Ref Surf [m^2]" -> "Ref_Surf"."""
+    """Short metric name of a bdfoil_v1 (foil.py format) column: "Cx [-]" -> "Cx", "Ref Surf [m^2]" -> "Ref_Surf"."""
     return key.split(" [")[0].strip().replace(" ", "_")
 
 
@@ -84,13 +84,13 @@ class BdToolboxFoilSimulator(BaseSimulator):
         self.reference_lift = {}
         # trim: last secant slope dCL / d(angle) of each level (first guess of the next trim)
         self.trim_slope = {}
-        # bdFoil core errors of a 3D level are failed evaluations (NaN), except a missing
+        # bdfoil_v1 errors of a 3D level are failed evaluations (NaN), except a missing
         # executable (ExeError), which is a set-up problem and stops the run
         self._core_errors, self._exe_error = (), None
         if problem.section_on_planform:
             try:
-                core = bridge.bdfoil_core()
-                self._core_errors, self._exe_error = (core.model.CoreError,), core.model.ExeError
+                model = bridge.bdfoil_v1().model
+                self._core_errors, self._exe_error = (model.CoreError,), model.ExeError
             except bridge.BridgeError:
                 pass
 

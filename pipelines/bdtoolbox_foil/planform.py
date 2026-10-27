@@ -17,12 +17,11 @@ _build_arrays) that does NOT import the legacy foil.py. bdFoil conventions (bdFo
 * Main-section markers (MS) at the root and the tip only.
 * The heel and the trunk cant are NOT in the geometry: they enter through the attitude,
   cant = heel + trunk_cant (VPP convention FOIL_PRT_Cant_Eff = Heel + FOIL_PRT_Cant), applied
-  by bdFoil core (rotation R = Rz(-yaw) Ry(-rake) Rx(-cant) about the origin, then z += sink).
+  by bdfoil_v1 (rotation R = Rz(-yaw) Ry(-rake) Rx(-cant) about the origin, then z += sink).
 
 The planform is written ONCE per evaluation as a bdGeometry CSV in METRES
 (Xle, Yle, Zle, Chord, Ainc, Section, MS) next to the section .xf file, and both 3D solvers read
-this same file (NPLLT with length_factor = 1, AVL through bdFoil core load_planform), so they
-see exactly the same geometry.
+this same file (the planform of the bdfoil_v1 case), so they see exactly the same geometry.
 
 Configuration entries:
     "planform": {"type": "cfoil_arc", "radius": 9.8, "span": 3.25, "chord": 0.70,

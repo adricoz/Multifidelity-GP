@@ -371,7 +371,7 @@ then open the notebook with the `Python (.venv-benchmark)` kernel (`QUICK = True
 
 ## Optional-5: Foil optimization with bdToolbox
 
-`pipelines/bdtoolbox_foil` optimizes 2D sections (NACA 4-digit, Kulfan, PARSEC from bdSec) with fidelity levels taken among NeuralFoil models and the XFOIL engine of bdFoil core, from a JSON configuration; 3D backends (non-planar lifting line, AVL) are provided as templates. See `pipelines/README.md`.
+`pipelines/bdtoolbox_foil` optimizes 2D sections (NACA 4-digit, Kulfan, PARSEC from bdSec) with fidelity levels taken among NeuralFoil models and the XFOIL engine of bdfoil_v1, from a JSON configuration, and the section of a fixed 3D planform with the AVL and non-planar lifting line of bdfoil_v1 (since 2026-10-27; the old bdFoil engine is the git tag `pre-bdfoil-v1`). See `pipelines/README.md`.
 
 ## Nota-Bene
 

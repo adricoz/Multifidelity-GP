@@ -1,6 +1,6 @@
 {
     "name": "naca4_cd_at_cl10",
-    "description": "Minimum drag of a continuous NACA 4-digit section at CL = 1.0 (cl_target changed from 0.5 to 1.0 in commit 6c36944; Re = 5e5, n_crit = 1, forced transition at 10 % chord). Levels: NeuralFoil xxsmall, NeuralFoil xxxlarge, XFOIL (bdFoil core); costs measured with --calibrate-costs (1 : 6.2 : 142).",
+    "description": "Minimum drag of a continuous NACA 4-digit section at CL = 1.0 (cl_target changed from 0.5 to 1.0 in commit 6c36944; Re = 5e5, n_crit = 1, forced transition at 10 % chord). Levels: NeuralFoil xxsmall, NeuralFoil xxxlarge, XFOIL (bdfoil_v1, bdFoil core when the costs were measured); costs measured with --calibrate-costs (1 : 6.2 : 142).",
     "kind": "section2d",
     "parametrization": {"type": "naca4", "n_points": 161, "fixed": {}},
     "variables": [

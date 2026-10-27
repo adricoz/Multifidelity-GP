@@ -33,7 +33,7 @@ example/*/*.html
 # MDS environment of vpp_acceleration (venv of the conda env bdToolbox, vpp_acceleration/README.md)
 .venv-mds/
 
-# XFOIL polar cache of the studies (bdFoil core content-addressed cache, safe to delete)
+# XFOIL polar cache of the studies (bdfoil_v1 / old bdFoil core content-addressed cache, safe to delete)
 studies/*/results/polar_cache/
 # solver work files kept by the study scripts for inspection
 studies/*/results/step0_avl/

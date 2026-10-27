@@ -1,11 +1,17 @@
 # mfego ↔ bdToolbox: multi-fidelity foil optimization
 
 `pipelines/bdtoolbox_foil` connects the mfego multi-fidelity Bayesian optimizer (NN-MF-EGO, Sacher et al. 2021) to the
-bdToolbox / bdFoil solvers. A JSON configuration describes the design variables, the fidelity levels (one solver per
+bdToolbox / bdfoil_v1 solvers. A JSON configuration describes the design variables, the fidelity levels (one solver per
 level, with its relative cost), the flow conditions and the objective; the runner does the rest (DOE, optimization,
 export of the surrogate, figures, timestamped log).
 
-bdToolbox and bdFoil are **only read**: nothing is installed or modified in them.
+bdToolbox and bdfoil_v1 are **only read**: nothing is installed or modified in them.
+
+**Since 2026-10-27 the solvers are those of bdfoil_v1** (Antoine's clean-room successor of bdFoil `foil.py`, clone
+`Code-Adri/bdfoil_v1`): AVL and the non-planar lifting line (NP-LLT) of bdfoil_v1, XFOIL or NeuralFoil xxxlarge polars on
+its Reynolds lattice, its post-processing (viscous drag and Cpmin of every strip at its cl and local Re). The pipeline on
+the old bdFoil core and bdFoil/NonPlanarSolver is the git tag `pre-bdfoil-v1`; the studies `studies/cfoil_*` were run
+with it and their scripts still use its internals (run them from that tag).
 
 <p align="center"><img src="../charts/bdtoolbox_pipeline.svg" width="90%" alt="pipeline"/></p>
 
@@ -14,9 +20,9 @@ bdToolbox and bdFoil are **only read**: nothing is installed or modified in them
 | Part | Status |
 |---|---|
 | 2D sections: NACA 4-digit (continuous), Kulfan/CST (aerosandbox, `weights` or `thickness_camber` form), PARSEC (bdSec `SectionParsec`) | operational |
-| 2D solvers: NeuralFoil (any `model_size`), XFOIL through bdFoil core (`run_polar`, re-panelling) | operational |
+| 2D solvers: NeuralFoil (any `model_size`), XFOIL through bdfoil_v1 (`xfoil.run_polar`) | operational |
 | 2D objectives: Cd at a target CL (monotone CL branch, NaN outside), max CL/CD | operational |
-| 3D: ONE section on a fixed planform (C-foil single arc, `planform.py`), non-planar lifting line (bdFoil `NonPlanarSolver`, NeuralFoil polars) and bdFoil core AVL (XFOIL polars), objective 3D drag `cd3d` | operational (first study: `studies/cfoil_intens_kulfan/`) |
+| 3D: ONE section on a fixed planform (C-foil single arc, `planform.py`), one bdfoil_v1 case per evaluation (`solvers.BdfoilV1Backend`: NP-LLT or AVL, XFOIL or NeuralFoil polars), objective 3D drag `cd3d` | operational |
 | 2D lift equality constraint of the section (e.g. CL2d(0°) = 0.45), by projection on the camber offset (`section_constraint.py`) | operational |
 | Known geometric constraints (thickness) in the DOE and in the search of the next point (`constraints.py`) | operational |
 | GP hyperparameters: MAP with an InvGamma lengthscale prior (default), or MLE | operational |
@@ -33,15 +39,15 @@ C:\Users\SIM\.conda\envs\bdToolbox\python.exe -m pipelines.bdtoolbox_foil.run --
 (from the repository root). The versions are stored in `results.json` (`environment`): NeuralFoil 0.2.x and 0.3.x do
 not give the same polars.
 
-Toolbox locations (first defined wins): `"paths"` entry of the configuration (`bdfoil_root`, `bdtoolbox_root`, `soft_dir`,
-and `polar_cache` for the XFOIL polar cache of the 3D AVL level; relative paths are relative to the configuration file) →
-environment variables `MFEGO_BDFOIL_ROOT`, `MFEGO_BDTOOLBOX_ROOT`, `BDFOIL_SOFT` → defaults:
+Toolbox locations (first defined wins): `"paths"` entry of the configuration (`bdfoil_v1_root`, `bdtoolbox_root`, `soft_dir`,
+and `polar_cache` for the polar cache of the 3D levels, env `BDFOIL_V1_CACHE` of bdfoil_v1, <= 182 characters; relative paths are relative to the configuration file) →
+environment variables `MFEGO_BDFOIL_V1_ROOT`, `MFEGO_BDTOOLBOX_ROOT`, `BDFOIL_SOFT` → defaults:
 
 | Item | Default | Used for |
 |---|---|---|
-| bdFoil | `C:\Users\SIM\Desktop\Code-Adri\bdFoil` (up-to-date clone: `Code/core`, `NonPlanarSolver`) | XFOIL / AVL engine, lifting line |
+| bdfoil_v1 | `C:\Users\SIM\Desktop\Code-Adri\bdfoil_v1` (clone of `bdGit-56780/bdfoil_v1`, imported from its `src/`) | XFOIL, AVL, NP-LLT, polars, post-processing |
 | bdToolbox | `C:\Users\SIM\Outils - banulsdesign\bdToolbox` | bdSec (PARSEC) |
-| executables | `<bdToolbox>\soft` (`xfoil.exe`, `avl_3.40b.exe`) | set as `BDFOIL_SOFT` for bdFoil core |
+| executables | `<bdToolbox>\soft` (`xfoil.exe`, `avl_3.40b.exe`) | set as `BDFOIL_SOFT` for bdfoil_v1 |
 
 ## Usage
 
@@ -139,31 +145,39 @@ A `foil3d` configuration with a `kulfan` parametrization optimizes the SECTION u
 "parametrization": {"type": "kulfan", "form": "thickness_camber", "n_points": 121,
                     "fixed": {"leading_edge_weight": 0.0, "TE_thickness": 0.00197, "s_0": 0.0}},
 "section_constraint": {"cl2d_target": 0.45, "alpha_deg": 0.0, "reference_model": "xxlarge"},
-"levels": [{"solver": "npllt", "cost": 1.0, "options": {"neuralfoil_model": "xxsmall", "nodes_count": 100}},
-           {"solver": "npllt", "cost": 1.5, "options": {"neuralfoil_model": "xxlarge", "nodes_count": 100}},
-           {"solver": "avl", "cost": 30.0, "options": {"npane": 250, "niter": 100}}],
+"levels": [{"solver": "npllt", "cost": 1.0, "options": {"polars": "neuralfoil"}},
+           {"solver": "npllt", "cost": 2.0, "options": {"polars": "xfoil"}},
+           {"solver": "avl", "cost": 30.0, "options": {"polars": "xfoil"}}],
 "objective": {"type": "cd3d"}
 ```
 
 * **Geometry** (`planform.py`): the single circular arc of bdFoil `CFoil_Arc_T1` re-derived without importing `foil.py`,
   in the bdFoil frame (leading edge of the lower bearing at the origin, x forward, y to port, z up). The planform is
   written once per evaluation as a bdGeometry CSV **in metres** next to the section `.xf`, and both 3D solvers read this
-  same file (NPLLT with `length_factor = 1`, AVL through `core.load_planform`).
-* **Attitude**: `cant = heel + trunk_cant` (VPP convention), `rake`, `yaw`, `sink`, applied by bdFoil core.
-* **Image of the plane z = 0**: `"wall"` (hull = symmetry plane: AVL `iZsym = +1`, NPLLT `surface_type = 0`),
-  `"free_surface"` (`iZsym = -1`, `surface_type = 1`) or `"none"`. With a wall met at an angle, NPLLT uses a vortex
-  cut-off `core_radius = 0.005` by default (root kink singularity) and the root zone (2 % of the span) is excluded from
-  the stall check.
-* **Levels**: `npllt` (options: `neuralfoil_model`, `nodes_count`, `core_radius`, any `NonPlanarLiftingLine` keyword;
-  single polar Reynolds number = `flow.re`, n_crit / xtr of `flow`) and `avl` (options: `npane`, `niter`,
-  `polar_timeout`, `timeout`, `settings` of bdFoil core; viscous model always `"profile"`: cd of a strip = polar CD at
-  the strip cl, the same definition as the NPLLT profile drag; the XFOIL polar uses `flow.alpha`, which must contain 0).
-  AVL reads at most 300 airfoil points: `n_points` ≤ 150 per side.
-* **Objective** `cd3d`: CD = −Cx (induced + profile drag; no wave drag). A strip or control point whose angle / cl is
-  outside the polar (stall, clamped value) makes the evaluation fail.
+  same file (the planform of the bdfoil_v1 case).
+* **Attitude**: `cant = heel + trunk_cant` (VPP convention), `rake`, `yaw`, `sink`, applied by bdfoil_v1 (rotation R = Rz(-yaw) Ry(-rake) Rx(-cant) about the origin, then
+  z += sink).
+* **Image of the plane z = 0**: `"wall"` (hull = symmetry plane, bdfoil_v1 `boundary.zsym = +1`), `"free_surface"`
+  (`zsym = -1`) or `"none"` (0). With a wall met at an angle the root strip has a kink singularity (bdfoil_v1 warns:
+  the NP-LLT loads drift 0.1-0.5 % per doubling of the panels on the C-foil); the root zone (2 % of the span) is
+  excluded from the stall check.
+* **Levels** `npllt` and `avl` (`solvers.BdfoilV1Backend`), options: `polars` (`"xfoil"` default, or `"neuralfoil"`:
+  xxxlarge, the only model of bdfoil_v1, fitted Kulfan of the section, no Cpmin), `speed` (default: the speed that
+  gives `flow.re` on the planform chord in seawater at `temperature`, 15 °C: a fixed reference speed, decision of
+  2026-10-27), `wave_drag` (default false, decision of 2026-10-27), `free_surface_height` (depth of the strips for
+  sigma and the wave drag; 0.654 m for the C-foil in Antoine's case), `cp_min_percentile` (default 20, the production
+  RS; bdfoil_v1's default is 1), `nchord`, `n_mesh`, `nspan` (AVL), `n_panels` (NP-LLT), `npane`, `niter`,
+  `polar_timeout`, `timeout`, `fail_on_clamp`, `root_zone`. n_crit, xtr and the alpha grid of the polars come from
+  `flow`; the polars are computed on the Reynolds lattice of bdfoil_v1 (8 nodes per decade) that brackets the local
+  Re of the strips. AVL reads at most 300 airfoil points: `n_points` ≤ 150 per side.
+* **Objective** `cd3d`: CD = −Cx (induced + viscous drag; wave drag only with `wave_drag`). The induced drag is AVL's
+  Trefftz-plane drag, or the near field of the NP-LLT. A strip whose cl, or an NP-LLT panel whose incidence, leaves
+  the monotone branch of its polar (stall, clamped value) makes the evaluation fail. With bdfoil_v1 the moments include
+  the viscous part (foil.py: induced only): on the C-foil, AVL's My +7 to +16 % and Mz −5 to −6 % against the old
+  engine, the forces within 0.2 % (AVL) and 1.5 % (NP-LLT) (check of 2026-10-27, 3 attitudes).
 * **Section constraint** (optional): the camber offset `delta` of the `thickness_camber` form is solved for every
   design so that CL2d(`alpha_deg`) = `cl2d_target` with the reference NeuralFoil model; every level evaluates the same
-  geometry and reports the CL2d it sees at each station (`cl2d_check_min/max`).
+  geometry.
 * **Drag at equal lift** (`"objective": {"type": "cd3d", "equal_lift_reference": {<variable>: <value>, ...}}`): the
   lift of the reference section at the configured attitude, CL_ref = |(Cy, Cz)|, is computed once per level. Without
   a trim, the objective is the first-order correction CD* = Cdprofile + Cdi (CL_ref / CL)^2 (fixed attitude).
@@ -183,4 +197,5 @@ A `foil3d` configuration with a `kulfan` parametrization optimizes the SECTION u
   of the surrogate is evaluated at the highest level after each chunk (verification points carry
   `"verification": true`). Useful with a large cost ratio, where the merit function seldom chooses the expensive level.
 
-The first study with this path, with its step-by-step guide (in French), is `studies/cfoil_intens_kulfan/`.
+The first study with this path, with its step-by-step guide (in French), is `studies/cfoil_intens_kulfan/` (run on
+the old bdFoil engine: tag `pre-bdfoil-v1`).
