@@ -23,6 +23,9 @@ Third run (HF = NPLLT x XFOIL, flexible foil, parallel batches on 32 logical cor
     ... run_real_vpp.py --name real_npllt_xfoil_fsi --box current --box-scale 0.5
         --hf npllt_xfoil --hf-cost 2 --fsi --batch 16 --workers 28 --vpp-workers 30
         --compare runs/2026-10-22_1131_real_1h30_current_box/results/best_section.json
+Since 2026-10-27 (CHANGEMENTS_2026-10-27.md): convergence of a region and restarts, robust
+sensitivities, a minimum gain for the trust-region rule:
+    ... --converge 10 0.01 --restarts 2 --min-gain 0.002 --sensitivity-median 3
 """
 import argparse
 import json
@@ -103,7 +106,25 @@ def main():
                         help="initial trust-region radius, whitened PCA scores")
     parser.add_argument("--max-refit-size", type=int, default=None,
                         help="hyperparameters frozen above this design size (long runs)")
+    # 2026-10-27: convergence of a region of the search, restarts, robust sensitivities
+    parser.add_argument("--converge", type=float, nargs=2, default=None,
+                        metavar=("WINDOW", "TOL_KT"),
+                        help="a region has converged when its last WINDOW updates gained less "
+                             "than TOL_KT in all (e.g. 10 0.01); default: no test")
+    parser.add_argument("--restarts", type=int, default=0,
+                        help="new regions after a converged one (needs --converge); the loop "
+                             "stops when the last one has converged")
+    parser.add_argument("--restart-distance", type=float, default=2.0,
+                        help="a new region starts at least this far from every optimum found "
+                             "(whitened PCA scores)")
+    parser.add_argument("--min-gain", type=float, default=0.0,
+                        help="a change of incumbent gaining less [kt] counts as kept for the "
+                             "trust-region radius")
+    parser.add_argument("--sensitivity-median", type=int, default=1,
+                        help="sensitivities = median of this many last evaluations")
     args = parser.parse_args()
+    if args.restarts and args.converge is None:
+        parser.error("--restarts needs --converge")
     if args.smoke:
         args.n_low, args.n_high, args.time_limit_min = 30, 8, 4.0
     if args.screen_seed is None:
@@ -120,7 +141,11 @@ def main():
     settings = {"n_per_state": 16, "n_local": 512, "refit_every": 10, "update_every": 10,
                 "sensitivities_every": 3, "n_screen": 256, "n_top": 3, "kappa": 1.0,
                 "local_fraction": args.local_fraction, "radius": args.radius,
-                "max_refit_size": args.max_refit_size}
+                "max_refit_size": args.max_refit_size, "min_gain": args.min_gain,
+                "convergence": None if args.converge is None
+                else (int(args.converge[0]), args.converge[1]),
+                "max_restarts": args.restarts, "restart_distance": args.restart_distance,
+                "sensitivity_memory": args.sensitivity_median}
     if args.batch > 1:
         settings.update({"update_every": 1, "refit_growth": 1.25})
     levels = LEVELS_XFOIL if args.hf == "npllt_xfoil" else LEVELS
@@ -192,8 +217,12 @@ def main():
     run.log(f"loop done: {optimizer.iteration} choices in {optimizer.n_batches} batches, LF/HF "
             f"{surrogate.sizes}, runs {runner.n_runs}, code time {runner.time}")
 
-    # 4. validation: the best section, the start section and the best sections of earlier runs
+    # 4. validation: the best section, the start section, the other local optima (restarts) and
+    # the best sections of earlier runs
     sections = {"best": optimizer.incumbent, start_name: start_scores}
+    for entry in optimizer.compared:
+        if not entry["best"]:
+            sections[f"region_{entry['region']}"] = np.array(entry["scores"])
     for path in args.compare:
         earlier = json.loads(Path(path).read_text(encoding="utf-8"))
         weights = np.array(earlier["kulfan_upper"] + earlier["kulfan_lower"])
@@ -211,6 +240,8 @@ def main():
     import pandas as pd  # noqa: PLC0415
     pd.DataFrame(optimizer.history).to_csv(run.path("results", "history.csv"), index=False)
     run.write_json("results/updates.json", optimizer.updates)
+    if optimizer.compared:
+        run.write_json("results/optima.json", optimizer.compared)
     validation = pd.DataFrame(rows)
     validation.to_csv(run.path("results", "validation.csv"), index=False)
     best_weights = problem.weights(optimizer.incumbent)[0]
@@ -261,6 +292,10 @@ def summarize(run, optimizer, runner, validation, conditions) -> str:
              "speeds of the incumbent: " + ", ".join(
                  f"{a:.0f}/{s:.0f}: {v:.3f}" for (a, s), v in zip(conditions,
                                                                    last["incumbent_speeds"]))]
+    if optimizer.compared:
+        lines.append("local optima of the regions, final surrogate (results/optima.json): "
+                     + ", ".join(f"region {e['region']} {e['final_speed']:.4f} kt"
+                                 + (" (best)" if e["best"] else "") for e in optimizer.compared))
     hf = "AVL" if runner.levels[1]["solver"] == "avl" else "NPLLT x XFOIL"
     for name, group in validation.groupby("section"):
         err = group["speed_error_kt"].to_numpy()

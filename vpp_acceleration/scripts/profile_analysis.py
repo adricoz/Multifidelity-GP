@@ -43,6 +43,7 @@ for _path in (VPP_DIR, VPP_DIR.parent / "mfego"):
 # pylint: disable=wrong-import-position
 from src.operating_profile import OperatingProfile  # noqa: E402
 from src.section_pca import CFoilFamily, SectionPCA, section_ixx  # noqa: E402
+from src.vpp_optimize import GENERIC_GUESSES  # noqa: E402  (other starting points of the solve)
 
 STUDY_CONFIG = VPP_DIR.parent / "studies" / "cfoil_intens_kulfan_trim_2" / "config_cfoil_trim.json"
 
@@ -95,12 +96,6 @@ def stiffness_ratios(config: dict, pca, scores: np.ndarray) -> np.ndarray:
     current = CFoilFamily.from_study_config(STUDY_CONFIG).reference_weights()
     reference = float(section_ixx(current, pca.te_thickness)[0])
     return reference / section_ixx(pca.decode(scores), pca.te_thickness)
-
-
-# other starting points of the VPP solve (SOLVE_VARS order: speed, leeway, heel, trim, CC_Dspl,
-# rudder, flat), besides its fixed initial guess (12 kt, flat 0.6): powered upwind, downwind
-GENERIC_GUESSES = [np.array([18.0, 1.0, 5.0, 1.0, 9500.0, 0.5, 1.0]),
-                   np.array([11.0, -2.0, 0.5, 0.0, 11000.0, 0.0, 1.0])]
 
 
 def robust_solve(vpp_pool, sections, ratios, conditions) -> list:

@@ -31,16 +31,35 @@ The loop (VPPSectionOptimizer), every `update_every` batches:
      these sections (with a local search, half of them also move the section by the trust-region
      radius): the refinement goes where the decision "which section is best" is taken. Each point
      weighs w_c (dV/dC_k)_c^2 for coefficient k, c the condition of its state;
-  4. every `sensitivities_every` updates, dV/dC_k at the incumbent by finite differences.
+  4. every `sensitivities_every` updates, dV/dC_k at the incumbent by finite differences (with
+     sensitivity_memory > 1, the median of the last evaluations: a path-dependent VPP solve
+     doubled dV/dFx at one condition 3 times in the fourth run, 2026-10-27).
+The first solve of a section that becomes the incumbent without a solved state (start of the
+search, restart) also starts from GENERIC_GUESSES: from the fixed guess alone, the solve can stop
+on a slow "successful" equilibrium (scripts/profile_analysis.robust_solve, 2026-10-26).
 The candidates of a batch are new points in clouds around the states (vpp_optimize.candidates).
 One batch = `batch_size` pairs (point, level), chosen one after the other by the best
 speed-variance reduction per unit of cost (vpp_targeted.choose, the ALC gains of
 sequential_design). After each choice the co-krigings are conditioned on the chosen point as if it
 had been run, with its predicted mean as value ("kriging believer"): the variance of a GP does
 not depend on the observed values, so the next choice sees exactly the variance reduction of the
-previous ones, and the batch spreads by itself. The codes of the batch then run in parallel
-(CodeRunner), and the placeholders are replaced by the real values. batch_size = 1 is the
-sequential loop of the first two runs. The run stops at a wall-clock limit.
+previous ones, and the batch spreads by itself. Since 2026-10-27 this conditioning extends the
+Cholesky factor (TorsorCoKriging.believe) instead of conditioning again on all the data: same
+choices, 12 s less per choice at 3400 points. The codes of the batch then run in parallel
+(CodeRunner), and the real values enter at the next fit. batch_size = 1 is the sequential loop of
+the first two runs.
+
+Convergence and restarts (2026-10-27; the fourth run gained 0.012 kt in its last 6 h 40). The
+gain of an update is the weighted speed of the new incumbent minus that of the old one, both
+solved in that update (same conditions). A change of less than min_gain counts as "kept" for the
+trust-region radius. The region of the search has converged when its last convergence[0] updates
+gained less than convergence[1] kt in all, or when its incumbent comes within merge_distance of a
+local optimum already found (same basin). Then, up to max_restarts times, the incumbent is kept
+as a local optimum and a new region starts from the best screened section of the whole family
+at least restart_distance from every optimum (TuRBO restarts, Eriksson et al. 2019), all the data
+kept; otherwise the loop stops. At the end, the optima and the last incumbent are solved again
+with the final surrogate, and the best becomes the incumbent (compare_optima). The run also stops
+at a wall-clock limit.
 
 Parallel pieces (third run, 2026-10-22, 32 logical cores): the codes of a batch in a pool of
 worker processes, the VPP solves of an update and the finite differences of the sensitivities in
@@ -71,6 +90,10 @@ OUTPUT_NAMES = ["Fx", "Fy", "Fz", "Mx", "My", "Mz", "Cpmin"]
 # the worker processes compute one run at a time: one BLAS thread each
 SINGLE_THREAD = {name: "1" for name in ("OMP_NUM_THREADS", "MKL_NUM_THREADS",
                                         "OPENBLAS_NUM_THREADS", "NUMBA_NUM_THREADS")}
+# other starting points of the VPP solve (SOLVE_VARS order: speed, leeway, heel, trim, CC_Dspl,
+# rudder, flat), besides its fixed initial guess (12 kt, flat 0.6): powered upwind, downwind
+GENERIC_GUESSES = [np.array([18.0, 1.0, 5.0, 1.0, 9500.0, 0.5, 1.0]),
+                   np.array([11.0, -2.0, 0.5, 0.0, 11000.0, 0.0, 1.0])]
 
 
 def _process_pool(n_workers, initializer, initargs) -> ProcessPoolExecutor:
@@ -371,7 +394,9 @@ class VPPSectionOptimizer:
                  sensitivities_every=2, n_screen=256, n_top=3, kappa=1.0, seed=0,
                  start_scores=None, batch_size=1, vpp_pool=None, refit_growth=None,
                  condition_weights=None, screen_seed=None, local_fraction=0.0, radius=1.0,
-                 radius_bounds=(0.1, 3.0), radius_factors=(0.7, 1.5), max_refit_size=None):
+                 radius_bounds=(0.1, 3.0), radius_factors=(0.7, 1.5), max_refit_size=None,
+                 min_gain=0.0, convergence=None, max_restarts=0, restart_distance=2.0,
+                 merge_distance=1.0, sensitivity_memory=1):
         """
         - refit_growth: new hyperparameters when the design has grown by this factor since the
           last fit (e.g. 1.25; a fit costs O(n^3) and the batches add many points), instead of
@@ -388,6 +413,12 @@ class VPPSectionOptimizer:
         - max_refit_size: above this design size the hyperparameters are frozen (conditioning
           only): a fit costs O(n^3), ~2.5 min at 1045 points in the third run, about an hour at
           3000 (None = no limit).
+        - min_gain [kt]: a change of incumbent that gains less counts as "kept" for the radius.
+        - convergence: (window, tolerance [kt]) of the convergence test, None = no test (runs 1
+          to 4: until the time limit); max_restarts, restart_distance, merge_distance (whitened
+          scores): the restarts (module docstring).
+        - sensitivity_memory: the sensitivities are the median of that many last evaluations
+          (1 = the last one).
         """
         self.problem, self.surrogate, self.runner, self.vpp = problem, surrogate, runner, vpp
         self.conditions, self.run = list(conditions), run
@@ -420,22 +451,34 @@ class VPPSectionOptimizer:
         # points where a run failed: excluded from the candidates (the first real run chose the
         # same failing HF point 4 times in a row, 40 s each, 2026-10-22)
         self.failed = []
+        # convergence and restarts (module docstring): the gains of the updates of the current
+        # region, the local optima of the converged regions
+        self.min_gain, self.convergence = float(min_gain), convergence
+        self.max_restarts, self.restart_distance = int(max_restarts), float(restart_distance)
+        self.merge_distance, self.initial_radius = float(merge_distance), float(radius)
+        self.region, self.region_gains, self.optima, self.compared = 0, [], [], []
+        self.new_region = True                             # sensitivities due at the next update
+        self.sensitivity_memory, self.sensitivity_history = int(sensitivity_memory), []
 
     # --- VPP pieces ---
-    def solve_sections(self, sections, guesses=None) -> list:
-        """States [section][condition] of several sections, with the current surrogate."""
+    def solve_sections(self, sections, guesses=None, extra_guesses=None) -> list:
+        """States [section][condition] of several sections, with the current surrogate
+        (guesses, extra_guesses: VPPPool.solve)."""
         ratios = self.problem.stiffness_ratios(np.array(sections))
         if self.vpp_pool is not None:                # the surrogate published by update()
-            return self.vpp_pool.solve(sections, ratios, self.conditions, guesses)
+            return self.vpp_pool.solve(sections, ratios, self.conditions, guesses, extra_guesses)
         out = []
-        for scores, ratio in zip(sections, ratios):
+        for i, (scores, ratio) in enumerate(zip(sections, ratios)):
             self.vpp.set_foil(self.surrogate.predict, scores, ratio)
-            out.append([self.vpp.solve(twa, tws, guess=None if guesses is None else guesses[j])
+            out.append([self.vpp.solve(twa, tws, guess=None if guesses is None else guesses[j],
+                                       extra_guesses=() if extra_guesses is None
+                                       else extra_guesses[i][j])
                         for j, (twa, tws) in enumerate(self.conditions)])
         return out
 
-    def solve_section(self, scores, guesses=None) -> list:
-        return self.solve_sections([scores], guesses)[0]
+    def solve_section(self, scores, guesses=None, extra_guesses=None) -> list:
+        return self.solve_sections([scores], guesses,
+                                   None if extra_guesses is None else [extra_guesses])[0]
 
     def state_points(self, scores, states) -> np.ndarray:
         return np.array([np.concatenate([scores, [s["Cant_Eff"], s["Rake_Eff"], s["Yaw_Eff"]]])
@@ -464,7 +507,13 @@ class VPPSectionOptimizer:
                 else np.zeros_like(derivatives)
             derivatives[bad] = previous[bad]
             self.run.log(f"speed sensitivities: {bad.sum()} failed solves, previous values kept")
-        self.derivatives = derivatives
+        # the median of the last evaluations at this incumbent's region (module docstring)
+        self.sensitivity_history.append(derivatives)
+        self.derivatives = np.median(self.sensitivity_history[-self.sensitivity_memory:], axis=0)
+        outliers = np.abs(derivatives - self.derivatives) > 0.3 * np.abs(self.derivatives)
+        if self.sensitivity_memory > 1 and outliers.any():
+            self.run.log(f"speed sensitivities: {outliers.sum()} values more than 30 % from the "
+                         f"median of the last {self.sensitivity_memory} evaluations, median kept")
         self.run.log("speed sensitivities dV/dC (rows = conditions): "
                      + np.array2string(self.derivatives, precision=2, suppress_small=True))
 
@@ -484,6 +533,18 @@ class VPPSectionOptimizer:
                                                      seed + 1))
         parts.append(self.problem.sample_sections(self.n_screen - n_local, seed))
         candidates = np.vstack(parts)
+        gain, sigma = self.first_order_scores(candidates)
+        score = gain + self.kappa * sigma
+        order = np.argsort(-score[1:])[:self.n_top] + 1
+        self.last_screen = {"gain": gain[order].tolist(), "sigma": sigma[order].tolist(),
+                            "incumbent_sigma": float(sigma[0]), "n_local": len(parts[1])
+                            if n_local else 0, "local_in_top": int(np.sum(order <= len(parts[1])))
+                            if n_local else 0}
+        return candidates[order]
+
+    def first_order_scores(self, candidates: np.ndarray) -> tuple:
+        """mu and sigma of the screening (screen) for sections (m, k) whose first row is the
+        incumbent (its mu is 0)."""
         ratios = self.problem.stiffness_ratios(candidates)
         gain = np.zeros(len(candidates))
         variance = np.zeros(len(candidates))
@@ -503,15 +564,7 @@ class VPPSectionOptimizer:
                 gain += w * (ratios - ratios[0]) * (delta @ self.derivatives[j])
             variance += w ** 2 * self.surrogate.variances(x)[:, :6] @ self.derivatives[j] ** 2
         total = total if total > 0.0 else 1.0           # no solved state: nothing to rank on
-        gain /= total
-        sigma = np.sqrt(variance) / total
-        score = gain + self.kappa * sigma
-        order = np.argsort(-score[1:])[:self.n_top] + 1
-        self.last_screen = {"gain": gain[order].tolist(), "sigma": sigma[order].tolist(),
-                            "incumbent_sigma": float(sigma[0]), "n_local": len(parts[1])
-                            if n_local else 0, "local_in_top": int(np.sum(order <= len(parts[1])))
-                            if n_local else 0}
-        return candidates[order]
+        return gain / total, np.sqrt(variance) / total
 
     def update(self) -> None:
         """Screening, full VPP of the best candidates and of the incumbent, new integration
@@ -520,9 +573,14 @@ class VPPSectionOptimizer:
         if self.vpp_pool is not None:
             self.vpp_pool.publish(self.surrogate)    # the model of this update, for the workers
         if self.incumbent_states is None:
-            self.incumbent_states = self.solve_section(self.incumbent)
-        if self.derivatives is None or self.n_updates % self.sensitivities_every == 0:
+            # several starting points: from the fixed guess alone the solve can stop on a slow
+            # "successful" equilibrium (module docstring)
+            self.incumbent_states = self.solve_section(
+                self.incumbent, extra_guesses=[GENERIC_GUESSES] * len(self.conditions))
+        if self.derivatives is None or self.new_region \
+                or self.n_updates % self.sensitivities_every == 0:
             self.sensitivities()
+            self.new_region = False
         top = self.screen()
         sections = [self.incumbent] + list(top)
         guesses = [s["unknowns"] for s in self.incumbent_states]
@@ -539,13 +597,20 @@ class VPPSectionOptimizer:
                             [s["speed"] if s["success"] else np.nan for s in states]))
         best = max(results, key=lambda r: r[0] if np.isfinite(r[0]) else -np.inf)
         changed = best[1] is not self.incumbent and not np.allclose(best[1], self.incumbent)
+        # gain of the update: new incumbent against the old one (results[0]), same conditions;
+        # the speed itself is not comparable from one update to the next (other model, other
+        # conditions solved for all)
+        gain = best[0] - results[0][0] if changed else 0.0
+        gain = float(gain) if np.isfinite(gain) else 0.0
+        self.region_gains.append(gain)
         self.incumbent, self.incumbent_states = best[1], best[2]
         if self.local_fraction > 0.0:
-            # trust region of the local search: wider when the incumbent changes, narrower when
-            # it is confirmed
+            # trust region of the local search: wider when the incumbent changes by at least
+            # min_gain, narrower otherwise
             low, high = self.radius_bounds
             shrink, grow = self.radius_factors
-            self.radius = min(high, self.radius * grow) if changed else max(low, self.radius * shrink)
+            self.radius = min(high, self.radius * grow) if changed and gain >= self.min_gain \
+                else max(low, self.radius * shrink)
         # the solved states of the 4 sections, the condition of each, the integration points
         rows = [(self.state_points(r[1], [s])[0], j) for r in results
                 for j, s in enumerate(r[2]) if s["success"]]
@@ -558,15 +623,16 @@ class VPPSectionOptimizer:
                   "n_lf": self.surrogate.sizes[0], "n_hf": self.surrogate.sizes[1],
                   "incumbent_speed": float(best[0]), "incumbent_speeds": best[3],
                   "probability_compared": float(weights.sum()), "radius": self.radius,
-                  "changed": bool(changed), "candidate_speeds": [float(r[0]) for r in results],
+                  "changed": bool(changed), "gain": gain, "region": self.region,
+                  "candidate_speeds": [float(r[0]) for r in results],
                   "incumbent": self.incumbent.tolist(), **self.last_screen,
                   "time_s": time.perf_counter() - start}
         self.updates.append(record)
         self.run.log(f"update {self.n_updates}: incumbent speed {best[0]:.4f} kt "
-                     f"({'new' if changed else 'kept'}), candidates "
+                     f"({'new' if changed else 'kept'}, gain {gain:.4f} kt), candidates "
                      f"{np.round(record['candidate_speeds'], 3)}, on "
                      f"{100 * weights.sum():.0f} % of the probability, radius {self.radius:.2f}, "
-                     f"{record['time_s']:.0f} s")
+                     f"region {self.region}, {record['time_s']:.0f} s")
         self.n_updates += 1
 
     def section_radius(self) -> float:
@@ -585,6 +651,81 @@ class VPPSectionOptimizer:
         counts = np.bincount(self.int_owner, minlength=len(self.states))[self.int_owner]
         return (self.condition_weights[conditions] / counts)[:, None] \
             * self.derivatives[conditions] ** 2
+
+    # --- convergence and restarts (module docstring) ---
+    def converged(self) -> bool:
+        """The region of the search has converged: its last convergence[0] updates gained less
+        than convergence[1] kt in all, or its incumbent is in the basin of an optimum already
+        found (closer than merge_distance)."""
+        if self.convergence is None:
+            return False
+        window, tolerance = self.convergence
+        if len(self.region_gains) >= window and sum(self.region_gains[-window:]) < tolerance:
+            return True
+        return any(np.linalg.norm(self.incumbent - optimum["scores"]) < self.merge_distance
+                   for optimum in self.optima)
+
+    def restart(self) -> None:
+        """Keeps the incumbent as a local optimum and starts a new region from the best screened
+        section of the whole family (mu + kappa sigma, as screen) at least restart_distance from
+        every optimum; its states are solved at the next update."""
+        last = self.updates[-1]
+        self.optima.append({"scores": self.incumbent.copy(), "states": self.incumbent_states,
+                            "region": self.region, "speed": last["incumbent_speed"],
+                            "update": last["update"], "elapsed_min": last["elapsed_min"]})
+        pool = self.problem.sample_sections(4 * self.n_screen,
+                                            self.screen_seed + 31 * self.n_updates + 17)
+        distances = np.min([np.linalg.norm(pool - optimum["scores"], axis=1)
+                            for optimum in self.optima], axis=0)
+        far = pool[distances >= self.restart_distance]
+        if not len(far):
+            far = pool[[np.argmax(distances)]]               # the farthest one, failing better
+        gain, sigma = self.first_order_scores(np.vstack([self.incumbent[None], far]))
+        best = int(np.argmax(gain[1:] + self.kappa * sigma[1:]))
+        distance = min(np.linalg.norm(far[best] - optimum["scores"]) for optimum in self.optima)
+        self.region += 1
+        self.incumbent, self.incumbent_states = far[best], None
+        self.radius, self.region_gains = self.initial_radius, []
+        self.new_region, self.sensitivity_history = True, []
+        self.run.log(f"region {self.region - 1} converged (update {last['update']}, incumbent "
+                     f"speed {last['incumbent_speed']:.4f} kt): region {self.region} starts from a "
+                     f"section at distance {distance:.2f} of the optima, predicted gain "
+                     f"{gain[1 + best]:+.3f} +- {sigma[1 + best]:.3f} kt")
+
+    def compare_optima(self) -> None:
+        """The local optima of the regions and the incumbent, solved again with the current
+        surrogate from every state known at each condition and GENERIC_GUESSES; the best
+        weighted speed over the conditions solved for all becomes the incumbent."""
+        if self.vpp_pool is not None:
+            self.vpp_pool.publish(self.surrogate)
+        entries = self.optima + [{"scores": self.incumbent, "states": self.incumbent_states,
+                                  "region": self.region}]
+        known = [[e["states"][j]["unknowns"] for e in entries if e["states"][j]["success"]]
+                 + GENERIC_GUESSES for j in range(len(self.conditions))]
+        all_states = self.solve_sections([e["scores"] for e in entries],
+                                         extra_guesses=[known] * len(entries))
+        solved = np.array([[s["success"] for s in states] for states in all_states])
+        weights = self.condition_weights * solved.all(axis=0)
+        speeds = [float(np.sum(weights * np.array([s["speed"] for s in states])) / weights.sum())
+                  if weights.sum() > 0 else np.nan for states in all_states]
+        if not np.isfinite(speeds).any():
+            self.run.log("local optima: no condition solved for all of them, incumbent kept")
+            return
+        best = int(np.nanargmax(speeds))
+        self.compared = [{"region": e["region"], "scores": np.asarray(e["scores"]).tolist(),
+                          "speed_when_found": e.get("speed"), "final_speed": s,
+                          "final_speeds": [st["speed"] if st["success"] else None for st in states],
+                          "best": i == best}
+                         for i, (e, s, states) in enumerate(zip(entries, speeds, all_states))]
+        self.run.log("local optima with the final surrogate, on "
+                     f"{100 * weights.sum():.0f} % of the probability: "
+                     + ", ".join(f"region {e['region']} {s:.4f} kt" for e, s in zip(entries, speeds))
+                     + f" -> region {entries[best]['region']}")
+        if best != len(entries) - 1:
+            self.incumbent, self.incumbent_states = entries[best]["scores"], all_states[best]
+            self.new_region, self.sensitivity_history = True, []
+        else:
+            self.incumbent_states = all_states[best]
 
     # --- one batch and the loop ---
     def candidates(self) -> tuple:
@@ -624,11 +765,18 @@ class VPPSectionOptimizer:
         if refit:
             self.fitted_size = size
             self.run.log(f"batch {self.n_batches}: hyperparameters refitted on {size} points")
-        if self.n_batches % self.update_every == 0 or self.states is None:
+        if self.converged():
+            if len(self.optima) >= self.max_restarts:
+                self.run.log(f"region {self.region} converged, no restart left: end of the loop")
+                return []
+            self.restart()
+        update_start = time.perf_counter()
+        if self.n_batches % self.update_every == 0 or self.states is None \
+                or self.incumbent_states is None:
             self.update()
+        update_s = time.perf_counter() - update_start
         weights = self.point_weights()                     # (N, 6): Cpmin weight 0
         x_cand, missing = self.candidates()
-        sizes = self.surrogate.sizes
         choices = []
         for _ in range(self.batch_size):
             choice = choose(self.surrogate, weights, x_cand, missing, self.x_int, np.inf)
@@ -637,11 +785,7 @@ class VPPSectionOptimizer:
             choices.append(choice)
             missing[choice["index"], :choice["level"]] = False
             if len(choices) < self.batch_size:          # kriging believer (module docstring)
-                for level in self.levels_to_run(choice):
-                    self.surrogate.add(level, choice["x"],
-                                       self.surrogate.predict(choice["x"][None], level=level))
-                self.surrogate.fit(refit=False)
-        self.surrogate.truncate(sizes)
+                self.surrogate.believe(choice["x"], self.levels_to_run(choice))
         select_s = time.perf_counter() - start
 
         tasks = [(i, level) for i, choice in enumerate(choices) for level in self.levels_to_run(choice)]
@@ -672,8 +816,9 @@ class VPPSectionOptimizer:
                             "attitude_distance": float(distances[same_section].min())
                             if same_section.any() else float("nan"),
                             "x": x.tolist(), "time_s": (time.perf_counter() - start) / len(choices),
-                            "select_s": select_s, "n_lf": self.surrogate.sizes[0],
-                            "n_hf": self.surrogate.sizes[1]})
+                            "select_s": select_s, "update_s": update_s,
+                            "n_lf": self.surrogate.sizes[0], "n_hf": self.surrogate.sizes[1],
+                            "region": self.region})
             self.iteration += 1
         self.history.extend(records)
         self.n_batches += 1
@@ -688,9 +833,12 @@ class VPPSectionOptimizer:
                 last = records[-1]
                 n_high = sum(r["level"] == 2 for r in records)
                 self.run.log(f"batch {last['batch']}: {len(records)} choices ({n_high} HF), LF/HF "
-                             f"{last['n_lf']}/{last['n_hf']}, selection {last['select_s']:.1f} s, "
+                             f"{last['n_lf']}/{last['n_hf']}, selection {last['select_s']:.1f} s "
+                             f"(update {last['update_s']:.0f} s), "
                              f"{last['time_s'] * len(records):.1f} s")
         self.surrogate.fit(refit=self.refit_allowed(sum(self.surrogate.sizes)))
+        if self.optima:
+            self.compare_optima()                          # the best region, final model
         self.update()                                      # final incumbent with the final model
 
     def refit_allowed(self, size: int) -> bool:

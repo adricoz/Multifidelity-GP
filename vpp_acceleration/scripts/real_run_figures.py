@@ -44,10 +44,16 @@ def make_figures(root) -> None:
     # 1. convergence
     fig = make_subplots(rows=1, cols=2, horizontal_spacing=0.1, subplot_titles=(
         "Vitesse moyenne prédite (VPP avec le surrogate)", "Taille du plan et niveaux choisis"))
-    t = [u["elapsed_min"] for u in updates]
-    fig.add_trace(go.Scatter(x=t, y=[u["incumbent_speed"] for u in updates], mode="lines+markers",
-                             name="meilleure section du moment", line={"color": SERIES[0]}),
-                  row=1, col=1)
+    # one curve per region of the search (restarts, 2026-10-27; a single region before)
+    regions = sorted({u.get("region", 0) for u in updates})
+    for r in regions:
+        part = [u for u in updates if u.get("region", 0) == r]
+        fig.add_trace(go.Scatter(x=[u["elapsed_min"] for u in part],
+                                 y=[u["incumbent_speed"] for u in part], mode="lines+markers",
+                                 name="meilleure section du moment" if len(regions) == 1
+                                 else f"meilleure section, région {r}",
+                                 line={"color": SERIES[0] if r == 0
+                                       else SERIES[(3 + r) % len(SERIES)]}), row=1, col=1)
     for i, u in enumerate(updates):
         fig.add_trace(go.Scatter(x=[u["elapsed_min"]] * (len(u["candidate_speeds"]) - 1),
                                  y=u["candidate_speeds"][1:], mode="markers",

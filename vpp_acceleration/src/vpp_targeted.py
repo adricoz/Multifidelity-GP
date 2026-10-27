@@ -44,7 +44,7 @@ from scipy.stats import qmc
 from src.cokriging import CoKriging
 from src.data_management import ExperimentData, greedy_maximin
 from src.meta_foil import ATTITUDE_BOUNDS, N_SCORES
-from src.sequential_design import batched_imse_gains
+from src.sequential_design import append_observations, batched_imse_gains
 
 N_FORCES = 6                                     # Fx, Fy, Fz, Mx, My, Mz (Cpmin is not modelled)
 RHO_PRIOR = {"rho": ("normal", 1.0, 2.0)}        # "v2": rho bounded +-5, N(1, 2^2) prior
@@ -87,6 +87,19 @@ class TorsorCoKriging:
         """Adds observations (m, 16) -> (m, 7) at a level (1 or 2)."""
         self.x_lists[level - 1] = np.vstack([self.x_lists[level - 1], np.atleast_2d(x)])
         self.y_lists[level - 1] = np.vstack([self.y_lists[level - 1], np.atleast_2d(y)])
+
+    def believe(self, x: np.ndarray, levels) -> None:
+        """Kriging believer (vpp_optimize): conditions every model on observations at x (m, d),
+        one per level of `levels`, equal to their predicted means, by extending the Cholesky
+        factor (sequential_design.append_observations): the same posterior as add() of the
+        predicted means + fit(refit=False), without rebuilding the covariance matrix. The data
+        lists x_lists / y_lists are unchanged: the next fit forgets these observations."""
+        x = np.atleast_2d(x)
+        levels = np.asarray(levels, dtype=int)
+        points = np.repeat(x, len(levels), axis=0)
+        point_levels = np.tile(levels, len(x))
+        self.map_models(lambda model: append_observations(model, points, point_levels),
+                        self.models)
 
     def truncate(self, sizes) -> None:
         """Keeps the first sizes[l] observations of each level (removes the placeholders of a

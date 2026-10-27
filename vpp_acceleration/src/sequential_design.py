@@ -156,6 +156,44 @@ def whitened_data_covariance(model: CoKriging, x: np.ndarray, levels: np.ndarray
     return solve_triangular(model.l_chol, c.T, lower=True)
 
 
+def append_observations(model: CoKriging, x: np.ndarray, levels: np.ndarray) -> None:
+    """
+    Conditions the model on new observations at (x, levels) whose values are their predicted
+    means (the "kriging believer" of a batch, vpp_optimize), WITHOUT rebuilding and factorizing
+    the covariance matrix V of the n observations again. Block Cholesky:
+        V' = [[V, c], [c^T, c_new + noise]] = L' L'^T,   L' = [[L, 0], [w^T, E]],
+        w = L^-1 c (whitened_data_covariance),   E E^T = c_new + noise - w^T w.
+    Cost O(n^2) per new observation, instead of O(n^2 d) for V and O(n^3) for its factor
+    (2.7 s per model at 3437 points, run of 2026-10-23). With values y_new equal to the posterior
+    means, y_new - m_new = c^T V^-1 (z - m) = c^T alpha, so alpha' = (alpha, 0): the posterior
+    mean is unchanged and the posterior covariances are those of a full conditioning (the order
+    of the observations differs, which changes nothing but the rounding).
+    The jitter of the factor (safe_cholesky) is added to the new diagonal too.
+    (Access to the private attributes of CoKriging, as whitened_data_covariance.)
+
+    Args:
+    - x: numpy array (a, d), raw units; levels: integer numpy array (a,), level of each point.
+    """
+    x = np.atleast_2d(x)
+    levels = np.asarray(levels, dtype=int)
+    u = to_unit(model, x)
+    c = model._covariance(u, levels, to_unit(model, model.x_all), model.levels_all)   # (a, n)
+    w = solve_triangular(model.l_chol, c.T, lower=True)                              # (n, a)
+    noise = np.array([model.gps[l - 1].get_noise_variance() for l in levels])
+    block = model._covariance(u, levels, u, levels) + np.diag(noise + model.jitter) - w.T @ w
+    n, a = len(model.l_chol), len(x)
+    l_new = np.zeros((n + a, n + a))
+    l_new[:n, :n] = model.l_chol
+    l_new[n:, :n] = w.T
+    l_new[n:, n:] = np.linalg.cholesky(block)
+    means = model._mean(levels) + c @ model.alpha
+    model.x_all = np.vstack([model.x_all, x])
+    model.levels_all = np.concatenate([model.levels_all, levels])
+    model.z_all = np.concatenate([model.z_all, means])
+    model.alpha = np.concatenate([model.alpha, np.zeros(a)])
+    model.l_chol = l_new
+
+
 def loo_errors(gp) -> tuple[np.ndarray, np.ndarray]:
     """
     Leave-one-out of ONE GP on its own data, in closed form (note, Eq. N3; Dubrule 1983):
