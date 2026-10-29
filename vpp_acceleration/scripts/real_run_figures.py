@@ -3,8 +3,9 @@ Figures of a real run folder (runs/<date>_<name>/): written to its figures/ fold
   1. convergence.html: predicted mean speed of the incumbent and of the candidates at each update,
      sizes of the design, levels chosen along the steps;
   2. points.html: points added by the loop in the attitude planes, with the VPP states;
-  3. sections.html: the best section against the mean section of the PCA (start of the search),
-     and its scores;
+  3. sections.html: the best section against the start section, and its scores; a button shows
+     the other local optima of the regions (results/optima.json). The best section and the
+     other local optima are also written as Selig .dat files in results/sections/;
   4. validation.html: surrogate (mean +- 2 sigma) against the HF code (AVL x XFOIL or NPLLT x
      XFOIL), the LF code and AVL when it is a validation level, at the VPP states;
   5. speeds.html: speed per condition of every validated section, corrected to first order
@@ -43,6 +44,41 @@ def code_labels(config: dict) -> dict:
     labels.update({f"l{l}": CODE_NAMES[name] for l, name in enumerate(levels[1:-1], start=2)})
     labels.update({name: label for name, label in CODE_NAMES.items() if name not in levels})
     return labels
+
+
+def other_optima(root) -> list:
+    """The local optima of the regions other than the best one (results/optima.json, runs since
+    2026-10-27), each {"region", "scores", "final_speed", ...}; [] when there is none."""
+    path = Path(root) / "results" / "optima.json"
+    if not path.exists():
+        return []
+    return [o for o in json.loads(path.read_text(encoding="utf-8")) if not o["best"]]
+
+
+def write_selig(path, weights, te_thickness: float, name: str, n_side: int = 161) -> None:
+    """Coordinates of a section in the Selig format of XFOIL: the name, then x y from the trailing
+    edge along the upper surface to the leading edge and back along the lower surface (cosine
+    spacing, n_side points per side)."""
+    from src.section_pca import section_coordinates  # noqa: PLC0415
+    x = 0.5 * (1.0 - np.cos(np.linspace(0.0, np.pi, n_side)))
+    y = section_coordinates(weights, x, te_thickness)[0]
+    xs = np.concatenate([x[::-1], x[1:]])
+    ys = np.concatenate([y[:n_side][::-1], y[n_side:][1:]])
+    Path(path).write_text(name + "\n" + "\n".join(f"{a:.6f} {b:.6f}" for a, b in zip(xs, ys))
+                          + "\n", encoding="utf-8")
+
+
+def write_section_files(root, pca, best: dict, optima: list) -> None:
+    """results/sections/: the best section and the other local optima as Selig .dat files."""
+    folder = Path(root) / "results" / "sections"
+    folder.mkdir(parents=True, exist_ok=True)
+    weights = np.array(best["kulfan_upper"] + best["kulfan_lower"])
+    write_selig(folder / "best_section.dat", weights, pca.te_thickness,
+                f"{Path(root).name} best section")
+    for o in optima:
+        write_selig(folder / f"optimum_region_{o['region']}.dat",
+                    pca.decode(np.array(o["scores"])[None])[0], pca.te_thickness,
+                    f"{Path(root).name} local optimum region {o['region']}")
 
 
 def make_figures(root) -> None:
@@ -109,29 +145,49 @@ def make_figures(root) -> None:
     style(fig, "Où le raffinement a placé ses points", root.name, height=500)
     save(fig, figures, "points")
 
-    # 3. sections
+    # 3. sections: the best one, the start one and, behind a button, the other local optima
     pca = SectionPCA.load(root / "data" / "pca.json")
     best = json.loads((root / "results" / "best_section.json").read_text(encoding="utf-8"))
+    optima = other_optima(root)
     x = pca.stations
     fig = make_subplots(rows=1, cols=2, column_widths=[0.65, 0.35],
-                        subplot_titles=("Profils", "Scores PCA de la meilleure section"))
+                        subplot_titles=("Profils", "Scores PCA"))
     start = np.array(best.get("start_scores", np.zeros(k)))
     start_label = {"current_section": "profil actuel (départ)",
                    "closest_to_current": "profil admissible le plus proche de l'actuel (départ)"
                    }.get(best.get("start"), "section moyenne (départ)")
-    for name, scores, color in ((start_label, start, SERIES[1]),
-                                ("meilleure section", np.array(best["scores"]), SERIES[0])):
+    shown = [(start_label, start, SERIES[1], True, False),
+             ("meilleure section", np.array(best["scores"]), SERIES[0], True, True)]
+    shown += [(f"optimum local, région {o['region']} ({o['final_speed']:.3f} nd)",
+               np.array(o["scores"]), SERIES[(3 + i) % len(SERIES)], False, True)
+              for i, o in enumerate(optima)]
+    is_optimum = []
+    for name, scores, color, visible, with_bars in shown:
         y = section_coordinates(pca.decode(scores[None]), x, pca.te_thickness)[0]
         n = len(x)
         fig.add_trace(go.Scatter(x=np.concatenate([x, x[::-1]]),
                                  y=np.concatenate([y[:n], y[n:][::-1]]), mode="lines",
-                                 name=name, line={"color": color}), row=1, col=1)
-    fig.add_trace(go.Bar(x=[f"z{j + 1}" for j in range(k)], y=best["scores"],
-                         marker_color=SERIES[0], showlegend=False), row=1, col=2)
+                                 name=name, line={"color": color}, legendgroup=name,
+                                 visible=visible), row=1, col=1)
+        is_optimum.append(not visible)
+        if with_bars:
+            fig.add_trace(go.Bar(x=[f"z{j + 1}" for j in range(k)], y=scores, name=name,
+                                 marker_color=color, legendgroup=name, showlegend=False,
+                                 visible=visible), row=1, col=2)
+            is_optimum.append(not visible)
     fig.update_yaxes(scaleanchor="x", scaleratio=1, row=1, col=1)
     style(fig, "La meilleure section trouvée",
           f"vitesse moyenne prédite {best['mean_speed']:.3f} nd", height=500)
+    if optima:
+        fig.update_layout(barmode="group", updatemenus=[{
+            "type": "buttons", "direction": "right", "x": 0.0, "xanchor": "left", "y": 1.18,
+            "buttons": [
+                {"label": "Meilleure section seule", "method": "restyle",
+                 "args": [{"visible": [not o for o in is_optimum]}]},
+                {"label": f"Avec les {len(optima)} autres optima locaux", "method": "restyle",
+                 "args": [{"visible": [True] * len(is_optimum)}]}]}])
     save(fig, figures, "sections")
+    write_section_files(root, pca, best, optima)
 
     # 4. validation
     labels = code_labels(config)
@@ -201,7 +257,8 @@ FIGURE_NOTES = {
                     "jour, taille du plan BF / HF"),
     "points": ("Points ajoutés", "où le raffinement a placé ses calculs (plans d'attitude), avec "
                "les états VPP finaux"),
-    "sections": ("Sections", "la meilleure section contre la section de départ, et ses scores PCA"),
+    "sections": ("Sections", "la meilleure section contre la section de départ, et ses scores PCA ; "
+                 "un bouton montre les autres optima locaux (coordonnées dans results/sections/)"),
     "validation": ("Validation", "surrogate contre les codes (HF, BF, AVL) aux états VPP"),
     "speeds": ("Vitesses par condition", "sections validées, vitesse corrigée au premier ordre de "
                "l'écart aux codes"),
