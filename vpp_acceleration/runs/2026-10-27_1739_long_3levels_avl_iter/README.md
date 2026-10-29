@@ -73,8 +73,7 @@ Les meilleurs profils des runs 4 et 5 sont validés en fin de run (`--compare`).
 - **Le run est plus lent que le 5e** (convergence à 204 min contre 92). La cause principale est le coût de code des
   niveaux 2 et 3 (AVL itéré).
 
-## À décider
+## Décision (28/10)
 
-- Garder le niveau 2 ? Une seule trajectoire ne suffit pas pour trancher.
-- Recaler les coûts sur les temps mesurés, par exemple 1 / 19 / 25.
-- Faire un run de contrôle à deux niveaux (NF / AVL itéré) avec les mêmes réglages. Ce serait la comparaison propre.
+NPLLT × XFOIL est retiré des niveaux de fidélité des runs. On revient à deux niveaux, NPLLT × NeuralFoil et AVL × XFOIL itéré, ce qui est le défaut de `run_real_vpp.py` sans `--levels`. Le code reste général : `--levels` accepte toujours
+L codes. Reste ouvert : recaler les coûts sur les temps mesurés (environ 1 / 25).
