@@ -1,0 +1,16 @@
+{
+ "name": "guess_trimodal",
+ "comment": "HYPOTHESE du 28/10/2026 : guess_bimodal (pres et portant, 45 % chacun) plus un mode de fond large a 10 % (TWA 95 +- 40 deg dans [38, 148], TWS 13 +- 6 nd dans [8, 18]) pour garder de l'information hors des deux zones d'usage (travers, autres vents). Bornes : domaine ou la VPP MDS de l'Intens SY converge (elle echoue a 45/20, 90/20 et 150/10).",
+ "nodes_per_dim": 3,
+ "modes": [
+  {"name": "pres", "weight": 0.45,
+   "twa": {"mean": 45.0, "std": 4.0, "lower": 38.0, "upper": 52.0},
+   "tws": {"mean": 13.0, "std": 3.0, "lower": 8.0, "upper": 18.0}},
+  {"name": "portant", "weight": 0.45,
+   "twa": {"mean": 135.0, "std": 7.0, "lower": 120.0, "upper": 148.0},
+   "tws": {"mean": 13.0, "std": 3.0, "lower": 8.0, "upper": 18.0}},
+  {"name": "fond", "weight": 0.10,
+   "twa": {"mean": 95.0, "std": 40.0, "lower": 38.0, "upper": 148.0},
+   "tws": {"mean": 13.0, "std": 6.0, "lower": 8.0, "upper": 18.0}}
+ ]
+}

@@ -1,0 +1,239 @@
+{
+ "name": "guess_valley",
+ "comment": "HYPOTHESE du 28/10/2026 (editeur Qwen-Projects/Bimodal-Sailing-Discretizer) : pres (TWA 45 +- 4 dans [38, 52]) et portant (135 +- 7 dans [120, 148]) a 40 % chacun, TWS 13 +- 3 nd dans [8, 18] ; chacun a une queue large a 10 % (meme centre, sd 25 deg, sur [38, 148], 2 noeuds par dimension) : vallee lisse entre les deux, la plus creuse au milieu. 26 conditions VPP (cle nodes) ; bloc editor pour recharger dans l'editeur. Bornes : domaine ou la VPP MDS de l'Intens SY converge (elle echoue a 45/20, 90/20 et 150/10).",
+ "nodes": [
+  {
+   "twa": 41.5379,
+   "tws": 10.4593,
+   "weight": 0.04444444,
+   "mode": "upwind"
+  },
+  {
+   "twa": 41.5379,
+   "tws": 13,
+   "weight": 0.04444444,
+   "mode": "upwind"
+  },
+  {
+   "twa": 41.5379,
+   "tws": 15.5407,
+   "weight": 0.04444444,
+   "mode": "upwind"
+  },
+  {
+   "twa": 45,
+   "tws": 10.4593,
+   "weight": 0.04444444,
+   "mode": "upwind"
+  },
+  {
+   "twa": 45,
+   "tws": 13,
+   "weight": 0.04444444,
+   "mode": "upwind"
+  },
+  {
+   "twa": 45,
+   "tws": 15.5407,
+   "weight": 0.04444444,
+   "mode": "upwind"
+  },
+  {
+   "twa": 48.4621,
+   "tws": 10.4593,
+   "weight": 0.04444444,
+   "mode": "upwind"
+  },
+  {
+   "twa": 48.4621,
+   "tws": 13,
+   "weight": 0.04444444,
+   "mode": "upwind"
+  },
+  {
+   "twa": 48.4621,
+   "tws": 15.5407,
+   "weight": 0.04444444,
+   "mode": "upwind"
+  },
+  {
+   "twa": 47.6557,
+   "tws": 11.1968,
+   "weight": 0.025,
+   "mode": "upwind_tail"
+  },
+  {
+   "twa": 47.6557,
+   "tws": 14.8032,
+   "weight": 0.025,
+   "mode": "upwind_tail"
+  },
+  {
+   "twa": 70.6358,
+   "tws": 11.1968,
+   "weight": 0.025,
+   "mode": "upwind_tail"
+  },
+  {
+   "twa": 70.6358,
+   "tws": 14.8032,
+   "weight": 0.025,
+   "mode": "upwind_tail"
+  },
+  {
+   "twa": 128.4518,
+   "tws": 10.4593,
+   "weight": 0.04444444,
+   "mode": "downwind"
+  },
+  {
+   "twa": 128.4518,
+   "tws": 13,
+   "weight": 0.04444444,
+   "mode": "downwind"
+  },
+  {
+   "twa": 128.4518,
+   "tws": 15.5407,
+   "weight": 0.04444444,
+   "mode": "downwind"
+  },
+  {
+   "twa": 134.8633,
+   "tws": 10.4593,
+   "weight": 0.04444444,
+   "mode": "downwind"
+  },
+  {
+   "twa": 134.8633,
+   "tws": 13,
+   "weight": 0.04444444,
+   "mode": "downwind"
+  },
+  {
+   "twa": 134.8633,
+   "tws": 15.5407,
+   "weight": 0.04444444,
+   "mode": "downwind"
+  },
+  {
+   "twa": 141.136,
+   "tws": 10.4593,
+   "weight": 0.04444444,
+   "mode": "downwind"
+  },
+  {
+   "twa": 141.136,
+   "tws": 13,
+   "weight": 0.04444444,
+   "mode": "downwind"
+  },
+  {
+   "twa": 141.136,
+   "tws": 15.5407,
+   "weight": 0.04444444,
+   "mode": "downwind"
+  },
+  {
+   "twa": 111.6019,
+   "tws": 11.1968,
+   "weight": 0.025,
+   "mode": "downwind_tail"
+  },
+  {
+   "twa": 111.6019,
+   "tws": 14.8032,
+   "weight": 0.025,
+   "mode": "downwind_tail"
+  },
+  {
+   "twa": 136.4964,
+   "tws": 11.1968,
+   "weight": 0.025,
+   "mode": "downwind_tail"
+  },
+  {
+   "twa": 136.4964,
+   "tws": 14.8032,
+   "weight": 0.025,
+   "mode": "downwind_tail"
+  }
+ ],
+ "editor": {
+  "version": 1,
+  "nodes_per_dim": 3,
+  "modes": [
+   {
+    "name": "upwind",
+    "weight": 0.4,
+    "slope": 0,
+    "twa": {
+     "mean": 45,
+     "std": 4,
+     "lower": 38,
+     "upper": 52
+    },
+    "tws": {
+     "mean": 13,
+     "std": 3,
+     "lower": 8,
+     "upper": 18
+    }
+   },
+   {
+    "name": "upwind_tail",
+    "weight": 0.1,
+    "slope": 0,
+    "twa": {
+     "mean": 45,
+     "std": 25,
+     "lower": 38,
+     "upper": 148
+    },
+    "tws": {
+     "mean": 13,
+     "std": 3,
+     "lower": 8,
+     "upper": 18
+    },
+    "nodes_per_dim": 2
+   },
+   {
+    "name": "downwind",
+    "weight": 0.4,
+    "slope": 0,
+    "twa": {
+     "mean": 135,
+     "std": 7,
+     "lower": 120,
+     "upper": 148
+    },
+    "tws": {
+     "mean": 13,
+     "std": 3,
+     "lower": 8,
+     "upper": 18
+    }
+   },
+   {
+    "name": "downwind_tail",
+    "weight": 0.1,
+    "slope": 0,
+    "twa": {
+     "mean": 135,
+     "std": 25,
+     "lower": 38,
+     "upper": 148
+    },
+    "tws": {
+     "mean": 13,
+     "std": 3,
+     "lower": 8,
+     "upper": 18
+    },
+    "nodes_per_dim": 2
+   }
+  ],
+  "manual": []
+ }
+}
