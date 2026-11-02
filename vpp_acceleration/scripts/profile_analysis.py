@@ -14,13 +14,15 @@ For every section:
     (reported, not hidden: the VPP of the boat has no equilibrium deep downwind in light wind,
     heel at its bound 0, even with the production RS; 2026-10-22);
   * the same per mode, and the time-equivalent speed 1 / E_p[1 / V] (a fixed course);
-  * the gain against the start section, on the nodes both solved;
+  * the gain against the start section, on the nodes both solved, in kt and in % of the start
+    section's speed (relative gain, plotted per node);
   * at every node, the standard deviation of the predicted speed, sqrt(sum_k (dV/dC_k)^2 s_k^2),
     with the sensitivities at that node (VPPPool.sensitivities): the surrogate was refined around
     the states of the conditions of the run, a node far from them (downwind) is less certain.
 
 Outputs (run folder): results/profile_<name>.csv (one row per section and node),
-results/profile_<name>.json (expectations), figures/profile_<name>.html.
+results/profile_<name>.json (expectations), figures/profile_<name>.html (with the foil attitude
+at the equilibrium of every node). --figure-only redraws them from the CSV, without the VPP.
 
 Run (MDS environment), on a finished run:
     ..\\.venv-mds\\Scripts\\python scripts\\profile_analysis.py --run runs/<run>
@@ -208,37 +210,67 @@ def summarize(table, names: list, profile_name: str) -> dict:
                            for mode in rows["mode"].unique()}}
         if name != start:
             gain = rows["speed_kt"] - reference["speed_kt"]
+            relative = 100 * gain / reference["speed_kt"]     # % of the start section's speed
 
             def mean_gain(mask, gain=gain, rows=rows):
                 w = rows["weight"][mask]
                 return float(np.sum(w * gain[mask]) / w.sum()) if w.sum() > 0 else None
+            modes = {mode: common & (rows["mode"] == mode).to_numpy()
+                     for mode in rows["mode"].unique()}
             entry["gain_vs_start_kt"] = mean_gain(common)
-            entry["gain_by_mode_kt"] = {mode: mean_gain(common & (rows["mode"] == mode).to_numpy())
-                                        for mode in rows["mode"].unique()}
+            entry["gain_by_mode_kt"] = {mode: mean_gain(mask) for mode, mask in modes.items()}
+            entry["gain_vs_start_pct"] = mean_gain(common, relative)
+            entry["gain_by_mode_pct"] = {mode: mean_gain(mask, relative)
+                                         for mode, mask in modes.items()}
         summary["sections"][name] = entry
     return summary
 
 
+# foil attitude at the VPP equilibrium: (column of the table, label)
+ATTITUDE = [("cant_eff", "Cant_Eff [°]"), ("rake_eff", "Rake_Eff [°]"), ("yaw_eff", "Yaw_Eff [°]")]
+
+
+def _colorbar(fig, row: int, col: int, title: str) -> dict:
+    """A colorbar just right of subplot (row, col), as tall as it."""
+    axes = fig.get_subplot(row, col)
+    y0, y1 = axes.yaxis.domain
+    return {"title": title, "x": axes.xaxis.domain[1] + 0.005, "xanchor": "left",
+            "y": (y0 + y1) / 2, "len": y1 - y0, "thickness": 12}
+
+
 def make_figure(root: Path, table, names: list, profile_name: str) -> None:
+    """
+    Row 1: relative gain of the best section at every node (% of the start section's speed) and
+    the speed per node of every section. Row 2: the attitude of the best section's foil at the VPP
+    equilibrium of every node (the trim the VPP found optimal), the start section's in the hover.
+    """
     import plotly.graph_objects as go  # noqa: PLC0415
     from plotly.subplots import make_subplots  # noqa: PLC0415
     sys.path.insert(0, str(VPP_DIR.parent / "benchmarks"))      # as real_run_figures.py
     from figure_style import SERIES, save, style  # noqa: PLC0415
     start = names[1]
-    fig = make_subplots(rows=1, cols=2, column_widths=[0.55, 0.45], horizontal_spacing=0.12,
-                        subplot_titles=("Gain du meilleur profil à chaque nœud [nd]",
-                                        "Vitesse par nœud, triée par TWA"))
+    fig = make_subplots(rows=2, cols=3, specs=[[{"colspan": 2}, None, {}], [{}, {}, {}]],
+                        horizontal_spacing=0.09, vertical_spacing=0.14,
+                        subplot_titles=(
+                            "Gain relatif du meilleur profil à chaque nœud [% de la vitesse]",
+                            "Vitesse par nœud, triée par TWA",
+                            *[f"Attitude optimale du meilleur profil : {label}"
+                              for _, label in ATTITUDE]))
     best = table[table["section"] == "best"].reset_index(drop=True)
     ref = table[table["section"] == start].reset_index(drop=True)
     both = best["success"] & ref["success"]
     gain = (best["speed_kt"] - ref["speed_kt"]).where(both)
+    relative = 100 * gain / ref["speed_kt"]
     size = 10 + 60 * best["weight"] / best["weight"].max()
     fig.add_trace(go.Scatter(x=best["twa"][both], y=best["tws"][both], mode="markers",
-                             marker={"size": size[both], "color": gain[both], "colorscale": "RdBu",
-                                     "cmid": 0.0, "colorbar": {"title": "gain [nd]", "x": 0.47},
+                             marker={"size": size[both], "color": relative[both],
+                                     "colorscale": "RdBu", "cmid": 0.0,
+                                     "colorbar": _colorbar(fig, 1, 1, "gain [%]"),
                                      "line": {"width": 0.5, "color": "black"}},
-                             text=[f"gain {g:+.3f} nd, poids {w:.3f}" for g, w
-                                   in zip(gain[both], best["weight"][both])],
+                             text=[f"gain {p:+.2f} % ({g:+.3f} nd sur {v:.2f} nd), poids {w:.3f}"
+                                   for p, g, v, w in zip(relative[both], gain[both],
+                                                         ref["speed_kt"][both],
+                                                         best["weight"][both])],
                              name="nœud résolu (taille = probabilité)"), row=1, col=1)
     fig.add_trace(go.Scatter(x=best["twa"][~both], y=best["tws"][~both], mode="markers",
                              marker={"symbol": "x", "size": 10, "color": "black"},
@@ -249,13 +281,27 @@ def make_figure(root: Path, table, names: list, profile_name: str) -> None:
         fig.add_trace(go.Scatter(x=np.arange(len(group))[ok.to_numpy()], y=group["speed_kt"][ok],
                                  mode="markers", name=name,
                                  error_y={"type": "data", "array": 2 * group["speed_sigma_kt"][ok]},
-                                 marker={"color": SERIES[i % len(SERIES)], "size": 7}), row=1, col=2)
-    fig.update_xaxes(title_text="TWA [°]", row=1, col=1)
-    fig.update_yaxes(title_text="TWS [nd]", row=1, col=1)
-    fig.update_xaxes(title_text="nœud (TWA croissant, puis TWS)", row=1, col=2)
-    fig.update_yaxes(title_text="vitesse [nd] (barres : ± 2σ du surrogate)", row=1, col=2)
+                                 marker={"color": SERIES[i % len(SERIES)], "size": 7}), row=1, col=3)
+    solved = best["success"]
+    for col, (column, label) in enumerate(ATTITUDE, start=1):
+        fig.add_trace(go.Scatter(
+            x=best["twa"][solved], y=best["tws"][solved], mode="markers", showlegend=False,
+            marker={"size": 12, "color": best[column][solved], "colorscale": "Viridis",
+                    "colorbar": _colorbar(fig, 2, col, "[°]"),
+                    "line": {"width": 0.5, "color": "black"}},
+            text=[f"{label} : {a:.2f} (départ {'—' if np.isnan(r) else f'{r:.2f}'}), "
+                  f"vitesse {v:.2f} nd"
+                  for a, r, v in zip(best[column][solved], ref[column].where(ref["success"])[solved],
+                                     best["speed_kt"][solved])],
+            name=label), row=2, col=col)
+    for row, col in [(1, 1), (2, 1), (2, 2), (2, 3)]:
+        fig.update_xaxes(title_text="TWA [°]", row=row, col=col)
+        fig.update_yaxes(title_text="TWS [nd]", row=row, col=col)
+    fig.update_xaxes(title_text="nœud (TWA croissant, puis TWS)", row=1, col=3)
+    fig.update_yaxes(title_text="vitesse [nd] (barres : ± 2σ du surrogate)", row=1, col=3)
     style(fig, f"Comportement sur la distribution d'usage « {profile_name} »",
-          f"{root.name} ; VPP avec le surrogate final du run", height=520, legend_rows=2)
+          f"{root.name} ; VPP avec le surrogate final du run ; gain relatif à la vitesse de la "
+          f"section « {start} »", height=920, legend_rows=2)
     save(fig, root / "figures", f"profile_{profile_name}")
     from real_run_figures import write_index, write_runs_index  # noqa: PLC0415
     write_index(root)
@@ -275,6 +321,9 @@ def print_summary(summary: dict) -> None:
         if "gain_vs_start_kt" in entry:
             line += f"; gain {entry['gain_vs_start_kt']:+.3f} kt " + str(
                 {m: None if g is None else round(g, 3) for m, g in entry["gain_by_mode_kt"].items()})
+        if entry.get("gain_vs_start_pct") is not None:
+            line += f" = {entry['gain_vs_start_pct']:+.2f} % " + str(
+                {m: None if g is None else round(g, 2) for m, g in entry["gain_by_mode_pct"].items()})
         print(line)
         for mode, m in entry["modes"].items():
             print(f"      {mode}: E[V] {m.get('expected_speed_kt', float('nan')):.3f} kt on "
@@ -287,12 +336,30 @@ def main():
     parser.add_argument("--profile", required=True, help="JSON of the operating profile")
     parser.add_argument("--workers", type=int, default=16)
     parser.add_argument("--no-sigma", action="store_true", help="skip the sensitivities")
+    parser.add_argument("--figure-only", action="store_true",
+                        help="no VPP: summary and figure again from results/profile_<name>.csv")
     args = parser.parse_args()
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
-    summary = analyse(args.run, OperatingProfile.from_json(args.profile), args.workers,
-                      sigma=not args.no_sigma)
+    profile = OperatingProfile.from_json(args.profile)
+    if args.figure_only:
+        summary = redraw(args.run, profile.name)
+    else:
+        summary = analyse(args.run, profile, args.workers, sigma=not args.no_sigma)
     print_summary(summary)
+
+
+def redraw(root, profile_name: str) -> dict:
+    """Summary and figure again from the table of an earlier analyse (no VPP solve)."""
+    import pandas as pd  # noqa: PLC0415
+    root = Path(root)
+    table = pd.read_csv(root / "results" / f"profile_{profile_name}.csv")
+    names = list(table["section"].unique())          # best, start, compared: order of analyse
+    summary = summarize(table, names, profile_name)
+    (root / "results" / f"profile_{profile_name}.json").write_text(
+        json.dumps(summary, indent=1), encoding="utf-8")
+    make_figure(root, table, names, profile_name)
+    return summary
 
 
 if __name__ == "__main__":
