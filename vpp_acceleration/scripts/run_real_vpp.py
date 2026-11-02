@@ -138,6 +138,13 @@ def main():
                              "trust-region radius")
     parser.add_argument("--sensitivity-median", type=int, default=1,
                         help="sensitivities = median of this many last evaluations")
+    # 2026-10-30: start of the search chosen by the user (site vpp_acceleration/site)
+    parser.add_argument("--start-section", default=None, metavar="BEST_SECTION_JSON",
+                        help="best_section.json of an earlier run: its section is the start of the "
+                             "search, encoded on the PCA of this run (when it is not admissible in "
+                             "this family, the admissible sample closest to it is used). Default: "
+                             "the current C-foil section with --box current, the mean section "
+                             "with --box dimred")
     args = parser.parse_args()
     if args.restarts and args.converge is None:
         parser.error("--restarts needs --converge")
@@ -225,14 +232,21 @@ def main():
     problem = RealFoilProblem(pca, family, ixx_reference=ixx_current if args.fsi else None)
     # start of the search: the current section (projected on the k modes) when it is admissible
     # once decoded, otherwise the admissible sample closest to it; the mean section for "dimred"
+    # (--start-section: the best section of an earlier run instead, same rule)
     start_name, start_scores = "mean_section", np.zeros(args.k)
-    if args.box == "current":
-        projected = pca.encode(current)[0]
+    if args.box == "current" or args.start_section:
+        if args.start_section:
+            earlier = json.loads(Path(args.start_section).read_text(encoding="utf-8"))
+            wanted = np.asarray(earlier["kulfan_upper"] + earlier["kulfan_lower"], dtype=float)
+            label = "start_" + Path(args.start_section).resolve().parents[1].name
+        else:
+            wanted, label = current, "current"
+        projected = pca.encode(wanted)[0]
         if family.contains(pca.decode(projected))[0]:
-            start_name, start_scores = "current_section", projected
+            start_name, start_scores = (label if args.start_section else "current_section"), projected
         else:
             pool = problem.sample_sections(2000, seed=args.seed + 5)
-            start_name = "closest_to_current"
+            start_name = "closest_to_" + label
             start_scores = pool[np.argmin(np.linalg.norm(pool - projected, axis=1))]
         run.log(f"start of the search: {start_name}")
 

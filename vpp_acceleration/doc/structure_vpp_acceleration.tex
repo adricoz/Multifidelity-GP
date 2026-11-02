@@ -1,0 +1,433 @@
+% =============================================================================================
+%  La structure de l'algorithme de vpp_acceleration, simplement. Note pédagogique (~7 pages),
+%  état du code du 8e run (29/10/2026). Pour comprendre la chaîne en entier avant d'entrer dans
+%  selection_points_vpp.tex (le choix des calculs) et algorithme_vpp_cible.tex (la référence).
+%  Compilation : tectonic -X compile structure_vpp_acceleration.tex --outdir build
+% =============================================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage{fontspec}
+\usepackage[french]{babel}
+\usepackage{csquotes}
+\usepackage[a4paper,margin=2.0cm,top=1.6cm,bottom=1.8cm]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,mathtools,bm}
+\usepackage{xcolor}
+\usepackage{booktabs,tabularx,array,xltabular}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage[most]{tcolorbox}
+\usepackage{titlesec}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds}
+\usepackage[hidelinks,unicode]{hyperref}
+
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,
+            urlcolor=blue!60!black,pdftitle={La structure de vpp_acceleration}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\setlength{\emergencystretch}{3em}   % long \texttt paths cannot be hyphenated
+\setlist{itemsep=0.1em,topsep=0.2em,leftmargin=1.3em}
+\renewcommand{\arraystretch}{1.12}
+\titleformat{\section}{\normalfont\large\bfseries\color{blue!40!black}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{0.8em}{0.25em}
+\captionsetup{font=small,labelfont=bf,margin=0.3cm}
+
+% encadrés du document Doc-GP-mfego (preambule.tex)
+\tcbset{enhanced,breakable,boxrule=0.6pt,arc=1.5mm,left=2mm,right=2mm,top=0.8mm,bottom=0.8mm,
+        fonttitle=\bfseries\small\hypersetup{citecolor=yellow!60!white,linkcolor=yellow!60!white},
+        before skip=0.6em,after skip=0.6em}
+\newtcolorbox{theorie}[1][]{colback=blue!3,colframe=blue!45!black,
+  title={Théorie\ifx&#1&\else~— #1\fi}}
+\newtcolorbox{danslecode}[1][]{colback=green!3,colframe=green!35!black,
+  title={Dans le code\ifx&#1&\else~— #1\fi}}
+\newtcolorbox{subtilite}[1][]{colback=orange!4,colframe=orange!70!black,
+  title={Subtilité\ifx&#1&\else~— #1\fi}}
+\newtcolorbox{aretenir}[1][]{colback=violet!4,colframe=violet!60!black,
+  title={À retenir\ifx&#1&\else~— #1\fi}}
+
+\newcommand{\vx}{\bm{x}}
+\newcommand{\vz}{\bm{z}}
+\newcommand{\va}{\bm{a}}
+\newcommand{\vc}{\bm{c}}
+\newcommand{\vs}{\bm{s}}
+\newcommand{\vh}{\bm{h}}
+\newcommand{\tp}{^{\mathsf{T}}}
+\newcommand{\py}[1]{\texttt{#1}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\begin{document}
+
+{\centering
+{\Large\bfseries\color{blue!40!black} La structure de \py{vpp\_acceleration}, simplement\par}
+\vspace{0.15em}
+{\large Chercher la section du C-foil qui fait aller le bateau le plus vite\par}
+\vspace{0.2em}
+{\small Note pédagogique · état du code du 8\textsuperscript{e} run (29/10/2026)\par}}
+
+\vspace{0.4em}
+\textbf{Ce que cette note explique.} Toute la chaîne, des codes d'hydrodynamique jusqu'à la meilleure
+section, en quatre briques : la section (§\,2), le modèle des efforts (§\,3), la VPP (§\,4) et la boucle qui
+les relie (§\,5). Chaque brique dit \emph{ce qu'elle fait}, \emph{pourquoi}, et \emph{où elle est dans le
+code}. Les détails du choix des nouveaux calculs sont dans \py{selection\_points\_vpp.tex} ; la description
+complète, dans \py{algorithme\_vpp\_cible.tex}.
+
+% ---------------------------------------------------------------------------------------------
+\section{Le problème en une page}
+% ---------------------------------------------------------------------------------------------
+On garde le planform du C-foil de l'Intens SY et l'on cherche la \textbf{section 2D} qui maximise la vitesse
+du bateau sur ses conditions d'usage, avec une section au moins aussi raide en flexion que l'actuelle.
+
+La troisième colonne donne la notation de la note de M. Le Maître (version 01, 29/10/2026).
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}Xl@{}}
+\toprule
+Symbole & Sens & Note Le Maître \\
+\midrule
+$\vz\in\mathbb R^{10}$ & la section : ses 10 premiers scores PCA (§\,2) & $u_f$ \\
+$\va=(\text{cant},\text{rake},\text{yaw})$ & l'attitude effective du foil, en degrés : \emph{un état de fonctionnement}, pas de la géométrie & $z=(\theta_1,\theta_2,\theta_3)$ \\
+$\vx=(\vz,\va)\in\mathbb R^{13}$ & l'entrée des modèles d'efforts & $x=(u_f,z)$ \\
+$\vh(\vx)=(C_1,\dots,C_7)$ & le torseur $F_x,F_y,F_z,M_x,M_y,M_z$ et le $C_{p,\min}$ (cavitation), en coefficients, donnés par les codes & $\mathsf F$ \\
+$\vc=(\text{TWA},\text{TWS})$, $w_c$ & une condition de navigation et sa probabilité ($\sum_c w_c=1$) & $v_w^{(k)}$, $\omega_k$ \\
+$\vs$ & les 7 inconnues de la VPP : vitesse, dérive, gîte, assiette, déplacement (l'état), safran, \enquote{flat} (les réglages) ; l'attitude du foil en découle, $\va=A(\vs)$ & $y=(u_r,a)$ \\
+$V^\ast(\vz,\vc)$ & la vitesse d'équilibre du bateau avec la section $\vz$, à la condition $\vc$ & $V^\star_k(u_f;\mathsf F)$ \\
+$J(\vz)$ & l'objectif : la vitesse moyenne sur le profil d'usage & $J_{\text{moy}}$ \\
+$d_k=\partial V^\ast/\partial C_k$ & la sensibilité de la vitesse optimisée à la sortie $k$ (§\,4) & $b_N=B\tp\bar\lambda_N$ \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{theorie}[le problème, écrit une fois]
+\begin{equation}\label{eq:vstar}
+V^\ast(\vz,\vc)=\max_{\vs}\;V(\vs)\quad\text{tel que}\quad
+\bm R\big(\vs;\;\vh(\vz,A(\vs)),\;\vc\big)=\bm 0,
+\end{equation}
+où $\bm R$ regroupe les 6 équations d'équilibre (forces et moments) du bateau entier : voiles, coque, safran
+et foil. Puis
+\begin{equation}\label{eq:objectif}
+\max_{\vz}\;J(\vz)=\sum_c w_c\,V^\ast(\vz,\vc)\qquad\text{tel que}\quad I_{xx}(\vz)\ge I_{xx}(\text{section actuelle}).
+\end{equation}
+\end{theorie}
+
+\textbf{Qu'est-ce qui coûte ?} Les \textbf{codes} qui calculent $\vh$ : NPLLT × NeuralFoil (environ 0,5 s
+par calcul) et surtout AVL × XFOIL itéré (environ 17 s ; chiffres du 8\textsuperscript{e} run). Or la VPP
+appelle le modèle du foil à \emph{chaque itération} de son solveur, soit des centaines de fois par solve, pour
+chaque condition et chaque section essayée. Brancher les codes directement dans la VPP coûterait des centaines
+de calculs AVL par vitesse. D'où l'idée de la chaîne : \textbf{remplacer les codes par un modèle statistique de
+$\vh$} (un solve prend alors quelques secondes), et ne lancer les codes que là où ils servent la décision.
+
+\begin{subtilite}[pourquoi ce n'est pas une simple composition $f=g\circ h$]
+On peut écrire $J=g\circ\vh$ comme Astudillo \& Frazier~\cite{AF19} : $\vh$ est cher, $g$ (la VPP) est connue
+et rapide. Mais chez eux, $\vh$ est évaluée au même point que l'objectif. Ici, la VPP a besoin de $\vh$ en des
+attitudes $\va=A(\vs)$ qui sont \emph{elles-mêmes des inconnues de l'équilibre}. Le modèle de $\vh$ doit donc
+être bon sur une surface de l'espace $(\vz,\va)$ que l'on ne connaît qu'en résolvant la VPP. C'est la raison
+d'être du critère ciblé (§\,5, étape 3).
+\end{subtilite}
+
+% ---------------------------------------------------------------------------------------------
+\section{Brique 1 : la section}
+% ---------------------------------------------------------------------------------------------
+\begin{enumerate}
+  \item \textbf{16 poids de Kulfan} (8 par face), bord d'attaque arrondi, épaisseur au bord de fuite fixe
+        (0,00197 de la corde). C'est la paramétrisation de NeuralFoil.
+  \item \textbf{Une famille admissible} : les poids dans une boîte centrée sur la section actuelle, et trois
+        contraintes physiques. Les deux faces ne se croisent pas ; $I_{xx}\ge I_{xx}$ actuel ; NeuralFoil
+        est confiant (au moins 0,90 à 0°, 2°, 4° et 6°).
+  \item \textbf{Une PCA sur les coordonnées} de 4\,000 sections tirées dans la famille. On garde $k=10$
+        modes, qui portent 99,87 \% de la variance géométrique. La section est alors $\vz\in\mathbb R^{10}$, et
+        le décodage $\vz\mapsto$ poids est exact.
+\end{enumerate}
+
+\begin{danslecode}
+\py{src/section\_pca.py} : \py{KulfanBoxFamily} (la boîte et les contraintes), \py{SectionPCA} (\py{fit},
+\py{encode}, \py{decode}). La taille de la boîte est l'option \py{--box-scale} de
+\py{scripts/run\_real\_vpp.py} : 0,5 aux runs 2 à 6, 0,75 au 7\textsuperscript{e}, 3 au 8\textsuperscript{e}.
+À l'échelle 3, la boîte ne limite plus : c'est $I_{xx}$ qui retient la section.
+\end{danslecode}
+
+% ---------------------------------------------------------------------------------------------
+\section{Brique 2 : le modèle des efforts (7 co-krigeages)}
+% ---------------------------------------------------------------------------------------------
+\textbf{Deux niveaux de fidélité}, calculés aux mêmes points $\vx$ (plan imbriqué) :
+\begin{itemize}
+  \item niveau 1 (BF) : NPLLT × NeuralFoil, coût relatif 1 ;
+  \item niveau 2 (HF) : AVL × XFOIL itéré, coût relatif 6. C'est la référence que la VPP utilise.
+\end{itemize}
+
+\textbf{Un co-krigeage AR(1) par sortie} (Kennedy \& O'Hagan~\cite{KOH00}, sous la forme récursive de Le
+Gratiet~\cite{LG}) :
+\[
+Z_2(\vx)=\rho\,Z_1(\vx)+\delta(\vx),
+\]
+avec un noyau Matérn 5/2 et des hyperparamètres estimés par \textbf{MAP} : prior Inverse-Gamma(3, 2) sur les
+longueurs de corrélation, Log-Normale sur la variance et le bruit, $\mathcal N(1,2^2)$ sur $\rho$. Il y a 7
+co-krigeages indépendants, un par composante de $\vh$, qui partagent le même plan.
+
+\begin{aretenir}[ce que les GP apprennent, et ce qu'ils n'apprennent pas]
+\begin{itemize}
+  \item Les GP apprennent $\vh(\vz,\va)$ \textbf{directement}, à partir des sorties des codes, en des points
+        $(\vz,\va)$ que nous choisissons. C'est une \textbf{régression ordinaire}, sortie par sortie.
+  \item \textbf{Aucun GP n'est appris à travers l'équation d'équilibre.} On n'observe jamais $V^\ast$ pour en
+        déduire $\vh$. L'équilibre ne sert qu'\emph{après} l'apprentissage : pour prédire la vitesse (§\,4) et
+        pour choisir les prochains calculs (§\,5).
+\end{itemize}
+\end{aretenir}
+
+\begin{danslecode}
+\py{src/vpp\_targeted.py} : \py{TorsorCoKriging} (les 7 \py{CoKriging} de mfego, ajustement, prédiction,
+conditionnement). Les codes : \py{src/foil\_codes.py} (sur bdfoil\_v1), lancés en parallèle par
+\py{CodeRunner} (\py{src/vpp\_optimize.py}).
+\end{danslecode}
+
+% ---------------------------------------------------------------------------------------------
+\section{Brique 3 : la VPP et le profil d'usage}
+% ---------------------------------------------------------------------------------------------
+\begin{itemize}
+  \item \textbf{La VPP} est celle de MDS (Intens SY, foil \enquote{CFoilFSI}). Elle maximise la vitesse sous les
+        6 équations d'équilibre, avec 7 inconnues (vitesse, dérive, gîte, assiette, déplacement, safran,
+        flat). Nous remplaçons seulement la surface de réponse du foil par \textbf{la moyenne} des 7
+        co-krigeages. Une correction de déformation du foil (FSI) s'y ajoute, mise à l'échelle par la raideur
+        de la section.
+  \item \textbf{Le profil d'usage} donne les conditions $\vc$ et leurs poids $w_c$. Au
+        8\textsuperscript{e} run, c'est \py{profile\_v2.json} (dossier \py{profiles/}), avec 49 conditions, deux bosses à 40° et 80° de TWA, TWS de 5 à
+        17 nd, et des points sur les bords du domaine. Il se construit avec l'éditeur HTML du dossier
+        \py{Bimodal-Sailing-Discretizer}.
+\end{itemize}
+
+\begin{theorie}[l'incertitude sur la vitesse, au premier ordre]
+À un état d'équilibre, une petite erreur $\delta C_k$ change la vitesse de $d_k\,\delta C_k$, avec
+$d_k=\partial V^\ast/\partial C_k$ calculé par différences finies avec la VPP. Les 7 GP étant indépendants,
+\[
+\Var V^\ast\;\approx\;\sum_{k} d_k^2\,s_k^2(\vx),
+\]
+avec $s_k^2$ la variance du co-krigeage $k$. Une erreur de traînée coûte beaucoup en vitesse ; une erreur
+d'effort latéral presque rien, car la VPP rattrape l'équilibre avec une dérive un peu différente.
+\end{theorie}
+
+\begin{subtilite}[deux limites à connaître]
+\begin{itemize}
+  \item \textbf{On met la moyenne dans la VPP}, alors que $\mathbb E[V^\ast(\vh)]\ne V^\ast(\mathbb E[\vh])$ si
+        la VPP est non linéaire. L'écart est du second ordre en $s_k$ : il est négligeable là où le modèle est
+        précis. Au 8\textsuperscript{e} run, l'erreur de vitesse contre AVL × XFOIL est de 0,0006 nd à la
+        meilleure section.
+  \item \textbf{La VPP de MDS bute à 24 nd} : les surfaces de réponse de la coque ne vont pas plus loin. Au
+        travers par vent fort, plusieurs conditions sont en butée et ne départagent pas les sections.
+\end{itemize}
+\end{subtilite}
+
+\begin{danslecode}[comment $d_k$ est calculé, honnêtement]
+\begin{itemize}
+  \item \textbf{Une différence finie avant, à un seul pas.} On ajoute une constante à la sortie $k$ du modèle,
+        partout (environ 3 \% de sa taille : 5e-4 pour $F_x$, 1e-2 pour $F_y$ et $F_z$, 2e-2 pour $M_x$, 3e-3
+        pour $M_y$ et $M_z$), on refait la VPP complète en partant de la base, et
+        $d_k=(V_{\text{décalé}}-V_{\text{base}})/\text{pas}$. Toutes les inconnues sont réoptimisées : c'est la
+        sensibilité de la vitesse \emph{optimisée}.
+  \item \textbf{12 solves par condition} : pour chaque $k$, la base est refaite dans le même processus que le
+        solve décalé, car le solveur MDS dépend du chemin.
+  \item \textbf{Seulement à la titulaire}, une mise à jour sur trois, puis la médiane des 3 derniers calculs. Un
+        solve en échec garde l'ancienne valeur ; une condition en butée à 24 nd a $d=0$.
+  \item \textbf{Jamais vérifié} contre un autre pas, une différence centrée ou les multiplicateurs (§\,9).
+\end{itemize}
+Le code : la méthode \py{speed\_sensitivities} de \py{IntensSYVPP} (\py{src/vpp\_coupling.py}) et la
+méthode \py{sensitivities} de \py{VPPSectionOptimizer} (\py{src/vpp\_optimize.py}). Le solve est
+\py{IntensSYVPP.solve} ; le profil, \py{OperatingProfile} (\py{src/operating\_profile.py}).
+\end{danslecode}
+
+% ---------------------------------------------------------------------------------------------
+\section{Brique 4 : la boucle}
+% ---------------------------------------------------------------------------------------------
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  node distance=0.55cm and 1.15cm,
+  box/.style={draw,rounded corners=2pt,align=center,font=\small,minimum height=1.0cm,text width=3.15cm,fill=#1},
+  box/.default=white,
+  arr/.style={-{Stealth[length=2.2mm]},thick}]
+\node[box=gray!10] (codes) {\textbf{Codes}\\NPLLT × NF (BF)\\AVL × XFOIL (HF)};
+\node[box=blue!6, right=of codes] (gp) {\textbf{7 co-krigeages}\\$\vh(\vz,\va)$ : moyenne $m_k$, variance $s_k^2$};
+\node[box=green!6, right=of gp] (vpp) {\textbf{VPP} (moyenne $m_k$)\\vitesse $V^\ast$, états $\vs$, sensibilités $d_k$};
+\node[box=orange!8, below=1.1cm of vpp] (crib) {\textbf{1–2. Criblage}\\256 sections au 1\textsuperscript{er} ordre, 3 à la VPP : le titulaire};
+\node[box=violet!6, left=of crib] (crit) {\textbf{3–4. Critère ALC ciblé}\\nuages autour des états, choix (point, niveau) par gain / coût};
+\node[box=gray!10, left=of crit] (lot) {\textbf{5. Lot de 16 calculs}\\\enquote{kriging believer}, en parallèle};
+\draw[arr] (codes) -- node[above,font=\scriptsize]{données} (gp);
+\draw[arr] (gp) -- (vpp);
+\draw[arr] (vpp) -- (crib);
+\draw[arr] (crib) -- node[above,font=\scriptsize]{états} (crit);
+\draw[arr] (crit) -- (lot);
+\draw[arr] (lot) -- (codes);
+\end{tikzpicture}
+\caption{Une mise à jour de la boucle. Les codes ne sont lancés qu'à l'étape 5 ; tout le reste utilise le
+modèle et la VPP.}
+\label{fig:boucle}
+\end{figure}
+
+\textbf{Étape 0 — le plan de départ.} 256 points BF : des sections de la famille, avec une attitude tirée
+par hypercube latin. Puis 64 points HF choisis par maximin parmi eux (plan imbriqué). On ajuste les 7
+co-krigeages. La recherche part de la section actuelle (ou de la section admissible la plus proche).
+
+Ensuite, à chaque mise à jour :
+
+\textbf{Étape 1 — cribler des sections.} On tire 256 sections : la moitié dans une \textbf{région de
+confiance} autour du titulaire (la meilleure section du moment), l'autre dans toute la famille. Pour chacune,
+on prédit au premier ordre le gain de vitesse $\mu$ et son incertitude $\sigma$, sans résoudre la VPP. On
+garde les 3 meilleurs scores $\mu+\sigma$ : une section incertaine mais prometteuse a sa chance (comme
+UCB~\cite{Srinivas10}).
+
+\textbf{Étape 2 — juger avec la VPP complète.} Les 3 sections retenues et le titulaire passent à la VPP, sur
+toutes les conditions. La meilleure vitesse moyenne pondérée devient le titulaire. La région de confiance
+grandit (×1,5) si le titulaire a changé, et rétrécit (×0,7) sinon (TuRBO~\cite{TuRBO19}).
+
+\textbf{Étape 3 — où le modèle doit être bon.} Autour de chaque état d'équilibre de ces 4 sections, un nuage
+de 16 points : l'attitude bouge de $\pm1°$ en cant, $\pm0{,}3°$ en rake et $\pm1°$ en yaw, et la section aussi
+sur un point sur deux. Chaque point pèse $w_c\,d_k^2$ : la probabilité de sa condition, fois l'effet de
+l'erreur sur la vitesse.
+
+\textbf{Étape 4 — choisir les calculs (le critère ALC ciblé).} Pour chaque candidat $\vx_m$ et chaque niveau
+$l$, on sait \emph{avant de lancer le code} de combien la variance pondérée des nuages baissera : la variance
+d'un GP ne dépend pas des valeurs observées. On prend le meilleur rapport
+\[
+(\vx^\star,l^\star)=\argmax_{m,\,l}\;\frac{\text{baisse de }\sum\text{(poids)}\times\text{variance sur les nuages}}{\text{coût du calcul}}.
+\]
+C'est l'ALC de Cohn~\cite{Cohn96} et de Gramacy \& Lee~\cite{GL09}, avec la mesure d'intégration placée
+autour des équilibres au lieu de tout le domaine (Le Gratiet \& Cannamela~\cite{LGC15}).
+
+\textbf{Étape 5 — 16 calculs à la fois.} On choisit 16 couples (point, niveau) l'un après l'autre. Après
+chaque choix, on fait comme si le calcul était fait (\enquote{kriging believer}~\cite{GLC10}) : le choix
+suivant voit exactement la variance déjà retirée, et le lot s'étale de lui-même. Les 16 calculs tournent en
+parallèle, puis les vraies valeurs entrent dans le modèle.
+
+\textbf{Étape 6 — s'arrêter ou repartir.} Si les 10 dernières mises à jour ont gagné moins de 0,01 nd en
+tout, la région a convergé : on garde son optimum local et l'on repart (au plus 2 fois) d'une section éloignée
+de tous les optima, en gardant toutes les données. La boucle s'arrête aussi à la limite de temps.
+
+\textbf{Étape 7 — vérifier.} La meilleure section, la section de départ, les autres optima locaux et les
+meilleures sections des runs précédents sont recalculés avec les codes aux états VPP. On compare la vitesse
+du modèle à celle des codes, puis l'on analyse les sections sur le profil d'usage. Les coordonnées des
+sections (format Selig) vont dans \py{results/sections/}, les figures dans \py{figures/}.
+
+\begin{danslecode}
+\py{scripts/run\_real\_vpp.py} enchaîne tout (étapes 0 à 7) et écrit un dossier \py{runs/<date>\_<nom>/}.
+La boucle est \py{VPPSectionOptimizer} (\py{src/vpp\_optimize.py}) ; le critère, \py{choose}
+(\py{src/vpp\_targeted.py}) et les gains exacts de \py{src/sequential\_design.py} ; les figures,
+\py{scripts/real\_run\_figures.py}.
+\end{danslecode}
+
+% ---------------------------------------------------------------------------------------------
+\section{Ce qui ne sert qu'à aller vite}
+% ---------------------------------------------------------------------------------------------
+Ces couches ne changent pas la logique. Sans elles, l'algorithme est le même, en plus lent :
+\begin{itemize}
+  \item les lots de 16 et les processus parallèles (28 pour les codes, 28 pour la VPP sur toute la machine) ;
+  \item la mise à jour du facteur de Cholesky au lieu de tout refactoriser, pendant un lot ;
+  \item les hyperparamètres réestimés seulement quand le plan a grossi de 25 \%, et plus du tout au-delà de
+        2\,500 points ;
+  \item les sensibilités $d_k$ recalculées une mise à jour sur trois (médiane des 3 dernières) ;
+  \item la VPP avec la moyenne seule (sans variance) quand on n'a besoin que de la vitesse.
+\end{itemize}
+
+% ---------------------------------------------------------------------------------------------
+\section{Les hypothèses essentielles}
+% ---------------------------------------------------------------------------------------------
+{\small
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{4.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Hypothèse & Pourquoi & Ce qu'on risque \\
+\midrule
+\endhead
+AR(1) à $\rho$ constant, plan imbriqué & le modèle de \cite{LG}, validé sur nos cas & une corrélation BF/HF qui varie dans le domaine \\
+7 sorties indépendantes & un calcul donne tout le torseur ; simple & corrélations physiques ignorées ($F_y$ et $M_x$ viennent de la même portance) \\
+hyperparamètres par MAP & stable quand il y a peu de données & résultat dépendant du prior au début du run \\
+moyenne du modèle dans la VPP & la VPP reste déterministe & biais de second ordre là où le modèle est incertain \\
+vitesse linéarisée ($d_k$) & rend le critère calculable & faux si l'erreur déplace beaucoup l'équilibre \\
+intégration autour des états de 4 sections & seule zone utile à la décision & le reste du domaine peu appris \\
+criblage au premier ordre & trier 256 sections sans 256 VPP & une bonne section mal classée \\
+famille sans contrainte de forme (8\textsuperscript{e} run) & ne pas brider l'optimum & une section à l'extrado non convexe \\
+\bottomrule
+\end{xltabular}}
+
+La liste complète (13 hypothèses) est dans \py{selection\_points\_vpp.tex}, §\,7.
+
+% ---------------------------------------------------------------------------------------------
+\section{Où on en est}
+% ---------------------------------------------------------------------------------------------
+{\small
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X r@{}}
+\toprule
+Run & Ce qui change & Gain sur la section actuelle \\
+\midrule
+4\textsuperscript{e} (23/10, 8 h) & recherche sur une distribution d'usage, recherche locale & +0,16 nd \\
+5\textsuperscript{e} (27/10, 2 h) & convergence, redémarrages, lots par Cholesky : même résultat en 2 h & +0,15 nd \\
+6\textsuperscript{e} (27/10, 6 h) & 3 niveaux sur bdfoil\_v1 : le niveau du milieu ne vaut pas son coût & +0,16 nd \\
+7\textsuperscript{e} (28/10, 8 h) & profil \py{profile\_v1}, boîte 0,75 : un nouveau bassin & +0,21 nd \\
+8\textsuperscript{e} (29/10, 2 h 49) & profil \py{profile\_v2}, boîte 3 (seule $I_{xx}$ retient la section) & +0,26 nd \\
+\bottomrule
+\end{tabularx}}
+
+Chaque gain est mesuré sur le profil du run, contre AVL × XFOIL. Au 8\textsuperscript{e} run, la section est
+moins cambrée (2,2 \% à 55 \% de corde, contre 4,2 \% à 33 \% pour l'actuelle). Elle gagne au travers et perd
+un peu au près serré par vent fort. Son extrado n'est plus convexe (creux de 3,6 ‰ de corde à 80 \%) : c'est
+à vérifier.
+
+% ---------------------------------------------------------------------------------------------
+\section{Ce que nous devrions changer (note de M. Le Maître)}
+% ---------------------------------------------------------------------------------------------
+La différence principale : \textbf{notre ALC réduit la variance de la vitesse de chaque section}, prise une
+par une ; \textbf{son critère réduit le regret de conception}, la vitesse qu'on s'attend à perdre en
+choisissant mal. Le regret ne dépend que des écarts de moyenne entre sections candidates et de la variance de
+leurs \emph{différences} $S_{ii}+S_{jj}-2S_{ij}$ : une incertitude commune ne vaut rien. Les changements, dans
+l'ordre :
+\begin{enumerate}
+  \item \textbf{Les sensibilités par les multiplicateurs} du VPP, $d=B\tp\bar\lambda$ (sa 5.14) : un solve au
+        lieu de 12 par condition, vérifié contre nos différences finies. Cela rend abordable une sensibilité
+        $b_i$ \emph{par section candidate}, à son propre équilibre, au lieu de celle de la titulaire pour tout
+        le monde.
+  \item \textbf{La loi jointe complète} des vitesses candidates, $S_{ij}=\sum_{c,c'}w_cw_{c'}\,b_{ic}\tp
+        K_N(x^\star_{ic},x^\star_{jc'})\,b_{jc'}$ (sa 12.6), entre sections \emph{et} entre conditions, au lieu des
+        seules variances au criblage.
+  \item \textbf{L'arrêt sur le regret}, $\tilde r_N=\mathbb E[\max_i\tilde J_i]-\max_i m_i\le\varepsilon_V$ (en
+        nœuds), au lieu de \enquote{moins de 0,01 nd gagné en 10 mises à jour} : on s'arrête quand le choix est
+        sûr, pas quand la recherche stagne. Les redémarrages restent : le regret ne voit que les candidates
+        connues.
+  \item \textbf{Le critère de regret (sa 9.11) à la place de l'ALC}, en version par lot et à deux niveaux,
+        comparé à l'ALC sur un cas test.
+  \item \textbf{Les hypothèses sur les entrées}, écrites : pas de vitesse $V_f$ (coefficients, pas d'effet de
+        Reynolds, sauf la correction FSI) ni d'enfoncement $h_f$ (pas de surface libre dans AVL et XFOIL).
+\end{enumerate}
+
+% ---------------------------------------------------------------------------------------------
+\section{Questions ouvertes}
+% ---------------------------------------------------------------------------------------------
+\begin{enumerate}
+  \item \textbf{Les hyperparamètres par validation croisée (LOO)} au lieu du MAP, ou en diagnostic : les
+        formules rapides existent pour le co-krigeage~\cite{LGC15}, et la LOO en forme fermée est déjà dans
+        mfego (\py{CoKriging.leave\_one\_out}). La calibration de la variance compte, puisque le critère, le
+        nôtre comme le sien, est fait de variances.
+  \item \textbf{Les sorties corrélées} : un modèle multi-sorties au lieu de 7 GP indépendants.
+  \item \textbf{L'incertitude à travers l'équilibre} : propager la loi de $\vh$ dans la VPP au lieu de la
+        moyenne.
+  \item \textbf{La forme} : faut-il une contrainte de convexité ou de régularité dans la famille ?
+  \item \textbf{La butée de 24 nd} de la VPP au travers par vent fort.
+\end{enumerate}
+
+\begin{thebibliography}{9}\footnotesize\setlength{\itemsep}{0pt}
+\bibitem{KOH00} M. C. Kennedy, A. O'Hagan, \emph{Predicting the output from a complex computer code when fast
+approximations are available}, Biometrika 87(1), 1–13, 2000.
+\bibitem{LG} L. Le Gratiet, \emph{Multi-fidelity Gaussian process regression for computer experiments},
+thèse, Université Paris-Diderot, 2013.
+\bibitem{LGC15} L. Le Gratiet, C. Cannamela, \emph{Cokriging-based sequential design strategies using fast
+cross-validation techniques for multi-fidelity computer codes}, Technometrics 57(3), 418–427, 2015.
+\bibitem{Cohn96} D. Cohn, \emph{Neural network exploration using optimal experiment design}, Neural
+Networks 9(6), 1996.
+\bibitem{GL09} R. B. Gramacy, H. K. H. Lee, \emph{Adaptive design and analysis of supercomputer experiments},
+Technometrics 51(2), 130–145, 2009.
+\bibitem{AF19} R. Astudillo, P. I. Frazier, \emph{Bayesian optimization of composite functions}, ICML 2019.
+\bibitem{GLC10} D. Ginsbourger, R. Le Riche, L. Carraro, \emph{Kriging is well-suited to parallelize
+optimization}, in \emph{Computational Intelligence in Expensive Optimization Problems}, Springer, 2010.
+\bibitem{TuRBO19} D. Eriksson, M. Pearce, J. Gardner, R. Turner, M. Poloczek, \emph{Scalable global
+optimization via local Bayesian optimization}, NeurIPS 2019.
+\bibitem{Srinivas10} N. Srinivas, A. Krause, S. Kakade, M. Seeger, \emph{Gaussian process optimization in
+the bandit setting: no regret and experimental design}, ICML 2010.
+\end{thebibliography}
+
+\end{document}
