@@ -226,8 +226,11 @@ def summarize(table, names: list, profile_name: str) -> dict:
     return summary
 
 
-# foil attitude at the VPP equilibrium: (column of the table, label)
-ATTITUDE = [("cant_eff", "Cant_Eff [°]"), ("rake_eff", "Rake_Eff [°]"), ("yaw_eff", "Yaw_Eff [°]")]
+# effective angles of the foil at the VPP equilibrium: (column of the table, label). The foil
+# controls Foil_Cant/Rake/Yaw are 0 (as vpp36; calage kept by decision of 2026-11-02), so they
+# are the heel, trim and leeway of the boat (vpp_coupling.py)
+ATTITUDE = [("cant_eff", "Cant_Eff = gîte [°]"), ("rake_eff", "Rake_Eff = assiette [°]"),
+            ("yaw_eff", "Yaw_Eff = dérive [°]")]
 
 
 def _colorbar(fig, row: int, col: int, title: str) -> dict:
@@ -241,8 +244,9 @@ def _colorbar(fig, row: int, col: int, title: str) -> dict:
 def make_figure(root: Path, table, names: list, profile_name: str) -> None:
     """
     Row 1: relative gain of the best section at every node (% of the start section's speed) and
-    the speed per node of every section. Row 2: the attitude of the best section's foil at the VPP
-    equilibrium of every node (the trim the VPP found optimal), the start section's in the hover.
+    the speed per node of every section. Row 2: the effective angles of the best section's foil at the
+    VPP equilibrium of every node (heel, trim, leeway of the boat: foil calage 0), the start
+    section's in the hover.
     """
     import plotly.graph_objects as go  # noqa: PLC0415
     from plotly.subplots import make_subplots  # noqa: PLC0415
@@ -254,7 +258,7 @@ def make_figure(root: Path, table, names: list, profile_name: str) -> None:
                         subplot_titles=(
                             "Gain relatif du meilleur profil à chaque nœud [% de la vitesse]",
                             "Vitesse par nœud, triée par TWA",
-                            *[f"Attitude optimale du meilleur profil : {label}"
+                            *[f"Foil à l'équilibre, meilleur profil : {label}"
                               for _, label in ATTITUDE]))
     best = table[table["section"] == "best"].reset_index(drop=True)
     ref = table[table["section"] == start].reset_index(drop=True)
@@ -301,7 +305,8 @@ def make_figure(root: Path, table, names: list, profile_name: str) -> None:
     fig.update_yaxes(title_text="vitesse [nd] (barres : ± 2σ du surrogate)", row=1, col=3)
     style(fig, f"Comportement sur la distribution d'usage « {profile_name} »",
           f"{root.name} ; VPP avec le surrogate final du run ; gain relatif à la vitesse de la "
-          f"section « {start} »", height=920, legend_rows=2)
+          f"section « {start} » ; angles effectifs du foil avec calage 0", height=920,
+          legend_rows=2)
     save(fig, root / "figures", f"profile_{profile_name}")
     from real_run_figures import write_index, write_runs_index  # noqa: PLC0415
     write_index(root)

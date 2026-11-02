@@ -300,7 +300,8 @@ def write_index(root) -> Path:
         if name.startswith("profile_"):
             title, note = (f"Distribution d'usage « {name[len('profile_'):]} »",
                            "gain relatif (%) du meilleur profil à chaque nœud, vitesse "
-                           "par nœud, attitude optimale du foil (cant, rake, yaw)")
+                           "par nœud, angles effectifs du foil à l'équilibre (= gîte, assiette, "
+                           "dérive ; calage 0)")
         else:
             title, note = FIGURE_NOTES.get(name, (name, ""))
         items.append(f"<li><a href='{html.escape(path.name)}'>{html.escape(title)}</a>"
