@@ -1,0 +1,15 @@
+{
+ "check": "tolerance",
+ "of_run": "runs\\2026-10-29_1002_profile_v2_box3_3h",
+ "amplitudes_chord": [
+  0.0005,
+  0.0015
+ ],
+ "amplitudes_mm": [
+  0.35,
+  1.05
+ ],
+ "n_per_amplitude": 5,
+ "seed": 0,
+ "workers": 12
+}

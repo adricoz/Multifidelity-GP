@@ -265,6 +265,10 @@ FIGURE_NOTES = {
     "calibration": ("Recalage", "codes contre la RS de production (étape 0)"),
     "comparison": ("Comparaison avec un run de référence", "durée des lots selon la taille du "
                    "plan, gain cumulé de la titulaire par région (scripts/compare_runs.py)"),
+    "posterior": ("Tirages a posteriori", "vitesse des sections dans chaque fonction GP tirée, "
+                  "écart best − autres (scripts/robustness_figures.py)"),
+    "tolerance": ("Tolérances de fabrication", "écart de vitesse des sections perturbées contre "
+                  "leur souplesse, défauts appliqués (scripts/robustness_figures.py)"),
 }
 PAGE_STYLE = """
 :root { --bg: #ffffff; --fg: #1d1d1f; --muted: #6e6e73; --card: #f5f5f7; --link: #0b5cad; }

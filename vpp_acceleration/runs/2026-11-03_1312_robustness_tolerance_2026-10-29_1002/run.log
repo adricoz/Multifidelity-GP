@@ -1,0 +1,6 @@
+13:12:43 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-03_1312_robustness_tolerance_2026-10-29_1002
+13:31:53 [ 19.2 min] VPP on the surrogate and sensitivities of the best section done
+13:37:02 [ 24.3 min] 517 runs of AVL x XFOIL done
+13:37:04 [ 24.3 min] best section (reference): 13.5661 kt on 98 % of the probability
+13:37:04 [ 24.3 min] amplitude 0.050 % c (0.35 mm): speed change mean -0.0003 kt, min -0.0018, max +0.0018 (5 sections)
+13:37:04 [ 24.3 min] amplitude 0.150 % c (1.05 mm): speed change mean +0.0010 kt, min -0.0026, max +0.0066 (5 sections)

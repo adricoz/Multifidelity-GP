@@ -1,0 +1,50 @@
+{
+ "nominal": {
+  "best": 13.566456210295463,
+  "region_1": 13.55963333639528,
+  "best_2026-10-28_1747_profile_v1_box075": 13.549350218571568,
+  "closest_to_current": 13.308906006509433
+ },
+ "scales": {
+  "1.0": {
+   "n_draws": 1,
+   "mean": {
+    "best": 13.566010458043863,
+    "region_1": 13.55991545572778,
+    "best_2026-10-28_1747_profile_v1_box075": 13.55087943658897,
+    "closest_to_current": 13.311512275379558
+   },
+   "std": {
+    "best": NaN,
+    "region_1": NaN,
+    "best_2026-10-28_1747_profile_v1_box075": NaN,
+    "closest_to_current": NaN
+   },
+   "p_best": {
+    "best": 1.0,
+    "region_1": 0.0,
+    "best_2026-10-28_1747_profile_v1_box075": 0.0,
+    "closest_to_current": 0.0
+   },
+   "regret_mean_kt": 0.0,
+   "regret_max_kt": 0.0,
+   "gain_vs": {
+    "region_1": [
+     0.006095002316083509,
+     NaN
+    ],
+    "best_2026-10-28_1747_profile_v1_box075": [
+     0.015131021454893201,
+     NaN
+    ],
+    "closest_to_current": [
+     0.2544981826643049,
+     NaN
+    ]
+   }
+  }
+ },
+ "lines": [
+  "scale 1.0 (1 draws): P(best) best 1.00, region_1 0.00, best_2026-10-28_1747_profile_v1_box075 0.00, closest_to_current 0.00; regret of keeping best 0.0000 kt (max 0.0000); best minus region_1 +0.0061 +- nan, best_2026-10-28_1747_profile_v1_box075 +0.0151 +- nan, closest_to_current +0.2545 +- nan"
+ ]
+}
