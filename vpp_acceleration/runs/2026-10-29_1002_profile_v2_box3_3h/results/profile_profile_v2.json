@@ -1,0 +1,238 @@
+{
+ "profile": "profile_v2",
+ "start_section": "closest_to_current",
+ "probability_common": 0.9799999999999952,
+ "sections": {
+  "best": {
+   "probability_solved": 0.9799999999999952,
+   "common": {
+    "probability": 0.9799999999999952,
+    "expected_speed_kt": 13.566456248467084,
+    "time_equivalent_speed_kt": 11.953962410782356,
+    "speed_sigma_kt": 0.0009192867575633549
+   },
+   "modes": {
+    "upwind": {
+     "probability": 0.3869999999999984,
+     "expected_speed_kt": 11.891480088820737,
+     "time_equivalent_speed_kt": 10.933953813828923,
+     "speed_sigma_kt": 0.0009006804119411087
+    },
+    "downwind": {
+     "probability": 0.3869999999999984,
+     "expected_speed_kt": 15.403592901578197,
+     "time_equivalent_speed_kt": 13.494903713278719,
+     "speed_sigma_kt": 0.0008620949649792293
+    },
+    "downwind_tail": {
+     "probability": 0.0859999999999996,
+     "expected_speed_kt": 15.129055540075052,
+     "time_equivalent_speed_kt": 13.356045456013572,
+     "speed_sigma_kt": 0.001353764634884738
+    },
+    "manual": {
+     "probability": 0.11999999999999889,
+     "expected_speed_kt": 11.923625831390805,
+     "time_equivalent_speed_kt": 10.46177608992426,
+     "speed_sigma_kt": 0.0007583450600762469
+    }
+   },
+   "gain_vs_start_kt": 0.25537775009965036,
+   "gain_by_mode_kt": {
+    "upwind": 0.05201160165803703,
+    "downwind": 0.4116472682783743,
+    "downwind_tail": 0.5151796003883091,
+    "manual": 0.22107305665726296
+   },
+   "gain_vs_start_pct": 1.5269060683146407,
+   "gain_by_mode_pct": {
+    "upwind": 0.27773201678215087,
+    "downwind": 2.4131276721977337,
+    "downwind_tail": 2.9972338657657134,
+    "manual": 1.6436927904773428
+   }
+  },
+  "closest_to_current": {
+   "probability_solved": 0.9799999999999952,
+   "common": {
+    "probability": 0.9799999999999952,
+    "expected_speed_kt": 13.311078498367435,
+    "time_equivalent_speed_kt": 11.81619862897969,
+    "speed_sigma_kt": 0.009767233402917259
+   },
+   "modes": {
+    "upwind": {
+     "probability": 0.3869999999999984,
+     "expected_speed_kt": 11.839468487162698,
+     "time_equivalent_speed_kt": 10.91440318383068,
+     "speed_sigma_kt": 0.011233222138529944
+    },
+    "downwind": {
+     "probability": 0.3869999999999984,
+     "expected_speed_kt": 14.99194563329982,
+     "time_equivalent_speed_kt": 13.22591019847527,
+     "speed_sigma_kt": 0.008265853402478629
+    },
+    "downwind_tail": {
+     "probability": 0.0859999999999996,
+     "expected_speed_kt": 14.613875939686743,
+     "time_equivalent_speed_kt": 13.042447471196493,
+     "speed_sigma_kt": 0.009595420510651879
+    },
+    "manual": {
+     "probability": 0.11999999999999889,
+     "expected_speed_kt": 11.70255277473354,
+     "time_equivalent_speed_kt": 10.322882225827838,
+     "speed_sigma_kt": 0.009263481775470489
+    }
+   }
+  },
+  "best_2026-10-28_1747_profile_v1_box075": {
+   "probability_solved": 0.9799999999999952,
+   "common": {
+    "probability": 0.9799999999999952,
+    "expected_speed_kt": 13.54935041189854,
+    "time_equivalent_speed_kt": 11.950184591775228,
+    "speed_sigma_kt": 0.0043164820953012625
+   },
+   "modes": {
+    "upwind": {
+     "probability": 0.3869999999999984,
+     "expected_speed_kt": 11.904569566635995,
+     "time_equivalent_speed_kt": 10.949184754692624,
+     "speed_sigma_kt": 0.003678211915636356
+    },
+    "downwind": {
+     "probability": 0.3869999999999984,
+     "expected_speed_kt": 15.371833575595055,
+     "time_equivalent_speed_kt": 13.4750785888119,
+     "speed_sigma_kt": 0.004936141475459747
+    },
+    "downwind_tail": {
+     "probability": 0.0859999999999996,
+     "expected_speed_kt": 15.048547598016524,
+     "time_equivalent_speed_kt": 13.313615446591578,
+     "speed_sigma_kt": 0.00536015893464064
+    },
+    "manual": {
+     "probability": 0.11999999999999889,
+     "expected_speed_kt": 11.901835784897717,
+     "time_equivalent_speed_kt": 10.450442414831898,
+     "speed_sigma_kt": 0.003059442399840162
+    }
+   },
+   "gain_vs_start_kt": 0.23827191353110538,
+   "gain_by_mode_kt": {
+    "upwind": 0.06510107947329635,
+    "downwind": 0.37988794229523287,
+    "downwind_tail": 0.4346716583297808,
+    "manual": 0.19928301016417707
+   },
+   "gain_vs_start_pct": 1.4492421905132542,
+   "gain_by_mode_pct": {
+    "upwind": 0.40978891468519274,
+    "downwind": 2.2313539447449964,
+    "downwind_tail": 2.5545267601847037,
+    "manual": 1.4870479893968465
+   }
+  },
+  "best_2026-10-27_1739_long_3levels_avl_iter": {
+   "probability_solved": 0.9799999999999952,
+   "common": {
+    "probability": 0.9799999999999952,
+    "expected_speed_kt": 13.507264079524662,
+    "time_equivalent_speed_kt": 11.929617535486654,
+    "speed_sigma_kt": 0.008135116104692041
+   },
+   "modes": {
+    "upwind": {
+     "probability": 0.3869999999999984,
+     "expected_speed_kt": 11.90123781148371,
+     "time_equivalent_speed_kt": 10.951375967654002,
+     "speed_sigma_kt": 0.0058658766793647146
+    },
+    "downwind": {
+     "probability": 0.3869999999999984,
+     "expected_speed_kt": 15.299183286562315,
+     "time_equivalent_speed_kt": 13.429972998665098,
+     "speed_sigma_kt": 0.010425180761661441
+    },
+    "downwind_tail": {
+     "probability": 0.0859999999999996,
+     "expected_speed_kt": 14.961309270290371,
+     "time_equivalent_speed_kt": 13.259941656699418,
+     "speed_sigma_kt": 0.008755506254364867
+    },
+    "manual": {
+     "probability": 0.11999999999999889,
+     "expected_speed_kt": 11.865693631211542,
+     "time_equivalent_speed_kt": 10.426968608995871,
+     "speed_sigma_kt": 0.004904839212632096
+    }
+   },
+   "gain_vs_start_kt": 0.19618558115723242,
+   "gain_by_mode_kt": {
+    "upwind": 0.061769324321011454,
+    "downwind": 0.3072376532624911,
+    "downwind_tail": 0.34743333060362813,
+    "manual": 0.16314085647800175
+   },
+   "gain_vs_start_pct": 1.206621900362925,
+   "gain_by_mode_pct": {
+    "upwind": 0.41280895805905277,
+    "downwind": 1.8149302118160515,
+    "downwind_tail": 2.0413315860777876,
+    "manual": 1.2066657267609242
+   }
+  },
+  "best_2026-10-27_1224_control_restarts": {
+   "probability_solved": 0.9799999999999952,
+   "common": {
+    "probability": 0.9799999999999952,
+    "expected_speed_kt": 13.500378046835607,
+    "time_equivalent_speed_kt": 11.926141928421485,
+    "speed_sigma_kt": 0.008191286462386706
+   },
+   "modes": {
+    "upwind": {
+     "probability": 0.3869999999999984,
+     "expected_speed_kt": 11.901845316290487,
+     "time_equivalent_speed_kt": 10.951641216595787,
+     "speed_sigma_kt": 0.005964282925646066
+    },
+    "downwind": {
+     "probability": 0.3869999999999984,
+     "expected_speed_kt": 15.288377025394588,
+     "time_equivalent_speed_kt": 13.423186236381586,
+     "speed_sigma_kt": 0.010440774345463885
+    },
+    "downwind_tail": {
+     "probability": 0.0859999999999996,
+     "expected_speed_kt": 14.936268028804035,
+     "time_equivalent_speed_kt": 13.24722921933772,
+     "speed_sigma_kt": 0.008852003196036318
+    },
+    "manual": {
+     "probability": 0.11999999999999889,
+     "expected_speed_kt": 11.860294909913508,
+     "time_equivalent_speed_kt": 10.42334317477211,
+     "speed_sigma_kt": 0.005052261570595504
+    }
+   },
+   "gain_vs_start_kt": 0.18929954846817496,
+   "gain_by_mode_kt": {
+    "upwind": 0.06237682912778797,
+    "downwind": 0.2964313920947659,
+    "downwind_tail": 0.32239208911729156,
+    "manual": 0.15774213517996674
+   },
+   "gain_vs_start_pct": 1.166640300396278,
+   "gain_by_mode_pct": {
+    "upwind": 0.4168356268035887,
+    "downwind": 1.752625190204893,
+    "downwind_tail": 1.9071048167989322,
+    "manual": 1.1642928663446774
+   }
+  }
+ }
+}

@@ -1,0 +1,5 @@
+10:29:21 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-03_1029_robustness_posterior_2026-10-29_1002
+10:37:26 [  8.1 min] nominal (posterior mean): best 13.5665, region_1 13.5596, best_2026-10-28_1747_profile_v1_box075 13.5494, closest_to_current 13.3089 kt on 98 % of the probability
+10:37:34 [  8.2 min] 940 anchors, joint posterior of the 6 forces / moments
+10:41:01 [ 11.7 min] draw 0 scale 1.0: best 13.5660, region_1 13.5599, best_2026-10-28_1747_profile_v1_box075 13.5509, closest_to_current 13.3115 (98 %)
+10:41:02 [ 11.7 min] scale 1.0 (1 draws): P(best) best 1.00, region_1 0.00, best_2026-10-28_1747_profile_v1_box075 0.00, closest_to_current 0.00; regret of keeping best 0.0000 kt (max 0.0000); best minus region_1 +0.0061 +- nan, best_2026-10-28_1747_profile_v1_box075 +0.0151 +- nan, closest_to_current +0.2545 +- nan

@@ -1,6 +1,6 @@
 {
     "name": "parsec_cd_at_cl05",
-    "description": "Minimum drag at CL = 0.5 of a PARSEC section (bdSec SectionParsec, 11 parameters: 4 optimized, 7 fixed). Levels: NeuralFoil xxxlarge, XFOIL (bdFoil core).",
+    "description": "Minimum drag at CL = 0.5 of a PARSEC section (bdSec SectionParsec, 11 parameters: 4 optimized, 7 fixed). Levels: NeuralFoil xxxlarge, XFOIL (bdfoil_v1).",
     "kind": "section2d",
     "parametrization": {
         "type": "parsec",

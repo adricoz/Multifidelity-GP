@@ -1,0 +1,50 @@
+run 2026-10-27_1224_control_restarts: 624 steps in 123.1 min
+code runs: LF 873 (360 s), HF 380 (2882 s); final design LF/HF (780, 287)
+speed of the validated sections (final surrogate corrected against HF, weighted mean over the 13 conditions solved for all, 72 % of the probability): best 13.0796 kt, best_2026-10-22_1519_real_npllt_xfoil_fsi 13.0259 kt, best_2026-10-23_1702_real_search_profile_local 13.0842 kt, current_section 12.9231 kt, region_1 13.0650 kt
+speeds of the incumbent: 42/10: 10.267, 42/13: 12.586, 42/16: 17.719, 45/10: 10.670, 45/13: 13.549, 45/16: 18.516, 48/10: 11.062, 48/13: 14.571, 48/16: 19.265, 128/10: 9.120, 128/13: 10.229, 128/16: 11.730, 135/10: nan, 135/13: 9.604, 135/16: 10.754, 141/10: nan, 141/13: nan, 141/16: nan
+local optima of the regions, final surrogate (results/optima.json): region 0 12.8316 kt (best), region 1 12.8243 kt
+validation best: first-order speed error of the surrogate against NPLLT x XFOIL RMS 0.0005 kt, max 0.0013 kt; predicted sigma RMS 0.0012 kt; |z| <= 2 on 100 %
+   against AVL x XFOIL (not a level of the surrogate): speed error mean +0.0022 kt, RMS 0.0155 kt
+   Fx     |surrogate - HF| / |HF| median 0.02 %
+   Fy     |surrogate - HF| / |HF| median 0.06 %
+   Fz     |surrogate - HF| / |HF| median 0.09 %
+   Mx     |surrogate - HF| / |HF| median 0.07 %
+   My     |surrogate - HF| / |HF| median 0.02 %
+   Mz     |surrogate - HF| / |HF| median 0.04 %
+   Cpmin  |surrogate - HF| / |HF| median 0.19 %
+validation best_2026-10-22_1519_real_npllt_xfoil_fsi: first-order speed error of the surrogate against NPLLT x XFOIL RMS 0.0009 kt, max 0.0019 kt; predicted sigma RMS 0.0059 kt; |z| <= 2 on 100 %
+   against AVL x XFOIL (not a level of the surrogate): speed error mean +0.0025 kt, RMS 0.0145 kt
+   Fx     |surrogate - HF| / |HF| median 0.10 %
+   Fy     |surrogate - HF| / |HF| median 0.04 %
+   Fz     |surrogate - HF| / |HF| median 0.04 %
+   Mx     |surrogate - HF| / |HF| median 0.03 %
+   My     |surrogate - HF| / |HF| median 0.04 %
+   Mz     |surrogate - HF| / |HF| median 0.05 %
+   Cpmin  |surrogate - HF| / |HF| median 1.68 %
+validation best_2026-10-23_1702_real_search_profile_local: first-order speed error of the surrogate against NPLLT x XFOIL RMS 0.0019 kt, max 0.0054 kt; predicted sigma RMS 0.0019 kt; |z| <= 2 on 100 %
+   against AVL x XFOIL (not a level of the surrogate): speed error mean +0.0035 kt, RMS 0.0161 kt
+   Fx     |surrogate - HF| / |HF| median 0.15 %
+   Fy     |surrogate - HF| / |HF| median 0.08 %
+   Fz     |surrogate - HF| / |HF| median 0.08 %
+   Mx     |surrogate - HF| / |HF| median 0.08 %
+   My     |surrogate - HF| / |HF| median 0.02 %
+   Mz     |surrogate - HF| / |HF| median 0.06 %
+   Cpmin  |surrogate - HF| / |HF| median 1.09 %
+validation current_section: first-order speed error of the surrogate against NPLLT x XFOIL RMS 0.0074 kt, max 0.0193 kt; predicted sigma RMS 0.0042 kt; |z| <= 2 on 89 %
+   against AVL x XFOIL (not a level of the surrogate): speed error mean -0.0009 kt, RMS 0.0190 kt
+   Fx     |surrogate - HF| / |HF| median 1.05 %
+   Fy     |surrogate - HF| / |HF| median 0.03 %
+   Fz     |surrogate - HF| / |HF| median 0.04 %
+   Mx     |surrogate - HF| / |HF| median 0.04 %
+   My     |surrogate - HF| / |HF| median 0.22 %
+   Mz     |surrogate - HF| / |HF| median 0.07 %
+   Cpmin  |surrogate - HF| / |HF| median 1.93 %
+validation region_1: first-order speed error of the surrogate against NPLLT x XFOIL RMS 0.0005 kt, max 0.0010 kt; predicted sigma RMS 0.0020 kt; |z| <= 2 on 100 %
+   against AVL x XFOIL (not a level of the surrogate): speed error mean +0.0020 kt, RMS 0.0157 kt
+   Fx     |surrogate - HF| / |HF| median 0.08 %
+   Fy     |surrogate - HF| / |HF| median 0.01 %
+   Fz     |surrogate - HF| / |HF| median 0.02 %
+   Mx     |surrogate - HF| / |HF| median 0.01 %
+   My     |surrogate - HF| / |HF| median 0.02 %
+   Mz     |surrogate - HF| / |HF| median 0.03 %
+   Cpmin  |surrogate - HF| / |HF| median 1.31 %

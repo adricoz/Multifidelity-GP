@@ -1,0 +1,29 @@
+{
+  "key": "5a3fca7e59c6351fcba67b55dd6c3d2c012e5752cf48762e6bf6304d37dadd34",
+  "n_filled": 0,
+  "npane_used": 250,
+  "section_name": "kc208a0b2c94a",
+  "section_path": "C:\\Users\\SIM\\AppData\\Local\\Temp\\vppc_qfu_ntga\\kc208a0b2c94a.xf",
+  "section_sha256": "2d06f2835c73f265a44da9387903fb52aafb51354f46649efd6b468ece699824",
+  "spec": {
+    "alpha": [
+      -6.0,
+      12.0,
+      0.5
+    ],
+    "mach": 0.0,
+    "ncrit": 1.0,
+    "niter": 300,
+    "npane": 250,
+    "ppar_r": 0.02,
+    "ppar_t": 0.5,
+    "re": 5000000.0,
+    "xtr": [
+      0.1,
+      0.1
+    ]
+  },
+  "spec_json": "{\"alpha\":[-6.0,12.0,0.5],\"mach\":0.0,\"ncrit\":1.0,\"niter\":300,\"npane\":250,\"ppar_r\":0.02,\"ppar_t\":0.5,\"re\":5000000.0,\"xtr\":[0.1,0.1]}",
+  "xfoil_exe_sha256": "c17342f84ae260c2b11a74cd0e2fb8189a5f8954c6bb7a8467a0f27055c7faea",
+  "xfoil_script_version": "1"
+}

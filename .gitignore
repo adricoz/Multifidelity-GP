@@ -11,8 +11,15 @@ env/
 *.pyc
 
 .ipynb_checkpoints/
-# [FIX-L1] one directory per run (log, JSON, figures): runs are not versioned
+# [FIX-L1] one directory per run (log, JSON, figures). Runs of vpp_acceleration are versioned (2026-10-26,
+# to read them anywhere) without their surrogate pickles (up to 139 MB, over the GitHub limit);
+# runs elsewhere stay ignored
 **/runs/
+!vpp_acceleration/runs/
+vpp_acceleration/runs/**/*.pkl
+vpp_acceleration/runs/**/test_report/
+# bdfoil_v1 XFOIL polar cache of a run (content-addressed, safe to delete)
+vpp_acceleration/runs/**/polar_cache/
 # outputs written by the scripts before the runs/ convention
 mfego/*.json
 mfego/*.log
@@ -25,8 +32,10 @@ example/*/*.html
 
 # benchmark environment (requirements-benchmark.txt)
 .venv-benchmark/
+# MDS environment of vpp_acceleration (venv of the conda env bdToolbox, vpp_acceleration/README.md)
+.venv-mds/
 
-# XFOIL polar cache of the studies (bdFoil core content-addressed cache, safe to delete)
+# XFOIL polar cache of the studies (bdfoil_v1 / old bdFoil core content-addressed cache, safe to delete)
 studies/*/results/polar_cache/
 # solver work files kept by the study scripts for inspection
 studies/*/results/step0_avl/

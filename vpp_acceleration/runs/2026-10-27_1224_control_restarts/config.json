@@ -1,0 +1,161 @@
+{
+ "name": "control_restarts",
+ "k": 10,
+ "n_low": 256,
+ "n_high": 64,
+ "time_limit_min": 110.0,
+ "workers": 28,
+ "seed": 0,
+ "smoke": false,
+ "box": "current",
+ "box_scale": 0.5,
+ "hf": "npllt_xfoil",
+ "hf_cost": 2.0,
+ "fsi": true,
+ "batch": 16,
+ "vpp_workers": 30,
+ "compare": [
+  "runs/2026-10-23_1702_real_search_profile_local/results/best_section.json",
+  "runs/2026-10-22_1519_real_npllt_xfoil_fsi/results/best_section.json"
+ ],
+ "profile": [
+  "profiles/guess_bimodal.json"
+ ],
+ "search_profile": "profiles/guess_bimodal.json",
+ "screen_seed": 875768254,
+ "local_fraction": 0.5,
+ "radius": 1.0,
+ "max_refit_size": 2500,
+ "converge": [
+  10.0,
+  0.01
+ ],
+ "restarts": 2,
+ "restart_distance": 2.0,
+ "min_gain": 0.002,
+ "sensitivity_median": 3,
+ "conditions": [
+  [
+   41.53786239300045,
+   10.459315825380532
+  ],
+  [
+   41.53786239300045,
+   13.0
+  ],
+  [
+   41.53786239300045,
+   15.540684174619468
+  ],
+  [
+   45.0,
+   10.459315825380532
+  ],
+  [
+   45.0,
+   13.0
+  ],
+  [
+   45.0,
+   15.540684174619468
+  ],
+  [
+   48.46213760699955,
+   10.459315825380532
+  ],
+  [
+   48.46213760699955,
+   13.0
+  ],
+  [
+   48.46213760699955,
+   15.540684174619468
+  ],
+  [
+   128.45183502228656,
+   10.459315825380532
+  ],
+  [
+   128.45183502228656,
+   13.0
+  ],
+  [
+   128.45183502228656,
+   15.540684174619468
+  ],
+  [
+   134.86327740299197,
+   10.459315825380532
+  ],
+  [
+   134.86327740299197,
+   13.0
+  ],
+  [
+   134.86327740299197,
+   15.540684174619468
+  ],
+  [
+   141.13597249919889,
+   10.459315825380532
+  ],
+  [
+   141.13597249919889,
+   13.0
+  ],
+  [
+   141.13597249919889,
+   15.540684174619468
+  ]
+ ],
+ "condition_weights": [
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555,
+  0.05555555555555555
+ ],
+ "optimizer": {
+  "n_per_state": 16,
+  "n_local": 512,
+  "refit_every": 10,
+  "update_every": 1,
+  "sensitivities_every": 3,
+  "n_screen": 256,
+  "n_top": 3,
+  "kappa": 1.0,
+  "local_fraction": 0.5,
+  "radius": 1.0,
+  "max_refit_size": 2500,
+  "min_gain": 0.002,
+  "convergence": [
+   10,
+   0.01
+  ],
+  "max_restarts": 2,
+  "restart_distance": 2.0,
+  "sensitivity_memory": 3,
+  "refit_growth": 1.25
+ },
+ "levels": "1 = NPLLT x NeuralFoil xxxlarge, 2 = NPLLT x XFOIL, 3 = AVL x XFOIL (validation only) (src/foil_codes.py)",
+ "criterion_costs": [
+  1.0,
+  2.0
+ ],
+ "family": "Dim-Reduction widths x 0.5 centred on the current C-foil section, no crossing, Ixx >= Ixx(current), NF confident (checked on the decoded sections)",
+ "inputs": "10 PCA scores + Cant_Eff, Rake_Eff, Yaw_Eff (no Hvol)",
+ "foil_variant_mds": "CFoilFSI (R 9.8 m), dyn RS replaced by the rigid surrogate + the FSI correction (Speed_kts input)"
+}

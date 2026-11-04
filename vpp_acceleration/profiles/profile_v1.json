@@ -1,0 +1,315 @@
+{
+ "name": "profile_v1",
+ "comment": "Profil du 28/10/2026 (editeur Qwen-Projects/Bimodal-Sailing-Discretizer) : deux bosses TWA 40 +- 10 (bornes [32, 90]) et 80 +- 10 ([32, 120]), 45/45 ; vallee lisse entre les deux, creux a 60 deg. Queue large du portant (80 +- 25 sur [32, 130], 10 %, 2 noeuds/dim) jusqu'a ~100 deg. 3 conditions placees a la main a TWA 60 (TWS 6, 10, 15 ; 2 % chacune) pour avoir des points au creux. TWS 10 +- 15 sur [1, 20] (quasi uniforme). 4 noeuds/dim, 39 conditions VPP. A verifier : convergence de la VPP MDS aux faibles vents (TWS < 8) et aux bornes TWA.",
+ "nodes": [
+  {
+   "twa": 35.0521,
+   "tws": 3.5422,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 35.0521,
+   "tws": 8.1804,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 35.0521,
+   "tws": 12.647,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 35.0521,
+   "tws": 17.3677,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 40.1857,
+   "tws": 3.5422,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 40.1857,
+   "tws": 8.1804,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 40.1857,
+   "tws": 12.647,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 40.1857,
+   "tws": 17.3677,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 45.3723,
+   "tws": 3.5422,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 45.3723,
+   "tws": 8.1804,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 45.3723,
+   "tws": 12.647,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 45.3723,
+   "tws": 17.3677,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 52.9004,
+   "tws": 3.5422,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 52.9004,
+   "tws": 8.1804,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 52.9004,
+   "tws": 12.647,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 52.9004,
+   "tws": 17.3677,
+   "weight": 0.0264375,
+   "mode": "upwind"
+  },
+  {
+   "twa": 68.4963,
+   "tws": 3.5422,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 68.4963,
+   "tws": 8.1804,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 68.4963,
+   "tws": 12.647,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 68.4963,
+   "tws": 17.3677,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 76.8133,
+   "tws": 3.5422,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 76.8133,
+   "tws": 8.1804,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 76.8133,
+   "tws": 12.647,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 76.8133,
+   "tws": 17.3677,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 83.1859,
+   "tws": 3.5422,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 83.1859,
+   "tws": 8.1804,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 83.1859,
+   "tws": 12.647,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 83.1859,
+   "tws": 17.3677,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 91.5022,
+   "tws": 3.5422,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 91.5022,
+   "tws": 8.1804,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 91.5022,
+   "tws": 12.647,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 91.5022,
+   "tws": 17.3677,
+   "weight": 0.0264375,
+   "mode": "downwind"
+  },
+  {
+   "twa": 64.291,
+   "tws": 5.9105,
+   "weight": 0.0235,
+   "mode": "downwind_tail"
+  },
+  {
+   "twa": 64.291,
+   "tws": 14.9458,
+   "weight": 0.0235,
+   "mode": "downwind_tail"
+  },
+  {
+   "twa": 96.0678,
+   "tws": 5.9105,
+   "weight": 0.0235,
+   "mode": "downwind_tail"
+  },
+  {
+   "twa": 96.0678,
+   "tws": 14.9458,
+   "weight": 0.0235,
+   "mode": "downwind_tail"
+  },
+  {
+   "twa": 60,
+   "tws": 6,
+   "weight": 0.02,
+   "mode": "manual"
+  },
+  {
+   "twa": 60,
+   "tws": 10,
+   "weight": 0.02,
+   "mode": "manual"
+  },
+  {
+   "twa": 60,
+   "tws": 15,
+   "weight": 0.02,
+   "mode": "manual"
+  }
+ ],
+ "editor": {
+  "version": 1,
+  "nodes_per_dim": 4,
+  "modes": [
+   {
+    "name": "upwind",
+    "weight": 0.45,
+    "slope": 0,
+    "twa": {
+     "mean": 40,
+     "std": 10,
+     "lower": 32,
+     "upper": 90
+    },
+    "tws": {
+     "mean": 10,
+     "std": 15,
+     "lower": 1,
+     "upper": 20
+    }
+   },
+   {
+    "name": "downwind",
+    "weight": 0.45,
+    "slope": 0,
+    "twa": {
+     "mean": 80,
+     "std": 10,
+     "lower": 32,
+     "upper": 120
+    },
+    "tws": {
+     "mean": 10,
+     "std": 15,
+     "lower": 1,
+     "upper": 20
+    }
+   },
+   {
+    "name": "downwind_tail",
+    "weight": 0.1,
+    "slope": 0,
+    "twa": {
+     "mean": 80,
+     "std": 25,
+     "lower": 32,
+     "upper": 130
+    },
+    "tws": {
+     "mean": 10,
+     "std": 15,
+     "lower": 1,
+     "upper": 20
+    },
+    "nodes_per_dim": 2
+   }
+  ],
+  "manual": [
+   {
+    "twa": 60,
+    "tws": 6,
+    "weight": 0.02
+   },
+   {
+    "twa": 60,
+    "tws": 10,
+    "weight": 0.02
+   },
+   {
+    "twa": 60,
+    "tws": 15,
+    "weight": 0.02
+   }
+  ]
+ }
+}

@@ -1,0 +1,15 @@
+=== Libraries on the region test (total cost 560), 10 seeds ===
+region RMSE: median [10 % ; 90 %], own model | our CoKriging on the design
+S1 notre séquentiel (ALC, ρ borné)   own 0.1353 [0.1204 ; 0.1868] | ours 0.1353 | cov95 0.94 | global 0.1828 | LF/HF 170/39 | in region 93 % | time 556 s
+B1 LHS imbriqué 160/40               own 0.1998 [0.1588 ; 0.2476] | ours 0.1998 | cov95 0.99 | global 0.1577 | LF/HF 160/40 | in region 19 % | time 6 s
+E1 emukit (AR(1) + IVR)              own 0.1297 [0.1070 ; 0.2072] | ours 0.1403 | cov95 0.77 | global 0.1702 | LF/HF 140/42 | in region 61 % | time 165 s
+T1 BoTorch (MF-GP + qNIPV)           own 0.1197 [0.0948 ; 0.1787] | ours 0.1411 | cov95 0.97 | global 0.1558 | LF/HF 155/40 | in region 79 % | time 941 s
+
+S1 against E1 (own model): median error -4 % lower | wins 5 / 10 | Wilcoxon (S1 < E1) p = 0.62
+S1 against E1 (ours model): median error +4 % lower | wins 5 / 10 | Wilcoxon (S1 < E1) p = 0.75
+S1 against T1 (own model): median error -13 % lower | wins 2 / 10 | Wilcoxon (S1 < T1) p = 0.96
+S1 against T1 (ours model): median error +4 % lower | wins 5 / 10 | Wilcoxon (S1 < T1) p = 0.54
+
+Criterion fixed before the computation (L* = T1, median ratio S1 / L* = 1.130):
+  [NO] S1 at least as good as L* (ratio <= 1.05 and Wilcoxon S1 > L* p = 0.053 >= 0.05)
+  [NO] S1 better than L* (ratio <= 0.90 and Wilcoxon S1 < L* p = 0.96 < 0.05)

@@ -6,9 +6,9 @@ flowchart LR
     SIM --> GEO["geometry.py<br/>to_physical + section<br/>NACA4 / Kulfan / PARSEC"]
     GEO --> BACK{"backend of the level"}
     BACK -- "level 1, 2" --> NF["NeuralFoil<br/>xxsmall ... xxxlarge"]
-    BACK -- "level 3" --> XF["bdFoil core XFOIL<br/>run_polar (soft/xfoil.exe)"]
-    BACK -. "3D template" .-> LLT["NonPlanarSolver<br/>lifting line"]
-    BACK -. "3D template" .-> AVL["bdFoil core AVL<br/>campaign.run_case"]
+    BACK -- "level 3" --> XF["bdfoil_v1 XFOIL<br/>run_polar (soft/xfoil.exe)"]
+    BACK -. "3D template" .-> LLT["bdfoil_v1 NP-LLT<br/>lifting line"]
+    BACK -. "3D template" .-> AVL["bdfoil_v1 AVL<br/>Session.evaluate"]
     NF --> OBJ["objectives.py<br/>Cd at CL target<br/>(NaN outside branch)"]
     XF --> OBJ
     OBJ -- "value, metrics" --> EGO

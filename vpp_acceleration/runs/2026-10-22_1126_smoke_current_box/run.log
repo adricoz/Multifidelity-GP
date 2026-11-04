@@ -1,0 +1,26 @@
+11:26:52 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-10-22_1126_smoke_current_box
+11:26:52 [  0.0 min] family: box centred on the current section, scale 0.5, Ixx >= 6.7174e-05
+11:27:03 [  0.2 min] PCA: rank 16, k = 10 modes carry 99.86 % of the geometric variance
+11:27:03 [  0.2 min] start of the search: current_section
+11:28:05 [  1.2 min] start design: LF 30 ok / 30, HF 7 ok / 8
+11:28:27 [  1.6 min] speed sensitivities dV/dC (rows = conditions): [[ 82.2   -1.39   1.86  -0.08   0.18  -0.08]
+ [104.69   1.25   8.     3.62   0.57   0.06]]
+11:28:34 [  1.7 min] update 0: incumbent mean speed 15.2739 kt (new), candidates [15.24  15.274 15.254 15.216], 20 s
+11:28:46 [  1.9 min] step 4: level 1, LF/HF 35/7, 2.4 s
+11:28:57 [  2.1 min] step 9: level 1, LF/HF 40/7, 2.4 s
+11:29:05 [  2.2 min] update 1: incumbent mean speed 15.3012 kt (kept), candidates [15.301 15.277 15.253 15.284], 8 s
+11:29:17 [  2.4 min] step 14: level 1, LF/HF 45/7, 1.7 s
+11:29:28 [  2.6 min] step 19: level 1, LF/HF 50/7, 2.6 s
+11:29:37 [  2.7 min] update 2: incumbent mean speed 15.3142 kt (new), candidates [15.303 15.247 15.301 15.314], 8 s
+11:29:48 [  2.9 min] step 24: level 1, LF/HF 55/7, 2.6 s
+11:29:59 [  3.1 min] step 29: level 1, LF/HF 60/7, 2.5 s
+11:30:10 [  3.3 min] speed sensitivities dV/dC (rows = conditions): [[62.56 -2.67  0.9  -0.58 -3.2  -3.47]
+ [77.25 -2.06  4.37  1.81 -5.64 -6.07]]
+11:30:20 [  3.5 min] update 3: incumbent mean speed 15.3000 kt (new), candidates [15.3   15.3   15.239 15.225], 20 s
+11:30:31 [  3.6 min] step 34: level 1, LF/HF 65/7, 1.7 s
+11:30:42 [  3.8 min] step 39: level 1, LF/HF 70/7, 2.7 s
+11:30:52 [  4.0 min] update 4: incumbent mean speed 15.3136 kt (new), candidates [15.311 15.308 15.311 15.314], 9 s
+11:31:03 [  4.2 min] update 5: incumbent mean speed 15.3111 kt (kept), candidates [15.311 15.31  15.283 15.297], 7 s
+11:31:03 [  4.2 min] loop done: 41 steps, LF/HF (71, 7), runs {1: 71, 2: 8}, code time {1: 14.964243300055386, 2: 101.9963146999653}
+11:31:30 [  4.6 min] validation done
+11:31:31 [  4.6 min] done

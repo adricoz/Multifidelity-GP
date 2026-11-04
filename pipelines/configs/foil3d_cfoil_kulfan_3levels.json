@@ -1,6 +1,6 @@
 {
     "name": "foil3d_cfoil_kulfan",
-    "description": "Intens SY C-foil (single circular arc, R 9.8 m, wetted arc 3.25 m, chord 0.70 m, fixed area): optimization of its ONE constant Kulfan section (4+4 weights, thickness/camber form, 7 free variables) for the minimum 3D drag at equal lift (CD* = Cdprofile + Cdi (CL_ref / CL)^2, CL_ref = lift of the baseline section MC2_60_6101_1 at the same level) at a fixed attitude (heel 5 + trunk cant 3.28 deg, rake 0.5 deg, yaw 4 deg, sink 0), hull = wall (symmetry plane z = 0). Equality constraint CL2d(alpha = 0 deg) = 0.45 (NeuralFoil xxlarge, camber offset delta solved). Re 5e6, n_crit 1, xtr 0.1. Levels: NPLLT x NeuralFoil xxsmall, NPLLT x NeuralFoil xxlarge, AVL x XFOIL (bdFoil core).",
+    "description": "Intens SY C-foil (single circular arc, R 9.8 m, wetted arc 3.25 m, chord 0.70 m, fixed area): optimization of its ONE constant Kulfan section (4+4 weights, thickness/camber form, 7 free variables) for the minimum 3D drag at equal lift (CD* = Cdprofile + Cdi (CL_ref / CL)^2, CL_ref = lift of the baseline section MC2_60_6101_1 at the same level) at a fixed attitude (heel 5 + trunk cant 3.28 deg, rake 0.5 deg, yaw 4 deg, sink 0), hull = wall (symmetry plane z = 0). Equality constraint CL2d(alpha = 0 deg) = 0.45 (NeuralFoil xxlarge, camber offset delta solved). Re 5e6, n_crit 1, xtr 0.1. Levels (bdfoil_v1 since 2026-10-27, which has only the xxxlarge NeuralFoil model): NPLLT x NeuralFoil xxxlarge, NPLLT x XFOIL, AVL x XFOIL; speed giving Re 5e6 on the chord, no wave drag. The NeuralFoil xxsmall / xxlarge levels of the old bdFoil pipeline: git tag pre-bdfoil-v1.",
     "kind": "foil3d",
     "planform": {"type": "cfoil_arc", "radius": 9.8, "span": 3.25, "chord": 0.70,
                  "taper": 1.0, "root_twist": 0.0, "tip_twist": 0.0, "cant_geom": 0.0,
@@ -23,15 +23,12 @@
     "section_constraint": {"cl2d_target": 0.45, "alpha_deg": 0.0, "reference_model": "xxlarge",
                            "delta_bounds": [-0.3, 0.6], "tolerance": 1e-5, "n_grid": 25},
     "constraints": {"min_thickness": 0.1225},
-    "flow": {"re": 5000000.0, "n_crit": 1.0, "xtr": [0.1, 0.1], "alpha": [-6.0, 12.0, 0.5]},
+    "flow": {"re": 5000000.0, "n_crit": 1.0, "xtr": [0.1, 0.1], "alpha": [-12.0, 12.0, 0.5]},
     "levels": [
-        {"solver": "npllt", "cost": 1.0,
-         "options": {"neuralfoil_model": "xxsmall", "nodes_count": 100}},
-        {"solver": "npllt", "cost": 1.5,
-         "options": {"neuralfoil_model": "xxlarge", "nodes_count": 100}},
+        {"solver": "npllt", "cost": 1.0, "options": {"polars": "neuralfoil"}},
+        {"solver": "npllt", "cost": 2.0, "options": {"polars": "xfoil", "polar_timeout": 300}},
         {"solver": "avl", "cost": 30.0,
-         "options": {"npane": 250, "niter": 100, "polar_timeout": 300, "timeout": 120,
-                     "settings": {}}}
+         "options": {"polars": "xfoil", "polar_timeout": 300, "timeout": 120}}
     ],
     "objective": {"type": "cd3d",
                   "equal_lift_reference": {"t_0": 0.332208, "t_1": 0.376276, "t_2": 0.161338,

@@ -1,0 +1,29 @@
+{
+  "key": "94b1d01669f7ef601fc76a4c2366e1f6a2f45475243caea98b72e9e9d26e3975",
+  "n_filled": 0,
+  "npane_used": 250,
+  "section_name": "k9e9800a2b708",
+  "section_path": "C:\\Users\\SIM\\AppData\\Local\\Temp\\vppc_gis3uyun\\k9e9800a2b708.xf",
+  "section_sha256": "e9fd2c7d3324d49b3f3a37013e535c75eba0adf40ad9bbbc74e6b72cd13a2734",
+  "spec": {
+    "alpha": [
+      -6.0,
+      12.0,
+      0.5
+    ],
+    "mach": 0.0,
+    "ncrit": 1.0,
+    "niter": 300,
+    "npane": 250,
+    "ppar_r": 0.02,
+    "ppar_t": 0.5,
+    "re": 5000000.0,
+    "xtr": [
+      0.1,
+      0.1
+    ]
+  },
+  "spec_json": "{\"alpha\":[-6.0,12.0,0.5],\"mach\":0.0,\"ncrit\":1.0,\"niter\":300,\"npane\":250,\"ppar_r\":0.02,\"ppar_t\":0.5,\"re\":5000000.0,\"xtr\":[0.1,0.1]}",
+  "xfoil_exe_sha256": "c17342f84ae260c2b11a74cd0e2fb8189a5f8954c6bb7a8467a0f27055c7faea",
+  "xfoil_script_version": "1"
+}

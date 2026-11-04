@@ -1,0 +1,38 @@
+16:43:34 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-10-23_1643_smoke_search_profile_local
+16:43:34 [  0.0 min] family: box centred on the current section, scale 0.5, Ixx >= 6.7174e-05
+16:43:45 [  0.2 min] PCA: rank 16, k = 10 modes carry 99.86 % of the geometric variance
+16:43:45 [  0.2 min] start of the search: current_section
+16:44:39 [  1.1 min] start design: LF 30 ok / 30, HF 7 ok / 8
+16:44:45 [  1.2 min] batch 0: hyperparameters refitted on 37 points
+16:45:11 [  1.6 min] speed sensitivities: 12 failed solves, previous values kept
+16:45:11 [  1.6 min] speed sensitivities dV/dC (rows = conditions): [[ 54.36  -1.23   0.83  -0.05   0.13  -0.05]
+ [216.38  -0.38   8.62  -0.47   0.47   0.21]
+ [ 69.99  -1.19   1.36  -0.07   0.15  -0.08]
+ [108.75   2.3    9.52   2.56   0.59   0.04]
+ [ 67.93  16.43  -9.99  -3.36  -0.24   1.54]
+ [ 34.23   4.06   0.53  -0.05   0.06   0.54]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+16:45:27 [  1.9 min] update 0: incumbent speed 12.9219 kt (new), candidates [12.863 12.9   12.922 12.917], on 75 % of the probability, radius 1.50, 42 s
+16:45:33 [  2.0 min] batch 0: 16 choices (0 HF), LF/HF 46/7, selection 48.0 s, 48.4 s
+16:45:33 [  2.0 min] batch 1: hyperparameters refitted on 53 points
+16:45:55 [  2.4 min] update 1: incumbent speed 13.6078 kt (new), candidates [13.571 13.606 13.608 13.608], on 62 % of the probability, radius 2.25, 22 s
+16:45:59 [  2.4 min] batch 1: 16 choices (0 HF), LF/HF 62/7, selection 25.8 s, 26.2 s
+16:46:00 [  2.4 min] batch 2: hyperparameters refitted on 69 points
+16:46:26 [  2.9 min] update 2: incumbent speed 12.8300 kt (new), candidates [12.805 12.827 12.824 12.83 ], on 75 % of the probability, radius 3.00, 26 s
+16:46:47 [  3.2 min] batch 2: 16 choices (2 HF), LF/HF 76/9, selection 29.7 s, 48.8 s
+16:46:51 [  3.3 min] speed sensitivities: 12 failed solves, previous values kept
+16:46:51 [  3.3 min] speed sensitivities dV/dC (rows = conditions): [[ 54.32  -1.4    0.85  -0.04   0.12  -0.06]
+ [217.69  -1.4    9.01  -0.41   0.31   0.12]
+ [ 70.13  -1.41   1.4   -0.06   0.14  -0.1 ]
+ [119.79  -0.47   6.7    2.8    0.46   0.05]
+ [ 34.19   7.36  -3.08  -0.98  -0.01   0.48]
+ [ 32.62   3.76   0.52  -0.03   0.07   0.5 ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]]
+16:47:12 [  3.6 min] update 3: incumbent speed 12.8720 kt (new), candidates [12.838 12.872 12.857 12.868], on 75 % of the probability, radius 3.00, 24 s
+16:47:34 [  4.0 min] batch 3: 16 choices (1 HF), LF/HF 91/10, selection 27.0 s, 46.8 s
+16:48:30 [  4.9 min] update 4: incumbent speed 12.9018 kt (new), candidates [12.868 12.902 12.889 12.895], on 75 % of the probability, radius 3.00, 54 s
+16:48:30 [  4.9 min] loop done: 64 choices in 4 batches, LF/HF (91, 10), runs {1: 91, 2: 11, 3: 0}, code time {1: 47.19054229998801, 2: 109.51375169999301, 3: 0.0}
+16:49:40 [  6.1 min] validation done
+16:49:44 [  6.2 min] done

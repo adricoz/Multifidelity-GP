@@ -1,0 +1,48 @@
+--- level 1 against the production RS at 7 kt
+Fx    : RS = +1.1420 code +0.00327, R2 0.9962 (18 points) | at (0, 0, 0): RS -0.0112, code -0.0128
+Fy    : RS = +0.8690 code -0.01144, R2 1.0000 (18 points) | at (0, 0, 0): RS -0.2843, code -0.3140
+Fz    : RS = +0.8692 code +0.00889, R2 1.0000 (18 points) | at (0, 0, 0): RS +0.1585, code +0.1734
+Mx    : RS = +0.8917 code -0.03474, R2 1.0000 (18 points) | at (0, 0, 0): RS -0.5092, code -0.5342
+My    : RS = +0.8751 code +0.00219, R2 0.9985 (18 points) | at (0, 0, 0): RS +0.0669, code +0.0752
+Mz    : RS = +0.8350 code +0.02423, R2 0.9991 (18 points) | at (0, 0, 0): RS +0.0992, code +0.0891
+Cpmin : RS = +0.6209 code -0.28342, R2 0.2867 (18 points) | at (0, 0, 0): RS -0.6895, code -0.8568
+--- level 2 against the production RS at 7 kt
+Fx    : RS = +1.2932 code +0.00472, R2 0.9970 (18 points) | at (0, 0, 0): RS -0.0112, code -0.0123
+Fy    : RS = +0.9133 code -0.01043, R2 0.9998 (18 points) | at (0, 0, 0): RS -0.2843, code -0.2976
+Fz    : RS = +0.9219 code +0.00771, R2 0.9999 (18 points) | at (0, 0, 0): RS +0.1585, code +0.1635
+Mx    : RS = +0.9627 code -0.02589, R2 1.0000 (18 points) | at (0, 0, 0): RS -0.5092, code -0.5010
+My    : RS = +0.9576 code +0.00849, R2 0.9998 (18 points) | at (0, 0, 0): RS +0.0669, code +0.0610
+Mz    : RS = +0.8551 code +0.01536, R2 0.9962 (18 points) | at (0, 0, 0): RS +0.0992, code +0.0956
+Cpmin : RS = +0.0615 code -0.76076, R2 0.1931 (18 points) | at (0, 0, 0): RS -0.6895, code -2.0763
+--- level 1 against the production RS at 12 kt
+Fx    : RS = +1.1446 code +0.00341, R2 0.9964 (18 points) | at (0, 0, 0): RS -0.0110, code -0.0128
+Fy    : RS = +0.8704 code -0.00585, R2 1.0000 (18 points) | at (0, 0, 0): RS -0.2793, code -0.3140
+Fz    : RS = +0.8933 code +0.00364, R2 0.9999 (18 points) | at (0, 0, 0): RS +0.1579, code +0.1734
+Mx    : RS = +0.9019 code -0.02086, R2 0.9999 (18 points) | at (0, 0, 0): RS -0.5008, code -0.5342
+My    : RS = +0.8924 code +0.00090, R2 0.9989 (18 points) | at (0, 0, 0): RS +0.0668, code +0.0752
+Mz    : RS = +0.8277 code +0.02399, R2 0.9992 (18 points) | at (0, 0, 0): RS +0.0983, code +0.0891
+Cpmin : RS = +0.5682 code -0.34737, R2 0.1980 (18 points) | at (0, 0, 0): RS -0.6849, code -0.8568
+--- level 2 against the production RS at 12 kt
+Fx    : RS = +1.2962 code +0.00487, R2 0.9972 (18 points) | at (0, 0, 0): RS -0.0110, code -0.0123
+Fy    : RS = +0.9148 code -0.00485, R2 0.9998 (18 points) | at (0, 0, 0): RS -0.2793, code -0.2976
+Fz    : RS = +0.9475 code +0.00244, R2 0.9997 (18 points) | at (0, 0, 0): RS +0.1579, code +0.1635
+Mx    : RS = +0.9738 code -0.01191, R2 0.9999 (18 points) | at (0, 0, 0): RS -0.5008, code -0.5010
+My    : RS = +0.9762 code +0.00735, R2 0.9997 (18 points) | at (0, 0, 0): RS +0.0668, code +0.0610
+Mz    : RS = +0.8475 code +0.01520, R2 0.9961 (18 points) | at (0, 0, 0): RS +0.0983, code +0.0956
+Cpmin : RS = +0.0817 code -0.72520, R2 0.2812 (18 points) | at (0, 0, 0): RS -0.6849, code -2.0763
+--- level 1 against the production RS at 20 kt
+Fx    : RS = +1.1526 code +0.00382, R2 0.9966 (18 points) | at (0, 0, 0): RS -0.0106, code -0.0128
+Fy    : RS = +0.8746 code +0.00969, R2 0.9999 (18 points) | at (0, 0, 0): RS -0.2657, code -0.3140
+Fz    : RS = +0.9608 code -0.01184, R2 0.9990 (18 points) | at (0, 0, 0): RS +0.1551, code +0.1734
+Mx    : RS = +0.9309 code +0.01856, R2 0.9998 (18 points) | at (0, 0, 0): RS -0.4770, code -0.5342
+My    : RS = +0.9393 code -0.00278, R2 0.9993 (18 points) | at (0, 0, 0): RS +0.0664, code +0.0752
+Mz    : RS = +0.8074 code +0.02335, R2 0.9992 (18 points) | at (0, 0, 0): RS +0.0958, code +0.0891
+Cpmin : RS = +0.4106 code -0.54160, R2 0.0712 (18 points) | at (0, 0, 0): RS -0.6862, code -0.8568
+--- level 2 against the production RS at 20 kt
+Fx    : RS = +1.3053 code +0.00529, R2 0.9976 (18 points) | at (0, 0, 0): RS -0.0106, code -0.0123
+Fy    : RS = +0.9191 code +0.01067, R2 0.9995 (18 points) | at (0, 0, 0): RS -0.2657, code -0.2976
+Fz    : RS = +1.0188 code -0.01309, R2 0.9983 (18 points) | at (0, 0, 0): RS +0.1551, code +0.1635
+Mx    : RS = +1.0051 code +0.02780, R2 0.9998 (18 points) | at (0, 0, 0): RS -0.4770, code -0.5010
+My    : RS = +1.0267 code +0.00406, R2 0.9986 (18 points) | at (0, 0, 0): RS +0.0664, code +0.0610
+Mz    : RS = +0.8266 code +0.01480, R2 0.9955 (18 points) | at (0, 0, 0): RS +0.0958, code +0.0956
+Cpmin : RS = +0.1263 code -0.65870, R2 0.4627 (18 points) | at (0, 0, 0): RS -0.6862, code -2.0763

@@ -1,0 +1,29 @@
+{
+  "key": "0910de5297b04f4a4659ba8dcba83fe6d4a86fea5ba5f5ec61f8a3d9baf7feb6",
+  "n_filled": 0,
+  "npane_used": 250,
+  "section_name": "ke18655c3477a",
+  "section_path": "C:\\Users\\SIM\\AppData\\Local\\Temp\\vppc_la2ppi2_\\ke18655c3477a.xf",
+  "section_sha256": "2c9f34fbd7e79a751c82eb8b1bcb2c4f2037a9c546cd65993f99570ffbe6d44f",
+  "spec": {
+    "alpha": [
+      -6.0,
+      12.0,
+      0.5
+    ],
+    "mach": 0.0,
+    "ncrit": 1.0,
+    "niter": 300,
+    "npane": 250,
+    "ppar_r": 0.02,
+    "ppar_t": 0.5,
+    "re": 5000000.0,
+    "xtr": [
+      0.1,
+      0.1
+    ]
+  },
+  "spec_json": "{\"alpha\":[-6.0,12.0,0.5],\"mach\":0.0,\"ncrit\":1.0,\"niter\":300,\"npane\":250,\"ppar_r\":0.02,\"ppar_t\":0.5,\"re\":5000000.0,\"xtr\":[0.1,0.1]}",
+  "xfoil_exe_sha256": "c17342f84ae260c2b11a74cd0e2fb8189a5f8954c6bb7a8467a0f27055c7faea",
+  "xfoil_script_version": "1"
+}

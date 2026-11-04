@@ -1,0 +1,24 @@
+run 2026-10-27_1727_smoke_3levels: 28 steps in 4.6 min
+code runs: level 1 62 (33 s), level 2 12 (157 s), level 3 8 (40 s); final design per level (58, 8, 4)
+speed of the validated sections (final surrogate corrected against HF, weighted mean over the 2 conditions solved for all, 100 % of the probability): best 15.3943 kt, current_section 15.2939 kt
+speeds of the incumbent: 45/12: 12.130, 45/16: 18.665
+validation best: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0074 kt, max 0.0101 kt; predicted sigma RMS 0.0387 kt; |z| <= 2 on 100 %
+   against the lf code: speed error mean +0.0197 kt, RMS 0.0384 kt
+   against the l2 code: speed error mean +0.0232 kt, RMS 0.0407 kt
+   Fx     |surrogate - HF| / |HF| median 0.62 %
+   Fy     |surrogate - HF| / |HF| median 0.71 %
+   Fz     |surrogate - HF| / |HF| median 0.91 %
+   Mx     |surrogate - HF| / |HF| median 0.69 %
+   My     |surrogate - HF| / |HF| median 0.82 %
+   Mz     |surrogate - HF| / |HF| median 0.57 %
+   Cpmin  |surrogate - HF| / |HF| median 180.10 %
+validation current_section: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0131 kt, max 0.0143 kt; predicted sigma RMS 0.0242 kt; |z| <= 2 on 100 %
+   against the lf code: speed error mean +0.0121 kt, RMS 0.0361 kt
+   against the l2 code: speed error mean +0.0160 kt, RMS 0.0372 kt
+   Fx     |surrogate - HF| / |HF| median 0.99 %
+   Fy     |surrogate - HF| / |HF| median 0.18 %
+   Fz     |surrogate - HF| / |HF| median 0.25 %
+   Mx     |surrogate - HF| / |HF| median 0.22 %
+   My     |surrogate - HF| / |HF| median 0.40 %
+   Mz     |surrogate - HF| / |HF| median 0.38 %
+   Cpmin  |surrogate - HF| / |HF| median 93.41 %

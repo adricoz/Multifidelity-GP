@@ -1,0 +1,18 @@
+=== Region test (CL_LF in (0.4, 0.6)), total cost 560, 20 seeds ===
+S1 séquentiel ALC orienté région             region RMSE 0.1486 [0.1153 ; 0.1819] | cov95 0.94 | NLPD 1.58 | global RMSE 0.1800 | LF/HF 160/40 | in region 93 %
+S2 séquentiel ALC global                     region RMSE 0.1992 [0.1658 ; 0.2983] | cov95 0.98 | NLPD 2.08 | global RMSE 0.1696 | LF/HF 235/32 | in region 17 %
+B1 LHS imbriqué, tout le domaine (160/40)    region RMSE 0.2024 [0.1544 ; 0.2492] | cov95 0.98 | NLPD 2.10 | global RMSE 0.1597 | LF/HF 160/40 | in region 19 %
+B2 LHS imbriqué, tout le domaine (240/32)    region RMSE 0.2254 [0.1799 ; 0.3200] | cov95 0.99 | NLPD 2.27 | global RMSE 0.1781 | LF/HF 240/32 | in region 20 %
+B3 plan dans la région (oracle, 160/40)      region RMSE 0.1336 [0.1195 ; 0.1629] | cov95 0.94 | NLPD 1.60 | global RMSE 0.7363 | LF/HF 160/40 | in region 100 %
+
+S1 against B1: median error +27 % lower | wins 17 / 20 | one-sided paired Wilcoxon p = 1.3e-05
+S1 against B2: median error +34 % lower | wins 19 / 20 | one-sided paired Wilcoxon p = 2.9e-06
+S1 against B3: median error -11 % lower | wins 10 / 20 | one-sided paired Wilcoxon p = 0.88
+S1 against S2: median error +25 % lower | wins 19 / 20 | one-sided paired Wilcoxon p = 1.9e-06
+
+Success criterion fixed before the computation:
+  [OK] median error at least 20 % lower than B1
+  [OK] wins at least 80 % of the seeds (17 / 20)
+  [OK] Wilcoxon p < 0.05 (p = 1.3e-05)
+  [OK] coverage on the region at least 0.90 (0.94)
+  => SUCCESS

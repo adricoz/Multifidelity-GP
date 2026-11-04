@@ -1,0 +1,42 @@
+16:36:46 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-10-27_1636_smoke_bdfoil_v1
+16:36:46 [  0.0 min] family: box centred on the current section, scale 0.5, Ixx >= 6.7174e-05
+16:37:10 [  0.4 min] PCA: rank 16, k = 10 modes carry 99.86 % of the geometric variance
+16:37:10 [  0.4 min] start of the search: current_section
+16:38:45 [  2.0 min] start design: LF 20 ok / 30, HF 8 ok / 8
+16:38:57 [  2.2 min] batch 0: hyperparameters refitted on 28 points
+16:39:25 [  2.7 min] speed sensitivities dV/dC (rows = conditions): [[ 80.23  -1.43   1.76  -0.08   0.19  -0.08]
+ [109.05  -2.28   5.42   2.55   0.53  -0.01]]
+16:39:32 [  2.8 min] update 0: incumbent speed 15.2384 kt (new, gain 0.0257 kt), candidates [15.213 15.206 15.194 15.238], on 100 % of the probability, radius 1.50, region 0, 36 s
+16:39:34 [  2.8 min] batch 0: level 1 failed (SolverFailure: bdfoil_v1 npllt: 31 strips or panels outside the monotone branch )
+16:39:34 [  2.8 min] batch 0: 4 choices (0 HF), LF/HF 23/8, selection 37.2 s (update 36 s), 37.7 s
+16:39:39 [  2.9 min] update 1: incumbent speed 15.2931 kt (kept, gain 0.0000 kt), candidates [15.293 15.192 15.228 15.209], on 100 % of the probability, radius 1.05, region 0, 5 s
+16:39:41 [  2.9 min] batch 1: level 1 failed (SolverFailure: bdfoil_v1 npllt: 32 strips or panels outside the monotone branch )
+16:39:41 [  2.9 min] batch 1: 4 choices (0 HF), LF/HF 26/8, selection 6.7 s (update 5 s), 7.1 s
+16:39:46 [  3.0 min] update 2: incumbent speed 15.2926 kt (kept, gain 0.0000 kt), candidates [15.293 15.227 15.26  15.221], on 100 % of the probability, radius 0.73, region 0, 6 s
+16:39:49 [  3.0 min] batch 2: 4 choices (0 HF), LF/HF 30/8, selection 7.1 s (update 6 s), 7.6 s
+16:39:50 [  3.1 min] batch 3: hyperparameters refitted on 38 points
+16:39:57 [  3.2 min] speed sensitivities: 2 values more than 30 % from the median of the last 3 evaluations, median kept
+16:39:57 [  3.2 min] speed sensitivities dV/dC (rows = conditions): [[ 81.66  -1.44   1.83  -0.08   0.18  -0.08]
+ [108.91  -0.42   7.03   2.57   0.52   0.03]]
+16:40:03 [  3.3 min] update 3: incumbent speed 15.2953 kt (kept, gain 0.0000 kt), candidates [15.295 15.269 15.294 15.214], on 100 % of the probability, radius 0.51, region 0, 13 s
+16:40:05 [  3.3 min] batch 3: 4 choices (0 HF), LF/HF 34/8, selection 15.8 s (update 13 s), 16.2 s
+16:40:10 [  3.4 min] update 4: incumbent speed 15.3241 kt (new, gain 0.0288 kt), candidates [15.295 15.324 15.249 15.247], on 100 % of the probability, radius 0.77, region 0, 6 s
+16:40:12 [  3.4 min] batch 4: level 1 failed (SolverFailure: bdfoil_v1 npllt: 12 strips or panels outside the monotone branch )
+16:40:12 [  3.4 min] batch 4: 4 choices (0 HF), LF/HF 37/8, selection 7.2 s (update 6 s), 7.6 s
+16:40:20 [  3.6 min] update 5: incumbent speed 15.3101 kt (kept, gain 0.0000 kt), candidates [15.31  15.297 15.262 15.149], on 100 % of the probability, radius 0.54, region 0, 8 s
+16:40:22 [  3.6 min] batch 5: level 1 failed (SolverFailure: bdfoil_v1 npllt: 202 strips or panels outside the monotone branch)
+16:40:22 [  3.6 min] batch 5: level 1 failed (SolverFailure: bdfoil_v1 npllt: 90 strips or panels outside the monotone branch )
+16:40:22 [  3.6 min] batch 5: 4 choices (0 HF), LF/HF 39/8, selection 9.1 s (update 8 s), 9.5 s
+16:40:28 [  3.7 min] speed sensitivities: 2 values more than 30 % from the median of the last 3 evaluations, median kept
+16:40:28 [  3.7 min] speed sensitivities dV/dC (rows = conditions): [[ 82.9   -1.43   1.91  -0.08   0.17  -0.08]
+ [108.77   1.44   8.63   2.58   0.52   0.08]]
+16:40:35 [  3.8 min] update 6: incumbent speed 15.3100 kt (kept, gain 0.0000 kt), candidates [15.31  15.216 15.305 15.275], on 100 % of the probability, radius 0.38, region 0, 13 s
+16:40:37 [  3.8 min] batch 6: level 1 failed (SolverFailure: bdfoil_v1 npllt: 82 strips or panels outside the monotone branch )
+16:40:37 [  3.8 min] batch 6: 4 choices (0 HF), LF/HF 42/8, selection 14.3 s (update 13 s), 15.0 s
+16:40:38 [  3.9 min] batch 7: hyperparameters refitted on 50 points
+16:40:44 [  4.0 min] update 7: incumbent speed 15.3343 kt (new, gain 0.0243 kt), candidates [15.31  15.334 15.324 15.325], on 100 % of the probability, radius 0.57, region 0, 6 s
+16:40:47 [  4.0 min] batch 7: 4 choices (0 HF), LF/HF 46/8, selection 9.1 s (update 6 s), 9.6 s
+16:40:54 [  4.1 min] update 8: incumbent speed 15.3546 kt (new, gain 0.0179 kt), candidates [15.337 15.355 15.339 15.339], on 100 % of the probability, radius 0.85, region 0, 6 s
+16:40:54 [  4.1 min] loop done: 32 choices in 8 batches, LF/HF (46, 8), runs {1: 62, 2: 8, 3: 0}, code time {1: 31.376140899998518, 2: 138.29652639999995, 3: 0.0}
+16:41:33 [  4.8 min] validation done
+16:41:38 [  4.9 min] done

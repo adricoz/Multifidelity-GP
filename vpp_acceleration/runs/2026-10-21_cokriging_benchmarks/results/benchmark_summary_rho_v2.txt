@@ -1,0 +1,13 @@
+=== hartmann (total cost 280, 10 seeds) ===
+séquentiel, variance ajustée     RMSE rel 0.7956 [0.6969 ; 0.8612] | Q2 0.366 | cov95 0.94 | NLPD 0.33 | LF/HF 145/14 | rho 4.60 | ask 0.8 s
+séquentiel, variance seule       RMSE rel 0.9381 [0.8695 ; 1.0138] | Q2 0.120 | cov95 0.80 | NLPD 3.85 | LF/HF 105/18 | rho 3.25 | ask 0.4 s
+LHS imbriqué (coût égal)         RMSE rel 0.8245 [0.7810 ; 0.8921] | Q2 0.320 | cov95 0.89 | NLPD 0.59 | LF/HF 80/20 | rho 4.87 | ask nan s
+  séquentiel, variance ajustée better than the LHS on 7 / 10 seeds
+  séquentiel, variance seule better than the LHS on 3 / 10 seeds
+
+=== airfoil (total cost 280, 10 seeds) ===
+séquentiel, variance ajustée     RMSE rel 0.2745 [0.2049 ; 0.2996] | Q2 0.925 | cov95 0.96 | NLPD 3.61 | LF/HF 180/10 | rho 0.85 | ask 0.7 s
+séquentiel, variance seule       RMSE rel 0.2508 [0.1642 ; 0.3135] | Q2 0.937 | cov95 0.92 | NLPD 3.26 | LF/HF 170/11 | rho 0.85 | ask 0.5 s
+LHS imbriqué (coût égal)         RMSE rel 0.2093 [0.1730 ; 0.2564] | Q2 0.956 | cov95 0.94 | NLPD 2.80 | LF/HF 80/20 | rho 0.78 | ask nan s
+  séquentiel, variance ajustée better than the LHS on 1 / 10 seeds
+  séquentiel, variance seule better than the LHS on 2 / 10 seeds

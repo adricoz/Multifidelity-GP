@@ -1,0 +1,6 @@
+﻿2026-10-23 17:02:00 start, deadline 10/25/2026 16:02:00
+2026-10-23 17:02:00 long run: python scripts\run_real_vpp.py --name real_search_profile_local --box current --box-scale 0.5 --hf npllt_xfoil --hf-cost 2 --fsi --batch 16 --workers 28 --vpp-workers 30 --n-low 256 --n-high 64 --time-limit-min 480 --search-profile profiles\guess_bimodal.json --local-fraction 0.5 --radius 1.0 --max-refit-size 2500 --compare runs\2026-10-22_1519_real_npllt_xfoil_fsi\results\best_section.json --profile profiles\guess_bimodal.json
+2026-10-24 01:22:00 long run finished, exit code 0
+2026-10-24 01:22:01 CFD mesh study, time budget 38 h
+2026-10-24 12:34:46 CFD finished, exit code 0
+2026-10-24 12:34:46 end

@@ -1,0 +1,10 @@
+10:03:32 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-10-22_1003_step0_calibration
+10:03:34 [  0.0 min] level 1 (0.0, 0.0, -3.0): FAILED SolverFailure: NPLLT did not converge (max residual 1.71e+00, 200 iterations)
+10:03:34 [  0.0 min] level 1 (0.0, 1.0, -3.0): FAILED SolverFailure: NPLLT did not converge (max residual 1.45e+00, 200 iterations)
+10:03:35 [  0.1 min] level 1 (4.0, 0.0, -3.0): FAILED SolverFailure: NPLLT did not converge (max residual 1.85e+00, 200 iterations)
+10:03:36 [  0.1 min] level 1 (4.0, 1.0, -3.0): FAILED SolverFailure: NPLLT did not converge (max residual 1.43e+00, 200 iterations)
+10:03:37 [  0.1 min] level 1 (8.0, 0.0, -3.0): FAILED SolverFailure: NPLLT did not converge (max residual 1.42e+00, 200 iterations)
+10:03:37 [  0.1 min] level 1 (8.0, 1.0, -3.0): FAILED SolverFailure: NPLLT did not converge (max residual 1.51e+00, 200 iterations)
+10:03:38 [  0.1 min] level 1: 18 runs, 12 ok
+10:05:08 [  1.6 min] level 2: 18 runs, 18 ok
+10:05:09 [  1.6 min] done

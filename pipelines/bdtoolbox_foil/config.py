@@ -57,7 +57,7 @@ OPTIMIZATION_DEFAULTS = {"iterations": 20, "seed": 0, "estimate_rho": True,
 # [V2] values of optimization.kernel -> kernel class name in mfego (src.kernels)
 KERNEL_NAMES = {"squared_exponential": "SquaredExponentialKernel", "matern52": "Matern52Kernel"}
 PRIOR_GROUP_NAMES = ("lengthscale", "signal_variance", "bias_variance", "noise", "rho")
-PATH_KEYS = ("bdfoil_root", "bdtoolbox_root", "soft_dir", "polar_cache")
+PATH_KEYS = ("bdfoil_v1_root", "bdtoolbox_root", "soft_dir", "polar_cache")
 CONSTRAINT_KEYS = ("min_thickness", "max_thickness")
 SECTION_CONSTRAINT_KEYS = ("cl2d_target", "alpha_deg", "reference_model", "delta_bounds",
                            "tolerance", "n_grid")

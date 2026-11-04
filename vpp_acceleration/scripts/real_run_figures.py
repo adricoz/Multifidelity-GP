@@ -1,0 +1,350 @@
+"""
+Figures of a real run folder (runs/<date>_<name>/): written to its figures/ folder.
+  1. convergence.html: predicted mean speed of the incumbent and of the candidates at each update,
+     sizes of the design, levels chosen along the steps;
+  2. points.html: points added by the loop in the attitude planes, with the VPP states;
+  3. sections.html: the best section against the start section, and its scores; a button shows
+     the other local optima of the regions (results/optima.json). The best section and the
+     other local optima are also written as Selig .dat files in results/sections/;
+  4. validation.html: surrogate (mean +- 2 sigma) against the HF code (AVL x XFOIL or NPLLT x
+     XFOIL), the LF code and AVL when it is a validation level, at the VPP states;
+  5. speeds.html: speed per condition of every validated section, corrected to first order
+     against the HF code (and AVL);
+  6. index.html: one page that links every figure of the run (write_index), with its summary;
+     runs/index.html links the index of every run (write_runs_index).
+Run: ..\\.venv-mds\\Scripts\\python scripts\\real_run_figures.py runs\\<folder>
+     ..\\.venv-mds\\Scripts\\python scripts\\real_run_figures.py --index-all   (indexes only)
+"""
+import html
+import json
+import re
+import sys
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+VPP_DIR = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(VPP_DIR.parent / "benchmarks"))
+sys.path.insert(0, str(VPP_DIR))
+
+
+CODE_NAMES = {"nf_llt": "NPLLT × NeuralFoil", "xfoil_llt": "NPLLT × XFOIL", "avl": "AVL × XFOIL"}
+
+
+def code_labels(config: dict) -> dict:
+    """Label of every code of the validation table of a run: "hf" (the reference level), "lf",
+    "l<l>" (the levels in between), and the validation-only codes by name. The runs before
+    2026-10-27 have 2 levels and the key "hf" ("avl" or "npllt_xfoil") instead of the list
+    "levels"."""
+    levels = config.get("levels")
+    if not isinstance(levels, list):
+        levels = ["nf_llt", "xfoil_llt" if config.get("hf") == "npllt_xfoil" else "avl"]
+    labels = {"hf": CODE_NAMES[levels[-1]], "lf": CODE_NAMES[levels[0]]}
+    labels.update({f"l{l}": CODE_NAMES[name] for l, name in enumerate(levels[1:-1], start=2)})
+    labels.update({name: label for name, label in CODE_NAMES.items() if name not in levels})
+    return labels
+
+
+def other_optima(root) -> list:
+    """The local optima of the regions other than the best one (results/optima.json, runs since
+    2026-10-27), each {"region", "scores", "final_speed", ...}; [] when there is none."""
+    path = Path(root) / "results" / "optima.json"
+    if not path.exists():
+        return []
+    return [o for o in json.loads(path.read_text(encoding="utf-8")) if not o["best"]]
+
+
+def write_selig(path, weights, te_thickness: float, name: str, n_side: int = 161) -> None:
+    """Coordinates of a section in the Selig format of XFOIL: the name, then x y from the trailing
+    edge along the upper surface to the leading edge and back along the lower surface (cosine
+    spacing, n_side points per side)."""
+    from src.section_pca import section_coordinates  # noqa: PLC0415
+    x = 0.5 * (1.0 - np.cos(np.linspace(0.0, np.pi, n_side)))
+    y = section_coordinates(weights, x, te_thickness)[0]
+    xs = np.concatenate([x[::-1], x[1:]])
+    ys = np.concatenate([y[:n_side][::-1], y[n_side:][1:]])
+    Path(path).write_text(name + "\n" + "\n".join(f"{a:.6f} {b:.6f}" for a, b in zip(xs, ys))
+                          + "\n", encoding="utf-8")
+
+
+def write_section_files(root, pca, best: dict, optima: list) -> None:
+    """results/sections/: the best section and the other local optima as Selig .dat files."""
+    folder = Path(root) / "results" / "sections"
+    folder.mkdir(parents=True, exist_ok=True)
+    weights = np.array(best["kulfan_upper"] + best["kulfan_lower"])
+    write_selig(folder / "best_section.dat", weights, pca.te_thickness,
+                f"{Path(root).name} best section")
+    for o in optima:
+        write_selig(folder / f"optimum_region_{o['region']}.dat",
+                    pca.decode(np.array(o["scores"])[None])[0], pca.te_thickness,
+                    f"{Path(root).name} local optimum region {o['region']}")
+
+
+def make_figures(root) -> None:
+    import plotly.graph_objects as go  # noqa: PLC0415
+    from figure_style import SERIES, save, style  # noqa: PLC0415
+    from plotly.subplots import make_subplots  # noqa: PLC0415
+    from src.section_pca import SectionPCA, section_coordinates  # noqa: PLC0415
+
+    root = Path(root)
+    figures = root / "figures"
+    updates = json.loads((root / "results" / "updates.json").read_text(encoding="utf-8"))
+    history = pd.read_csv(root / "results" / "history.csv")
+    validation = pd.read_csv(root / "results" / "validation.csv")
+    config = json.loads((root / "config.json").read_text(encoding="utf-8"))
+    k = int(config["k"])
+
+    # 1. convergence
+    fig = make_subplots(rows=1, cols=2, horizontal_spacing=0.1, subplot_titles=(
+        "Vitesse moyenne prédite (VPP avec le surrogate)", "Taille du plan et niveaux choisis"))
+    # one curve per region of the search (restarts, 2026-10-27; a single region before)
+    regions = sorted({u.get("region", 0) for u in updates})
+    for r in regions:
+        part = [u for u in updates if u.get("region", 0) == r]
+        fig.add_trace(go.Scatter(x=[u["elapsed_min"] for u in part],
+                                 y=[u["incumbent_speed"] for u in part], mode="lines+markers",
+                                 name="meilleure section du moment" if len(regions) == 1
+                                 else f"meilleure section, région {r}",
+                                 line={"color": SERIES[0] if r == 0
+                                       else SERIES[(3 + r) % len(SERIES)]}), row=1, col=1)
+    for i, u in enumerate(updates):
+        fig.add_trace(go.Scatter(x=[u["elapsed_min"]] * (len(u["candidate_speeds"]) - 1),
+                                 y=u["candidate_speeds"][1:], mode="markers",
+                                 marker={"color": SERIES[1], "size": 6, "symbol": "circle-open"},
+                                 name="candidats du tri", showlegend=(i == 0)), row=1, col=1)
+    # design size of every level (n_l1 ... n_lL since 2026-10-27; n_lf / n_hf before)
+    size_columns = sorted((c for c in history.columns if re.fullmatch(r"n_l\d+", c)),
+                          key=lambda c: int(c[3:])) or ["n_lf", "n_hf"]
+    for i, column in enumerate(size_columns):
+        label = {"n_lf": "points BF", "n_hf": "points HF"}.get(column, f"points niveau {column[3:]}")
+        fig.add_trace(go.Scatter(x=history["elapsed_min"], y=history[column], name=label,
+                                 line={"color": SERIES[(2 + i) % len(SERIES)]}), row=1, col=2)
+    fig.update_xaxes(title_text="temps du run [min]")
+    fig.update_yaxes(title_text="vitesse moyenne [nd]", row=1, col=1)
+    fig.update_yaxes(title_text="nombre de points", row=1, col=2)
+    style(fig, "Convergence du run", f"{root.name} ; {len(updates)} mises à jour de l'optimiseur",
+          height=500)
+    save(fig, figures, "convergence")
+
+    # 2. points added
+    xs = np.array([json.loads(x) if isinstance(x, str) else x for x in history["x"]])
+    fig = make_subplots(rows=1, cols=2, subplot_titles=("Cant / Yaw", "Cant / Rake"))
+    for col, (j, name) in enumerate(((k + 2, "Yaw_Eff"), (k + 1, "Rake_Eff")), start=1):
+        for level, symbol, color in ((1, "circle-open", SERIES[0]), (2, "diamond", SERIES[3])):
+            sel = history["level"] == level
+            fig.add_trace(go.Scatter(x=xs[sel, k], y=xs[sel, j], mode="markers",
+                                     name=f"point ajouté, niveau {level}", showlegend=(col == 1),
+                                     marker={"symbol": symbol, "color": color, "size": 7}),
+                          row=1, col=col)
+        fig.add_trace(go.Scatter(x=validation["att0"], y=validation[f"att{j - k}"], mode="markers",
+                                 name="états VPP finaux", showlegend=(col == 1),
+                                 marker={"symbol": "x", "color": "black", "size": 9}), row=1, col=col)
+        fig.update_xaxes(title_text="Cant_Eff [°]", row=1, col=col)
+        fig.update_yaxes(title_text=f"{name} [°]", row=1, col=col)
+    style(fig, "Où le raffinement a placé ses points", root.name, height=500)
+    save(fig, figures, "points")
+
+    # 3. sections: the best one, the start one and, behind a button, the other local optima
+    pca = SectionPCA.load(root / "data" / "pca.json")
+    best = json.loads((root / "results" / "best_section.json").read_text(encoding="utf-8"))
+    optima = other_optima(root)
+    x = pca.stations
+    fig = make_subplots(rows=1, cols=2, column_widths=[0.65, 0.35],
+                        subplot_titles=("Profils", "Scores PCA"))
+    start = np.array(best.get("start_scores", np.zeros(k)))
+    start_label = {"current_section": "profil actuel (départ)",
+                   "closest_to_current": "profil admissible le plus proche de l'actuel (départ)"
+                   }.get(best.get("start"), "section moyenne (départ)")
+    shown = [(start_label, start, SERIES[1], True, False),
+             ("meilleure section", np.array(best["scores"]), SERIES[0], True, True)]
+    shown += [(f"optimum local, région {o['region']} ({o['final_speed']:.3f} nd)",
+               np.array(o["scores"]), SERIES[(3 + i) % len(SERIES)], False, True)
+              for i, o in enumerate(optima)]
+    is_optimum = []
+    for name, scores, color, visible, with_bars in shown:
+        y = section_coordinates(pca.decode(scores[None]), x, pca.te_thickness)[0]
+        n = len(x)
+        fig.add_trace(go.Scatter(x=np.concatenate([x, x[::-1]]),
+                                 y=np.concatenate([y[:n], y[n:][::-1]]), mode="lines",
+                                 name=name, line={"color": color}, legendgroup=name,
+                                 visible=visible), row=1, col=1)
+        is_optimum.append(not visible)
+        if with_bars:
+            fig.add_trace(go.Bar(x=[f"z{j + 1}" for j in range(k)], y=scores, name=name,
+                                 marker_color=color, legendgroup=name, showlegend=False,
+                                 visible=visible), row=1, col=2)
+            is_optimum.append(not visible)
+    fig.update_yaxes(scaleanchor="x", scaleratio=1, row=1, col=1)
+    style(fig, "La meilleure section trouvée",
+          f"vitesse moyenne prédite {best['mean_speed']:.3f} nd", height=500)
+    if optima:
+        fig.update_layout(barmode="group", updatemenus=[{
+            "type": "buttons", "direction": "right", "x": 0.0, "xanchor": "left", "y": 1.18,
+            "buttons": [
+                {"label": "Meilleure section seule", "method": "restyle",
+                 "args": [{"visible": [not o for o in is_optimum]}]},
+                {"label": f"Avec les {len(optima)} autres optima locaux", "method": "restyle",
+                 "args": [{"visible": [True] * len(is_optimum)}]}]}])
+    save(fig, figures, "sections")
+    write_section_files(root, pca, best, optima)
+
+    # 4. validation
+    labels = code_labels(config)
+    hf_name = labels["hf"]
+    # the other codes run at the states: the levels under the reference (lf, l2, ...) and the
+    # validation-only codes (e.g. avl)
+    others = [c[len("speed_error_"):-len("_kt")] for c in validation.columns
+              if c.startswith("speed_error_") and c != "speed_error_kt"]
+    extra = [k for k in others if k != "lf" and not re.fullmatch(r"l\d+", k)]
+    names = ["Fx", "Fy", "Fz", "Mx", "My", "Mz", "Cpmin"]
+    symbols = ("circle", "square", "diamond", "triangle-up")
+    fig = make_subplots(rows=2, cols=4, subplot_titles=names + ["Erreur de vitesse (1er ordre)"])
+    for idx, name in enumerate(names):
+        row, col = idx // 4 + 1, idx % 4 + 1
+        for section, symbol in zip(validation["section"].unique(), symbols):
+            g = validation[validation["section"] == section]
+            fig.add_trace(go.Scatter(
+                x=g[f"{name}_hf"], y=g[f"{name}_sur"], mode="markers",
+                error_y={"type": "data", "array": 2 * g[f"{name}_sigma"]},
+                marker={"symbol": symbol, "color": SERIES[0]}, name=f"surrogate, {section}",
+                showlegend=(idx == 0)), row=row, col=col)
+            for j, key in enumerate(others):
+                fig.add_trace(go.Scatter(x=g[f"{name}_hf"], y=g[f"{name}_{key}"], mode="markers",
+                                         marker={"symbol": symbol, "size": 6,
+                                                 "color": SERIES[(1 + j) % len(SERIES)]},
+                                         name=f"{labels.get(key, key)}, {section}",
+                                         showlegend=(idx == 0)), row=row, col=col)
+        columns = [f"{name}_hf", f"{name}_sur"] + [f"{name}_{k}" for k in extra]
+        lo = float(np.nanmin(validation[columns].to_numpy()))
+        hi = float(np.nanmax(validation[columns].to_numpy()))
+        fig.add_trace(go.Scatter(x=[lo, hi], y=[lo, hi], mode="lines", showlegend=False,
+                                 line={"color": "grey", "dash": "dot"}), row=row, col=col)
+    fig.add_trace(go.Bar(x=validation["section"] + " " + validation["condition"],
+                         y=validation["speed_error_kt"],
+                         error_y={"type": "data", "array": 2 * validation["speed_sigma_kt"]},
+                         marker_color=SERIES[0], showlegend=False), row=2, col=4)
+    style(fig, f"Validation : surrogate contre {hf_name} aux états VPP",
+          f"abscisse : {hf_name} ; barres : ± 2σ du surrogate", height=760, legend_rows=2)
+    save(fig, figures, "validation")
+
+    # 5. speeds of the validated sections, corrected to first order against the codes:
+    #    V_code = V_surrogate - sum_k dV/dC_k (C_k surrogate - C_k code)
+    fig = make_subplots(rows=1, cols=1 + len(extra), subplot_titles=(
+        [f"Vitesse corrigée {hf_name}"] + [f"Vitesse corrigée {labels.get(k, k)}" for k in extra]))
+    corrections = [("speed_error_kt", 1)] + [(f"speed_error_{k}_kt", 2 + i)
+                                             for i, k in enumerate(extra)]
+    for i, section in enumerate(validation["section"].unique()):
+        g = validation[validation["section"] == section]
+        for column, col in corrections:
+            fig.add_trace(go.Bar(x=g["condition"], y=g["speed_kt"] - g[column],
+                                 name=section, marker_color=SERIES[i % len(SERIES)],
+                                 showlegend=(col == 1)), row=1, col=col)
+    fig.update_yaxes(title_text="vitesse [nd]")
+    lows = [float((validation["speed_kt"] - validation[c]).min()) for c, _ in corrections]
+    fig.update_yaxes(range=[min(lows) - 1.0, None])
+    style(fig, "Vitesse du bateau par condition, sections validées",
+          "VPP avec le surrogate final, corrigée au 1er ordre de l'écart mesuré aux états",
+          height=480)
+    save(fig, figures, "speeds")
+    write_index(root)
+    print(f"figures written to {figures}")
+
+
+# what each figure shows (index pages); an unknown figure is listed with its file name
+FIGURE_NOTES = {
+    "convergence": ("Convergence", "vitesse de la titulaire et des concurrentes à chaque mise à "
+                    "jour, taille du plan BF / HF"),
+    "points": ("Points ajoutés", "où le raffinement a placé ses calculs (plans d'attitude), avec "
+               "les états VPP finaux"),
+    "sections": ("Sections", "la meilleure section contre la section de départ, et ses scores PCA ; "
+                 "un bouton montre les autres optima locaux (coordonnées dans results/sections/)"),
+    "validation": ("Validation", "surrogate contre les codes (HF, BF, AVL) aux états VPP"),
+    "speeds": ("Vitesses par condition", "sections validées, vitesse corrigée au premier ordre de "
+               "l'écart aux codes"),
+    "calibration": ("Recalage", "codes contre la RS de production (étape 0)"),
+    "comparison": ("Comparaison avec un run de référence", "durée des lots selon la taille du "
+                   "plan, gain cumulé de la titulaire par région (scripts/compare_runs.py)"),
+    "posterior": ("Tirages a posteriori", "vitesse des sections dans chaque fonction GP tirée, "
+                  "écart best − autres (scripts/robustness_figures.py)"),
+    "tolerance": ("Tolérances de fabrication", "écart de vitesse des sections perturbées contre "
+                  "leur souplesse, défauts appliqués (scripts/robustness_figures.py)"),
+}
+PAGE_STYLE = """
+:root { --bg: #ffffff; --fg: #1d1d1f; --muted: #6e6e73; --card: #f5f5f7; --link: #0b5cad; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #161618; --fg: #f2f2f2; --muted: #a1a1a6; --card: #232326; --link: #6cb4ff; } }
+body { background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif;
+       max-width: 980px; margin: 0 auto; padding: 24px 16px; }
+h1 { font-size: 22px; margin: 0 0 4px; } .sub { color: var(--muted); margin: 0 0 20px; }
+a { color: var(--link); } ul { padding-left: 0; list-style: none; }
+li { background: var(--card); border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+li span { color: var(--muted); } pre { background: var(--card); border-radius: 8px;
+       padding: 12px; overflow-x: auto; font-size: 12px; white-space: pre-wrap; }
+"""
+
+
+def _page(title: str, subtitle: str, body: str) -> str:
+    return (f"<!doctype html><html lang='fr'><head><meta charset='utf-8'>"
+            f"<meta name='viewport' content='width=device-width, initial-scale=1'>"
+            f"<title>{html.escape(title)}</title><style>{PAGE_STYLE}</style></head><body>"
+            f"<h1>{html.escape(title)}</h1><p class='sub'>{html.escape(subtitle)}</p>"
+            f"{body}</body></html>")
+
+
+def write_index(root) -> Path:
+    """figures/index.html of a run: a link to every figure, what it shows, and the summary."""
+    root = Path(root)
+    figures = root / "figures"
+    items = []
+    for path in sorted(figures.glob("*.html")):
+        if path.name == "index.html":
+            continue
+        name = path.stem
+        if name.startswith("profile_"):
+            title, note = (f"Distribution d'usage « {name[len('profile_'):]} »",
+                           "gain relatif (%) du meilleur profil à chaque nœud, vitesse "
+                           "par nœud, angles effectifs du foil à l'équilibre (= gîte, assiette, "
+                           "dérive ; calage 0)")
+        else:
+            title, note = FIGURE_NOTES.get(name, (name, ""))
+        items.append(f"<li><a href='{html.escape(path.name)}'>{html.escape(title)}</a>"
+                     f"<br><span>{html.escape(note)}</span></li>")
+    body = f"<ul>{''.join(items)}</ul>"
+    readme = root / "README.md"
+    if readme.exists():
+        body += "<p><a href='../README.md'>Lecture du run (README.md)</a></p>"
+    summary = root / "results" / "summary.txt"
+    if summary.exists():
+        body += f"<h2>Résumé</h2><pre>{html.escape(summary.read_text(encoding='utf-8'))}</pre>"
+    figures.mkdir(exist_ok=True)
+    path = figures / "index.html"
+    path.write_text(_page(f"Figures du run {root.name}", "vpp_acceleration", body),
+                    encoding="utf-8")
+    return path
+
+
+def write_runs_index(runs_dir=VPP_DIR / "runs") -> Path:
+    """runs/index.html: the figure index of every run folder that has figures."""
+    runs_dir = Path(runs_dir)
+    items = []
+    for run in sorted(runs_dir.iterdir(), reverse=True):
+        if not (run / "figures").is_dir() or not any((run / "figures").glob("*.html")):
+            continue
+        index = write_index(run)
+        n_figures = len([p for p in (run / "figures").glob("*.html") if p.name != "index.html"])
+        items.append(f"<li><a href='{html.escape(run.name)}/figures/{index.name}'>"
+                     f"{html.escape(run.name)}</a><br><span>{n_figures} figures</span></li>")
+    path = runs_dir / "index.html"
+    path.write_text(_page("Runs de vpp_acceleration", "les figures de chaque run, du plus récent "
+                          "au plus ancien (détail dans runs/README.md)",
+                          f"<ul>{''.join(items)}</ul>"), encoding="utf-8")
+    return path
+
+
+if __name__ == "__main__":
+    if sys.argv[1:] == ["--index-all"]:
+        print(write_runs_index())
+    else:
+        make_figures(sys.argv[1])
+        write_runs_index()

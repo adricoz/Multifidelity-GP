@@ -1,0 +1,88 @@
+{
+ "nominal": {
+  "best": 13.566456210295463,
+  "region_1": 13.55963333639528,
+  "best_2026-10-28_1747_profile_v1_box075": 13.549350218571568,
+  "closest_to_current": 13.308906006509433
+ },
+ "scales": {
+  "1.0": {
+   "n_draws": 20,
+   "mean": {
+    "best": 13.56639750141118,
+    "region_1": 13.559389698047179,
+    "best_2026-10-28_1747_profile_v1_box075": 13.549520478503377,
+    "closest_to_current": 13.308034227803997
+   },
+   "std": {
+    "best": 0.0004394653132971952,
+    "region_1": 0.0010357007680790883,
+    "best_2026-10-28_1747_profile_v1_box075": 0.0020464342064985914,
+    "closest_to_current": 0.0028811870586183067
+   },
+   "p_best": {
+    "best": 1.0,
+    "region_1": 0.0,
+    "best_2026-10-28_1747_profile_v1_box075": 0.0,
+    "closest_to_current": 0.0
+   },
+   "regret_mean_kt": 0.0,
+   "regret_max_kt": 0.0,
+   "gain_vs": {
+    "region_1": [
+     0.007007803364003529,
+     0.0009791742938963306
+    ],
+    "best_2026-10-28_1747_profile_v1_box075": [
+     0.016877022907805996,
+     0.0022815535299404548
+    ],
+    "closest_to_current": [
+     0.25836327360718175,
+     0.0030612111469000727
+    ]
+   }
+  },
+  "2.0": {
+   "n_draws": 20,
+   "mean": {
+    "best": 13.566339641444781,
+    "region_1": 13.559136599958986,
+    "best_2026-10-28_1747_profile_v1_box075": 13.549708011236229,
+    "closest_to_current": 13.307197116061328
+   },
+   "std": {
+    "best": 0.0008108448155138819,
+    "region_1": 0.0020701951704976823,
+    "best_2026-10-28_1747_profile_v1_box075": 0.003937570854798994,
+    "closest_to_current": 0.0055695103614681616
+   },
+   "p_best": {
+    "best": 1.0,
+    "region_1": 0.0,
+    "best_2026-10-28_1747_profile_v1_box075": 0.0,
+    "closest_to_current": 0.0
+   },
+   "regret_mean_kt": 0.0,
+   "regret_max_kt": 0.0,
+   "gain_vs": {
+    "region_1": [
+     0.007203041485790607,
+     0.0019357104804620699
+    ],
+    "best_2026-10-28_1747_profile_v1_box075": [
+     0.01663163020855043,
+     0.004389314033378637
+    ],
+    "closest_to_current": [
+     0.2591425253834503,
+     0.0057779754006324685
+    ]
+   }
+  }
+ },
+ "lines": [
+  "scale 1.0 (20 draws): P(best) best 1.00, region_1 0.00, best_2026-10-28_1747_profile_v1_box075 0.00, closest_to_current 0.00; regret of keeping best 0.0000 kt (max 0.0000); best minus region_1 +0.0070 +- 0.0010, best_2026-10-28_1747_profile_v1_box075 +0.0169 +- 0.0023, closest_to_current +0.2584 +- 0.0031",
+  "scale 2.0 (20 draws): P(best) best 1.00, region_1 0.00, best_2026-10-28_1747_profile_v1_box075 0.00, closest_to_current 0.00; regret of keeping best 0.0000 kt (max 0.0000); best minus region_1 +0.0072 +- 0.0019, best_2026-10-28_1747_profile_v1_box075 +0.0166 +- 0.0044, closest_to_current +0.2591 +- 0.0058"
+ ]
+}

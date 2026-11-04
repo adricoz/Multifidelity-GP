@@ -1,0 +1,33 @@
+=== Joint estimation or model structure? (same designs for every model) ===
+
+--- design B1 (10 seeds), region RMSE median [10 % ; 90 %] | coverage | global RMSE
+CK notre CoKriging (niveau par niveau, MAP)    0.1998 [0.1588 ; 0.2476] | 0.99 | 0.1577
+CS CK avec share_lengthscales=True (mfego)     0.1790 [0.1690 ; 0.2231] | 0.98 | 0.1414
+P0 prototype AR(1) (niveau par niveau, MV)     0.1907 [0.1536 ; 0.2785] | 0.97 | 0.1395
+EJ emukit AR(1) Matérn (conjoint)              0.1770 [0.1603 ; 0.2276] | 0.98 | 0.1366
+PS P0, longueurs de delta = celles de la BF    0.1799 [0.1505 ; 0.2217] | 0.97 | 0.1425
+BT BoTorch MF-GP                               0.1730 [0.1452 ; 0.1985] | 0.98 | 0.1437
+BN BoTorch sans prior sur les longueurs        0.1537 [0.1214 ; 0.1852] | 0.98 | 0.1285
+EJ / P0: median -7 % | EJ better on 4 / 10 | two-sided Wilcoxon p = 0.77
+PS / P0: median -6 % | PS better on 7 / 10 | two-sided Wilcoxon p = 0.11
+BT / P0: median -9 % | BT better on 5 / 10 | two-sided Wilcoxon p = 0.62
+BN / BT: median -11 % | BN better on 7 / 10 | two-sided Wilcoxon p = 0.16
+BT / PS: median -4 % | BT better on 6 / 10 | two-sided Wilcoxon p = 0.77
+CS / CK: median -10 % | CS better on 7 / 10 | two-sided Wilcoxon p = 0.064
+BT / CS: median -3 % | BT better on 6 / 10 | two-sided Wilcoxon p = 0.32
+
+--- design B3 (10 seeds), region RMSE median [10 % ; 90 %] | coverage | global RMSE
+CK notre CoKriging (niveau par niveau, MAP)    0.1301 [0.1199 ; 0.1484] | 0.94 | 0.7303
+CS CK avec share_lengthscales=True (mfego)     0.1232 [0.1107 ; 0.1431] | 0.92 | 0.7559
+P0 prototype AR(1) (niveau par niveau, MV)     0.1292 [0.1158 ; 0.1845] | 0.88 | 0.6132
+EJ emukit AR(1) Matérn (conjoint)              0.1254 [0.1047 ; 0.1852] | 0.88 | 0.6472
+PS P0, longueurs de delta = celles de la BF    0.1204 [0.1043 ; 0.1391] | 0.92 | 0.6662
+BT BoTorch MF-GP                               0.1135 [0.0994 ; 0.1324] | 0.93 | 0.6983
+BN BoTorch sans prior sur les longueurs        0.1047 [0.0948 ; 0.1298] | 0.93 | 0.6641
+EJ / P0: median -3 % | EJ better on 6 / 10 | two-sided Wilcoxon p = 0.11
+PS / P0: median -7 % | PS better on 8 / 10 | two-sided Wilcoxon p = 0.027
+BT / P0: median -12 % | BT better on 10 / 10 | two-sided Wilcoxon p = 0.002
+BN / BT: median -8 % | BN better on 8 / 10 | two-sided Wilcoxon p = 0.02
+BT / PS: median -6 % | BT better on 9 / 10 | two-sided Wilcoxon p = 0.027
+CS / CK: median -5 % | CS better on 7 / 10 | two-sided Wilcoxon p = 0.11
+BT / CS: median -8 % | BT better on 9 / 10 | two-sided Wilcoxon p = 0.0039

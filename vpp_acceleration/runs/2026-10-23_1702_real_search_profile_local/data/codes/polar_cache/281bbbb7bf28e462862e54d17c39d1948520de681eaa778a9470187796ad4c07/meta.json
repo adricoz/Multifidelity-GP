@@ -1,0 +1,29 @@
+{
+  "key": "281bbbb7bf28e462862e54d17c39d1948520de681eaa778a9470187796ad4c07",
+  "n_filled": 3,
+  "npane_used": 260,
+  "section_name": "k38d01226e2f1",
+  "section_path": "C:\\Users\\SIM\\AppData\\Local\\Temp\\vppc_68ko4tv_\\k38d01226e2f1.xf",
+  "section_sha256": "d7c25093c358786047345a70312f20f6fca906e479fe1c55b2383181b4ad8e9e",
+  "spec": {
+    "alpha": [
+      -6.0,
+      12.0,
+      0.5
+    ],
+    "mach": 0.0,
+    "ncrit": 1.0,
+    "niter": 300,
+    "npane": 250,
+    "ppar_r": 0.02,
+    "ppar_t": 0.5,
+    "re": 5000000.0,
+    "xtr": [
+      0.1,
+      0.1
+    ]
+  },
+  "spec_json": "{\"alpha\":[-6.0,12.0,0.5],\"mach\":0.0,\"ncrit\":1.0,\"niter\":300,\"npane\":250,\"ppar_r\":0.02,\"ppar_t\":0.5,\"re\":5000000.0,\"xtr\":[0.1,0.1]}",
+  "xfoil_exe_sha256": "c17342f84ae260c2b11a74cd0e2fb8189a5f8954c6bb7a8467a0f27055c7faea",
+  "xfoil_script_version": "1"
+}

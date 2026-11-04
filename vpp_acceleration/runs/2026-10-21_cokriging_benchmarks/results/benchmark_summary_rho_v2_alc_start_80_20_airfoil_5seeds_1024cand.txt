@@ -1,0 +1,6 @@
+=== airfoil (total cost 560, 5 seeds) ===
+séquentiel, variance ajustée   RMSE rel 0.2058 [0.1948 ; 0.2184] | Q2 0.958 | cov95 0.98 | NLPD 3.12 | LF/HF 330/23 | rho 0.76 | ask 3.02 s
+séquentiel, variance seule     RMSE rel 0.1806 [0.1537 ; 0.1842] | Q2 0.967 | cov95 0.91 | NLPD 2.76 | LF/HF 250/31 | rho 0.69 | ask 2.40 s
+LHS imbriqué (coût égal)       RMSE rel 0.1683 [0.1458 ; 0.2507] | Q2 0.972 | cov95 0.92 | NLPD 2.54 | LF/HF 160/40 | rho 0.72 | ask nan s
+  séquentiel, variance ajustée: better than the LHS on 1 / 5 seeds
+  séquentiel, variance seule: better than the LHS on 3 / 5 seeds

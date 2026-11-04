@@ -1,0 +1,29 @@
+12:19:56 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-10-27_1219_smoke_restarts
+12:19:56 [  0.0 min] family: box centred on the current section, scale 0.5, Ixx >= 6.7174e-05
+12:20:08 [  0.2 min] PCA: rank 16, k = 10 modes carry 99.86 % of the geometric variance
+12:20:08 [  0.2 min] start of the search: current_section
+12:21:01 [  1.1 min] start design: LF 30 ok / 30, HF 7 ok / 8
+12:21:07 [  1.2 min] batch 0: hyperparameters refitted on 37 points
+12:21:28 [  1.5 min] speed sensitivities dV/dC (rows = conditions): [[ 82.93  -1.4    1.86  -0.09   0.19  -0.07]
+ [116.16  -0.96   6.32   2.77   0.59   0.03]]
+12:21:32 [  1.6 min] update 0: incumbent speed 15.2996 kt (new, gain 0.0240 kt), candidates [15.276 15.29  15.3   15.257], on 100 % of the probability, radius 1.50, region 0, 25 s
+12:21:33 [  1.6 min] batch 0: 4 choices (0 HF), LF/HF 34/7, selection 26.0 s (update 25 s), 26.2 s
+12:21:36 [  1.7 min] update 1: incumbent speed 15.3172 kt (kept, gain 0.0000 kt), candidates [15.317 15.298 15.218 15.275], on 100 % of the probability, radius 1.05, region 0, 3 s
+12:21:37 [  1.7 min] batch 1: 4 choices (0 HF), LF/HF 38/7, selection 3.8 s (update 3 s), 3.9 s
+12:21:44 [  1.8 min] region 0 converged (update 1, incumbent speed 15.3172 kt): region 1 starts from a section at distance 3.34 of the optima, predicted gain -0.025 +- 0.266 kt
+12:21:54 [  2.0 min] speed sensitivities dV/dC (rows = conditions): [[ 83.59  -1.51   1.9   -0.09   0.18  -0.08]
+ [106.61   1.39   8.33   2.56   0.6    0.07]]
+12:21:56 [  2.0 min] update 2: incumbent speed 15.2913 kt (new, gain 0.0114 kt), candidates [15.28  15.262 15.291 15.259], on 100 % of the probability, radius 1.50, region 1, 12 s
+12:21:57 [  2.0 min] batch 2: 4 choices (0 HF), LF/HF 42/7, selection 20.0 s (update 12 s), 20.2 s
+12:21:58 [  2.0 min] batch 3: hyperparameters refitted on 49 points
+12:22:01 [  2.1 min] speed sensitivities: 2 values more than 30 % from the median of the last 3 evaluations, median kept
+12:22:01 [  2.1 min] speed sensitivities dV/dC (rows = conditions): [[ 83.22  -1.65   1.88  -0.08   0.19  -0.09]
+ [107.78   0.04   6.52   2.58   0.6    0.05]]
+12:22:04 [  2.1 min] update 3: incumbent speed 15.3390 kt (new, gain 0.0398 kt), candidates [15.299 15.338 15.339 15.327], on 100 % of the probability, radius 2.25, region 1, 6 s
+12:22:05 [  2.2 min] batch 3: 4 choices (0 HF), LF/HF 46/7, selection 7.4 s (update 6 s), 7.6 s
+12:22:05 [  2.2 min] region 1 converged, no restart left: end of the loop
+12:22:15 [  2.3 min] local optima with the final surrogate, on 100 % of the probability: region 0 15.3291 kt, region 1 15.3614 kt -> region 1
+12:22:17 [  2.4 min] update 4: incumbent speed 15.3614 kt (kept, gain 0.0000 kt), candidates [15.361 15.335 15.318 15.357], on 100 % of the probability, radius 1.57, region 1, 2 s
+12:22:17 [  2.4 min] loop done: 16 choices in 4 batches, LF/HF (46, 7), runs {1: 46, 2: 8, 3: 0}, code time {1: 12.533759499992811, 2: 68.61559670000133, 3: 0.0}
+12:23:07 [  3.2 min] validation done
+12:23:10 [  3.2 min] done

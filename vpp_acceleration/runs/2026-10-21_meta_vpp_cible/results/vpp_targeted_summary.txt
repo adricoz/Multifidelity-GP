@@ -1,0 +1,9 @@
+strategy     cost     n_lf    n_hf  speed_error_kt  true_error_mean_kt  true_error_max_kt  coverage_95    time_s
+  global 598.0000 278.0000 32.0000          0.1572              0.0941             0.5487       1.0000 2714.0433
+     lhs 594.0000 264.0000 33.0000          0.1412              0.0805             0.2823       1.0000  129.1044
+     vpp 598.0000 158.0000 44.0000          0.0295              0.0151             0.0618       1.0000  449.1275
+
+median attitude distance of the added points to the nearest state (in units of the cloud half-width):
+strategy
+global    4.673290
+vpp       0.803921

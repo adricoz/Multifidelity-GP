@@ -1,0 +1,40 @@
+15:14:13 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-10-22_1514_smoke2_npllt_xfoil_fsi
+15:14:13 [  0.0 min] family: box centred on the current section, scale 0.5, Ixx >= 6.7174e-05
+15:14:24 [  0.2 min] PCA: rank 16, k = 10 modes carry 99.86 % of the geometric variance
+15:14:24 [  0.2 min] start of the search: current_section
+15:15:19 [  1.1 min] start design: LF 30 ok / 30, HF 7 ok / 8
+15:15:25 [  1.2 min] batch 0: hyperparameters refitted on 37 points
+15:15:41 [  1.5 min] speed sensitivities dV/dC (rows = conditions): [[ 82.93  -1.4    1.86  -0.09   0.19  -0.07]
+ [107.45   1.59   8.88   2.57   0.62   0.03]]
+15:15:45 [  1.5 min] update 0: incumbent mean speed 15.3008 kt (new), candidates [15.263 15.284 15.264 15.301], 21 s
+15:15:51 [  1.6 min] batch 0: 16 choices (0 HF), LF/HF 46/7, selection 27.0 s, 27.3 s
+15:15:52 [  1.7 min] batch 1: hyperparameters refitted on 53 points
+15:15:55 [  1.7 min] update 1: incumbent mean speed 15.2948 kt (new), candidates [15.283 15.287 15.295 15.269], 3 s
+15:16:01 [  1.8 min] batch 1: 16 choices (0 HF), LF/HF 62/7, selection 9.6 s, 9.9 s
+15:16:02 [  1.8 min] batch 2: hyperparameters refitted on 69 points
+15:16:05 [  1.9 min] update 2: incumbent mean speed 15.3058 kt (new), candidates [15.293 15.285 15.306 15.3  ], 3 s
+15:16:31 [  2.3 min] batch 2: 16 choices (5 HF), LF/HF 74/12, selection 10.4 s, 29.4 s
+15:16:34 [  2.3 min] speed sensitivities dV/dC (rows = conditions): [[ 83.61  -1.64   1.93  -0.08   0.17  -0.09]
+ [107.79   4.46  11.38   2.59   0.55   0.09]]
+15:16:37 [  2.4 min] update 3: incumbent mean speed 15.3068 kt (kept), candidates [15.307 15.275 15.304 15.304], 6 s
+15:16:46 [  2.6 min] batch 3: 16 choices (3 HF), LF/HF 87/15, selection 13.1 s, 15.5 s
+15:16:48 [  2.6 min] batch 4: hyperparameters refitted on 102 points
+15:16:51 [  2.6 min] update 4: incumbent mean speed 15.3279 kt (new), candidates [15.306 15.328 15.313 15.31 ], 4 s
+15:17:00 [  2.8 min] batch 4: 16 choices (5 HF), LF/HF 98/20, selection 11.5 s, 14.0 s
+15:17:03 [  2.8 min] update 5: incumbent mean speed 15.3218 kt (kept), candidates [15.322 15.304 15.299 15.271], 3 s
+15:17:18 [  3.1 min] batch 5: 16 choices (3 HF), LF/HF 111/23, selection 10.0 s, 17.4 s
+15:17:20 [  3.1 min] batch 6: hyperparameters refitted on 134 points
+15:17:23 [  3.2 min] speed sensitivities dV/dC (rows = conditions): [[ 83.6   -1.63   1.94  -0.08   0.17  -0.09]
+ [108.39   3.5    6.92   4.88   0.56   0.08]]
+15:17:25 [  3.2 min] update 6: incumbent mean speed 15.3213 kt (kept), candidates [15.321 15.304 15.307 15.299], 5 s
+15:17:52 [  3.7 min] batch 6: 16 choices (6 HF), LF/HF 122/29, selection 15.5 s, 34.8 s
+15:17:56 [  3.7 min] update 7: incumbent mean speed 15.3424 kt (new), candidates [15.321 15.314 15.342 15.321], 4 s
+15:18:11 [  4.0 min] batch 7: 16 choices (4 HF), LF/HF 134/33, selection 11.2 s, 18.4 s
+15:18:15 [  4.0 min] update 8: incumbent mean speed 15.3535 kt (kept), candidates [15.353 15.34  15.321 15.313], 4 s
+15:18:36 [  4.4 min] batch 8: 16 choices (5 HF), LF/HF 145/38, selection 12.1 s, 25.4 s
+15:18:42 [  4.5 min] speed sensitivities dV/dC (rows = conditions): [[ 84.12  -1.7    1.97  -0.08   0.16  -0.09]
+ [119.15  -5.13   0.53   2.82   0.53   0.05]]
+15:18:45 [  4.5 min] update 9: incumbent mean speed 15.3693 kt (new), candidates [15.354 15.369 15.314 15.331], 6 s
+15:18:45 [  4.5 min] loop done: 144 choices in 9 batches, LF/HF (145, 38), runs {1: 145, 2: 39, 3: 0}, code time {1: 58.94103829993401, 2: 243.45103040002869, 3: 0.0}
+15:19:10 [  5.0 min] validation done
+15:19:13 [  5.0 min] done

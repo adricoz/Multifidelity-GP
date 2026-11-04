@@ -1,0 +1,59 @@
+run 2026-10-29_1002_profile_v2_box3_3h: 736 steps in 155.5 min
+code runs: level 1 1194 (598 s), level 2 570 (9895 s); final design per level (899, 276)
+speed of the validated sections (final surrogate corrected against HF, weighted mean over the 47 conditions solved for all, 98 % of the probability): best 13.5659 kt, best_2026-10-27_1224_control_restarts 13.4904 kt, best_2026-10-27_1739_long_3levels_avl_iter 13.4962 kt, best_2026-10-28_1747_profile_v1_box075 13.5450 kt, closest_to_current 13.3096 kt, region_1 13.5583 kt
+speeds of the incumbent: 35/7: 7.736, 35/10: 9.017, 35/12: 10.577, 35/15: 13.334, 40/7: 8.090, 40/10: 9.544, 40/12: 11.617, 40/15: 16.069, 45/7: 8.376, 45/10: 10.030, 45/12: 12.772, 45/15: 18.786, 53/7: 8.705, 53/10: 10.660, 53/12: 14.601, 53/15: 20.325, 68/7: 9.113, 68/10: 11.556, 68/12: 17.347, 68/15: 22.874, 77/7: 9.184, 77/10: 11.699, 77/12: 17.687, 77/15: 24.000, 83/7: 9.170, 83/10: 11.625, 83/12: 17.407, 83/15: 24.000, 92/7: 9.068, 92/10: 11.317, 92/12: 16.411, 92/15: 24.000, 64/8: 10.052, 64/14: 21.521, 96/8: 9.899, 96/14: 19.033, 40/5: 7.258, 60/5: 8.058, 80/5: 8.269, 100/5: 8.077, 40/17: 17.978, 60/17: nan, 80/17: nan, 100/17: 24.000, 32/8: 8.073, 32/14: 10.879, 110/8: 9.264, 110/14: 15.139, 60/11: 13.044
+local optima of the regions, final surrogate (results/optima.json): region 0 13.5656 kt (best), region 1 13.5597 kt
+validation best: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0006 kt, max 0.0023 kt; predicted sigma RMS 0.0008 kt; |z| <= 2 on 96 %
+   against the lf code: speed error mean -0.0005 kt, RMS 0.0089 kt
+   Fx     |surrogate - HF| / |HF| median 0.03 %
+   Fy     |surrogate - HF| / |HF| median 0.05 %
+   Fz     |surrogate - HF| / |HF| median 0.04 %
+   Mx     |surrogate - HF| / |HF| median 0.04 %
+   My     |surrogate - HF| / |HF| median 0.02 %
+   Mz     |surrogate - HF| / |HF| median 0.03 %
+   Cpmin  |surrogate - HF| / |HF| median 1.58 %
+validation best_2026-10-27_1224_control_restarts: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0135 kt, max 0.0505 kt; predicted sigma RMS 0.0064 kt; |z| <= 2 on 69 %
+   against the lf code: speed error mean +0.0031 kt, RMS 0.0129 kt
+   Fx     |surrogate - HF| / |HF| median 0.65 %
+   Fy     |surrogate - HF| / |HF| median 0.04 %
+   Fz     |surrogate - HF| / |HF| median 0.04 %
+   Mx     |surrogate - HF| / |HF| median 0.02 %
+   My     |surrogate - HF| / |HF| median 0.11 %
+   Mz     |surrogate - HF| / |HF| median 0.14 %
+   Cpmin  |surrogate - HF| / |HF| median 6.64 %
+validation best_2026-10-27_1739_long_3levels_avl_iter: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0134 kt, max 0.0524 kt; predicted sigma RMS 0.0062 kt; |z| <= 2 on 65 %
+   against the lf code: speed error mean +0.0034 kt, RMS 0.0125 kt
+   Fx     |surrogate - HF| / |HF| median 0.59 %
+   Fy     |surrogate - HF| / |HF| median 0.04 %
+   Fz     |surrogate - HF| / |HF| median 0.08 %
+   Mx     |surrogate - HF| / |HF| median 0.03 %
+   My     |surrogate - HF| / |HF| median 0.13 %
+   Mz     |surrogate - HF| / |HF| median 0.09 %
+   Cpmin  |surrogate - HF| / |HF| median 9.15 %
+validation best_2026-10-28_1747_profile_v1_box075: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0042 kt, max 0.0218 kt; predicted sigma RMS 0.0039 kt; |z| <= 2 on 92 %
+   against the lf code: speed error mean +0.0010 kt, RMS 0.0095 kt
+   Fx     |surrogate - HF| / |HF| median 0.16 %
+   Fy     |surrogate - HF| / |HF| median 0.03 %
+   Fz     |surrogate - HF| / |HF| median 0.06 %
+   Mx     |surrogate - HF| / |HF| median 0.04 %
+   My     |surrogate - HF| / |HF| median 0.04 %
+   Mz     |surrogate - HF| / |HF| median 0.02 %
+   Cpmin  |surrogate - HF| / |HF| median 2.95 %
+validation closest_to_current: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0051 kt, max 0.0172 kt; predicted sigma RMS 0.0088 kt; |z| <= 2 on 100 %
+   against the lf code: speed error mean -0.0047 kt, RMS 0.0120 kt
+   Fx     |surrogate - HF| / |HF| median 0.22 %
+   Fy     |surrogate - HF| / |HF| median 0.08 %
+   Fz     |surrogate - HF| / |HF| median 0.11 %
+   Mx     |surrogate - HF| / |HF| median 0.03 %
+   My     |surrogate - HF| / |HF| median 0.08 %
+   Mz     |surrogate - HF| / |HF| median 0.10 %
+   Cpmin  |surrogate - HF| / |HF| median 9.78 %
+validation region_1: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0026 kt, max 0.0076 kt; predicted sigma RMS 0.0022 kt; |z| <= 2 on 100 %
+   against the lf code: speed error mean -0.0020 kt, RMS 0.0084 kt
+   Fx     |surrogate - HF| / |HF| median 0.17 %
+   Fy     |surrogate - HF| / |HF| median 0.02 %
+   Fz     |surrogate - HF| / |HF| median 0.03 %
+   Mx     |surrogate - HF| / |HF| median 0.02 %
+   My     |surrogate - HF| / |HF| median 0.03 %
+   Mz     |surrogate - HF| / |HF| median 0.06 %
+   Cpmin  |surrogate - HF| / |HF| median 1.39 %

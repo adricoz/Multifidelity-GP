@@ -1,0 +1,17 @@
+{
+ "check": "posterior",
+ "of_run": "runs\\2026-10-29_1002_profile_v2_box3_3h",
+ "sections": [
+  "best",
+  "region_1",
+  "best_2026-10-28_1747_profile_v1_box075",
+  "closest_to_current"
+ ],
+ "draws": 1,
+ "scales": [
+  1.0
+ ],
+ "n_cloud": 4,
+ "seed": 0,
+ "workers": 12
+}
