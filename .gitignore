@@ -40,3 +40,6 @@ studies/*/results/polar_cache/
 # solver work files kept by the study scripts for inspection
 studies/*/results/step0_avl/
 studies/*/results/*_files/
+
+# personal notes and slides of vpp_acceleration (Le Maitre exchanges...): kept local only
+vpp_acceleration/doc/
