@@ -14,7 +14,7 @@ pytest.importorskip("neuralfoil")
 # pylint: disable=wrong-import-position
 from src.meta_foil import ANCHOR_RS, HVOL_REF, N_SCORES, MetaFoil  # noqa: E402
 from src.sequential_design import batched_imse_gains  # noqa: E402
-from src.vpp_coupling import MDS_DIR, IntensSYVPP  # noqa: E402
+from src.vpp_coupling import IntensSYVPP  # noqa: E402
 from src.vpp_targeted import choose, integration_cloud, nested_design  # noqa: E402
 
 
@@ -36,10 +36,8 @@ def attitudes(n, seed=0):
 
 def test_chebyshev_rs_matches_mds(meta, vpp):
     """The numpy evaluation of the anchor RS equals MDS' VppChebyRS (unclamped)."""
-    del vpp                                            # builds the boat: MDS on sys.path
-    import sys  # noqa: PLC0415
-    assert str(MDS_DIR) in sys.path
-    from Systems.Ships.Sail.IntensSY.vpp_cheby_rs import VppChebyRS  # noqa: PLC0415
+    del vpp                                            # builds the boat first
+    from mds.rs.vpp_cheby import VppChebyRS  # noqa: PLC0415
     rs = VppChebyRS(str(ANCHOR_RS), clamp=False)
     x = attitudes(30)[:, :3] * 1.1                     # a little outside the box too
     expected = np.array([rs.eval(row).copy() for row in x])

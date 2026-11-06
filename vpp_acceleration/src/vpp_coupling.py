@@ -1,8 +1,9 @@
 """
-Coupling of a foil surrogate with the MDS VPP of the Intens SY (MDS branch new_master).
+Coupling of a foil surrogate with the MDS VPP of the Intens SY (MDS branch master, package `mds`
+under MDS/src since 2026-11-02; before: branch new_master, top-level packages Code and Systems).
 
-What MDS does with the foil (Systems/Ships/Sail/IntensSY/intenssy_subsystems.py, IntensSY_foil_dyn,
-read 2026-10-21):
+What MDS does with the foil (mds/components/appendage.py, IntensSY_foil_dyn, read 2026-10-21,
+unchanged in the package):
   * Cant_Eff = Heel + Foil_Cant, Rake_Eff = Trim + Foil_Rake, Yaw_Eff = Leeway + Foil_Yaw;
   * the input vector of the RS is assembled BY NAME (foil_rs_vector) from its input_names;
   * surrogate.regression(x) fills surrogate.prediction (Fx, Fy, Fz, Mx, My, Mz, Cpmin);
@@ -13,28 +14,48 @@ SurrogateFoilRS below. It adds what the RS does not see: the section (12 PCA sco
 for a VPP run) and the boat sink Hvol, read in the global variables of the system (the hulls,
 evaluated before the foil, update it).
 
-The VPP solve (IntensSYVPP.solve) is the one of Systems/Ships/Sail/IntensSY/
-IntensSY_flying_NCpre.py: SLSQP maximizes the boat speed subject to the 6 equilibrium equations,
+The VPP solve (IntensSYVPP.solve) is the one of the former MDS script IntensSY_flying_NCpre.py
+(removed from MDS on 2026-10-30, readable at the MDS tag archive/pre-reorg-2026-10): SLSQP maximizes the boat speed subject to the 6 equilibrium equations,
 unknowns Speed, Leeway, Heel, Trim, CC_Dspl, Rudder_Angle, Flat (foil controls at 0, as the vpp36
-navigation cases). Differences: the C-foil variant (build_IntensSY(foil='CFoil')), a fixed initial
+navigation cases). Differences: the C-foil variant (build_IntensSY(foil=CFOIL_SPEC), see below), a fixed initial
 guess for every condition (no path dependence) and one retry from the previous solution.
 
-Environment: MDS needs pymoo, numba, ... : run with Multifidelity-GP-Clean/.venv-mds (venv of
+Environment: MDS needs numba, pandas, ... : run with Multifidelity-GP-Clean/.venv-mds (venv of
 the conda env bdToolbox + future, transforms3d, PyWavelets, pydmd; created 2026-10-21 so as not
-to touch the shared environments).
+to touch the shared environments), with the MDS package installed in it:
+    .venv-mds/Scripts/python.exe -m pip install -e ../MDS --no-deps
+(--no-deps: the engine needs none of the GUI dependencies declared by MDS, e.g. nicegui).
 """
-import sys
 import time
 from pathlib import Path
 
 import numpy as np
 from scipy.optimize import minimize
 
-MDS_DIR = Path(__file__).resolve().parents[3] / "MDS"          # .../Code-Adri/MDS
+# The rigid C-foil of radius 7.8 m, `CFoil` of the MDS catalogue until 2026-10-08 (removed with its
+# two RS at the request of Antoine, MDS commit 94e41773: its radius is not the one of the FSI foil,
+# 9.8 m). It is the anchor of the meta-surrogate (meta_foil.py), so its RS are kept in this repo
+# (vpp_acceleration/data/mds_cfoil_r7800, copies of MDS 60d5c2d9) and the boat is built from
+# this dict of files, which build_IntensSY accepts in place of a catalogue key (same surface,
+# span and lower-bearing origin as the former catalogue entry).
+DATA_DIR = Path(__file__).resolve().parents[1] / "data" / "mds_cfoil_r7800"
+CFOIL_SPEC = dict(dyn=str(DATA_DIR / "CFoil_R7800_S3250_C700_rs_vpp.json"),
+                  archi=str(DATA_DIR / "CFoil_R7800_S3250_C700_archi_rs_vpp.json"),
+                  surface=2.2749596294181016, span=3.249985306371202, kind="C-Foil",
+                  origin=(10.5745, 3.69217, -0.606084), name="CFoil")
 # production FSI RS of the C-foil of the boat (bdFoil CFoil_fsi.ipynb: AVL x XFOIL and the beam
-# model "supported", 625 points, Speed_kts in [7, 28]; the current section)
-FSI_RS_FILE = (MDS_DIR / "Systems" / "Ships" / "Sail" / "IntensSY" / "Data" / "Foil"
-               / "CFoil_R9800_S3250_C700_fsi_rs_vpp.json")
+# model "supported", 625 points, Speed_kts in [7, 28]; the current section): the MDS catalogue
+# entry `CFoilFSI`, in the IntensSY project of the installed MDS (mds.paths.PROJECTS_DIR, i.e.
+# MDS/Projects or the environment variable MDS_PROJECTS)
+FSI_RS_NAME = "CFoil_R9800_S3250_C700_fsi_rs_vpp.json"
+
+
+def fsi_rs_file() -> Path:
+    """Path of the production FSI RS of the C-foil (read from the installed MDS)."""
+    from mds import paths as mds_paths  # noqa: PLC0415  (MDS only in .venv-mds)
+    return Path(mds_paths.PROJECTS_DIR) / "IntensSY" / "models" / "foil" / FSI_RS_NAME
+
+
 FSI_SPEEDS = np.array([7.0, 10.5, 14.0, 17.5, 21.0, 24.5, 28.0])
 FOIL_INPUTS = ["FOIL_PRT_Cant_Eff", "FOIL_PRT_Rake_Eff", "FOIL_PRT_Yaw_Eff"]
 FOIL_OUTPUTS = ["Fx", "Fy", "Fz", "Mx", "My", "Mz", "Cpmin"]
@@ -59,7 +80,7 @@ class _RSData:
 class FSICorrection:
     """
     Effect of the deformation of the flexible C-foil on its coefficients, taken from the
-    production FSI RS (FSI_RS_FILE), to be added to a RIGID foil model (the codes and the
+    production FSI RS (fsi_rs_file()), to be added to a RIGID foil model (the codes and the
     co-kriging are rigid).
 
     The deformation follows the load, i.e. V^2 (linear structure), and so does its effect: at a
@@ -75,9 +96,9 @@ class FSICorrection:
     [deg] follow the same law (rigid value 0).
     """
 
-    def __init__(self, path=FSI_RS_FILE, speeds=FSI_SPEEDS):
+    def __init__(self, path=None, speeds=FSI_SPEEDS):
         from src.meta_foil import ChebyshevRS  # noqa: PLC0415
-        self.rs = ChebyshevRS(path)
+        self.rs = ChebyshevRS(fsi_rs_file() if path is None else path)
         self.output_names = list(self.rs.output_names)       # Fx..Mz, Cpmin, Bending, Twisting
         self.speed_name = self.rs.input_names[3]              # "Speed_kts"
         self.speeds = np.asarray(speeds, dtype=float)
@@ -183,18 +204,17 @@ class IntensSYVPP:
         state = vpp.solve(twa=45.0, tws=16.0)  # dict: speed, attitude, foil inputs, success...
     """
 
-    def __init__(self, mds_dir=MDS_DIR, foil="CFoil", with_hvol=True, fsi=None):
-        """fsi: None (rigid foil model) or an FSICorrection added to the foil model (FSI run of
+    def __init__(self, foil="CFoil", with_hvol=True, fsi=None):
+        """foil: "CFoil" (R 7.8 m, the anchor of the meta-surrogate, built from CFOIL_SPEC), an MDS
+        catalogue key such as "CFoilFSI" (R 9.8 m, the foil of the real codes; its dyn RS is
+        replaced by a rigid surrogate) or a dict of files as build_IntensSY accepts it.
+        fsi: None (rigid foil model) or an FSICorrection added to the foil model (FSI run of
         2026-10-22)."""
         self.fsi = fsi
-        if str(mds_dir) not in sys.path:
-            sys.path.insert(0, str(mds_dir))
-        # pylint: disable=import-outside-toplevel,import-error
-        from Code.Math.frame import Frame
-        from Systems.Ships.Sail.IntensSY.IntensSY_config import build_IntensSY
-        # foil variant of the boat: "CFoil" (R 7.8 m, meta-surrogate) or "CFoilFSI" (R 9.8 m, the
-        # foil of the real codes; its dyn RS is replaced by a rigid surrogate)
-        self.system, self.origin = build_IntensSY(foil=foil)
+        # pylint: disable=import-outside-toplevel
+        from mds.math.frame import Frame
+        from mds.boats.intenssy import build_IntensSY
+        self.system, self.origin = build_IntensSY(foil=CFOIL_SPEC if foil == "CFoil" else foil)
         self.with_hvol = bool(with_hvol)
         gv = self.system.global_variables
         self.ref = Frame(np.array([[gv["XCG [m]"], 0.0], [0.0, 0.0], [0.0, 0.0]]),

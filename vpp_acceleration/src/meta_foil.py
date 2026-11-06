@@ -9,8 +9,9 @@ Cant_Eff [deg], Rake_Eff [deg], Yaw_Eff [deg] and the boat sink Hvol [m] (INPUT_
 Outputs (7): the coefficients of the MDS C-foil RS, in its order: Fx, Fy, Fz, Mx, My, Mz (MDS
 multiplies them by 0.5 rho S V^2) and Cpmin (OUTPUT_NAMES).
 
-1. Anchor. The C-foil RS of the boat (MDS Systems/Ships/Sail/IntensSY/Data/Foil/
-   CFoil_R7800_S3250_C700_rs_vpp.json, 3 inputs Cant_Eff, Rake_Eff, Yaw_Eff) gives c_ref(attitude).
+1. Anchor. The rigid C-foil RS of the boat (CFoil_R7800_S3250_C700_rs_vpp.json, 3 inputs Cant_Eff,
+   Rake_Eff, Yaw_Eff; `CFoil` of the MDS catalogue until 2026-10-08, kept in
+   vpp_acceleration/data/mds_cfoil_r7800 since MDS removed it) gives c_ref(attitude).
    It is evaluated here with numpy's Chebyshev polynomials (same formula as MDS' VppChebyRS,
    checked in the tests). At the reference section, level 2 (without the immersion term at the
    reference sink) IS the production foil: the VPP of the meta-problem is the Intens SY VPP.
@@ -55,9 +56,7 @@ from src.section_pca import CFoilFamily, SectionPCA, SmoothKulfanFamily, kulfan_
 
 VPP_DIR = Path(__file__).resolve().parents[1]                 # .../vpp_acceleration
 REPO_DIR = VPP_DIR.parent                                      # .../Multifidelity-GP-Clean
-CODE_ADRI = REPO_DIR.parent                                    # .../Code-Adri
-ANCHOR_RS = (CODE_ADRI / "MDS" / "Systems" / "Ships" / "Sail" / "IntensSY" / "Data" / "Foil"
-             / "CFoil_R7800_S3250_C700_rs_vpp.json")
+ANCHOR_RS = VPP_DIR / "data" / "mds_cfoil_r7800" / "CFoil_R7800_S3250_C700_rs_vpp.json"
 PCA_FILE = VPP_DIR / "runs" / "2026-10-21_section_pca" / "results" / "section_pca_smooth16.json"
 STUDY_CONFIG = REPO_DIR / "studies" / "cfoil_intens_kulfan_trim_2" / "config_cfoil_trim.json"
 
