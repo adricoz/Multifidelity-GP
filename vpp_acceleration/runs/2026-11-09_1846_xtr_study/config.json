@@ -1,0 +1,13 @@
+{
+ "runs": [
+  "runs/2026-11-09_1057_xtr005_rigid_convex_k10",
+  "runs/2026-11-09_1411_xtr003_rigid_convex_k10",
+  "runs/2026-11-09_1325_xtr010_from5_rigid_convex_k10",
+  "runs/2026-11-09_1057_xtr010_rigid_convex_k10"
+ ],
+ "polar_xtr": [
+  0.03,
+  0.05,
+  0.1
+ ]
+}

@@ -55,6 +55,21 @@ def other_optima(root) -> list:
     return [o for o in json.loads(path.read_text(encoding="utf-8")) if not o["best"]]
 
 
+def compared_sections(config: dict) -> list:
+    """Best sections of the runs given to --compare (config "compare": paths of best_section.json,
+    relative to vpp_acceleration/), each {"name": "run <folder>", "weights": (2n,)}; the missing
+    files are left out."""
+    out = []
+    for path in config.get("compare", []):
+        path = Path(path) if Path(path).is_absolute() else VPP_DIR / path
+        if not path.exists():
+            continue
+        best = json.loads(path.read_text(encoding="utf-8"))
+        out.append({"name": path.parents[1].name,
+                    "weights": np.array(best["kulfan_upper"] + best["kulfan_lower"])})
+    return out
+
+
 def write_selig(path, weights, te_thickness: float, name: str, n_side: int = 161) -> None:
     """Coordinates of a section in the Selig format of XFOIL: the name, then x y from the trailing
     edge along the upper surface to the leading edge and back along the lower surface (cosine
@@ -162,9 +177,9 @@ def make_figures(root) -> None:
                np.array(o["scores"]), SERIES[(3 + i) % len(SERIES)], False, True)
               for i, o in enumerate(optima)]
     is_optimum = []
+    n = len(x)
     for name, scores, color, visible, with_bars in shown:
         y = section_coordinates(pca.decode(scores[None]), x, pca.te_thickness)[0]
-        n = len(x)
         fig.add_trace(go.Scatter(x=np.concatenate([x, x[::-1]]),
                                  y=np.concatenate([y[:n], y[n:][::-1]]), mode="lines",
                                  name=name, line={"color": color}, legendgroup=name,
@@ -175,17 +190,46 @@ def make_figures(root) -> None:
                                  marker_color=color, legendgroup=name, showlegend=False,
                                  visible=visible), row=1, col=2)
             is_optimum.append(not visible)
+    # best sections of the runs given to --compare (their own Kulfan weights, not projected): the
+    # first one shown, the others in the legend (a click shows them)
+    compared = compared_sections(config)
+    compared_colors = (6, 7, 2, 0)           # not those of the start, best and optima (1, 0, 3-5)
+    for i, entry in enumerate(compared):
+        y = section_coordinates(entry["weights"][None], x, pca.te_thickness)[0]
+        # "2026-10-29_1002_profile_v2_box3_3h" -> "run 2026-10-29 profile_v2_box3_3h"
+        date, _, rest = entry["name"].partition("_")
+        label = f"run {date} {rest.partition('_')[2] or rest}"
+        fig.add_trace(go.Scatter(x=np.concatenate([x, x[::-1]]),
+                                 y=np.concatenate([y[:n], y[n:][::-1]]), mode="lines",
+                                 name=f"meilleure du {label}" if i == 0 else label,
+                                 line={"color": SERIES[compared_colors[i % 4]], "dash": "dash",
+                                       "width": 1.5},
+                                 visible=True if i == 0 else "legendonly"), row=1, col=1)
+        is_optimum.append(None)                    # left as it is by the buttons
     fig.update_yaxes(scaleanchor="x", scaleratio=1, row=1, col=1)
+    fig.update_xaxes(title_text="x / c", row=1, col=1)
+    fig.update_yaxes(title_text="y / c", row=1, col=1)
+    legend_rows = 1 + (2 + len(optima) + len(compared) > 4)    # room for the optima (button)
+    height = 560 + 24 * legend_rows
     style(fig, "La meilleure section trouvée",
-          f"vitesse moyenne prédite {best['mean_speed']:.3f} nd", height=500)
+          f"vitesse moyenne prédite {best['mean_speed']:.3f} nd"
+          + ("" if not compared else " ; runs comparés en tirets (clic dans la légende)"),
+          height=height, legend_rows=legend_rows)
     if optima:
+        own = [i for i, o in enumerate(is_optimum) if o is not None]   # the compared ones excluded
+        top = 118 + 24 * legend_rows                                    # as in figure_style.style
         fig.update_layout(barmode="group", updatemenus=[{
-            "type": "buttons", "direction": "right", "x": 0.0, "xanchor": "left", "y": 1.18,
+            "type": "buttons", "direction": "right", "x": 1.0, "xanchor": "right",
+            "y": 1.0 + (top - 62) / (height - top - 70), "yanchor": "bottom",
+            "pad": {"t": 0, "b": 0},
+            # light buttons with dark ink in both themes (colors outside the dark-mode swap map:
+            # plotly draws the active button light whatever the theme)
+            "bgcolor": "#e9e9ee", "bordercolor": "#9a9aa2", "font": {"size": 12, "color": "#202024"},
             "buttons": [
                 {"label": "Meilleure section seule", "method": "restyle",
-                 "args": [{"visible": [not o for o in is_optimum]}]},
+                 "args": [{"visible": [not is_optimum[i] for i in own]}, own]},
                 {"label": f"Avec les {len(optima)} autres optima locaux", "method": "restyle",
-                 "args": [{"visible": [True] * len(is_optimum)}]}]}])
+                 "args": [{"visible": [True] * len(own)}, own]}]}])
     save(fig, figures, "sections")
     write_section_files(root, pca, best, optima)
 
@@ -257,8 +301,9 @@ FIGURE_NOTES = {
                     "jour, taille du plan BF / HF"),
     "points": ("Points ajoutés", "où le raffinement a placé ses calculs (plans d'attitude), avec "
                "les états VPP finaux"),
-    "sections": ("Sections", "la meilleure section contre la section de départ, et ses scores PCA ; "
-                 "un bouton montre les autres optima locaux (coordonnées dans results/sections/)"),
+    "sections": ("Sections", "la meilleure section contre la section de départ et la meilleure du "
+                 "premier run comparé (les autres dans la légende), et ses scores PCA ; un bouton "
+                 "montre les autres optima locaux (coordonnées dans results/sections/)"),
     "validation": ("Validation", "surrogate contre les codes (HF, BF, AVL) aux états VPP"),
     "speeds": ("Vitesses par condition", "sections validées, vitesse corrigée au premier ordre de "
                "l'écart aux codes"),

@@ -1,0 +1,21 @@
+{
+ "check": "cross",
+ "of_run": "runs\\2026-11-09_1325_xtr010_from5_rigid_convex_k10",
+ "xtr": [
+  0.1,
+  0.1
+ ],
+ "sections_from": [
+  "runs/2026-11-09_1057_xtr005_rigid_convex_k10",
+  "runs/2026-11-09_1411_xtr003_rigid_convex_k10",
+  "runs/2026-11-09_1057_xtr010_rigid_convex_k10"
+ ],
+ "sections": [
+  "own_best",
+  "best_2026-11-09_1057_xtr005_rigid_convex_k10",
+  "best_2026-11-09_1411_xtr003_rigid_convex_k10",
+  "best_2026-11-09_1057_xtr010_rigid_convex_k10",
+  "start_2026-11-09_1057_xtr005_rigid_convex_k10"
+ ],
+ "workers": 28
+}

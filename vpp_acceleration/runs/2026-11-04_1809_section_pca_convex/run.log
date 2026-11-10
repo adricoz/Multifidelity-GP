@@ -1,0 +1,22 @@
+18:09:47 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-04_1809_section_pca_convex
+18:09:47 [  0.0 min] domain: 9556 linear constraints, lower inflections 0.467 / 0.938 +- 0.05, kappa 1.253 / 0.0560, Ixx/v >= 9.9126e-04
+18:11:13 [  1.4 min] hit-and-run: step 500 / 7000, Ixx/v rejections 2.2% of the draws
+18:12:35 [  2.8 min] hit-and-run: step 1000 / 7000, Ixx/v rejections 1.6% of the draws
+18:13:58 [  4.2 min] hit-and-run: step 1500 / 7000, Ixx/v rejections 1.4% of the draws
+18:15:21 [  5.6 min] hit-and-run: step 2000 / 7000, Ixx/v rejections 1.4% of the draws
+18:16:41 [  6.9 min] hit-and-run: step 2500 / 7000, Ixx/v rejections 1.4% of the draws
+18:18:01 [  8.2 min] hit-and-run: step 3000 / 7000, Ixx/v rejections 1.4% of the draws
+18:19:21 [  9.6 min] hit-and-run: step 3500 / 7000, Ixx/v rejections 1.4% of the draws
+18:20:45 [ 11.0 min] hit-and-run: step 4000 / 7000, Ixx/v rejections 1.4% of the draws
+18:22:07 [ 12.3 min] hit-and-run: step 4500 / 7000, Ixx/v rejections 1.4% of the draws
+18:23:27 [ 13.7 min] hit-and-run: step 5000 / 7000, Ixx/v rejections 1.4% of the draws
+18:24:48 [ 15.0 min] hit-and-run: step 5500 / 7000, Ixx/v rejections 1.4% of the draws
+18:26:11 [ 16.4 min] hit-and-run: step 6000 / 7000, Ixx/v rejections 1.4% of the draws
+18:27:33 [ 17.8 min] hit-and-run: step 6500 / 7000, Ixx/v rejections 1.4% of the draws
+18:28:54 [ 19.1 min] hit-and-run: step 7000 / 7000, Ixx/v rejections 1.4% of the draws
+18:29:26 [ 19.7 min] hit-and-run: 97488 sections in 1179 s, 2512 dropped on the fine stations {'upper_curvature': 26, 'lower_curvature': 2486}
+18:29:33 [ 19.8 min] PCA: rank 16, variance per mode [58.77, 22.54, 8.16, 5.62, 1.97, 1.66, 0.53, 0.33, 0.17, 0.14, 0.05, 0.04, 0.01, 0.01, 0.0, 0.0] %; stability [{'n': 4000, 'sigma_rel_change_max': 0.016249318045695293, 'angle_k6_deg': 1.2713758927082344, 'angle_k10_deg': 1.3554633270451197, 'angle_k12_deg': 0.5765261509550197}, {'n': 20000, 'sigma_rel_change_max': 0.009565354210927635, 'angle_k6_deg': 0.573460093800992, 'angle_k10_deg': 0.8097414227988224, 'angle_k12_deg': 0.34474893443241555}]
+18:29:36 [ 19.8 min] score box: 0.1% of the domain sample inside
+18:30:03 [ 20.3 min] uniform in the score box: 11.60% admissible
+18:30:20 [ 20.6 min] convexity: {'segments': 2000, 'leaving_pct': 0.1, 'by_constraint_pct': {'kulfan_box': 0.0, 'crossing': 0.0, 'upper_curvature': 0.0, 'lower_curvature': 0.0, 'leading_edge': 0.0, 'ixx_v': 0.1}}
+18:30:20 [ 20.6 min] done

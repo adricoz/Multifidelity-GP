@@ -48,6 +48,8 @@ from src.meta_foil import confident  # noqa: E402
 from src.run_dir import RunDir  # noqa: E402
 from src.section_pca import (CFoilFamily, KulfanBoxFamily, SectionPCA,  # noqa: E402
                              notebook_bounds, section_ixx)
+from src.section_domain import load_search_space  # noqa: E402
+from src import foil_codes  # noqa: E402
 from src.foil_codes import CODE_LEVELS  # noqa: E402
 from src.operating_profile import OperatingProfile  # noqa: E402
 from src.vpp_coupling import FSICorrection, IntensSYVPP  # noqa: E402
@@ -145,7 +147,29 @@ def main():
                              "this family, the admissible sample closest to it is used). Default: "
                              "the current C-foil section with --box current, the mean section "
                              "with --box dimred")
+    # 2026-11-05: convex section domain (src/section_domain.py), k modes through the current
+    # section, a box of the scores, the constraints (Ixx / v included) checked at screening
+    parser.add_argument("--search-box", default=None, metavar="PCA_RUN",
+                        help="run folder of scripts/build_section_pca.py + build_search_box.py: "
+                             "PCA, domain and box of the search (replaces --box)")
+    parser.add_argument("--search-box-name", default="C_envelope",
+                        help="box of data/search_box_k<k>.json (C_envelope, A_scaled, ...)")
+    # 2026-11-09: forced transition of the XFOIL and NeuralFoil polars (default 0.1 = 10 % chord)
+    parser.add_argument("--xtr", type=float, nargs="+", default=None, metavar="XTR",
+                        help="forced transition, fraction of the chord: one value (both sides) or "
+                             "upper lower; default: src/foil_codes.FLOW (0.1 0.1)")
+    parser.add_argument("--polar-timeout", type=float, default=None,
+                        help="timeout of one XFOIL polar [s] (default 120, src/foil_codes.LEVELS); "
+                             "with xtr 0.01 XFOIL hangs on some sweeps, the rows done are kept, a "
+                             "shorter timeout gives the same polar sooner (test of 2026-11-09)")
     args = parser.parse_args()
+    if args.xtr is not None:
+        if len(args.xtr) not in (1, 2):
+            parser.error("--xtr needs 1 or 2 values")
+        xtr = [args.xtr[0], args.xtr[-1]]
+        foil_codes.FLOW["xtr"] = xtr                     # this process (FoilCodes default flow)
+        os.environ[foil_codes.XTR_ENV] = ",".join(str(v) for v in xtr)   # the worker processes
+    args.xtr = list(foil_codes.FLOW["xtr"])
     if args.restarts and args.converge is None:
         parser.error("--restarts needs --converge")
     if args.levels is None:
@@ -193,6 +217,9 @@ def main():
     # the codes of the runner: the levels of the surrogate (1..L), then the validation codes
     codes = list(args.levels) + [c for c in args.validate_with if c not in args.levels]
     levels = [CODE_LEVELS[name][0] for name in codes]
+    if args.polar_timeout is not None:          # copies: the module levels stay as they are
+        levels = [{**level, "options": {**level["options"], "polar_timeout": args.polar_timeout}}
+                  if "polar_timeout" in level["options"] else level for level in levels]
     extra_levels = {name: n_levels + i + 1 for i, name in enumerate(codes[n_levels:])}
     level_names = ", ".join(f"{i} = {CODE_LEVELS[name][1]}"
                             + (" (validation only)" if i > n_levels else "")
@@ -200,7 +227,11 @@ def main():
     config = {**vars(args), "conditions": conditions, "condition_weights": condition_weights,
               "optimizer": settings,
               "levels_description": level_names, "criterion_costs": list(args.costs),
-              "family": "Dim-Reduction box, no crossing, NF confident" if args.box == "dimred" else
+              "family": (f"convex domain of {args.search_box} (src/section_domain.py), "
+                         f"{args.k} modes through the current section, box "
+                         f"{args.search_box_name}, constraints incl. Ixx/v (v = t_max/2) checked "
+                         "on the decoded sections at screening") if args.search_box else
+              "Dim-Reduction box, no crossing, NF confident" if args.box == "dimred" else
               f"Dim-Reduction widths x {args.box_scale} centred on the current C-foil section, "
               "no crossing, Ixx >= Ixx(current), NF confident (checked on the decoded sections)",
               "inputs": f"{args.k} PCA scores + Cant_Eff, Rake_Eff, Yaw_Eff (no Hvol)",
@@ -213,7 +244,11 @@ def main():
         VPP_DIR.parent / "studies" / "cfoil_intens_kulfan_trim_2" / "config_cfoil_trim.json"
     ).reference_weights()                                # the current C-foil section (cambered)
     ixx_current = float(section_ixx(current, 0.00197)[0])
-    if args.box == "dimred":
+    if args.search_box:
+        family, pca, _ = load_search_space(Path(args.search_box), args.k, args.search_box_name)
+        run.log(f"search space: {args.search_box}, box {args.search_box_name}, k = {args.k} "
+                f"through the current section, Ixx/v >= {family.domain.ixx_v_min:.4e}")
+    elif args.box == "dimred":
         family = KulfanBoxFamily.from_notebook(extra_check=confident)
     else:
         lower, upper = notebook_bounds()
@@ -224,8 +259,9 @@ def main():
                                           extra_check=stiff_and_confident)
         run.log(f"family: box centred on the current section, scale {args.box_scale}, "
                 f"Ixx >= {ixx_current:.4e}")
-    pca = SectionPCA(family.te_thickness).fit(family.sample(4000, seed=args.seed))
-    pca.n_modes = args.k
+    if not args.search_box:
+        pca = SectionPCA(family.te_thickness).fit(family.sample(4000, seed=args.seed))
+        pca.n_modes = args.k
     pca.save(run.path("data", "pca.json"))
     run.log(f"PCA: rank {pca.rank}, k = {args.k} modes carry "
             f"{100 * pca.variance_ratio[:args.k].sum():.2f} % of the geometric variance")
@@ -234,7 +270,7 @@ def main():
     # once decoded, otherwise the admissible sample closest to it; the mean section for "dimred"
     # (--start-section: the best section of an earlier run instead, same rule)
     start_name, start_scores = "mean_section", np.zeros(args.k)
-    if args.box == "current" or args.start_section:
+    if args.box == "current" or args.start_section or args.search_box:
         if args.start_section:
             earlier = json.loads(Path(args.start_section).read_text(encoding="utf-8"))
             wanted = np.asarray(earlier["kulfan_upper"] + earlier["kulfan_lower"], dtype=float)

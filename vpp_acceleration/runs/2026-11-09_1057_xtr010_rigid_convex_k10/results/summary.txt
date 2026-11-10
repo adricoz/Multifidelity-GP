@@ -1,0 +1,22 @@
+run 2026-11-09_1057_xtr010_rigid_convex_k10: 176 steps in 46.3 min
+code runs: level 1 496 (373 s), level 2 212 (4454 s); final design per level (398, 114)
+speed of the validated sections (final surrogate corrected against HF, weighted mean over the 48 conditions solved for all, 99 % of the probability): best 13.2789 kt, current_section 12.9801 kt
+speeds of the incumbent: 35/7: 7.330, 35/10: 8.564, 35/12: 9.853, 35/15: 11.772, 40/7: 7.801, 40/10: 9.167, 40/12: 10.912, 40/15: 14.160, 45/7: 8.165, 45/10: 9.730, 45/12: 12.069, 45/15: 17.368, 53/7: 8.575, 53/10: 10.436, 53/12: 13.900, 53/15: 19.395, 68/7: 9.049, 68/10: 11.328, 68/12: 16.749, 68/15: 22.253, 77/7: 9.115, 77/10: 11.420, 77/12: 17.006, 77/15: 23.416, 83/7: 9.092, 83/10: 11.315, 83/12: 16.617, 83/15: 24.000, 92/7: 8.981, 92/10: 10.992, 92/12: 15.478, 92/15: 23.014, 64/8: 9.937, 64/14: 20.780, 96/8: 9.721, 96/14: 17.963, 40/5: nan, 60/5: 7.976, 80/5: 8.244, 100/5: 8.048, 40/17: 16.364, 60/17: 21.516, 80/17: 24.000, 100/17: 23.979, 32/8: 7.632, 32/14: 9.927, 110/8: 9.088, 110/14: 13.416, 60/11: 12.665
+validation best: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0034 kt, max 0.0133 kt; predicted sigma RMS 0.0051 kt; |z| <= 2 on 100 %
+   against the lf code: speed error mean -0.0054 kt, RMS 0.0094 kt
+   Fx     |surrogate - HF| / |HF| median 0.22 %
+   Fy     |surrogate - HF| / |HF| median 0.05 %
+   Fz     |surrogate - HF| / |HF| median 0.08 %
+   Mx     |surrogate - HF| / |HF| median 0.06 %
+   My     |surrogate - HF| / |HF| median 0.05 %
+   Mz     |surrogate - HF| / |HF| median 0.10 %
+   Cpmin  |surrogate - HF| / |HF| median 7.38 %
+validation current_section: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0156 kt, max 0.0489 kt; predicted sigma RMS 0.0078 kt; |z| <= 2 on 82 %
+   against the lf code: speed error mean -0.0119 kt, RMS 0.0223 kt
+   Fx     |surrogate - HF| / |HF| median 0.75 %
+   Fy     |surrogate - HF| / |HF| median 0.04 %
+   Fz     |surrogate - HF| / |HF| median 0.06 %
+   Mx     |surrogate - HF| / |HF| median 0.03 %
+   My     |surrogate - HF| / |HF| median 0.23 %
+   Mz     |surrogate - HF| / |HF| median 0.16 %
+   Cpmin  |surrogate - HF| / |HF| median 14.84 %

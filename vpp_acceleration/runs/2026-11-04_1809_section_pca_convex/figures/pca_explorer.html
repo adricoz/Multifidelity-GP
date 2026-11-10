@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explorateur PCA des sections</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+  :root { --bg: #ffffff; --fg: #1d1d1f; --muted: #6e6e73; --line: #d2d2d7; --box: #e8f0fe;
+          --ok: #1a7f37; --bad: #c62828; --accent: #1f6feb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #161618; --fg: #ececec; --muted: #9a9aa0; --line: #3a3a3e; --box: #1d2a40;
+            --ok: #4ac26b; --bad: #ff6b6b; --accent: #58a6ff; } }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+         font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  header h1 { font-size: 18px; margin: 0 0 4px; }
+  header p { margin: 0; color: var(--muted); }
+  main { display: grid; grid-template-columns: 360px 1fr; gap: 16px; padding: 16px; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  .panel { border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; }
+  button { background: transparent; color: var(--fg); border: 1px solid var(--line);
+           border-radius: 6px; padding: 4px 8px; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  input[type=number] { width: 56px; background: transparent; color: var(--fg);
+                       border: 1px solid var(--line); border-radius: 4px; padding: 2px 4px; }
+  .mode { display: grid; grid-template-columns: 74px 1fr 52px; gap: 6px; align-items: center;
+          padding: 2px 4px; border-radius: 4px; }
+  .mode.off { opacity: 0.45; }
+  .mode.shown { outline: 1px solid var(--accent); }
+  .mode label { cursor: pointer; font-variant-numeric: tabular-nums; }
+  .mode small { color: var(--muted); display: block; font-size: 11px; }
+  .track { position: relative; }
+  .track .box { position: absolute; top: 50%; height: 18px; transform: translateY(-50%);
+                border-left: 2px solid var(--accent); border-right: 2px solid var(--accent);
+                pointer-events: none; z-index: 1; box-sizing: border-box; }
+  .track input { position: relative; width: 100%; margin: 0; background: transparent; }
+  .val { text-align: right; font-variant-numeric: tabular-nums; }
+  .val.out { color: var(--bad); font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+  td, th { padding: 3px 6px; border-bottom: 1px solid var(--line); text-align: right; }
+  td:first-child, th:first-child { text-align: left; }
+  .ok { color: var(--ok); } .bad { color: var(--bad); }
+  #check { color: var(--muted); font-size: 12px; margin-top: 8px; }
+  #plot_section { height: 380px; } #plot_thickness, #plot_curvature { height: 260px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Explorateur PCA des sections du C-foil</h1>
+  <p>section = section moyenne + &Sigma;<sub>j&le;k</sub> &sigma;<sub>j</sub> z<sub>j</sub> m<sub>j</sub>
+     &middot; v = y<sub>extrados</sub>(x<sub>tmax</sub>) &minus; y<sub>g</sub> &middot; PCA : <span id="pca_file"></span></p>
+</header>
+<main>
+  <section class="panel">
+    <div class="row">
+      <label>k <input type="number" id="k" min="1" step="1"></label>
+      <label>boîte &plusmn;a <input type="number" id="a" min="0.5" max="4" step="0.5" value="3"></label>
+      <label><input type="checkbox" id="stretch" checked> y &times;3</label>
+    </div>
+    <div class="row" title="paramètres des contraintes, à choisir">
+      <label>wiggliness &le; <input type="number" id="wmax" min="1" step="1" value="2"> &times; actuelle</label>
+    </div>
+    <div class="row">
+      <label>intrados <select id="lowerRule">
+        <option value="none" selected>sans inflexion (y'' &ge; 0)</option>
+        <option value="zones">zones de signe +, &minus;, +</option></select></label>
+    </div>
+    <div class="row" title="rayon de bord d'attaque de chaque surface, w0² / 2 (fraction de corde)">
+      <label>r<sub>BA</sub> min : extrados <input type="number" id="rUp" min="0" step="0.001"></label>
+      <label>intrados <input type="number" id="rLo" min="0" step="0.0005"></label>
+    </div>
+    <div class="row" id="zoneRow" title="zones de signe de y'' de l'intrados : + avant x1 - g, - entre x1 + g et x2 - g, + après x2 + g">
+      <label>zones : x1 <input type="number" id="x1" min="0" max="1" step="0.01"></label>
+      <label>x2 <input type="number" id="x2" min="0" max="1" step="0.01"></label>
+      <label>&plusmn;g <input type="number" id="gap" min="0" max="0.3" step="0.01" value="0.05"></label>
+    </div>
+    <div class="row" id="buttons">
+      <button id="mean">moyenne</button>
+      <button id="random">aléatoire dans la boîte</button>
+      <button id="corner">coin aléatoire</button>
+    </div>
+    <div id="modes"></div>
+    <p style="color: var(--muted); font-size: 12px">Cliquer sur le nom d'un mode : affiche la section
+      moyenne &plusmn; a &sigma;<sub>j</sub> m<sub>j</sub> (ce que fait ce mode seul). Les modes au-delà de k
+      sont grisés et ne comptent pas dans la section.</p>
+  </section>
+  <section>
+    <div class="panel"><div id="plot_section"></div><div id="plot_thickness"></div><div id="plot_curvature"></div></div>
+    <div class="panel" style="margin-top: 16px">
+      <table id="metrics"></table>
+      <div id="check"></div>
+    </div>
+  </section>
+</main>
+<script>
+const DATA = {"pca_file": "runs\\2026-11-04_1809_section_pca_convex\\data\\pca.json", "te": 0.00197, "n_weights": 8, "k": 16, "mean_weights": [0.3569465865498915, 0.232073536559004, 0.28297425748419425, 0.25069740349944664, 0.2400487676934573, 0.26936942833067373, 0.24017713213203135, 0.28547367485429354, -0.1600939015264486, -0.14035674584688915, -0.16586175368104134, -0.12124595264153491, 0.02091036905072512, -0.008303144207692376, 0.08285364449612406, 0.00686457501475539], "sigmas": [0.18518867317933788, 0.11470249553182368, 0.06902777899407617, 0.057249591004374246, 0.03391821224662308, 0.03113468279886721, 0.017578118282405634, 0.013900993997740975, 0.010006519749217771, 0.00888781590082401, 0.005369622918677187, 0.00472976331963804, 0.0023892292942888534, 0.002091212621153068, 0.0008961047310641309, 0.0006813034464684133], "weight_modes": [[0.2980717235566105, -0.14285993902336633, 0.6622195941167824, -0.004809000635531671, 0.1254084055057148, 1.2209219628050474, 1.9729808933003092, -0.043207929436754555, 1.837457592491017, 0.07054164964510587, -1.766976750520951, -0.0004357315118234113, 2.1186258549913846, -0.056913873413468326, -1.766844210862944, 0.02068878367957975], [0.36737961408031633, -0.023463050711338525, 0.4268012804655207, -0.04979122810067431, -0.10318596568810358, -0.5645826784766927, -3.1759121203710765, 0.06265121879855153, -4.843471307606188, -0.18559687113317908, 6.108009163854212, -0.01609024242292444, -8.94012931188777, 0.23603070310200702, 8.467724714332057, -0.09945764395741033], [0.22638815395156484, -0.01816562655869798, -0.28310264625740045, 0.0436710298334306, -0.005152746226735887, -0.5895100942561501, 1.3711150371567613, -0.028021506231627243, 5.656929868650387, 0.23361316027653922, -10.879532588961837, 0.05816385637498557, 21.691136282739116, -0.5559938280285641, -24.280525950385154, 0.2888576069436796], [0.24484893668059748, -0.0019035130422831482, -0.11219021794480091, 0.002429500646706684, -0.035563403249163544, -0.25801351303554204, 0.8516326373547408, -0.001180623593777826, -1.5034745027655907, -0.10138325415690531, 9.175225403799027, -0.10660933089054556, -32.71376784608278, 0.7953953460152156, 46.165298992678736, -0.5595737739118917], [0.20677785258961534, 0.01536051650487568, -0.4030449676759674, 0.002651081930961386, 0.04387470758834428, 0.35686614198820954, -0.11083414826017468, 0.0022594804525319055, -2.0063962492725755, -0.04281716942497188, -0.0807551826927313, 0.12095080788465504, 30.376190272377496, -0.6622001683218742, -60.94325181026249, 0.7571347963758314], [0.13452720962530215, 0.017021115341289063, -0.2928150630458113, 0.01941618151758465, 0.032772454128649084, 0.36809664197792136, -0.11871514882828677, -0.026592891737681812, 0.09333892329006657, 0.010776138446785596, -6.137117362104081, -0.07810381407821568, -14.713389065366675, 0.21810915989027846, 56.7548231165708, -0.7287603026913704], [0.14015087395308268, 0.02029737463863842, -0.3538706549119374, 0.0015668473281199372, 0.05493074247915492, 0.6428130076483307, -0.9193086591438226, 0.0400784431311204, 1.4135210014986523, 0.04917831457441286, 3.1562408854499604, 0.004301976363032106, -0.4663096369845974, 0.139042354709066, -37.00338703239269, 0.49732637407626495], [0.0542322544718561, 0.010742207907968369, -0.1569311921482637, 0.0027853900955153075, 0.03382153180090776, 0.3131539557392958, -0.47900380507270124, 0.00013745104903195785, 1.0176390774565105, 0.00439887305672243, 2.005966834117271, 0.03936668748896817, 5.220727554110872, -0.19142467630358395, 16.306374787887773, -0.2335459434825678], [0.011274510526418596, 0.18636874669036868, 0.021217496736785173, -0.4630140098204614, 1.3537252209911816, -0.11275758270274575, 0.015033153091263374, 1.5010816185980025, -0.06167264614857148, 1.8135525823054035, 0.004823653850486365, -1.4598908804226074, 0.07682395977024173, 2.5841546230427603, -0.015271030801114565, -1.899895890765631], [0.04359091652963136, 0.36922600352955304, 0.0276640982610094, -0.2927575454264907, -0.27532985649530406, 0.02455203232548963, -0.0174058738279171, -2.191930872225897, 0.1287403896572877, -3.8803528686972917, -0.001455052956806764, 4.31411977370245, -0.2900395246992226, -10.167218019150887, 0.08470182715978615, 8.998918557295935], [0.028710377652292462, 0.3162685310788321, 0.024058307341180432, 0.016733585945929608, -0.7505503811019322, 0.06355114229983244, 0.0037090895768754125, 0.4088316799952232, -0.09239121274517689, 2.6069050477874027, -0.04519309528942554, -5.880081883386744, 0.6141174963328, 22.80124485348327, -0.26910101782097035, -25.50808542778114], [0.02174126751147396, 0.24391393093067776, 0.019952845501644556, 0.02198656960544644, -0.1258919950164311, 0.015990270944070593, 0.003372795863122846, 0.4256029252922531, -0.04847401347237219, 2.785780965527945, 0.13410454208767997, 1.4231438648995747, -0.7771902438491338, -31.28965130209564, 0.5506877661606508, 47.95508114535781], [0.016391636848675725, 0.14386283104086428, 0.02256178483030496, -0.04211174087829482, -0.044444615629547164, 0.033300480983405295, 0.06307051397554558, 1.665339085646969, 0.10578001945250982, -5.213751216639675, -0.18069413528708617, 6.447959702247649, 0.5470390671274693, 25.52922209423376, -0.7691043692807328, -62.59362122211865], [0.010081663119880102, 0.1937158670224629, 0.05996732199747448, 1.1006609530498026, 0.6901576508310442, -0.07949794012619012, -0.06391019078256817, -1.3903742818457514, -0.011277626955649236, 1.5456014438102095, 0.120281439189776, -8.14684371899758, -0.09791731187659718, -9.304597817606924, 0.7505497311916193, 57.58916482580192], [0.007059559566853628, 0.08125854769534847, 0.02173012306146905, 0.29086825369192953, 0.21847729828177964, -0.017415958732510846, -0.005638308239123515, -0.5320989769732315, -0.03681150397706719, 0.9014478585813988, -0.025225403726423654, 1.8457522917689517, -0.17988343795509426, -3.242721861866548, -0.5096379582435245, -36.9818019918553], [0.00545986174895779, 0.06971053409277096, 0.02000720248678241, 0.27214393567385864, 0.20120572285818228, -0.01767066604933272, -0.009075622539379016, -0.5323517654960613, -0.04101697965810481, 1.1118196856330302, -0.008607339558277452, 3.745907934155203, 0.17168633390186758, 5.499290281044637, 0.2312667909455242, 15.895406266970115]], "variance_ratio": [0.5876674096807217, 0.22544909690947548, 0.08164894290411367, 0.056162643755613716, 0.019713724067212984, 0.016610842386437036, 0.00529477526622695, 0.003311269112863229, 0.0017158087575640973, 0.0013536078579248763, 0.0004940721150373063, 0.0003833377454498363, 9.78179210535641e-05, 7.493749115217827e-05, 1.3760059343799254e-05, 7.95396980957665e-06], "n_stations": 2001, "domain": {"reference": [0.274243, 0.2836861428571429, 0.2746288571428572, 0.2545228285714286, 0.23081974285714285, 0.2109712857142857, 0.20242914285714286, 0.212645, -0.057965, -0.06740814285714286, -0.05835085714285715, -0.03824482857142858, -0.014541742857142863, 0.005306714285714283, 0.01384885714285714, 0.0036329999999999973], "te_thickness": 0.00197, "box_scale": 3.0, "band": 0.05, "le_factor": 0.5, "inflections": [0.467, 0.9380000000000001], "kappa": [1.2529306795044861, 0.05597416475625139], "ixx_v_min": 0.0009912588871855807, "box_lower": [-0.010757000000000017, 0.04368614285714284, 0.03462885714285713, 0.029522828571428628, 0.005819742857142818, 0.015971285714285688, 0.037429142857142855, 0.10014500000000001, -0.275465, -0.26240814285714287, -0.2683508571428571, -0.2482448285714286, -0.22454174285714287, -0.18969328571428573, -0.10615114285714286, -0.056367], "box_upper": [0.559243, 0.5236861428571429, 0.5146288571428572, 0.4795228285714286, 0.4558197428571429, 0.4059712857142857, 0.3674291428571429, 0.325145, 0.15953500000000004, 0.12759185714285715, 0.15164914285714282, 0.17175517142857144, 0.19545825714285717, 0.20030671428571428, 0.13384885714285713, 0.063633], "x_lo": 0.01, "x_hi": 0.99, "score_box": [{"mode": 1, "lower": -2.9877635830596865, "upper": 1.6322364169403132, "lower_limit": "leading_edge", "upper_limit": "upper_curvature"}, {"mode": 2, "lower": -2.365138530131779, "upper": 3.034861469868221, "lower_limit": "lower_curvature", "upper_limit": "leading_edge"}, {"mode": 3, "lower": -1.0889349934210395, "upper": 1.6510650065789605, "lower_limit": "leading_edge", "upper_limit": "upper_curvature"}, {"mode": 4, "lower": -2.444672175232175, "upper": -0.5046721752321752, "lower_limit": "leading_edge", "upper_limit": "lower_curvature"}, {"mode": 5, "lower": -1.0831492614673859, "upper": -0.053149261467385744, "lower_limit": "lower_curvature", "upper_limit": "leading_edge"}, {"mode": 6, "lower": -2.614119279205802, "upper": 1.1058807207941976, "lower_limit": "upper_curvature", "upper_limit": "upper_curvature"}, {"mode": 7, "lower": -1.7664513277464657, "upper": 1.2435486722535343, "lower_limit": "leading_edge", "upper_limit": "upper_curvature"}, {"mode": 8, "lower": -0.026571468172102652, "upper": 1.1634285318278974, "lower_limit": "lower_curvature", "upper_limit": "lower_curvature"}, {"mode": 9, "lower": -1.6612550111102826, "upper": 0.5887449888897173, "lower_limit": "upper_curvature", "upper_limit": "upper_curvature"}, {"mode": 10, "lower": -0.5707396260128634, "upper": 1.0792603739871365, "lower_limit": "lower_curvature", "upper_limit": "lower_curvature"}, {"mode": 11, "lower": -1.5570905877313503, "upper": 0.19290941226864955, "lower_limit": "upper_curvature", "upper_limit": "upper_curvature"}, {"mode": 12, "lower": -1.4599672037815643, "upper": -0.25996720378156424, "lower_limit": "lower_curvature", "upper_limit": "lower_curvature"}, {"mode": 13, "lower": -2.0530230115509216, "upper": 0.21697698844907842, "lower_limit": "upper_curvature", "upper_limit": "upper_curvature"}, {"mode": 14, "lower": -1.0905205480457718, "upper": 0.9894794519542283, "lower_limit": "lower_curvature", "upper_limit": "lower_curvature"}, {"mode": 15, "lower": -1.9164469450481847, "upper": 0.6235530549518153, "lower_limit": "upper_curvature", "upper_limit": "upper_curvature"}, {"mode": 16, "lower": -2.9651231885812583, "upper": 2.0848768114187415, "lower_limit": "kulfan_box", "upper_limit": "lower_curvature"}], "current_scores": [-0.11776358305968679, 2.024861469868221, 0.6310650065789605, -1.7846721752321753, -0.4131492614673858, -1.9241192792058022, 0.44354867225353417, 0.5534285318278974, -0.8812550111102827, 0.2792603739871365, -0.5670905877313505, -0.8399672037815643, -0.7630230115509216, 0.5594794519542283, -1.2864469450481848, 1.7948768114187417]}, "references": [{"name": "actuelle", "weights": [0.274243, 0.2836861428571429, 0.2746288571428572, 0.2545228285714286, 0.23081974285714285, 0.2109712857142857, 0.20242914285714286, 0.212645, -0.057965, -0.06740814285714286, -0.05835085714285715, -0.03824482857142858, -0.014541742857142863, 0.005306714285714283, 0.01384885714285714, 0.0036329999999999973], "scores": [-0.11776358305968151, 2.0248614698682075, 0.631065006579006, -1.7846721752321675, -0.4131492614673764, -1.9241192792057822, 0.44354867225357625, 0.5534285318279154, -0.8812550111103041, 0.2792603739870897, -0.5670905877315946, -0.8399672037815145, -0.7630230115508742, 0.5594794519541917, -1.2864469450479794, 1.7948768114186602], "structure": {"t_max": 0.12250167688288359, "x_tmax": 0.2665, "y_g": 0.034431920359145995, "ixx": 6.71744083444622e-05, "v": 0.06776676528488565, "ixx_v": 0.0009912588871855807, "wig": 0.0019436657285795927}}, {"name": "meilleure 2026-10-29_1002_profile_v2_box3_3h", "weights": [0.16190286307192003, 0.2142557410542992, 0.16160913330848825, 0.22966753457181416, 0.2492679556969393, 0.15366678005162684, 0.08536799459901051, 0.16546052898908195, -0.15115839622208446, -0.1417508706996429, -0.1468831462344741, -0.11992047490715677, -0.05668623976704838, -0.005376934337320412, 0.020089482994578082, 0.004830295366559875], "scores": [-1.6442706488273429, -0.02683611931272617, 0.00883363388131833, -1.0960314187653826, -0.5466650860141931, -2.9819732545139686, 1.9206324135471882, -0.5711890539801682, -3.3594390701655965, 0.16213058449779807, -0.4560712773888526, -0.5928923707463727, -0.19086654659654181, 0.5761772391691868, -1.0433704198479476, 1.5002713652595578], "structure": {"t_max": 0.12522623508102254, "x_tmax": 0.296, "y_g": 0.01415249064985406, "ixx": 6.744108282014825e-05, "v": 0.06192545436877818, "ixx_v": 0.0010890688410378619, "wig": 0.06900533073898228}}, {"name": "propre la plus proche", "weights": [0.27421862676347447, 0.283804317041867, 0.2742876608014388, 0.2551693638476472, 0.2299937329815259, 0.21166144085039185, 0.20206453998387416, 0.21279613183253443, -0.07417559196924559, -0.052970182181434254, -0.030412531165026544, -0.03683105836009301, -0.02559985573294642, -0.027222984411595284, -0.023315825558858486, -0.022622424478726737], "scores": [-0.11520188908306515, 2.045165910035332, 0.6100547487959593, -2.486313714376878, -1.229723586210452, -1.8468553434978914, 0.47607532898107674, 0.7159612474979196, -0.8533967099484779, -0.022745965299708456, -0.5768579947431347, -1.4477506270397367, -0.7509696081264736, 0.6251938580523408, -1.2639856887989513, 2.1976401072061775], "structure": {"t_max": 0.11866927162129584, "x_tmax": 0.2685, "y_g": 0.0339320904192361, "ixx": 6.81227587638897e-05, "v": 0.06830629194944032, "ixx_v": 0.000997313085217882, "wig": 0.002389274978098311}}]};
+const R = DATA.sigmas.length, NW = DATA.n_weights, TE = DATA.te;
+const N = DATA.n_stations, X = Array.from({length: N}, (_, i) => i / (N - 1));
+const STEP = 1 / (N - 1);
+let z = new Array(R).fill(0), shownMode = null;
+
+// --- geometry (section_pca: Kulfan, N1 = 0.5, N2 = 1, Bernstein of degree NW - 1) ---
+const binom = (n, i) => { let c = 1; for (let j = 1; j <= i; j++) c = c * (n - j + 1) / j; return c; };
+const SHAPE = X.map(x => { const c = Math.sqrt(x) * (1 - x);
+  return Array.from({length: NW}, (_, i) => c * binom(NW - 1, i) * x ** i * (1 - x) ** (NW - 1 - i)); });
+function decode(scores, k) {
+  const w = DATA.mean_weights.slice();
+  for (let j = 0; j < k; j++) { const s = DATA.sigmas[j] * scores[j];
+    for (let i = 0; i < 2 * NW; i++) w[i] += s * DATA.weight_modes[i][j]; }
+  return w;
+}
+function surfaces(w) {
+  const up = new Float64Array(N), lo = new Float64Array(N);
+  for (let p = 0; p < N; p++) { let u = 0, l = 0;
+    for (let i = 0; i < NW; i++) { u += SHAPE[p][i] * w[i]; l += SHAPE[p][i] * w[NW + i]; }
+    up[p] = u + X[p] * TE / 2; lo[p] = l - X[p] * TE / 2; }
+  return {up, lo};
+}
+const trapz = f => { let s = 0; for (let p = 1; p < N; p++) s += (f[p] + f[p - 1]) / 2; return s * STEP; };
+function structure(w) {
+  const {up, lo} = surfaces(w);
+  const tau = Array.from(up, (u, p) => u - lo[p]), cam = Array.from(up, (u, p) => (u + lo[p]) / 2);
+  const yg = trapz(tau.map((t, p) => t * cam[p])) / trapz(tau);
+  const ixx = trapz(tau.map((t, p) => t ** 3 / 12 + t * (cam[p] - yg) ** 2));
+  let j = 0; for (let p = 1; p < N; p++) if (tau[p] > tau[j]) j = p;
+  const v = up[j] - yg;
+  // second differences of the surfaces (null at both ends)
+  const d2 = y => Array.from(y, (_, p) => p === 0 || p === N - 1 ? null
+    : (y[p + 1] - 2 * y[p] + y[p - 1]) / (STEP * STEP));
+  return {up, lo, tau, cam, t_max: tau[j], x_tmax: X[j], y_g: yg, ixx, v, ixx_v: ixx / v,
+          t_min: Math.min(...tau.slice(1)), d2u: d2(up), d2l: d2(lo), wig: wiggliness(w)};
+}
+// section_pca.wiggliness: squared second differences of the upper, then of the lower weights
+function wiggliness(w) { let s = 0;
+  for (const off of [0, NW]) for (let i = 0; i < NW - 2; i++) s += (w[off + i] - 2 * w[off + i + 1] + w[off + i + 2]) ** 2;
+  return s; }
+// required sign of y'' at x (0 = free): upper <= 0 on [0.01, 0.99]; lower +, -, + zones around x1, x2
+const X_LO = 0.01, X_HI = 0.99;
+function signUpper(x) { return x >= X_LO && x <= X_HI ? -1 : 0; }
+function signLower(x, x1, x2, g, rule = "zones") {
+  if (x < X_LO || x > X_HI) return 0;
+  if (rule === "none") return 1;
+  if (x <= x1 - g) return 1; if (x >= x1 + g && x <= x2 - g) return -1; if (x >= x2 + g) return 1; return 0; }
+// stations where a surface breaks its sign rule (y'' ~ 0.1 to 10: 1e-4 is a numerical zero, e.g.
+// a straight stretch of a section on the bound of the rule)
+const breaks = (d2y, rule) => Array.from(d2y, (c, p) => c !== null && rule(X[p]) !== 0 && c * rule(X[p]) < -1e-4);
+// inflections of the lower surface of the current section: the default x1, x2 of the page
+function inflections(d2y) { const out = [];
+  for (let p = 1; p < N - 2; p++) if (X[p] > X_LO && X[p] < X_HI && d2y[p] * d2y[p + 1] < 0) out.push(X[p]);
+  return out; }
+
+// --- controls ---
+const kInput = document.getElementById("k"), aInput = document.getElementById("a");
+kInput.max = R; kInput.value = DATA.k;
+document.getElementById("pca_file").textContent = `${DATA.pca_file} (rang ${R}, k du run = ${DATA.k})`;
+const k = () => Math.max(1, Math.min(R, parseInt(kInput.value) || DATA.k));
+const a = () => parseFloat(aInput.value) || 3;
+// box of mode j: the score box of the domain (domain.json) when given, otherwise +-a
+const DOM = DATA.domain;
+const limits = j => DOM ? [DOM.score_box[j].lower, DOM.score_box[j].upper] : [-a(), a()];
+const SLIDER = Math.max(4, ...(DOM ? DOM.score_box.flatMap(b => [Math.abs(b.lower), Math.abs(b.upper)]).map(Math.ceil) : []));
+const modesDiv = document.getElementById("modes");
+for (let j = 0; j < R; j++) {
+  modesDiv.insertAdjacentHTML("beforeend",
+    `<div class="mode" id="mode${j}"><label data-j="${j}">mode ${j + 1}<small>${(100 * DATA.variance_ratio[j]).toFixed(2)} %</small></label>
+     <div class="track"><div class="box"></div><input type="range" min="${-SLIDER}" max="${SLIDER}" step="0.05" value="0" data-j="${j}"></div>
+     <span class="val" id="val${j}">0.00</span></div>`);
+}
+modesDiv.addEventListener("input", e => { if (e.target.dataset.j !== undefined) {
+  z[+e.target.dataset.j] = parseFloat(e.target.value); update(); } });
+modesDiv.addEventListener("click", e => { const lab = e.target.closest("label"); if (!lab) return;
+  const j = +lab.dataset.j; shownMode = shownMode === j ? null : j; update(); });
+function setScores(scores) { z = scores.slice(); z.forEach((s, j) => {
+  modesDiv.querySelector(`input[data-j="${j}"]`).value = s; }); update(); }
+document.getElementById("mean").onclick = () => setScores(new Array(R).fill(0));
+document.getElementById("random").onclick = () => setScores(z.map((_, j) => { const [lo, hi] = limits(j);
+  return j < k() ? lo + (hi - lo) * Math.random() : 0; }));
+document.getElementById("corner").onclick = () => setScores(z.map((_, j) => j < k() ? limits(j)[Math.random() < 0.5 ? 0 : 1] : 0));
+const buttons = document.getElementById("buttons");
+DATA.references.forEach(ref => { const b = document.createElement("button");
+  b.textContent = ref.name; b.title = "ses scores sur tous les modes (seuls les k premiers comptent)";
+  b.onclick = () => setScores(ref.scores.map(s => Math.max(-SLIDER, Math.min(SLIDER, s)))); buttons.appendChild(b); });
+const num = id => parseFloat(document.getElementById(id).value);
+["k", "a", "stretch", "wmax", "x1", "x2", "gap", "lowerRule", "rUp", "rLo"].forEach(id =>
+  document.getElementById(id).addEventListener("input", update));
+
+// --- drawing ---
+const REF_STYLE = [{color: "#8e8e93", dash: "dash"}, {color: "#e36209", dash: "dot"},
+                   {color: "#2da44e", dash: "longdash"}];
+const REF = DATA.references.map(r => ({...r, s: structure(r.weights)}));
+{ const f = inflections(REF[0].s.d2l);           // x1, x2 default: the current section's
+  document.getElementById("x1").value = (f[0] ?? 0.47).toFixed(2);
+  document.getElementById("x2").value = (f[1] ?? 0.94).toFixed(2); }
+// leading-edge radius of each surface: y = w0 sqrt(x) near x = 0, radius w0^2 / 2
+const leRadius = w => ({up: w[0] > 0 ? w[0] ** 2 / 2 : 0, lo: w[NW] < 0 ? w[NW] ** 2 / 2 : 0});
+{ const r = leRadius(REF[0].weights);           // default minima: half those of the current section
+  document.getElementById("rUp").value = (r.up / 2).toPrecision(2);
+  document.getElementById("rLo").value = (r.lo / 2).toPrecision(2); }
+if (DOM) {                                      // the settings of the domain (src/section_domain.py)
+  document.getElementById("lowerRule").value = "zones";
+  document.getElementById("x1").value = DOM.inflections[0].toFixed(3);
+  document.getElementById("x2").value = DOM.inflections[1].toFixed(3);
+  document.getElementById("gap").value = DOM.band;
+  ["rUp", "rLo"].forEach(id => { document.getElementById(id).disabled = true; });
+  document.getElementById("a").disabled = true;
+}
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+function layout(title, ytitle, equal) {
+  const fg = css("--fg"), grid = css("--line");
+  return {title: {text: title, font: {size: 14}}, paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
+    font: {color: fg}, margin: {l: 56, r: 16, t: 36, b: 40}, legend: {orientation: "h", y: -0.18},
+    xaxis: {title: "x / c", gridcolor: grid, zeroline: false, range: [-0.02, 1.02]},
+    yaxis: {title: ytitle, gridcolor: grid, zeroline: false,
+            ...(equal ? {scaleanchor: "x", scaleratio: document.getElementById("stretch").checked ? 3 : 1} : {})}};
+}
+const outline = (s, name, line, extra = {}) => ({x: [...X, ...X.slice().reverse()],
+  y: [...s.up, ...Array.from(s.lo).reverse()], name, mode: "lines", line, ...extra});
+const fmt = (x, d = 4) => x.toFixed(d), sci = x => x.toExponential(4);
+
+function update() {
+  const kk = k(), aa = a();
+  for (let j = 0; j < R; j++) {
+    const [lo, hi] = limits(j), out = j < kk && (z[j] < lo - 1e-9 || z[j] > hi + 1e-9);
+    const row = document.getElementById(`mode${j}`);
+    row.classList.toggle("off", j >= kk); row.classList.toggle("shown", shownMode === j);
+    const box = row.querySelector(".box"), pos = v => 50 + 50 * v / SLIDER;
+    box.style.left = `${pos(lo)}%`; box.style.width = `${pos(hi) - pos(lo)}%`;
+    const val = document.getElementById(`val${j}`); val.textContent = z[j].toFixed(2); val.classList.toggle("out", out);
+  }
+  const s = structure(decode(z, kk)), accent = css("--accent");
+  const traces = REF.map((r, i) => outline(r.s, r.name + " (exacte)", {...REF_STYLE[i], width: 1.5}));
+  if (shownMode !== null) [-1, 1].forEach(sign => { const zz = new Array(R).fill(0); zz[shownMode] = sign * aa;
+    traces.push(outline(structure(decode(zz, R)), `moyenne ${sign > 0 ? "+" : "−"} ${aa} σ mode ${shownMode + 1}`,
+      {color: sign > 0 ? "#2da44e" : "#cf222e", width: 1, dash: "dashdot"})); });
+  traces.push(outline(s, "section (z, k modes)", {color: accent, width: 2.5}));
+  traces.push({x: X, y: s.cam, name: "cambrure", mode: "lines", line: {color: accent, width: 1, dash: "dot"}});
+  // crossing surfaces (t < 0): the stretch of the upper surface where it is under the lower one
+  const crossed = (y) => Array.from(y, (v, p) => (p > 0 && s.tau[p] < 0 ? v : null));
+  if (s.t_min < 0) traces.push({x: X, y: crossed(s.up), name: "croisement (t < 0)", mode: "lines",
+                                line: {color: css("--bad"), width: 6}, connectgaps: false});
+  // curvature rules: the stretches of each surface whose y'' has the wrong sign
+  const x1 = num("x1"), x2 = num("x2"), g = num("gap"), wmax = num("wmax");
+  const lowerRule = document.getElementById("lowerRule").value;
+  document.getElementById("zoneRow").style.display = lowerRule === "zones" ? "" : "none";
+  const ruleLower = x => signLower(x, x1, x2, g, lowerRule);
+  const badU = breaks(s.d2u, signUpper), badL = breaks(s.d2l, ruleLower);
+  const onBad = (y, bad) => Array.from(y, (v, p) => (bad[p] ? v : null));
+  if (badU.some(Boolean)) traces.push({x: X, y: onBad(s.up, badU), name: "extrados : y'' > 0", mode: "lines",
+                                       line: {color: "#d97706", width: 5}, connectgaps: false});
+  if (badL.some(Boolean)) traces.push({x: X, y: onBad(s.lo, badL), name: "intrados : y'' hors zone", mode: "lines",
+                                       line: {color: "#a21caf", width: 5}, connectgaps: false});
+  traces.push({x: [0, 1], y: [s.y_g, s.y_g], name: "fibre neutre y_g", mode: "lines", line: {color: css("--muted"), width: 1}});
+  traces.push({x: [s.x_tmax, s.x_tmax], y: [s.y_g, s.y_g + s.v], name: "v", mode: "lines+markers",
+               line: {color: "#bf8700", width: 3}, marker: {size: 6}});
+  Plotly.react("plot_section", traces, layout("Section", "y / c", true), {responsive: true, displaylogo: false});
+
+  const tt = REF.map((r, i) => ({x: X, y: r.s.tau, name: r.name, mode: "lines", line: {...REF_STYLE[i], width: 1.5}}));
+  tt.push({x: X, y: s.tau, name: "section", mode: "lines", line: {color: accent, width: 2.5}});
+  tt.push({x: [0, 1], y: [0, 0], showlegend: false, mode: "lines", line: {color: css("--muted"), width: 1}});
+  if (s.t_min < 0) tt.push({x: X, y: crossed(s.tau), name: "t < 0", mode: "lines",
+                            line: {color: css("--bad"), width: 6}, connectgaps: false});
+  tt.push({x: [s.x_tmax], y: [s.t_max], name: "t_max", mode: "markers", marker: {color: "#bf8700", size: 8}});
+  Plotly.react("plot_thickness", tt, layout("Épaisseur locale t(x)", "t / c", false), {responsive: true, displaylogo: false});
+
+  // y'' of both surfaces, with the sign zones of the lower surface (shaded: + green, - red)
+  const view = Array.from(X, x => x >= 0.03 && x <= X_HI);            // the leading edge diverges
+  const cut = y => Array.from(y, (v, p) => (view[p] ? v : null));
+  const cc = [{x: X, y: cut(REF[0].s.d2u), name: "extrados actuelle", mode: "lines", line: {...REF_STYLE[0], width: 1}},
+              {x: X, y: cut(REF[0].s.d2l), name: "intrados actuelle", mode: "lines", line: {...REF_STYLE[0], width: 1, dash: "dot"}},
+              {x: X, y: cut(s.d2u), name: "extrados", mode: "lines", line: {color: accent, width: 2}},
+              {x: X, y: cut(s.d2l), name: "intrados", mode: "lines", line: {color: "#a21caf", width: 2}},
+              {x: [0, 1], y: [0, 0], showlegend: false, mode: "lines", line: {color: css("--muted"), width: 1}}];
+  const zone = (x0, x1_, sign) => ({type: "rect", xref: "x", yref: "paper", x0, x1: x1_, y0: 0, y1: 1, layer: "below",
+    line: {width: 0}, fillcolor: sign > 0 ? "rgba(46,160,67,0.10)" : "rgba(207,34,46,0.10)"});
+  const lc = layout("Dérivée seconde y''(x) — zones de signe de l'intrados (vert +, rouge −, blanc libre)", "y''", false);
+  lc.shapes = lowerRule === "zones" ? [zone(X_LO, x1 - g, 1), zone(x1 + g, x2 - g, -1), zone(x2 + g, X_HI, 1)]
+    : [zone(X_LO, X_HI, 1)];
+  lc.title.text = "Dérivée seconde y''(x) — signe imposé à l'intrados (vert +, rouge −, blanc libre)";
+  // y scale from x >= 0.1: the sign changes happen there, the leading-edge values would hide them
+  const span = Math.max(...[s.d2u, s.d2l, REF[0].s.d2u, REF[0].s.d2l].flatMap(y =>
+    y.filter((c, p) => c !== null && X[p] >= 0.1 && X[p] <= X_HI).map(Math.abs)));
+  lc.yaxis.range = [-1.3 * span, 1.3 * span];
+  Plotly.react("plot_curvature", cc, lc, {responsive: true, displaylogo: false});
+
+  const cur = REF[0].s, inBox = z.slice(0, kk).every((v, j) => v >= limits(j)[0] - 1e-9 && v <= limits(j)[1] + 1e-9);
+  const norm = Math.sqrt(z.slice(0, kk).reduce((t, v) => t + v * v, 0));
+  const rows = [["t_max / c", fmt(s.t_max), fmt(cur.t_max)], ["x_tmax / c", fmt(s.x_tmax, 3), fmt(cur.x_tmax, 3)],
+    ["y_g / c (fibre neutre)", fmt(s.y_g), fmt(cur.y_g)], ["v / c", fmt(s.v), fmt(cur.v)],
+    ["Ixx / c⁴", sci(s.ixx), sci(cur.ixx)], ["Ixx / v / c³", sci(s.ixx_v), sci(cur.ixx_v)]];
+  rows.push(["wiggliness", sci(s.wig), sci(cur.wig)]);
+  const ratio = s.ixx_v / cur.ixx_v, crossing = s.t_min < 0, wigRatio = s.wig / cur.wig;
+  const le = leRadius(decode(z, kk)), leCur = leRadius(REF[0].weights);
+  const where = bad => { const xs = X.filter((_, p) => bad[p]); return xs.length ?
+    ` (x ${xs[0].toFixed(2)}–${xs[xs.length - 1].toFixed(2)})` : ""; };
+  const checks = [
+    [(DOM ? "dans la boîte du domaine" : "dans la boîte ±" + aa) + " (k = " + kk + ")", inBox, ""],
+    ["surfaces sans croisement", !crossing, ` (t_min ${fmt(s.t_min)})`],
+    ["extrados convexe (y'' ≤ 0)", !badU.some(Boolean), where(badU)],
+    [lowerRule === "zones" ? "intrados dans ses zones de signe" : "intrados sans inflexion (y'' ≥ 0)",
+     !badL.some(Boolean), where(badL)],
+    ["bord d'attaque rond" + (DOM ? " (r ≥ κ t_max²)" : ""),
+     DOM ? le.up >= DOM.kappa[0] * s.t_max ** 2 * (1 - 1e-9) && le.lo >= DOM.kappa[1] * s.t_max ** 2 * (1 - 1e-9)
+         : le.up >= num("rUp") && le.lo >= num("rLo"),
+     ` (r extrados ${fmt(le.up)}, intrados ${fmt(le.lo)} ; actuelle ${fmt(leCur.up)}, ${fmt(leCur.lo)})`],
+    // not a constraint of the domain yet (threshold to choose): shown, not counted, with a domain
+    [`wiggliness ≤ ${wmax} × actuelle` + (DOM ? " (indicatif)" : ""), DOM ? null : wigRatio <= wmax,
+     ` (${wigRatio.toFixed(1)} ×)`],
+    ["Ixx/v ≥ actuelle", crossing ? null : ratio >= 1 - 1e-9, crossing ? " — sans objet : surfaces croisées" : ` (${ratio.toFixed(3)})`]];
+  const admissible = checks.every(([, ok]) => ok !== false) && !crossing;
+  const cell = ok => ok === null ? "" : ok ? "ok" : "bad", word = ok => ok === null ? "—" : ok ? "oui" : "non";
+  document.getElementById("metrics").innerHTML =
+    `<tr><th></th><th>section</th><th>actuelle</th><th>rapport</th></tr>` +
+    rows.map(([n, x, c]) => `<tr><td>${n}</td><td>${x}</td><td>${c}</td><td>${(parseFloat(x) / parseFloat(c)).toFixed(3)}</td></tr>`).join("") +
+    checks.map(([n, ok, info]) => `<tr><td>${n}</td><td colspan="3" class="${cell(ok)}">${word(ok)}${info}</td></tr>`).join("") +
+    `<tr><td><b>section admissible</b></td><td colspan="3" class="${cell(admissible)}"><b>${word(admissible)}</b></td></tr>` +
+    `<tr><td>|z| (k modes)</td><td colspan="3">${norm.toFixed(2)}</td></tr>`;
+}
+
+// --- check of the JavaScript geometry against Python (computed by pca_explorer.py) ---
+const worst = Math.max(...REF.map(r => Math.max(...["t_max", "y_g", "ixx", "v", "ixx_v", "wig"].map(q =>
+  Math.abs(r.s[q] / r.structure[q] - 1)))));
+document.getElementById("check").textContent =
+  `Contrôle JavaScript / Python sur les sections de référence : écart relatif max ${worst.toExponential(1)}` +
+  (worst < 1e-6 ? " (ok)" : " — ÉCART, ne pas se fier aux valeurs");
+// with a domain, start from the current section (the centre of the sweep of the box)
+if (DOM) setScores(DOM.current_scores); else update();
+</script>
+</body>
+</html>

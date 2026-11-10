@@ -1,0 +1,125 @@
+2 polar(s) truncated to their converged alphas (XFOIL end gap): MC2_60_6101_1_re5M@Re 5.623e+06 [-12, 10]; MC2_60_6101_1_re5M@Re 7.499e+06 [-12, 10]
+[18:48:32] AVL x XFOIL MC2 xtr 0.03: {'Fx': -2126.421817128781, 'Fy': -52958.862866519325, 'Fz': 29115.282019648694, 'Mx': -89372.16641054087, 'My': 14265.636585899048, 'Mz': 18363.141802141836, 'Fx induced': -781.5550278687423, 'Fx viscous': -1344.866789260039}
+[18:48:36] AVL x XFOIL MC2 xtr 0.05: {'Fx': -2108.44964897078, 'Fy': -53012.7891339408, 'Fz': 29143.062218017334, 'Mx': -89457.14113496259, 'My': 14247.626735308573, 'Mz': 18381.15867330257, 'Fx induced': -783.0747681324384, 'Fx viscous': -1325.3748808383414}
+[18:48:39] AVL x XFOIL MC2 xtr 0.1: {'Fx': -2071.72264695362, 'Fy': -53145.153608520784, 'Fz': 29213.32977859683, 'Mx': -89658.95610546417, 'My': 14212.809825679904, 'Mz': 18427.772161252935, 'Fx induced': -786.6535113340453, 'Fx viscous': -1285.0691356195746}
+polar end gap: 45/49 alphas converged, truncated to [-12, 10.5] (missing 11, 11.5, 12)
+polar interior gap filled by interpolation at alpha = -11
+polar end gap: 45/49 alphas converged, truncated to [-12, 10.5] (missing 11, 11.5, 12)
+polar interior gap filled by interpolation at alpha = -11
+2 polar(s) truncated to their converged alphas (XFOIL end gap): opt003@Re 5.623e+06 [-12, 10.5]; opt003@Re 7.499e+06 [-12, 10.5]
+[18:53:36] AVL x XFOIL opt003 xtr 0.03: AvlError: AVL did not write ['g.ft', 'g.fs', 'g.fe'] in C:\Users\SIM\AppData\Local\Temp\bdf8kriaotw\c00000 (returncode 0); stdout tail:
+
+ ===================================================
+  Athena Vortex Lattice  Program      Version  3.40
+  Copyright (C) 2002   Mark Drela, Harold Youngren
+
+  This software comes with ABSOLUTELY NO WARRANTY,
+    subject to the GNU General Public License.
+
+[18:53:48] AVL x XFOIL opt003 xtr 0.05: AvlError: AVL did not write ['g.ft', 'g.fs', 'g.fe'] in C:\Users\SIM\AppData\Local\Temp\bdf0b08ecad\c00000 (returncode 0); stdout tail:
+
+ ===================================================
+  Athena Vortex Lattice  Program      Version  3.40
+  Copyright (C) 2002   Mark Drela, Harold Youngren
+
+  This software comes with ABSOLUTELY NO WARRANTY,
+    subject to the GNU General Public License.
+
+polar interior gap filled by interpolation at alpha = 3.5
+[18:54:02] AVL x XFOIL opt003 xtr 0.1: AvlError: AVL did not write ['g.ft', 'g.fs', 'g.fe'] in C:\Users\SIM\AppData\Local\Temp\bdfruuobakj\c00000 (returncode 0); stdout tail:
+
+ ===================================================
+  Athena Vortex Lattice  Program      Version  3.40
+  Copyright (C) 2002   Mark Drela, Harold Youngren
+
+  This software comes with ABSOLUTELY NO WARRANTY,
+    subject to the GNU General Public License.
+
+polar end gap: 47/49 alphas converged, truncated to [-12, 11] (missing 11.5, 12)
+polar end gap: 47/49 alphas converged, truncated to [-12, 11] (missing 11.5, 12)
+2 polar(s) truncated to their converged alphas (XFOIL end gap): opt005@Re 5.623e+06 [-12, 11]; opt005@Re 7.499e+06 [-12, 11]
+[18:57:11] AVL x XFOIL opt005 xtr 0.03: AvlError: AVL did not write ['g.ft', 'g.fs', 'g.fe'] in C:\Users\SIM\AppData\Local\Temp\bdf_8dpf99t\c00000 (returncode 0); stdout tail:
+
+ ===================================================
+  Athena Vortex Lattice  Program      Version  3.40
+  Copyright (C) 2002   Mark Drela, Harold Youngren
+
+  This software comes with ABSOLUTELY NO WARRANTY,
+    subject to the GNU General Public License.
+
+[18:57:23] AVL x XFOIL opt005 xtr 0.05: AvlError: AVL did not write ['g.ft', 'g.fs', 'g.fe'] in C:\Users\SIM\AppData\Local\Temp\bdfmdrkveog\c00000 (returncode 0); stdout tail:
+
+ ===================================================
+  Athena Vortex Lattice  Program      Version  3.40
+  Copyright (C) 2002   Mark Drela, Harold Youngren
+
+  This software comes with ABSOLUTELY NO WARRANTY,
+    subject to the GNU General Public License.
+
+polar interior gap filled by interpolation at alpha = 2.5
+polar interior gap filled by interpolation at alpha = 2, 2.5, 8
+[18:57:43] AVL x XFOIL opt005 xtr 0.1: AvlError: AVL did not write ['g.ft', 'g.fs', 'g.fe'] in C:\Users\SIM\AppData\Local\Temp\bdfseljp0hc\c00000 (returncode 0); stdout tail:
+
+ ===================================================
+  Athena Vortex Lattice  Program      Version  3.40
+  Copyright (C) 2002   Mark Drela, Harold Youngren
+
+  This software comes with ABSOLUTELY NO WARRANTY,
+    subject to the GNU General Public License.
+
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Outils - banulsdesign\bdToolbox\tmp\bdfoil_v1\polars\_work\e8b2e41a11e984c2_8bdeb00b
+XFOIL timed out after 120 s on opt010b (npane 250)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Outils - banulsdesign\bdToolbox\tmp\bdfoil_v1\polars\_work\e8b2e41a11e984c2_8bdeb00b
+XFOIL timed out after 120 s on opt010b (npane 260)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Outils - banulsdesign\bdToolbox\tmp\bdfoil_v1\polars\_work\8ec2e05b13608279_ab45c0fa
+XFOIL timed out after 120 s on opt010b (npane 265)
+polar end gap: 44/49 alphas converged, truncated to [-12, 10] (missing 10.5, 11, 11.5, 12)
+polar interior gap filled by interpolation at alpha = 7
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Outils - banulsdesign\bdToolbox\tmp\bdfoil_v1\polars\_work\e8b2e41a11e984c2_8bdeb00b
+XFOIL timed out after 120 s on opt010b (npane 265)
+polar end gap: 43/49 alphas converged, truncated to [-11, 10] (missing -12, -11.5, 10.5, 11, 11.5, 12)
+2 polar(s) truncated to their converged alphas (XFOIL end gap): opt010b@Re 5.623e+06 [-11, 10]; opt010b@Re 7.499e+06 [-12, 10]
+[19:03:43] AVL x XFOIL opt010b xtr 0.03: AvlError: AVL did not write ['g.ft', 'g.fs', 'g.fe'] in C:\Users\SIM\AppData\Local\Temp\bdfsb40a27v\c00000 (returncode 0); stdout tail:
+
+ ===================================================
+  Athena Vortex Lattice  Program      Version  3.40
+  Copyright (C) 2002   Mark Drela, Harold Youngren
+
+  This software comes with ABSOLUTELY NO WARRANTY,
+    subject to the GNU General Public License.
+
+[19:03:56] AVL x XFOIL opt010b xtr 0.05: AvlError: AVL did not write ['g.ft', 'g.fs', 'g.fe'] in C:\Users\SIM\AppData\Local\Temp\bdf0m3sek92\c00000 (returncode 0); stdout tail:
+
+ ===================================================
+  Athena Vortex Lattice  Program      Version  3.40
+  Copyright (C) 2002   Mark Drela, Harold Youngren
+
+  This software comes with ABSOLUTELY NO WARRANTY,
+    subject to the GNU General Public License.
+
+polar interior gap filled by interpolation at alpha = 3.5
+[19:04:11] AVL x XFOIL opt010b xtr 0.1: AvlError: AVL did not write ['g.ft', 'g.fs', 'g.fe'] in C:\Users\SIM\AppData\Local\Temp\bdf5koua_zf\c00000 (returncode 0); stdout tail:
+
+ ===================================================
+  Athena Vortex Lattice  Program      Version  3.40
+  Copyright (C) 2002   Mark Drela, Harold Youngren
+
+  This software comes with ABSOLUTELY NO WARRANTY,
+    subject to the GNU General Public License.
+
+polar interior gap filled by interpolation at alpha = 2.75
+[19:41:54] 2D opt005 alpha -3: {'CL': -0.1307453425257, 'CD': 0.008182156566093045, 'CDp': 0.0016781424623341038, 'CDf': 0.006504014103758941, 'CM': -0.05387007347789, 'Cpmin': -1.468507978742, 'converged': True, 'message': '', 'CD_L1': 0.008238102474385, 'CD_L2': 0.008210404250752, 'n_iter_L2': 11385, 'wall_s': 2232.3409095000025}
+[20:14:06] 2D opt005 alpha -2: {'CL': -0.01659850750931, 'CD': 0.008072690988257027, 'CDp': 0.0015329479449684193, 'CDf': 0.006539743043288608, 'CM': -0.05355930010128, 'Cpmin': -1.122072236478, 'converged': True, 'message': '', 'CD_L1': 0.0081406007892, 'CD_L2': 0.008106979369675, 'n_iter_L2': 11708, 'wall_s': 1931.1628560000026}
+[21:03:33] 2D opt005 alpha -1: {'CL': 0.09760797808737, 'CD': 0.008034228816688051, 'CDp': 0.0014671706904775522, 'CDf': 0.006567058126210499, 'CM': -0.05322375111915, 'Cpmin': -0.818622039854, 'converged': True, 'message': '', 'CD_L1': 0.008119979515965, 'CD_L2': 0.008077525257597, 'n_iter_L2': 12467, 'wall_s': 2966.9714528999975}
+/home/bdcfd/bdcfd/cfd2d/263ba827b47b5674_fc759f: timeout after 10800 s: stop requested
+[00:08:57] 2D opt005 alpha 0: {'CL': 0.2130268402851, 'CD': 0.0083604518810985, 'CDp': 0.0017659191682184994, 'CDf': 0.00659453271288, 'CM': -0.05314064117335, 'Cpmin': -0.690672913126, 'converged': False, 'message': 'timeout after 10800 s: stop requested; a level did not converge: the extrapolated CD is not reliable', 'CD_L1': 0.008156528366859, 'CD_L2': 0.008257488727927, 'n_iter_L2': 2688, 'wall_s': 11124.1010923}
+[01:24:40] 2D opt005 alpha 1: {'CL': 0.3254001471226, 'CD': 0.00818954403192189, 'CDp': 0.0015920927996928725, 'CDf': 0.006597451232229018, 'CM': -0.05240373041106, 'Cpmin': -0.851973615662, 'converged': True, 'message': '', 'CD_L1': 0.008255943393006, 'CD_L2': 0.008223069776176, 'n_iter_L2': 18303, 'wall_s': 4542.998409899999}
+polar interior gap filled by interpolation at alpha = 3, 5
+[02:00:31] 2D opt003 alpha -2: {'CL': -0.01066377097102, 'CD': 0.007959240033268056, 'CDp': 0.0013740453811344191, 'CDf': 0.006585194652133637, 'CM': -0.04766713372991, 'Cpmin': -0.903026464408, 'converged': True, 'message': '', 'CD_L1': 0.008071847584605, 'CD_L2': 0.008016096784682, 'n_iter_L2': 13048, 'wall_s': 2126.724438999998}
+[03:10:15] 2D opt003 alpha -1: {'CL': 0.1022547842622, 'CD': 0.00794145673568495, 'CDp': 0.0013267826710448398, 'CDf': 0.00661467406464011, 'CM': -0.0477185826893, 'Cpmin': -0.5681616551, 'converged': True, 'message': '', 'CD_L1': 0.008054425398329, 'CD_L2': 0.007998495816042, 'n_iter_L2': 15056, 'wall_s': 4184.174806900002}
+[06:06:19] 2D opt003 alpha 0: {'CL': 0.2151133261194, 'CD': 0.007995071225963496, 'CDp': 0.0013611195053374959, 'CDf': 0.006633951720626, 'CM': -0.04776176779605, 'Cpmin': -0.529651815196, 'converged': True, 'message': '', 'CD_L1': 0.008104772669085, 'CD_L2': 0.008050460652403, 'n_iter_L2': 17387, 'wall_s': 10562.560417999994}
+polar interior gap filled by interpolation at alpha = 5.75
+[06:41:05] 2D opt010b alpha -2: {'CL': -0.02092503283492, 'CD': 0.008047125005489337, 'CDp': 0.0015020873140094947, 'CDf': 0.006545037691479842, 'CM': -0.04838365417165, 'Cpmin': -0.69173059574, 'converged': True, 'message': '', 'CD_L1': 0.008142408985988, 'CD_L2': 0.008095234901572, 'n_iter_L2': 11572, 'wall_s': 2051.315242299999}
+[07:33:47] 2D opt010b alpha -1: {'CL': 0.09362063136304, 'CD': 0.008029320565765883, 'CDp': 0.001464229511762582, 'CDf': 0.006565091054003301, 'CM': -0.04813538718229, 'Cpmin': -0.622740344542, 'converged': True, 'message': '', 'CD_L1': 0.008119245967598, 'CD_L2': 0.008074724858436, 'n_iter_L2': 12703, 'wall_s': 3161.774563500003}
+/home/bdcfd/bdcfd/cfd2d/fe19968a7220abea_f4a42b: run failed (missing)
+[09:21:45] 2D opt010b alpha 0: {'CL': nan, 'CD': nan, 'CDp': nan, 'CDf': nan, 'CM': nan, 'Cpmin': nan, 'converged': False, 'message': 'run.done: missing; a level did not converge: the extrapolated CD is not reliable', 'CD_L1': 0.008169553043291, 'CD_L2': nan, 'n_iter_L2': 0, 'wall_s': 6477.6079604000115}

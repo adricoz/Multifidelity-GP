@@ -1,0 +1,405 @@
+{
+ "opt005 L1 GPU": {
+  "result": {
+   "attitude": {
+    "cant": 0.0,
+    "rake": 0.0,
+    "yaw": 0.0,
+    "sink": 0.0,
+    "speed": 11.832,
+    "flaps": []
+   },
+   "F": [
+    -3240.62647385,
+    -13041.03591046,
+    7919.53651041
+   ],
+   "F_pressure": [
+    -2501.14702724,
+    -13031.3397251,
+    7916.178618965
+   ],
+   "F_viscous": [
+    -739.4794466105,
+    -9.696185357978,
+    3.357891445131
+   ],
+   "M": [
+    -32144.74209354,
+    7119.122385523,
+    5738.803269292
+   ],
+   "M_pressure": [
+    -32130.0577621,
+    6037.831316921,
+    6288.6663751
+   ],
+   "M_viscous": [
+    -14.68433143597,
+    1081.291068602,
+    -549.8631058072
+   ],
+   "cofr": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "Cd": 0.01983113912542,
+   "Cl": 0.04846391017727,
+   "Cs": 0.07980512396808,
+   "Cd_half_amplitude": 0.00788930778256,
+   "Cl_half_amplitude": 0.014426247064564995,
+   "Cs_half_amplitude": 0.03254377482911001,
+   "converged": false,
+   "stop": "failed",
+   "n_iter": 353,
+   "yplus_mean": 248.4406281686,
+   "yplus_max": 5372.836284608,
+   "n_cells": 927978,
+   "wall_s": 7326.033330700004,
+   "openfoam": "openfoam-v2512-patch0_bd2b6720-20260127",
+   "key": "0af7890b69553d75e5f1ff49178c37d7bf7f3b71196dc005bab36e7822a9080e",
+   "case_linux": "/home/bdcfd/bdcfd/cfd3d/0af7890b69553d75_74277f",
+   "host": "",
+   "message": "timeout after 7200 s: stop requested"
+  },
+  "totals": {
+   "Fx": -3240.62647385,
+   "Fy": -13041.03591046,
+   "Fz": 7919.53651041,
+   "Mx": -32144.74209354,
+   "My": 7119.122385523,
+   "Mz": 5738.803269292,
+   "Fx pressure": -2501.14702724,
+   "Fx viscous": -739.4794466105
+  },
+  "wall_s": 7326.472590600002
+ },
+ "opt005 L2 GPU": {
+  "result": {
+   "attitude": {
+    "cant": 0.0,
+    "rake": 0.0,
+    "yaw": 0.0,
+    "sink": 0.0,
+    "speed": 11.832,
+    "flaps": []
+   },
+   "F": [
+    -3112.641913329,
+    -23278.89460215,
+    12368.19268772
+   ],
+   "F_pressure": [
+    -2276.721957611,
+    -23271.52381845,
+    12362.135677
+   ],
+   "F_viscous": [
+    -835.9199557189,
+    -7.37078370851,
+    6.057010712401
+   ],
+   "M": [
+    -38565.23191651,
+    9595.290436874,
+    6983.412211813
+   ],
+   "M_pressure": [
+    -38552.91441353,
+    8352.195067438,
+    7618.33243132
+   ],
+   "M_viscous": [
+    -12.31750297949,
+    1243.095369436,
+    -634.9202195066
+   ],
+   "cofr": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "Cd": 0.01904792635862,
+   "Cl": 0.07568760881101,
+   "Cs": 0.142456049375,
+   "Cd_half_amplitude": 0.020364289856195,
+   "Cl_half_amplitude": 0.031626453925315,
+   "Cs_half_amplitude": 0.058973062870380004,
+   "converged": false,
+   "stop": "failed",
+   "n_iter": 28,
+   "yplus_mean": NaN,
+   "yplus_max": NaN,
+   "n_cells": 3748259,
+   "wall_s": 18130.602856800004,
+   "openfoam": "openfoam-v2512-patch0_bd2b6720-20260127",
+   "key": "c7b5492b4c7adde9b262aef64a423fd8144e12b926949a09771e14f8cd7192af",
+   "case_linux": "/home/bdcfd/bdcfd/cfd3d/c7b5492b4c7adde9_6a3f5d",
+   "host": "",
+   "message": "timeout after 18000 s: stop requested"
+  },
+  "totals": {
+   "Fx": -3112.641913329,
+   "Fy": -23278.89460215,
+   "Fz": 12368.19268772,
+   "Mx": -38565.23191651,
+   "My": 9595.290436874,
+   "Mz": 6983.412211813,
+   "Fx pressure": -2276.721957611,
+   "Fx viscous": -835.9199557189
+  },
+  "wall_s": 18130.9534367
+ },
+ "opt003 L1 GPU": {
+  "result": {
+   "attitude": {
+    "cant": 0.0,
+    "rake": 0.0,
+    "yaw": 0.0,
+    "sink": 0.0,
+    "speed": 11.832,
+    "flaps": []
+   },
+   "F": [
+    -1530.15840358,
+    -24712.37082947,
+    13148.57219089
+   ],
+   "F_pressure": [
+    -749.7387796255,
+    -24705.82868755,
+    13142.47014308
+   ],
+   "F_viscous": [
+    -780.4196239548,
+    -6.542141919112,
+    6.102047808967
+   ],
+   "M": [
+    -40907.43175795,
+    7096.944811298,
+    7761.020655807
+   ],
+   "M_pressure": [
+    -40892.40657569,
+    5971.088783651,
+    8339.549544327
+   ],
+   "M_viscous": [
+    -15.02518225975,
+    1125.856027647,
+    -578.5288885198
+   ],
+   "cofr": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "Cd": 0.009363863570883,
+   "Cl": 0.08046319639802,
+   "Cs": 0.1512283097088,
+   "Cd_half_amplitude": 2.8142067750019234e-07,
+   "Cl_half_amplitude": 2.1253452550037966e-06,
+   "Cs_half_amplitude": 3.6325004499904168e-06,
+   "converged": false,
+   "stop": "failed",
+   "n_iter": 1187,
+   "yplus_mean": 227.6454875468,
+   "yplus_max": 3762.29097111,
+   "n_cells": 866254,
+   "wall_s": 7215.188728400004,
+   "openfoam": "openfoam-v2512-patch0_bd2b6720-20260127",
+   "key": "b92afe50d72906209ecdbb67ddd6dd7d701be5d3bf05bf3e0ffd5500d86262b8",
+   "case_linux": "/home/bdcfd/bdcfd/cfd3d/b92afe50d7290620_b02d24",
+   "host": "",
+   "message": "timeout after 7200 s: stop requested"
+  },
+  "totals": {
+   "Fx": -1530.15840358,
+   "Fy": -24712.37082947,
+   "Fz": 13148.57219089,
+   "Mx": -40907.43175795,
+   "My": 7096.944811298,
+   "Mz": 7761.020655807,
+   "Fx pressure": -749.7387796255,
+   "Fx viscous": -780.4196239548
+  },
+  "wall_s": 7215.707060400004
+ },
+ "opt010b L1 GPU": {
+  "result": {
+   "attitude": {
+    "cant": 0.0,
+    "rake": 0.0,
+    "yaw": 0.0,
+    "sink": 0.0,
+    "speed": 11.832,
+    "flaps": []
+   },
+   "F": [
+    NaN,
+    NaN,
+    NaN
+   ],
+   "F_pressure": [
+    NaN,
+    NaN,
+    NaN
+   ],
+   "F_viscous": [
+    NaN,
+    NaN,
+    NaN
+   ],
+   "M": [
+    NaN,
+    NaN,
+    NaN
+   ],
+   "M_pressure": [
+    NaN,
+    NaN,
+    NaN
+   ],
+   "M_viscous": [
+    NaN,
+    NaN,
+    NaN
+   ],
+   "cofr": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "Cd": NaN,
+   "Cl": NaN,
+   "Cs": NaN,
+   "Cd_half_amplitude": NaN,
+   "Cl_half_amplitude": NaN,
+   "Cs_half_amplitude": NaN,
+   "converged": false,
+   "stop": "failed",
+   "n_iter": 0,
+   "yplus_mean": NaN,
+   "yplus_max": NaN,
+   "n_cells": 937002,
+   "wall_s": 1080.882530399991,
+   "openfoam": "openfoam-v2512-patch0_bd2b6720-20260127",
+   "key": "50c8839eb0c84e56bd529e839f274dc16acae1008e931fd1804a0ec9b8e5bd03",
+   "case_linux": "/home/bdcfd/bdcfd/cfd3d/50c8839eb0c84e56_fe509e",
+   "host": "",
+   "message": "run.done: rc=42 step=stage1"
+  },
+  "totals": {
+   "Fx": NaN,
+   "Fy": NaN,
+   "Fz": NaN,
+   "Mx": NaN,
+   "My": NaN,
+   "Mz": NaN,
+   "Fx pressure": NaN,
+   "Fx viscous": NaN
+  },
+  "wall_s": 1081.1029911000078
+ },
+ "MC2 L1 GPU": {
+  "result": {
+   "attitude": {
+    "cant": 0.0,
+    "rake": 0.0,
+    "yaw": 0.0,
+    "sink": 0.0,
+    "speed": 11.832,
+    "flaps": []
+   },
+   "F": [
+    -2208.092453015,
+    -52121.04002298,
+    28019.94716698
+   ],
+   "F_pressure": [
+    -1414.62288698,
+    -52109.97833807,
+    28010.16699395
+   ],
+   "F_viscous": [
+    -793.4695660355,
+    -11.06168491517,
+    9.780173023481
+   ],
+   "M": [
+    -86304.98744269,
+    13692.39446151,
+    17298.818871
+   ],
+   "M_pressure": [
+    -86279.94486285,
+    12552.34651546,
+    17901.49077561
+   ],
+   "M_viscous": [
+    -25.04257983992,
+    1140.047946059,
+    -602.6719046023
+   ],
+   "cofr": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "Cd": 0.0135125072238,
+   "Cl": 0.171469151116,
+   "Cs": 0.3189567216086,
+   "Cd_half_amplitude": 1.0993318500050059e-07,
+   "Cl_half_amplitude": 1.030353950007279e-06,
+   "Cs_half_amplitude": 1.8774196000048704e-06,
+   "converged": false,
+   "stop": "failed",
+   "n_iter": 1084,
+   "yplus_mean": 216.4717029409,
+   "yplus_max": 3522.755219766,
+   "n_cells": 889622,
+   "wall_s": 7220.689786100003,
+   "openfoam": "openfoam-v2512-patch0_bd2b6720-20260127",
+   "key": "e5db9b24d7fb0cb358020d50fc9e0e904d650b26277bc295b987d5909cacfeb2",
+   "case_linux": "/home/bdcfd/bdcfd/cfd3d/e5db9b24d7fb0cb3_4558ce",
+   "host": "",
+   "message": "timeout after 7200 s: stop requested"
+  },
+  "totals": {
+   "Fx": -2208.092453015,
+   "Fy": -52121.04002298,
+   "Fz": 28019.94716698,
+   "Mx": -86304.98744269,
+   "My": 13692.39446151,
+   "Mz": 17298.818871,
+   "Fx pressure": -1414.62288698,
+   "Fx viscous": -793.4695660355
+  },
+  "wall_s": 7221.173302700001
+ },
+ "opt003 L1 CPU yaw 2.593": {
+  "result": {
+   "n_cells": 878745,
+   "n_iter": 2386,
+   "converged": true,
+   "stop": "runTimeControl",
+   "Cd": 0.01301873733264,
+   "Cl": 0.170695648323,
+   "wall_s": 3360,
+   "note": "finished 10:18 (rc=0), the bridge timed out 1 min later and missed it; reduced afterwards with foil3d.reduce3d",
+   "case_linux": "/home/bdcfd/bdcfd/cfd3d/bd7f991c2b6d4c36_81c18b"
+  },
+  "totals": {
+   "Fx": -2127.405016396,
+   "Fy": -52002.56560377,
+   "Fz": 27893.54829433,
+   "Mx": -85003.50507668,
+   "My": 11177.96280033,
+   "Mz": 13219.05818128,
+   "Fx pressure": -1330.412812488,
+   "Fx viscous": -796.9922039072
+  }
+ }
+}

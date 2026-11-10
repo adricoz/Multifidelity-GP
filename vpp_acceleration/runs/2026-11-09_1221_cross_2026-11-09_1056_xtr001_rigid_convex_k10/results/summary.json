@@ -1,0 +1,14 @@
+{
+ "run": "xtr001_rigid_convex_k10",
+ "xtr": [
+  0.01,
+  0.01
+ ],
+ "share": 0.0,
+ "speed_kt": {
+  "own_best": NaN,
+  "best_2026-11-09_1057_xtr005_rigid_convex_k10": NaN,
+  "best_2026-11-09_1057_xtr010_rigid_convex_k10": NaN,
+  "current_section": NaN
+ }
+}

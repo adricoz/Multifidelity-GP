@@ -35,6 +35,7 @@ Run in the MDS environment (Multifidelity-GP-Clean/.venv-mds: conda bdToolbox pa
 """
 import hashlib
 import json
+import os
 import sys
 import tempfile
 import time
@@ -53,6 +54,11 @@ PLANFORM = {"type": "cfoil_arc", "radius": 9.8, "span": 3.25, "chord": 0.70, "ta
             "root_twist": 0.0, "tip_twist": 0.0, "cant_geom": 20.168, "tip_side": -1,
             "ori_y": 0.0, "ori_z": 0.0, "n_stations": 41, "kind": "FOIL"}
 FLOW = {"re": 5e6, "n_crit": 1.0, "xtr": [0.1, 0.1], "alpha": [-12.0, 12.0, 0.5]}
+# forced transition of a run (run_real_vpp --xtr, 2026-11-09): read from the environment so that
+# the worker processes (spawned, they import this module again) see the same flow
+XTR_ENV = "VPP_FOIL_XTR"
+if os.environ.get(XTR_ENV):
+    FLOW["xtr"] = [float(v) for v in os.environ[XTR_ENV].split(",")]
 # Cpmin of the foil = this percentile of the Cpmin of the strips, every strip counted: the value
 # of the production RS (CFoil_generation.ipynb, CP_MIN_PERC = 20): a few singular strips (root
 # next to the wall, tip) do not decide it (the plain minimum gave -6 against -0.69 for the RS,

@@ -315,7 +315,7 @@ def tolerance(args) -> None:
 
     # the HF code of the run at the states, with the unprojected weights
     names = list(config["levels"])
-    levels = [CODE_LEVELS[name][0] for name in names]
+    levels = run_levels(config)                 # with the run's xtr / polar timeout
     hf = len(levels)
     tasks, owners = [], []
     for i, ((_, w), row) in enumerate(zip(cases, states)):
@@ -359,6 +359,103 @@ def tolerance(args) -> None:
         run.log(line)
 
 
+# -------------------------------------------------------------------------------------------------
+# Cross evaluation: the best sections of other runs in the physics of this one (2026-11-09)
+# -------------------------------------------------------------------------------------------------
+def run_levels(config: dict) -> list:
+    """The code levels of a run with its flow: the forced transition (config "xtr", set here for
+    this process and, through the environment, for the code workers) and the XFOIL polar timeout
+    (config "polar_timeout"), as run_real_vpp.py set them."""
+    import os  # noqa: PLC0415
+    from src import foil_codes  # noqa: PLC0415
+    if config.get("xtr"):
+        foil_codes.FLOW["xtr"] = [float(v) for v in config["xtr"]]
+        os.environ[foil_codes.XTR_ENV] = ",".join(str(v) for v in foil_codes.FLOW["xtr"])
+    levels = [foil_codes.CODE_LEVELS[name][0] for name in config["levels"]]
+    if config.get("polar_timeout") is not None:
+        levels = [{**lv, "options": {**lv["options"], "polar_timeout": config["polar_timeout"]}}
+                  if "polar_timeout" in lv["options"] else lv for lv in levels]
+    return levels
+
+
+def cross(args) -> None:
+    """
+    The best sections of `--sections-from` runs (and the start section) evaluated with the
+    surrogate AND the HF code of `--run`, in its physics (xtr): VPP on the surrogate, HF code at
+    the equilibrium states, speed corrected to first order with the sensitivities OF EACH SECTION
+    (as vpp_optimize.validate): V = V_surrogate - (mu - F_hf) . dV/dC.
+    """
+    from concurrent.futures import ProcessPoolExecutor  # noqa: PLC0415
+    from src.vpp_optimize import SINGLE_THREAD  # noqa: PLC0415
+    import os  # noqa: PLC0415
+    import pandas as pd  # noqa: PLC0415
+    root = (VPP_DIR / args.run).resolve()
+    config, pca, conditions, weights, sections = load_run(root)
+    if args.polar_timeout is not None:          # e.g. a run made with a too short timeout
+        config["polar_timeout"] = args.polar_timeout
+    levels = run_levels(config)
+    if args.max_conditions:                     # quick checks: the first conditions only
+        conditions, weights = conditions[:args.max_conditions], weights[:args.max_conditions]
+    cases = {"own_best": pca.decode(sections["best"][None, :])[0]}
+    for other in args.sections_from:
+        other_root = (VPP_DIR / other).resolve()
+        best = json.loads((other_root / "results" / "best_section.json").read_text(encoding="utf-8"))
+        cases[f"best_{other_root.name}"] = np.array(best["kulfan_upper"] + best["kulfan_lower"])
+    start = next(name for name in sections if name not in ("best",) and
+                 not name.startswith(("region_", "best_")))
+    cases[start] = pca.decode(sections[start][None, :])[0]
+    names = list(cases)
+    run = RunDir.create(f"cross_{root.name[:15]}_{config['name']}", {
+        "check": "cross", "of_run": str(root.relative_to(VPP_DIR)), "xtr": config.get("xtr"),
+        "sections_from": args.sections_from, "sections": names, "workers": args.workers})
+    surrogate = load_surrogate(root)
+    pool = make_pool(config, args.workers)
+    pool.publish(surrogate)
+    scores = np.array([pca.encode(cases[n][None, :])[0] for n in names])
+    ratios = stiffness_ratios(config, pca, scores)
+    states = robust_solve(pool, list(scores), ratios, conditions)
+    derivatives = [pool.sensitivities(scores[i], ratios[i], conditions, states[i])
+                   for i in range(len(names))]
+    pool.close()
+    run.log(f"VPP on the surrogate and sensitivities of {len(names)} sections done")
+
+    hf = len(levels)
+    tasks, owners = [], []
+    for i, name in enumerate(names):
+        for j, s in enumerate(states[i]):
+            if s["success"]:
+                tasks.append((cases[name], (s["Cant_Eff"], s["Rake_Eff"], s["Yaw_Eff"]), hf))
+                owners.append((i, j))
+    os.environ.update(SINGLE_THREAD)
+    with ProcessPoolExecutor(args.workers, initializer=_init_codes,
+                             initargs=(str(run.path("data", "codes")), levels)) as codes:
+        results = list(codes.map(_run_code, tasks))
+    run.log(f"{len(tasks)} HF runs done (xtr {config.get('xtr')})")
+
+    speeds = np.full((len(names), len(conditions)), np.nan)
+    solved = np.zeros_like(speeds, dtype=bool)
+    rows = []
+    for (i, j), task, (y, info) in zip(owners, tasks, results):
+        s = states[i][j]
+        point = np.concatenate([scores[i], task[1]])
+        mean = surrogate.predict(point[None, :])[0, :6]
+        ok = bool(np.all(np.isfinite(y[:6])))
+        corrected = s["speed"] - float((mean - y[:6]) @ derivatives[i][j]) if ok else np.nan
+        speeds[i, j], solved[i, j] = corrected, ok
+        rows.append({"section": names[i], "twa": conditions[j][0], "tws": conditions[j][1],
+                     "speed_surrogate_kt": s["speed"], "speed_corrected_kt": corrected,
+                     "error": info["error"][:200]})
+    pd.DataFrame(rows).to_csv(run.path("results", "cases.csv"), index=False)
+    j, share = mean_speeds(np.nan_to_num(speeds), solved, weights)
+    summary = {"run": config["name"], "xtr": config.get("xtr"), "share": share,
+               "speed_kt": dict(zip(names, map(float, j)))}
+    run.write_json("results/summary.json", summary)
+    run.log(f"in the physics of {config['name']} (xtr {config.get('xtr')}), weighted mean speed "
+            f"on {100 * share:.0f} % of the probability:")
+    for name, value in zip(names, j):
+        run.log(f"   {name}: {value:.4f} kt ({value - j[0]:+.4f} vs own best)")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     sub = parser.add_subparsers(dest="check", required=True)
@@ -380,8 +477,14 @@ def main():
     t.add_argument("--n", type=int, default=5, help="sections per amplitude")
     t.add_argument("--seed", type=int, default=0)
     t.add_argument("--workers", type=int, default=12)
+    c = sub.add_parser("cross", help="best sections of other runs in the physics of this run")
+    c.add_argument("--run", required=True)
+    c.add_argument("--sections-from", nargs="+", required=True, help="run folders")
+    c.add_argument("--workers", type=int, default=12)
+    c.add_argument("--polar-timeout", type=float, default=None, help="replaces the run's one [s]")
+    c.add_argument("--max-conditions", type=int, default=None, help="test: first conditions only")
     args = parser.parse_args()
-    posterior(args) if args.check == "posterior" else tolerance(args)
+    {"posterior": posterior, "tolerance": tolerance, "cross": cross}[args.check](args)
 
 
 if __name__ == "__main__":

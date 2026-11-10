@@ -1,0 +1,411 @@
+10:38:17 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001
+10:38:17 [  0.0 min] search space: runs/2026-11-05_1212_section_pca_convex_tmax2_0p9, box C_envelope, k = 10 through the current section, Ixx/v >= 9.8704e-04
+10:38:17 [  0.0 min] PCA: rank 16, k = 10 modes carry 99.89 % of the geometric variance
+10:38:17 [  0.0 min] start of the search: current_section
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polar interior gap filled by interpolation at alpha = -6.5
+polar interior gap filled by interpolation at alpha = -6.5
+polar interior gap filled by interpolation at alpha = -7, 8
+polar interior gap filled by interpolation at alpha = -7
+case 0 (c+6.5713_r+0.8428_y-5.3287_s+0.0000): AVL near-field and Trefftz totals differ by 11.91 % (> 2.00 %)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\d424e832b44a1acd_af4e0f1a
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\596d62307d7fbba2_3427d454
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\07da51f41091be4c_ef43326d
+XFOIL timed out after 120 s on k322bf32f896b (npane 250)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\32cb43178e79436d_e29ede4d
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\3be318acf066f741_a24a1eb1
+XFOIL timed out after 120 s on kbb0dd27a72be (npane 250)
+XFOIL timed out after 120 s on ka02913c178a9 (npane 250)
+XFOIL timed out after 120 s on kbb0dd27a72be (npane 250)
+XFOIL timed out after 120 s on ka02913c178a9 (npane 250)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\fa4e40e951c30167_d0b13636
+XFOIL timed out after 120 s on k322bf32f896b (npane 265)
+polar interior gap filled by interpolation at alpha = 8
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\458d9bb0ab6eec6c_685a78a1
+XFOIL timed out after 120 s on kdbbf1105abfd (npane 265)
+polar interior gap filled by interpolation at alpha = 11
+case 0 (c+2.6385_r-0.1629_y-3.9709_s+0.0000): AVL near-field and Trefftz totals differ by 6.52 % (> 2.00 %)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\1dc575b5e8354ca3_edb91d8e
+XFOIL timed out after 120 s on kbc066357599a (npane 265)
+polar interior gap filled by interpolation at alpha = -6, 7
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\0f98a93daf7e332d_0838ccf3
+XFOIL timed out after 120 s on kbc066357599a (npane 265)
+polar end gap: 46/49 alphas converged, truncated to [-12, 11.5] (missing 12)
+polar interior gap filled by interpolation at alpha = -6, 9
+1 polar(s) truncated to their converged alphas (XFOIL end gap): kbc066357599a@Re 4.217e+06 [-12, 11.5]
+case 0 (c+4.4255_r+0.3801_y-5.6363_s+0.0000): AVL near-field and Trefftz totals differ by 18.26 % (> 2.00 %)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\07da51f41091be4c_ef43326d
+XFOIL timed out after 120 s on ka02913c178a9 (npane 260)
+polar end gap: 48/49 alphas converged, truncated to [-12, 11.5] (missing 12)
+1 polar(s) truncated to their converged alphas (XFOIL end gap): k322bf32f896b@Re 5.623e+06 [-12, 11.5]
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\596d62307d7fbba2_3427d454
+XFOIL timed out after 120 s on kbb0dd27a72be (npane 265)
+polar interior gap filled by interpolation at alpha = -6.5
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\32cb43178e79436d_e29ede4d
+XFOIL timed out after 120 s on kbb0dd27a72be (npane 265)
+polar interior gap filled by interpolation at alpha = -6.5
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\3be318acf066f741_a24a1eb1
+XFOIL timed out after 120 s on ka02913c178a9 (npane 265)
+polar end gap: 38/49 alphas converged, truncated to [-12, 6.5] (missing 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12)
+polar end gap: 37/49 alphas converged, truncated to [-12, 6] (missing 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12)
+2 polar(s) truncated to their converged alphas (XFOIL end gap): ka02913c178a9@Re 4.217e+06 [-12, 6]; ka02913c178a9@Re 5.623e+06 [-12, 6.5]
+10:44:28 [  6.2 min] start design: level 1 30 ok / 30, level 2 8 ok / 8
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+10:46:24 [  8.1 min] speed sensitivities: 6 failed solves, previous values kept
+10:46:24 [  8.1 min] speed sensitivities dV/dC (rows = conditions): [[ 43.18  -1.76   0.08   0.02   0.06  -0.19]
+ [ 30.32  -1.79   0.11   0.     0.04  -0.16]
+ [ 39.67  -2.74   0.34  -0.02   0.08  -0.22]
+ [ 73.2   -4.83   1.45  -0.07   0.2   -0.38]
+ [ 31.63  -1.2    0.07   0.01   0.04  -0.14]
+ [ 32.43  -1.62   0.19  -0.01   0.05  -0.15]
+ [ 52.69  -2.64   0.78  -0.05   0.12  -0.24]
+ [142.15  -5.33   4.91  -0.16   0.34  -0.6 ]
+ [ 29.54  -0.98   0.09   0.01   0.04  -0.12]
+ [ 36.63  -1.43   0.31  -0.02   0.07  -0.14]
+ [ 77.11  -2.56   1.7   -0.07   0.18  -0.28]
+ [113.72  -3.02   1.84   1.79   0.29  -0.43]
+ [ 29.74  -0.72   0.12   0.     0.04  -0.09]
+ [ 45.17  -1.1    0.55  -0.03   0.09  -0.12]
+ [136.59  -1.96   4.31  -0.13   0.24  -0.29]
+ [114.98  -1.6    6.94   2.46   0.33  -0.21]
+ [ 32.02  -0.17   0.17  -0.     0.05  -0.03]
+ [ 61.73  -0.04   1.03  -0.05   0.12   0.02]
+ [230.59   3.41   9.1   -0.29   0.31   0.33]
+ [115.21  -3.68   2.56   3.49   0.28   0.23]
+ [ 32.37   0.1    0.18  -0.     0.05   0.01]
+ [ 62.74   0.72   1.05  -0.05   0.12   0.13]
+ [235.57   6.05   9.32  -0.29   0.32   0.7 ]
+ [124.17  -5.58   0.6    4.17   0.28   0.41]
+ [ 32.06   0.27   0.17  -0.     0.05   0.03]
+ [ 59.11   1.32   0.94  -0.05   0.12   0.21]
+ [222.33   7.44   8.49  -0.24   0.3    0.93]
+ [139.54   4.3   10.41   4.93   0.31   0.55]
+ [ 31.18   0.46   0.15  -0.     0.05   0.05]
+ [ 50.8    2.11   0.7   -0.04   0.1    0.32]
+ [185.15   9.01   6.39  -0.18   0.29   1.21]
+ [353.64  21.13  22.15  -0.8    0.04   2.28]
+ [ 39.32  -0.34   0.37  -0.02   0.07  -0.03]
+ [454.13  11.63  25.6   -2.15   0.37   0.78]
+ [ 34.86   1.17   0.25  -0.02   0.06   0.17]
+ [243.41  13.57  10.16  -0.31   0.3    1.74]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.98  -0.46   0.08   0.01   0.04  -0.08]
+ [ 30.72   0.03   0.09   0.01   0.04  -0.03]
+ [ 32.09   0.32   0.08   0.01   0.04  -0.01]
+ [107.05  -3.75  -2.81   1.58   0.28  -0.5 ]
+ [112.17  -3.41   3.66   3.35   0.35   0.05]
+ [152.62   3.9   11.13   6.01   0.48   0.51]
+ [360.61  26.02  24.12  -0.71  -0.13   2.88]
+ [ 34.57  -1.74   0.06   0.02   0.05  -0.17]
+ [ 42.69  -3.59   0.36  -0.03   0.08  -0.25]
+ [ 29.85   1.35   0.12  -0.01   0.05   0.18]
+ [ 75.21  17.01   2.03  -0.11   0.21   2.1 ]
+ [ 97.56  -0.8    2.4   -0.09   0.19  -0.11]]
+10:47:15 [  9.0 min] update 0: incumbent speed 13.1265 kt (new, gain 0.1304 kt), candidates [12.996 13.093 13.106 13.126], on 99 % of the probability, radius 1.00, region 0, 162 s
+10:47:15 [  9.0 min] loop done: 0 choices in 0 batches, design per level (30, 8), runs {1: 30, 2: 8}, code time {1: 29.7830662999977, 2: 1315.6349911999987}
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_a53f5037
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_94800516
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\d54898a53859c93b_e525612c
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\d54898a53859c93b_fc141114
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\d54898a53859c93b_6dc7ad81
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_e5891654
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\d54898a53859c93b_9287f34c
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_3c31a659
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\d54898a53859c93b_ad9675e3
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_dd0e7258
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\d54898a53859c93b_be821179
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\d54898a53859c93b_e6d7893e
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_43c2ed6d
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\d54898a53859c93b_bab53fed
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_17e78cba
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_840f6da5
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 250)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_43c2ed6d
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_17e78cba
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_94800516
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 265)
+polar interior gap filled by interpolation at alpha = 9, 10, 11
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_840f6da5
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 265)
+polar interior gap filled by interpolation at alpha = 9, 10, 11
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_3c31a659
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 265)
+polar interior gap filled by interpolation at alpha = 9, 10, 11
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 265)
+polar interior gap filled by interpolation at alpha = 9, 10, 11
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_e5891654
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 265)
+polar interior gap filled by interpolation at alpha = 9, 10, 11
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_dd0e7258
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\be88cb2d0b99f869_a53f5037
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 265)
+polar interior gap filled by interpolation at alpha = 9, 10, 11
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 265)
+polar interior gap filled by interpolation at alpha = 9, 10, 11
+XFOIL timed out after 120 s on k5d7b7be0b079 (npane 265)
+polar interior gap filled by interpolation at alpha = 9, 10, 11
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+polars.provider : NeuralFoil ne donne pas de Cpmin : les colonnes Cpmin seront vides et le critère de cavitation (sigma contre -Cpmin) ne pourra pas être lu ; XFOIL pour la cavitation
+boundary.zsym : racine inclinée sur la paroi (coin de 41° avec son image, attitude c+0.0000_r+0.0000_y+0.0000_s+0.0000) : la charge de la bande contre la paroi croît avec le maillage et les efforts intégrés dérivent (C-foil : 0,1 à 0,5 % par doublement des panneaux)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\95870f6917393478_2327b912
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\95870f6917393478_f23e9fab
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\95870f6917393478_63c6b522
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\95870f6917393478_38e1e6f6
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\95870f6917393478_ca7da517
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\95870f6917393478_bde36073
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\95870f6917393478_deee640b
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\95870f6917393478_c563e8ec
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\f065dbfe43f8bcd2_fe2d1901
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\f065dbfe43f8bcd2_e73c8f64
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\f065dbfe43f8bcd2_d6e7e199
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\f065dbfe43f8bcd2_d5563fea
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\f065dbfe43f8bcd2_06e2a8f3
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\f065dbfe43f8bcd2_39cafd8d
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\f065dbfe43f8bcd2_825ca3d3
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+xfoil.exe timed out after 120.0 s in C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1038_smoke_xtr001\data\codes\polar_cache\_work\f065dbfe43f8bcd2_77dc8589
+XFOIL timed out after 120 s on k8666af8b6890 (npane 260)
+polar interior gap filled by interpolation at alpha = -5.5
+polar interior gap filled by interpolation at alpha = -5.5
+polar interior gap filled by interpolation at alpha = -5.5
+polar interior gap filled by interpolation at alpha = -5.5
+polar interior gap filled by interpolation at alpha = -5.5
+polar interior gap filled by interpolation at alpha = -5.5
+polar interior gap filled by interpolation at alpha = -5.5
+polar interior gap filled by interpolation at alpha = -5.5
+polar interior gap filled by interpolation at alpha = -11.5, -9, -7, -5.5
+polar interior gap filled by interpolation at alpha = -11.5, -9, -7, -5.5

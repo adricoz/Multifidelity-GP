@@ -1,0 +1,337 @@
+section,twa,tws,speed_surrogate_kt,speed_corrected_kt,error
+own_best,35.0521,6.5529,7.310051192489598,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,35.0521,9.5367,8.556094238655467,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,35.0521,12.4633,9.84650177415058,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,35.0521,15.4471,11.767075196225113,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,40.1857,6.5529,7.786459817172908,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,40.1857,9.5367,9.156402083457662,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,40.1857,12.4633,10.896593865903402,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,40.1857,15.4471,14.132552876167528,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,45.3723,6.5529,8.149349036719622,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,45.3723,9.5367,9.712969307800677,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,45.3723,12.4633,12.03667514343001,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,45.3723,15.4471,17.286534936825852,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,52.9004,6.5529,8.556379282715426,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,52.9004,9.5367,10.408085761534437,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,52.9004,12.4633,13.826024829554338,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,52.9004,15.4471,19.308117720361544,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,68.4963,6.5529,9.019998739133111,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,68.4963,9.5367,11.273679527004129,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,68.4963,12.4633,16.560525230717634,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,68.4963,15.4471,22.059748884427233,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,76.8133,6.5529,9.081664878153981,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,76.8133,9.5367,11.355613670778549,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,76.8133,12.4633,16.771894775152823,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,76.8133,15.4471,23.17532863337687,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,83.1859,6.5529,9.056092878935152,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,83.1859,9.5367,11.246211631899591,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,83.1859,12.4633,16.364305197493227,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,83.1859,15.4471,23.98592185218996,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,91.5022,6.5529,8.942883190247562,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,91.5022,9.5367,10.91879994255607,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,91.5022,12.4633,15.219028941674384,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,91.5022,15.4471,22.55688326348392,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,64.291,8.0594,9.903684846951258,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,64.291,13.9406,20.630459811230505,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,96.0678,8.0594,9.67115493886185,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,96.0678,13.9406,17.627007864203332,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,60.0,5.0,7.952128056686963,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,80.0,5.0,8.212152714599569,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,100.0,5.0,8.01099631325241,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,40.0,17.0,16.29569480272083,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,60.0,17.0,21.343079550426395,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,80.0,17.0,24.0,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,100.0,17.0,23.47875581822389,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,32.0,8.0,7.618552156636569,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,32.0,14.0,9.92303685589495,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,110.0,8.0,9.039039519507668,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,110.0,14.0,13.037319437103031,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+own_best,60.0,11.0,12.595814379469555,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kba7f98db993c at Re 4.21697e+06: kba7f98db993c: polar end gap: no converged alpha below the sweep start 0 (12/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,35.0521,6.5529,7.278837383597546,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,35.0521,9.5367,8.513576829363846,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,35.0521,12.4633,9.774613219056002,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,35.0521,15.4471,11.613418918940523,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,40.1857,6.5529,7.76336503899153,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,40.1857,9.5367,9.117857370075326,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,40.1857,12.4633,10.82236313128214,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,40.1857,15.4471,13.902028220062691,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,45.3723,6.5529,8.132483020847863,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,45.3723,9.5367,9.682913304644458,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,45.3723,12.4633,11.9621029450402,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,45.3723,15.4471,17.259672025862525,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,52.9004,6.5529,8.550257422493983,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,52.9004,9.5367,10.394220669811869,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,52.9004,12.4633,13.753842813239412,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,52.9004,15.4471,19.358152219203983,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,68.4963,6.5529,9.037163053772296,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,68.4963,9.5367,11.298921004178807,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,68.4963,12.4633,16.613052967730386,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,68.4963,15.4471,22.33413549224374,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,76.8133,6.5529,9.10888278049438,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,76.8133,9.5367,11.402148637185102,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,76.8133,12.4633,16.924053018760915,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,76.8133,15.4471,23.540636864061444,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,83.1859,6.5529,9.089416632569373,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,83.1859,9.5367,11.307915804489348,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,83.1859,12.4633,16.58066474147477,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,83.1859,15.4471,24.0,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,91.5022,6.5529,8.982338710918324,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,91.5022,9.5367,11.000125806923757,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,91.5022,12.4633,15.501125189717147,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,91.5022,15.4471,22.993535991310516,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,64.291,8.0594,9.916453507377993,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,64.291,13.9406,20.791245440997518,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,96.0678,8.0594,9.729457428408875,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,96.0678,13.9406,18.014329018189596,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,60.0,5.0,7.9580014264967085,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,80.0,5.0,8.23881208137127,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,100.0,5.0,8.050794991146944,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,40.0,17.0,16.24270059365626,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,60.0,17.0,21.575061617720294,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,80.0,17.0,24.0,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,100.0,17.0,24.0,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,32.0,8.0,7.584793356282521,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,32.0,14.0,9.834046172633034,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,110.0,8.0,9.106692887005911,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,110.0,14.0,13.688270395739629,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr005_rigid_convex_k10,60.0,11.0,12.591285019644186,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+ke46017590450 at Re 4.21697e+06: ke46017590450: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,35.0521,6.5529,7.294705622711472,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,35.0521,9.5367,8.538525636155386,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,35.0521,12.4633,9.818907924906389,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,35.0521,15.4471,11.709239399509062,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,40.1857,6.5529,7.775157406533881,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,40.1857,9.5367,9.139919809580759,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,40.1857,12.4633,10.866333562566792,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,40.1857,15.4471,14.037335736634468,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,45.3723,6.5529,8.140511198292604,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,45.3723,9.5367,9.698873527983777,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,45.3723,12.4633,12.002926297105224,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,45.3723,15.4471,17.27142218055201,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,52.9004,6.5529,8.551458516103482,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,52.9004,9.5367,10.398652567618555,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,52.9004,12.4633,13.78637379102535,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,52.9004,15.4471,19.32191519418358,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,68.4963,6.5529,9.023840604084242,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,68.4963,9.5367,11.277875425908846,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,68.4963,12.4633,16.56665285529077,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,68.4963,15.4471,22.162181503438646,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,76.8133,6.5529,9.089631149000905,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,76.8133,9.5367,11.36932530695226,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,76.8133,12.4633,16.820349544540612,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,76.8133,15.4471,23.314729320901588,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,83.1859,6.5529,9.066694252182467,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,83.1859,9.5367,11.267562788489585,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,83.1859,12.4633,16.44145871861981,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,83.1859,15.4471,24.0,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,91.5022,6.5529,8.956210155743733,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,91.5022,9.5367,10.950565150508828,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,91.5022,12.4633,15.329166235907653,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,91.5022,15.4471,22.71986212386774,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,64.291,8.0594,9.90495051311269,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,64.291,13.9406,20.688784244426184,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,96.0678,8.0594,9.69308581018685,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,96.0678,13.9406,17.779227753884008,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,60.0,5.0,7.951753685166071,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,80.0,5.0,8.219975016257754,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,100.0,5.0,8.024055620671023,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,40.0,17.0,16.270278425993947,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,60.0,17.0,21.428937176825553,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,80.0,17.0,24.0,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,100.0,17.0,23.68765753163917,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,32.0,8.0,7.603190691592086,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,32.0,14.0,9.890249374086933,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,110.0,8.0,9.064886669341384,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,110.0,14.0,13.32366493961087,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+best_2026-11-09_1057_xtr010_rigid_convex_k10,60.0,11.0,12.584776559310084,,"SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+kfb6d9ce1310e at Re 4.21697e+06: kfb6d9ce1310e: polar end gap: no converged alpha below the sweep start 0 (13/49 converg"
+current_section,35.0521,6.5529,7.333481437031124,7.329892312578188,
+current_section,35.0521,9.5367,8.600039072546345,8.59940368046534,
+current_section,35.0521,12.4633,9.920927065333567,9.922844378038029,
+current_section,35.0521,15.4471,11.92500242795257,11.931605183264313,
+current_section,40.1857,6.5529,7.803043516455567,7.800198135346751,
+current_section,40.1857,9.5367,9.193359513468856,9.192516910905567,
+current_section,40.1857,12.4633,10.968606663763934,10.970812538370678,
+current_section,40.1857,15.4471,14.374305693763523,14.388589096264301,
+current_section,45.3723,6.5529,8.157892879566763,8.155178535313777,
+current_section,45.3723,9.5367,9.737115737840048,9.73601425409636,
+current_section,45.3723,12.4633,12.102619629091256,12.105455711855244,
+current_section,45.3723,15.4471,17.245171686947813,17.25977315769565,
+current_section,52.9004,6.5529,8.549054350020214,8.546321979690475,
+current_section,52.9004,9.5367,10.40580570724505,10.404124625253765,
+current_section,52.9004,12.4633,13.84525640358251,13.847996300472335,
+current_section,52.9004,15.4471,19.052592918109507,19.057270577169344,
+current_section,68.4963,6.5529,8.97191815264418,8.968952427298305,
+current_section,68.4963,9.5367,11.170837592968374,11.167977455973988,
+current_section,68.4963,12.4633,16.17661804570169,16.170977077246782,
+current_section,68.4963,15.4471,21.563941235287743,21.561285331818855,
+current_section,76.8133,6.5529,9.013744844203188,9.010548957375976,
+current_section,76.8133,9.5367,11.181596977769573,11.17779372180911,
+current_section,76.8133,12.4633,16.16412602884687,16.152945906117647,
+current_section,76.8133,15.4471,22.600088376254806,22.597220111771037,
+current_section,83.1859,6.5529,8.976514364727924,8.973056962069952,
+current_section,83.1859,9.5367,11.022068726039311,11.017274271590221,
+current_section,83.1859,12.4633,15.613023487948402,15.598323660495645,
+current_section,83.1859,15.4471,23.22538491168903,23.21710101633882,
+current_section,91.5022,6.5529,8.853464460956644,8.849617086032666,
+current_section,91.5022,9.5367,10.644551623080813,10.638270504350583,
+current_section,91.5022,12.4633,14.278952700215482,14.259821158184938,
+current_section,91.5022,15.4471,21.335043661656933,21.298885016437342,
+current_section,64.291,8.0594,9.8553093206388,9.852624687805271,
+current_section,64.291,13.9406,20.283260331766723,20.28244715112377,
+current_section,96.0678,8.0594,9.515697739722633,9.510875066718716,
+current_section,96.0678,13.9406,16.430025773804505,16.39981361330522,
+current_section,60.0,5.0,7.927137978563813,7.923739083950421,
+current_section,80.0,5.0,8.155845228273016,8.152227014660896,
+current_section,100.0,5.0,7.936276996399786,7.931780749316149,
+current_section,40.0,17.0,16.27626151834905,16.28778579856121,
+current_section,60.0,17.0,20.984363051650405,20.986907701803233,
+current_section,80.0,17.0,23.802416956651935,23.79722280885924,
+current_section,100.0,17.0,22.01799666214375,21.970022417679306,
+current_section,32.0,8.0,7.651522148908368,7.649650274454878,
+current_section,32.0,14.0,10.017371063680663,10.021092081551053,
+current_section,110.0,8.0,8.893995836108923,8.888474750787822,
+current_section,110.0,14.0,11.90674024810274,11.889147245938688,
+current_section,60.0,11.0,12.532165578758848,12.530799671600994,

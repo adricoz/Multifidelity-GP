@@ -1,0 +1,91 @@
+{
+ "profile": "profile_v2",
+ "start_section": "current_section",
+ "probability_common": 0.9899999999999995,
+ "sections": {
+  "best": {
+   "probability_solved": 0.9899999999999995,
+   "common": {
+    "probability": 0.9899999999999995,
+    "expected_speed_kt": 13.185794946728048,
+    "time_equivalent_speed_kt": 11.648932789329637,
+    "speed_sigma_kt": 0.020110886559584443
+   },
+   "modes": {
+    "upwind": {
+     "probability": 0.38699999999999984,
+     "expected_speed_kt": 11.169042986566637,
+     "time_equivalent_speed_kt": 10.36179996893835,
+     "speed_sigma_kt": 0.012457356064556727
+    },
+    "downwind": {
+     "probability": 0.38699999999999984,
+     "expected_speed_kt": 14.850384783688042,
+     "time_equivalent_speed_kt": 13.09559869766557,
+     "speed_sigma_kt": 0.024535151980413877
+    },
+    "downwind_tail": {
+     "probability": 0.08599999999999995,
+     "expected_speed_kt": 14.458076864902292,
+     "time_equivalent_speed_kt": 12.920901270495504,
+     "speed_sigma_kt": 0.02309824347003388
+    },
+    "manual": {
+     "probability": 0.12999999999999995,
+     "expected_speed_kt": 13.39249107531238,
+     "time_equivalent_speed_kt": 11.373770577306738,
+     "speed_sigma_kt": 0.021750174273055926
+    }
+   },
+   "gain_vs_start_kt": 0.2280521567705667,
+   "gain_by_mode_kt": {
+    "upwind": -0.03527189342713044,
+    "downwind": 0.42546016155615946,
+    "downwind_tail": 0.437003581312561,
+    "manual": 0.2860497495695887
+   },
+   "gain_vs_start_pct": 1.3555299151969464,
+   "gain_by_mode_pct": {
+    "upwind": -0.3527930938895282,
+    "downwind": 2.6051922987058123,
+    "downwind_tail": 2.7804091341182904,
+    "manual": 1.7783149095915565
+   }
+  },
+  "current_section": {
+   "probability_solved": 0.9899999999999995,
+   "common": {
+    "probability": 0.9899999999999995,
+    "expected_speed_kt": 12.957742789957482,
+    "time_equivalent_speed_kt": 11.537483698272418,
+    "speed_sigma_kt": 0.009444964133110129
+   },
+   "modes": {
+    "upwind": {
+     "probability": 0.38699999999999984,
+     "expected_speed_kt": 11.204314879993769,
+     "time_equivalent_speed_kt": 10.399689589696216,
+     "speed_sigma_kt": 0.007258523003958912
+    },
+    "downwind": {
+     "probability": 0.38699999999999984,
+     "expected_speed_kt": 14.424924622131883,
+     "time_equivalent_speed_kt": 12.813677511771614,
+     "speed_sigma_kt": 0.010281945872446503
+    },
+    "downwind_tail": {
+     "probability": 0.08599999999999995,
+     "expected_speed_kt": 14.021073283589732,
+     "time_equivalent_speed_kt": 12.629309362024882,
+     "speed_sigma_kt": 0.011304214049709433
+    },
+    "manual": {
+     "probability": 0.12999999999999995,
+     "expected_speed_kt": 13.106441325742797,
+     "time_equivalent_speed_kt": 11.223379957386413,
+     "speed_sigma_kt": 0.011102035353998929
+    }
+   }
+  }
+ }
+}

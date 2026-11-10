@@ -1,0 +1,8 @@
+12:21:57 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-09_1221_cross_2026-11-09_1056_xtr001_rigid_convex_k10
+12:28:24 [  6.4 min] VPP on the surrogate and sensitivities of 4 sections done
+12:37:49 [ 15.9 min] 192 HF runs done (xtr [0.01, 0.01])
+12:37:49 [ 15.9 min] in the physics of xtr001_rigid_convex_k10 (xtr [0.01, 0.01]), weighted mean speed on 0 % of the probability:
+12:37:49 [ 15.9 min]    own_best: nan kt (+nan vs own best)
+12:37:49 [ 15.9 min]    best_2026-11-09_1057_xtr005_rigid_convex_k10: nan kt (+nan vs own best)
+12:37:49 [ 15.9 min]    best_2026-11-09_1057_xtr010_rigid_convex_k10: nan kt (+nan vs own best)
+12:37:49 [ 15.9 min]    current_section: nan kt (+nan vs own best)

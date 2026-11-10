@@ -1,0 +1,34 @@
+<!doctype html><html lang='fr'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Figures du run 2026-11-09_1411_xtr003_rigid_convex_k10</title><style>
+:root { --bg: #ffffff; --fg: #1d1d1f; --muted: #6e6e73; --card: #f5f5f7; --link: #0b5cad; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #161618; --fg: #f2f2f2; --muted: #a1a1a6; --card: #232326; --link: #6cb4ff; } }
+body { background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif;
+       max-width: 980px; margin: 0 auto; padding: 24px 16px; }
+h1 { font-size: 22px; margin: 0 0 4px; } .sub { color: var(--muted); margin: 0 0 20px; }
+a { color: var(--link); } ul { padding-left: 0; list-style: none; }
+li { background: var(--card); border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+li span { color: var(--muted); } pre { background: var(--card); border-radius: 8px;
+       padding: 12px; overflow-x: auto; font-size: 12px; white-space: pre-wrap; }
+</style></head><body><h1>Figures du run 2026-11-09_1411_xtr003_rigid_convex_k10</h1><p class='sub'>vpp_acceleration</p><ul><li><a href='convergence.html'>Convergence</a><br><span>vitesse de la titulaire et des concurrentes à chaque mise à jour, taille du plan BF / HF</span></li><li><a href='points.html'>Points ajoutés</a><br><span>où le raffinement a placé ses calculs (plans d&#x27;attitude), avec les états VPP finaux</span></li><li><a href='profile_profile_v2.html'>Distribution d&#x27;usage « profile_v2 »</a><br><span>gain relatif (%) du meilleur profil à chaque nœud, vitesse par nœud, angles effectifs du foil à l&#x27;équilibre (= gîte, assiette, dérive ; calage 0)</span></li><li><a href='sections.html'>Sections</a><br><span>la meilleure section contre la section de départ et la meilleure du premier run comparé (les autres dans la légende), et ses scores PCA ; un bouton montre les autres optima locaux (coordonnées dans results/sections/)</span></li><li><a href='speeds.html'>Vitesses par condition</a><br><span>sections validées, vitesse corrigée au premier ordre de l&#x27;écart aux codes</span></li><li><a href='validation.html'>Validation</a><br><span>surrogate contre les codes (HF, BF, AVL) aux états VPP</span></li></ul><h2>Résumé</h2><pre>run 2026-11-09_1411_xtr003_rigid_convex_k10: 416 steps in 189.7 min
+code runs: level 1 685 (309 s), level 2 322 (47603 s); final design per level (587, 198)
+speed of the validated sections (final surrogate corrected against HF, weighted mean over the 48 conditions solved for all, 99 % of the probability): best 13.2623 kt, current_section 12.9525 kt
+speeds of the incumbent: 35/7: 7.291, 35/10: 8.523, 35/12: 9.787, 35/15: 11.635, 40/7: 7.772, 40/10: 9.127, 40/12: 10.837, 40/15: 13.940, 45/7: 8.140, 45/10: 9.693, 45/12: 11.982, 45/15: 17.288, 53/7: 8.558, 53/10: 10.405, 53/12: 13.787, 53/15: 19.397, 68/7: 9.044, 68/10: 11.312, 68/12: 16.661, 68/15: 22.329, 77/7: 9.116, 77/10: 11.415, 77/12: 16.969, 77/15: 23.572, 83/7: 9.096, 83/10: 11.320, 83/12: 16.621, 83/15: 24.000, 92/7: 8.989, 92/10: 11.010, 92/12: 15.533, 92/15: 23.053, 64/8: 9.925, 64/14: 20.838, 96/8: 9.736, 96/14: 18.051, 40/5: nan, 60/5: 7.966, 80/5: 8.245, 100/5: 8.057, 40/17: 16.276, 60/17: 21.562, 80/17: 24.000, 100/17: 24.000, 32/8: 7.595, 32/14: 9.848, 110/8: 9.112, 110/14: 13.696, 60/11: 12.614
+validation best: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0005 kt, max 0.0012 kt; predicted sigma RMS 0.0011 kt; |z| &lt;= 2 on 100 %
+   against the lf code: speed error mean +0.0012 kt, RMS 0.0132 kt
+   Fx     |surrogate - HF| / |HF| median 0.05 %
+   Fy     |surrogate - HF| / |HF| median 0.05 %
+   Fz     |surrogate - HF| / |HF| median 0.05 %
+   Mx     |surrogate - HF| / |HF| median 0.05 %
+   My     |surrogate - HF| / |HF| median 0.03 %
+   Mz     |surrogate - HF| / |HF| median 0.06 %
+   Cpmin  |surrogate - HF| / |HF| median 2.18 %
+validation current_section: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0012 kt, max 0.0034 kt; predicted sigma RMS 0.0042 kt; |z| &lt;= 2 on 100 %
+   against the lf code: speed error mean -0.0147 kt, RMS 0.0211 kt
+   Fx     |surrogate - HF| / |HF| median 0.12 %
+   Fy     |surrogate - HF| / |HF| median 0.07 %
+   Fz     |surrogate - HF| / |HF| median 0.08 %
+   Mx     |surrogate - HF| / |HF| median 0.07 %
+   My     |surrogate - HF| / |HF| median 0.02 %
+   Mz     |surrogate - HF| / |HF| median 0.13 %
+   Cpmin  |surrogate - HF| / |HF| median 5.10 %
+</pre></body></html>

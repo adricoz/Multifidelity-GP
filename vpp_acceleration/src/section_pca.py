@@ -553,6 +553,27 @@ def section_ixx(weights: np.ndarray, te_thickness: float) -> np.ndarray:
     return trapezoid(tau ** 3 / 12.0 + tau * (camber - y_g[:, None]) ** 2, x, axis=1)
 
 
+def section_modulus(weights: np.ndarray, te_thickness: float) -> np.ndarray:
+    """
+    Bending strength Ixx / v of a batch of sections (chord 1), the structural constraint chosen on
+    2026-11-04, with v = t_max / 2 (half the maximum thickness, decided with the colleague on
+    2026-11-05; before: y_upper(x_tmax) - y_g).
+
+    Returns:
+    - numpy array (m,).
+    """
+    x = THICKNESS_STATIONS
+    coordinates = section_coordinates(weights, x, te_thickness)
+    upper, lower = coordinates[:, :len(x)], coordinates[:, len(x):]
+    tau, camber = upper - lower, (upper + lower) / 2.0
+    from scipy.integrate import trapezoid  # noqa: PLC0415
+    y_g = trapezoid(tau * camber, x, axis=1) / trapezoid(tau, x, axis=1)
+    # Ixx as in section_ixx, from the same coordinates (computed once: the sampler calls this often)
+    ixx = trapezoid(tau ** 3 / 12.0 + tau * (camber - y_g[:, None]) ** 2, x, axis=1)
+    v = np.max(tau, axis=1) / 2.0
+    return ixx / v
+
+
 class KulfanBoxFamily:
     """
     Sections whose 16 Kulfan weights (8 per side) lie in a box, e.g. the box of
@@ -717,6 +738,21 @@ class SectionPCA:
         scores = np.atleast_2d(np.asarray(scores, dtype=float))
         k = self._k(scores.shape[1])
         return self.mean_weights + (scores * self.sigmas[:k]) @ self.weight_modes[:, :k].T
+
+    def anchor(self, weights: np.ndarray, n_modes: int) -> "SectionPCA":
+        """
+        Moves the mean so that the k first modes span the affine space through the section
+        `weights` (instead of through the mean section): the modes beyond k keep the value they
+        have for that section. The scores are unchanged (the modes are orthonormal) and
+        decode(encode(weights)) = weights exactly, with k < r modes. Changes self, returns self.
+        """
+        k = self._k(n_modes)
+        weights = np.asarray(weights, dtype=float).reshape(-1)
+        z = self.encode(weights[None], k)[0]
+        self.mean_weights = weights - (z * self.sigmas[:k]) @ self.weight_modes[:, :k].T
+        self.mean_coordinates = self.coordinates(self.mean_weights)[0]
+        self.n_modes = k
+        return self
 
     def reconstruct(self, weights: np.ndarray, n_modes: int = None) -> np.ndarray:
         """Weights of the sections projected on the k first modes: decode(encode(w))."""

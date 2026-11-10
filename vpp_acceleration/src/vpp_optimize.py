@@ -144,6 +144,8 @@ class RealFoilProblem:
         return self.ixx_reference / section_ixx(self.weights(scores), self.family.te_thickness)
 
     def bounds(self) -> list:
+        if self._bounds is None and hasattr(self.family, "score_bounds"):
+            self._bounds = self.family.score_bounds + self.attitude_bounds   # a box of scores
         if self._bounds is None:
             scores = self.sample_sections(4096, seed=101)
             self._bounds = [(float(a), float(b)) for a, b in zip(scores.min(0), scores.max(0))] \
