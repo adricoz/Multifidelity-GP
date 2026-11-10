@@ -247,7 +247,8 @@ def main():
     if args.search_box:
         family, pca, _ = load_search_space(Path(args.search_box), args.k, args.search_box_name)
         run.log(f"search space: {args.search_box}, box {args.search_box_name}, k = {args.k} "
-                f"through the current section, Ixx/v >= {family.domain.ixx_v_min:.4e}")
+                f"through the current section, Ixx/v >= {family.domain.ixx_v_min:.4e}, "
+                f"Ixx >= {family.domain.ixx_min:.4e} (0 = no Ixx limit)")
     elif args.box == "dimred":
         family = KulfanBoxFamily.from_notebook(extra_check=confident)
     else:

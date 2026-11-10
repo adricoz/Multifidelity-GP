@@ -363,6 +363,7 @@ const leRadius = w => ({up: w[0] > 0 ? w[0] ** 2 / 2 : 0, lo: w[NW] < 0 ? w[NW] 
   document.getElementById("rUp").value = (r.up / 2).toPrecision(2);
   document.getElementById("rLo").value = (r.lo / 2).toPrecision(2); }
 const IXX_V_FACTOR = DOM && DOM.ixx_v_factor !== undefined ? DOM.ixx_v_factor : 1;
+const IXX_FACTOR = DOM && DOM.ixx_factor ? DOM.ixx_factor : 0;   // 0: no Ixx limit (domains before 10/11)
 if (SB) document.getElementById("mean").textContent = "z = 0";
 if (DOM) {                                      // the settings of the domain (src/section_domain.py)
   document.getElementById("lowerRule").value = "zones";
@@ -476,6 +477,8 @@ function update() {
      ` (${wigRatio.toFixed(1)} ×)`],
     [`Ixx/v ≥ ${IXX_V_FACTOR} × actuelle`, crossing ? null : ratio >= IXX_V_FACTOR * (1 - 1e-9),
      crossing ? " — sans objet : surfaces croisées" : ` (${ratio.toFixed(3)} ×)`]];
+  if (IXX_FACTOR > 0) checks.push([`Ixx ≥ ${IXX_FACTOR} × actuelle`, crossing ? null : s.ixx / cur.ixx >= IXX_FACTOR * (1 - 1e-9),
+     crossing ? " — sans objet : surfaces croisées" : ` (${(s.ixx / cur.ixx).toFixed(3)} ×)`]);
   const admissible = checks.every(([, ok]) => ok !== false) && !crossing;
   const cell = ok => ok === null ? "" : ok ? "ok" : "bad", word = ok => ok === null ? "—" : ok ? "oui" : "non";
   document.getElementById("metrics").innerHTML =

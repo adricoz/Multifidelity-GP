@@ -105,7 +105,10 @@ def make_figures(root) -> None:
     root = Path(root)
     figures = root / "figures"
     updates = json.loads((root / "results" / "updates.json").read_text(encoding="utf-8"))
-    history = pd.read_csv(root / "results" / "history.csv")
+    try:
+        history = pd.read_csv(root / "results" / "history.csv")
+    except pd.errors.EmptyDataError:  # no point added (run stopped after its start design)
+        history = pd.DataFrame(columns=["elapsed_min", "level", "x", "n_l1"])
     validation = pd.read_csv(root / "results" / "validation.csv")
     config = json.loads((root / "config.json").read_text(encoding="utf-8"))
     k = int(config["k"])
@@ -144,6 +147,8 @@ def make_figures(root) -> None:
 
     # 2. points added
     xs = np.array([json.loads(x) if isinstance(x, str) else x for x in history["x"]])
+    if len(history) == 0:
+        xs = np.empty((0, k + 3))
     fig = make_subplots(rows=1, cols=2, subplot_titles=("Cant / Yaw", "Cant / Rake"))
     for col, (j, name) in enumerate(((k + 2, "Yaw_Eff"), (k + 1, "Rake_Eff")), start=1):
         for level, symbol, color in ((1, "circle-open", SERIES[0]), (2, "diamond", SERIES[3])):

@@ -38,7 +38,7 @@ VPP_DIR = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(VPP_DIR))
 # pylint: disable=wrong-import-position
 from src.section_domain import SectionDomain  # noqa: E402
-from src.section_pca import SectionPCA, section_modulus  # noqa: E402
+from src.section_pca import SectionPCA, section_modulus, section_stiffness  # noqa: E402
 
 EARLIER = {"run4": "2026-10-23_1702_real_search_profile_local",
            "run5": "2026-10-27_1224_control_restarts",
@@ -52,7 +52,8 @@ def load(pca_run: Path, k: int):
     d = json.loads((pca_run / "data" / "domain.json").read_text(encoding="utf-8"))
     domain = SectionDomain(np.array(d["reference"]), d["te_thickness"], d["box_scale"], d["band"],
                            d["le_factor"], inflections=d["inflections"],
-                           ixx_v_factor=d.get("ixx_v_factor", 1.0))
+                           ixx_v_factor=d.get("ixx_v_factor", 1.0),
+                           ixx_factor=d.get("ixx_factor", 0.0))
     pca = SectionPCA.load(pca_run / "data" / "pca.json").anchor(domain.reference, k)
     z0 = pca.encode(domain.reference[None])[0]
     return domain, pca, z0
@@ -72,13 +73,13 @@ def axis_bounds(domain, pca, z0, a, c, step=0.005, reach=6.0):
             steps = np.arange(step, s_lin + step / 2, step)
             z = np.tile(z0, (len(steps), 1))
             z[:, j] += sign * steps
-            ok = domain.ixx_v_ok(pca.decode(z))
+            ok = domain.nonlinear_ok(pca.decode(z))
             if ok.all():
                 s, why = s_lin, domain.row_names[np.argmin(a + slope * s_lin)] if s_lin < reach \
                     else "reach"
             else:
                 first = int(np.argmax(~ok))
-                s, why = (steps[first - 1] if first > 0 else 0.0), "ixx_v"
+                s, why = (steps[first - 1] if first > 0 else 0.0), "ixx_v / ixx"
             store[j] = s
             out[sign] = why
         limits.append((out[-1.0], out[1.0]))
@@ -114,17 +115,24 @@ def max_volume_box(a, c, cap_minus, cap_plus, start_minus, start_plus):
     return x[:k], x[k:], result
 
 
+def stiffness_ratio(domain, weights):
+    """min(Ixx / v / its limit, Ixx / its limit) per section (the Ixx part only if ixx_factor > 0)."""
+    ixx, ixx_v = section_stiffness(np.atleast_2d(weights), domain.te_thickness)
+    ratio = ixx_v / domain.ixx_v_min
+    return np.minimum(ratio, ixx / domain.ixx_min) if domain.ixx_min > 0 else ratio
+
+
 def min_ixx_v(domain, pca, z0, d_minus, d_plus, rng, n_uniform=50_000, n_local=10):
     """Smallest Ixx / v / limit over the box: corners, uniform points, local minimisation."""
     lower, upper = z0 - d_minus, z0 + d_plus
     corners = np.array(list(itertools.product(*zip(lower, upper))))
     uniform = lower + (upper - lower) * rng.random((n_uniform, len(z0)))
     points = np.vstack([corners, uniform])
-    ratio = section_modulus(pca.decode(points), domain.te_thickness) / domain.ixx_v_min
+    ratio = stiffness_ratio(domain, pca.decode(points))
     best = float(ratio.min())
     for z in points[np.argsort(ratio)[:n_local]]:
-        res = minimize(lambda q: section_modulus(pca.decode(q), domain.te_thickness)[0]
-                       / domain.ixx_v_min, z, method="L-BFGS-B", bounds=list(zip(lower, upper)))
+        res = minimize(lambda q: stiffness_ratio(domain, pca.decode(q))[0], z, method="L-BFGS-B",
+                       bounds=list(zip(lower, upper)))
         best = min(best, float(res.fun))
     return best
 
@@ -187,6 +195,7 @@ def main() -> None:
 
     summary = {"pca_run": pca_run.name, "k": args.k, "z0": z0.tolist(),
                "ixx_v_limit": domain.ixx_v_min, "ixx_v_factor": domain.ixx_v_factor,
+               "ixx_limit": domain.ixx_min, "ixx_factor": domain.ixx_factor,
                "axis": {"d_minus": ax_minus.tolist(), "d_plus": ax_plus.tolist(),
                         "limits": limits}, "alpha_scaled": alpha, "boxes": {}}
     axis_width = ax_minus + ax_plus

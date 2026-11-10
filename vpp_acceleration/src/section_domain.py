@@ -25,10 +25,13 @@ admissible sections is admissible, the space has no holes and no separate pieces
    reference section, v = t_max / 2 (section_modulus; 2026-11-05, factor 0.9). It is checked on
    every section (contains, the sampler); on the segment tests of 2026-11-04 it left the domain
    nearly convex (1 to 3 % of the segments between admissible sections leave it).
+   A second one, optional, is the bending stiffness Ixx >= ixx_factor x that of the reference
+   section (section_ixx; 2026-11-10: factor 0.95 together with Ixx / v >= 0.9; 0 = not applied,
+   as in the domains built before). Ixx (~ int t^3) is not convex either: treated as Ixx / v.
 
 2. Sampling: hit-and-run (Smith 1984; Lovasz 1999). From an admissible point, draw a direction d,
    compute EXACTLY the chord of the polytope along d (the interval of s such that G (w + s d) >= h)
-   and draw s uniformly on it; Ixx / v is handled by the shrinkage of slice sampling (Neal 2003):
+   and draw s uniformly on it; Ixx / v (and Ixx) is handled by the shrinkage of slice sampling (Neal 2003):
    a rejected s shrinks the chord towards 0 (the current point) and s is drawn again. The chain
    leaves the uniform law on the domain invariant; every recorded section satisfies every
    constraint by construction. The directions are Gaussian with the covariance of the box
@@ -39,7 +42,7 @@ Import: vpp_acceleration on sys.path (from src.section_domain import SectionDoma
 """
 import numpy as np
 
-from src.section_pca import (THICKNESS_STATIONS, notebook_bounds, section_modulus,
+from src.section_pca import (THICKNESS_STATIONS, notebook_bounds, section_stiffness,
                              surface_matrix)
 
 X_LO, X_HI = 0.01, 0.99          # curvature rules on [X_LO, X_HI]: y'' diverges at the leading edge
@@ -61,7 +64,7 @@ class SectionDomain:
 
     def __init__(self, reference: np.ndarray, te_thickness: float, box_scale: float = 3.0,
                  band: float = 0.05, le_factor: float = 0.5, stations=THICKNESS_STATIONS,
-                 inflections=None, ixx_v_factor: float = 1.0):
+                 inflections=None, ixx_v_factor: float = 1.0, ixx_factor: float = 0.0):
         """
         Args:
         - reference: Kulfan weights (2n,) of the reference (current) section: centre of the Kulfan
@@ -75,6 +78,7 @@ class SectionDomain:
         - inflections: (x_1, x_2); default those of the reference on THICKNESS_STATIONS (the same
           zones whatever the stations of the constraints).
         - ixx_v_factor: Ixx / v >= ixx_v_factor x (Ixx / v of the reference).
+        - ixx_factor: Ixx >= ixx_factor x (Ixx of the reference); 0 = no Ixx constraint.
         """
         self.reference = np.asarray(reference, dtype=float)
         self.te_thickness, self.box_scale = float(te_thickness), float(box_scale)
@@ -135,8 +139,10 @@ class SectionDomain:
         add(e_lo[None, :] - c_lo * a_t, c_lo * b_t, "leading_edge")
         self.g, self.h = np.vstack(rows), np.concatenate(rhs)
         self.row_names = np.array(names)
-        self.ixx_v_factor = float(ixx_v_factor)
-        self.ixx_v_reference = float(section_modulus(self.reference[None], te_thickness)[0])
+        self.ixx_v_factor, self.ixx_factor = float(ixx_v_factor), float(ixx_factor)
+        ixx, ixx_v = section_stiffness(self.reference[None], te_thickness)
+        self.ixx_reference, self.ixx_v_reference = float(ixx[0]), float(ixx_v[0])
+        self.ixx_min = self.ixx_factor * self.ixx_reference
         self.ixx_v_min = self.ixx_v_factor * self.ixx_v_reference
 
     # --- membership ---
@@ -145,24 +151,33 @@ class SectionDomain:
         return np.atleast_2d(weights) @ self.g.T - self.h
 
     def violations(self, weights: np.ndarray, tolerance: float = 1e-10) -> dict:
-        """Per constraint name (and "ixx_v"): booleans (m,), True where it is broken."""
+        """Per constraint name (and "ixx_v", "ixx"): booleans (m,), True where it is broken."""
         weights = np.atleast_2d(weights)
         margins = self.margins(weights)
         out = {name: np.any(margins[:, self.row_names == name] < -tolerance, axis=1)
                for name in dict.fromkeys(self.row_names)}
-        out["ixx_v"] = ~self.ixx_v_ok(weights, tolerance)
+        ixx, ixx_v = section_stiffness(weights, self.te_thickness)
+        out["ixx_v"] = ixx_v < self.ixx_v_min * (1.0 - tolerance)
+        out["ixx"] = ixx < self.ixx_min * (1.0 - tolerance)
         return out
 
     def ixx_v_ok(self, weights: np.ndarray, tolerance: float = 1e-10) -> np.ndarray:
-        return section_modulus(np.atleast_2d(weights), self.te_thickness) \
+        """Booleans (m,): the Ixx / v constraint alone."""
+        return section_stiffness(np.atleast_2d(weights), self.te_thickness)[1] \
             >= self.ixx_v_min * (1.0 - tolerance)
 
+    def nonlinear_ok(self, weights: np.ndarray, tolerance: float = 1e-10) -> np.ndarray:
+        """Booleans (m,): the non-linear constraints, Ixx / v and Ixx (if ixx_factor > 0)."""
+        ixx, ixx_v = section_stiffness(np.atleast_2d(weights), self.te_thickness)
+        return (ixx_v >= self.ixx_v_min * (1.0 - tolerance)) \
+            & (ixx >= self.ixx_min * (1.0 - tolerance))
+
     def contains(self, weights: np.ndarray, tolerance: float = 1e-10) -> np.ndarray:
-        """Booleans (m,): every linear constraint and Ixx / v (SectionPCA family interface)."""
+        """Booleans (m,): every linear constraint, Ixx / v and Ixx (SectionPCA family interface)."""
         weights = np.atleast_2d(weights)
         ok = np.all(self.margins(weights) >= -tolerance, axis=1)
         if ok.any():
-            ok[ok] = self.ixx_v_ok(weights[ok], tolerance)
+            ok[ok] = self.nonlinear_ok(weights[ok], tolerance)
         return ok
 
     # --- sampling ---
@@ -219,7 +234,7 @@ class SectionDomain:
                 s = s_min + (s_max - s_min) * rng.random(n_chains)
                 trial = points + s[:, None] * directions
                 ok = np.zeros(n_chains, dtype=bool)
-                ok[moving] = self.ixx_v_ok(trial[moving])
+                ok[moving] = self.nonlinear_ok(trial[moving])
                 n_draws += int(moving.sum())
                 accepted = moving & ok
                 points[accepted] = trial[accepted]
@@ -234,7 +249,7 @@ class SectionDomain:
                 kept.append(points.copy())
             if log is not None and (step + 1) % 500 == 0:
                 log(f"hit-and-run: step {step + 1} / {burn + per_chain * thin}, "
-                    f"Ixx/v rejections {n_rejected / max(n_draws, 1):.1%} of the draws")
+                    f"Ixx/v + Ixx rejections {n_rejected / max(n_draws, 1):.1%} of the draws")
         return np.vstack(kept)[:n_sections]
 
     def to_dict(self) -> dict:
@@ -242,7 +257,8 @@ class SectionDomain:
                 "box_scale": self.box_scale, "band": self.band, "le_factor": self.le_factor,
                 "inflections": list(self.inflections), "kappa": list(self.kappa),
                 "ixx_v_factor": self.ixx_v_factor, "ixx_v_reference": self.ixx_v_reference,
-                "ixx_v_min": self.ixx_v_min, "box_lower": self.box_lower.tolist(),
+                "ixx_v_min": self.ixx_v_min, "ixx_factor": self.ixx_factor,
+                "ixx_reference": self.ixx_reference, "ixx_min": self.ixx_min, "box_lower": self.box_lower.tolist(),
                 "box_upper": self.box_upper.tolist(), "x_lo": X_LO, "x_hi": X_HI}
 
 
@@ -259,7 +275,8 @@ def load_search_space(pca_run, k: int, box_name: str = "C_envelope"):
     d = json.loads((pca_run / "data" / "domain.json").read_text(encoding="utf-8"))
     domain = SectionDomain(np.array(d["reference"]), d["te_thickness"], d["box_scale"], d["band"],
                            d["le_factor"], inflections=d["inflections"],
-                           ixx_v_factor=d.get("ixx_v_factor", 1.0))
+                           ixx_v_factor=d.get("ixx_v_factor", 1.0),
+                           ixx_factor=d.get("ixx_factor", 0.0))
     pca = SectionPCA.load(pca_run / "data" / "pca.json").anchor(domain.reference, k)
     box = json.loads((pca_run / "data" / f"search_box_k{k}.json").read_text(encoding="utf-8"))
     box = box["boxes"][box_name]
@@ -270,7 +287,7 @@ def load_search_space(pca_run, k: int, box_name: str = "C_envelope"):
 class ScoreBoxFamily:
     """
     The search space of the optimizer (2026-11-05): the sections whose k PCA scores lie in a box
-    and whose DECODED section is in the domain (all the constraints, Ixx / v included), checked
+    and whose DECODED section is in the domain (all the constraints, Ixx / v and Ixx), checked
     when the sections are screened. Interface of RealFoilProblem (sample, contains, te_thickness,
     score_bounds).
     """

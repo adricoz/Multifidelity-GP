@@ -553,6 +553,25 @@ def section_ixx(weights: np.ndarray, te_thickness: float) -> np.ndarray:
     return trapezoid(tau ** 3 / 12.0 + tau * (camber - y_g[:, None]) ** 2, x, axis=1)
 
 
+def section_stiffness(weights: np.ndarray, te_thickness: float) -> tuple:
+    """
+    Ixx (section_ixx) and Ixx / v (section_modulus) of a batch of sections from ONE evaluation of
+    the coordinates (the sampler of section_domain calls this often).
+
+    Returns:
+    - (ixx, ixx_v): numpy arrays (m,).
+    """
+    x = THICKNESS_STATIONS
+    coordinates = section_coordinates(weights, x, te_thickness)
+    upper, lower = coordinates[:, :len(x)], coordinates[:, len(x):]
+    tau, camber = upper - lower, (upper + lower) / 2.0
+    from scipy.integrate import trapezoid  # noqa: PLC0415
+    y_g = trapezoid(tau * camber, x, axis=1) / trapezoid(tau, x, axis=1)
+    ixx = trapezoid(tau ** 3 / 12.0 + tau * (camber - y_g[:, None]) ** 2, x, axis=1)
+    v = np.max(tau, axis=1) / 2.0
+    return ixx, ixx / v
+
+
 def section_modulus(weights: np.ndarray, te_thickness: float) -> np.ndarray:
     """
     Bending strength Ixx / v of a batch of sections (chord 1), the structural constraint chosen on
@@ -562,16 +581,7 @@ def section_modulus(weights: np.ndarray, te_thickness: float) -> np.ndarray:
     Returns:
     - numpy array (m,).
     """
-    x = THICKNESS_STATIONS
-    coordinates = section_coordinates(weights, x, te_thickness)
-    upper, lower = coordinates[:, :len(x)], coordinates[:, len(x):]
-    tau, camber = upper - lower, (upper + lower) / 2.0
-    from scipy.integrate import trapezoid  # noqa: PLC0415
-    y_g = trapezoid(tau * camber, x, axis=1) / trapezoid(tau, x, axis=1)
-    # Ixx as in section_ixx, from the same coordinates (computed once: the sampler calls this often)
-    ixx = trapezoid(tau ** 3 / 12.0 + tau * (camber - y_g[:, None]) ** 2, x, axis=1)
-    v = np.max(tau, axis=1) / 2.0
-    return ixx / v
+    return section_stiffness(weights, te_thickness)[1]
 
 
 class KulfanBoxFamily:

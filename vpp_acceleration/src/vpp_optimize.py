@@ -153,7 +153,7 @@ class RealFoilProblem:
         return self._bounds
 
     def local_sections(self, center: np.ndarray, radius: float, n_sections: int, seed: int,
-                       max_attempts: int = 20) -> np.ndarray:
+                       max_attempts: int = 200) -> np.ndarray:
         """
         Scores (<= n, k) of sections around `center`, the trust region of the local search
         (VPPSectionOptimizer.screen): center + radius g / sqrt(k), g ~ N(0, I), i.e. a typical

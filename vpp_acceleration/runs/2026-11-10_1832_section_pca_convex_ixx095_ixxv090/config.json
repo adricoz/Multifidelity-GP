@@ -1,0 +1,15 @@
+{
+ "n": 100000,
+ "chains": 500,
+ "burn": 1000,
+ "thin": 5,
+ "seed": 0,
+ "box_scale": 3.0,
+ "band": 0.05,
+ "le_factor": 0.5,
+ "ixx_v_factor": 0.9,
+ "ixx_factor": 0.95,
+ "sample_stations": 501,
+ "n_segments": 2000,
+ "name": "section_pca_convex_ixx095_ixxv090"
+}

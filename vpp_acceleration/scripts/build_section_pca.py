@@ -75,6 +75,8 @@ def main() -> None:
     parser.add_argument("--le-factor", type=float, default=0.5)
     parser.add_argument("--ixx-v-factor", type=float, default=1.0,
                         help="Ixx / v >= this factor x Ixx / v of the current section")
+    parser.add_argument("--ixx-factor", type=float, default=0.0,
+                        help="Ixx >= this factor x Ixx of the current section (0 = no Ixx limit)")
     parser.add_argument("--sample-stations", type=int, default=501)
     parser.add_argument("--n-segments", type=int, default=2000)
     parser.add_argument("--name", default="section_pca_convex")
@@ -84,13 +86,14 @@ def main() -> None:
     # 1. the sections
     current = np.asarray(CFoilFamily.from_study_config(STUDY_CONFIG).reference_weights(), float)
     settings = {"box_scale": args.box_scale, "band": args.band, "le_factor": args.le_factor,
-                "ixx_v_factor": args.ixx_v_factor}
+                "ixx_v_factor": args.ixx_v_factor, "ixx_factor": args.ixx_factor}
     domain = SectionDomain(current, TE, **settings)
     coarse = SectionDomain(current, TE, **settings, inflections=domain.inflections,
                            stations=np.linspace(0.0, 1.0, args.sample_stations))
     run.log(f"domain: {domain.g.shape[0]} linear constraints, lower inflections "
             f"{domain.inflections[0]:.3f} / {domain.inflections[1]:.3f} +- {args.band}, "
-            f"kappa {domain.kappa[0]:.3f} / {domain.kappa[1]:.4f}, Ixx/v >= {domain.ixx_v_min:.4e}")
+            f"kappa {domain.kappa[0]:.3f} / {domain.kappa[1]:.4f}, Ixx/v >= {domain.ixx_v_min:.4e}, "
+            f"Ixx >= {domain.ixx_min:.4e}")
     start = time.perf_counter()
     sample = coarse.sample(args.n, seed=args.seed, n_chains=args.chains, burn=args.burn,
                            thin=args.thin, log=run.log)
