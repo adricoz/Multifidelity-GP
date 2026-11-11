@@ -1,0 +1,132 @@
+{
+ "pca_run": "2026-11-11_1054_section_pca_convex_ixxv095",
+ "compare": "2026-11-05_1212_section_pca_convex_tmax2_0p9",
+ "k": 10,
+ "box_sections": {
+  "ixx_ratio_min": 0.8681202905063046,
+  "ixx_ratio_p5_p50_p95": [
+   1.0449317229572985,
+   1.7770538750388676,
+   3.118440467338938
+  ],
+  "ixx_v_ratio_min": 0.950520067789582,
+  "ixx_v_ratio_p5_p50_p95": [
+   1.0107054777718139,
+   1.4251250160587428,
+   2.0386491010473824
+  ],
+  "binding_ixx_pct": 0.0,
+  "binding_ixx_v_pct": 0.7000000000000001
+ },
+ "vs_old": {
+  "principal_angles_deg": [
+   1.6144623287216325e-14,
+   3.0659403258820453e-14,
+   5.1577809456660354e-14,
+   6.540245508855617e-14,
+   0.6397559191902764,
+   1.2278344544740412,
+   1.7966054535350289,
+   2.5025716112445053,
+   3.924171503629369,
+   4.809625595762258
+  ],
+  "recon_error_new_basis_max": 1.6653345369377348e-16,
+  "recon_error_old_basis_p50_p95_max": [
+   5.067740971027618e-05,
+   0.00010487187879234389,
+   0.0001708332092381533
+  ],
+  "old_box_admissible_pct": 1.7160000000000002,
+  "old_sections_breaking_new_ixx_pct": 0.0
+ },
+ "earlier_bests": {
+  "convexe 05/11 (FSI)": {
+   "run": "2026-11-05_1259_convex_envelope_k10_long",
+   "ixx_ratio": 0.8330753135647081,
+   "ixx_v_ratio": 0.901071442059529,
+   "in_new_space": false,
+   "broken": [
+    "ixx_v"
+   ]
+  },
+  "xtr 5 %": {
+   "run": "2026-11-09_1057_xtr005_rigid_convex_k10",
+   "ixx_ratio": 0.8557434289395897,
+   "ixx_v_ratio": 0.9018111394201703,
+   "in_new_space": false,
+   "broken": [
+    "ixx_v"
+   ]
+  },
+  "xtr 3 %": {
+   "run": "2026-11-09_1411_xtr003_rigid_convex_k10",
+   "ixx_ratio": 0.8622309469664955,
+   "ixx_v_ratio": 0.9034894424328918,
+   "in_new_space": false,
+   "broken": [
+    "ixx_v"
+   ]
+  },
+  "xtr 10 % depuis 5 %": {
+   "run": "2026-11-09_1325_xtr010_from5_rigid_convex_k10",
+   "ixx_ratio": 0.8988839444473149,
+   "ixx_v_ratio": 0.9002549345993934,
+   "in_new_space": false,
+   "broken": [
+    "ixx_v"
+   ]
+  },
+  "run 8": {
+   "run": "2026-10-29_1002_profile_v2_box3_3h",
+   "ixx_ratio": 1.0039698820169516,
+   "ixx_v_ratio": 0.9821264210922975,
+   "in_new_space": false,
+   "broken": [
+    "upper_curvature",
+    "leading_edge"
+   ]
+  }
+ },
+ "checks": [
+  {
+   "check": "section actuelle dans le domaine",
+   "value": true,
+   "threshold": "vrai",
+   "ok": true
+  },
+  {
+   "check": "decode(encode(actuelle)) exact (\u00e9cart max des poids)",
+   "value": 3.191891195797325e-16,
+   "threshold": "< 1e-10",
+   "ok": true
+  },
+  {
+   "check": "4000 sections de la box : contraintes viol\u00e9es",
+   "value": {
+    "kulfan_box": 0,
+    "crossing": 0,
+    "upper_curvature": 0,
+    "lower_curvature": 0,
+    "leading_edge": 0,
+    "ixx_v": 0,
+    "ixx": 0
+   },
+   "threshold": "0 partout",
+   "ok": true
+  },
+  {
+   "check": "variance gard\u00e9e par k = 10",
+   "value": 99.88969108029937,
+   "threshold": ">= 99.8 %",
+   "ok": true
+  },
+  {
+   "check": "fraction admissible de la box (uniforme)",
+   "value": 1.717,
+   "threshold": ">= 0.3 % (ancienne : 1.72 %)",
+   "ok": true
+  }
+ ],
+ "all_ok": true
+}

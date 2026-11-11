@@ -1,0 +1,5 @@
+WARNING:bdfoil_v1.xfoil:polar interior gap filled by interpolation at alpha = 2.5, 5.25
+WARNING:bdfoil_v1.solvers.openfoam.bridge:/home/bdcfd/bdcfd/cfd2d/544a245bcb5d794e_b9151f: timeout after 8089 s: stop requested
+WARNING:bdfoil_v1.solvers.openfoam.bridge:/home/bdcfd/bdcfd/cfd2d/2f49e11361a5fd32_226dd6: timeout after 28410 s: stop requested
+WARNING:bdfoil_v1.solvers.openfoam.bridge:/home/bdcfd/bdcfd/cfd2d/2450a91c117a3afc_f16e21: timeout after 7980 s: stop requested
+WARNING:bdfoil_v1.solvers.openfoam.bridge:/home/bdcfd/bdcfd/cfd2d/22ae237b7a93cc82_463808: timeout after 7739 s: stop requested

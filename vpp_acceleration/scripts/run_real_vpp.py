@@ -154,6 +154,16 @@ def main():
                              "PCA, domain and box of the search (replaces --box)")
     parser.add_argument("--search-box-name", default="C_envelope",
                         help="box of data/search_box_k<k>.json (C_envelope, A_scaled, ...)")
+    # 2026-11-11: 3D CFD as an asynchronous top level (src/cfd_queue.py, served by
+    # scripts/cfd_level.py serve on the GPU)
+    parser.add_argument("--cfd-queue", action="store_true",
+                        help="one more level above --levels, the 3D CFD points of <run>/cfd (requests "
+                             "written by the loop, results by scripts/cfd_level.py serve)")
+    parser.add_argument("--cfd-cost", type=float, default=240.0,
+                        help="cost of a CFD point in the units of --costs")
+    parser.add_argument("--cfd-start-yaw", type=float, default=-1.0,
+                        help="yaw [deg] of the first CFD point (the start section; MC2: median yaw of "
+                             "its VPP states in the xtr 3 %% run of 2026-11-09)")
     # 2026-11-09: forced transition of the XFOIL and NeuralFoil polars (default 0.1 = 10 % chord)
     parser.add_argument("--xtr", type=float, nargs="+", default=None, metavar="XTR",
                         help="forced transition, fraction of the chord: one value (both sides) or "
@@ -302,7 +312,26 @@ def main():
                                     start_scores=start_scores, batch_size=args.batch,
                                     vpp_pool=vpp_pool, condition_weights=condition_weights,
                                     screen_seed=args.screen_seed, **settings)
+    queue = None
+    if args.cfd_queue:
+        from src.cfd_queue import CFDQueue  # noqa: PLC0415
+        x0 = np.concatenate([start_scores, [0.0, 0.0, args.cfd_start_yaw]])
+        queue = CFDQueue(Path(run.root) / "cfd", problem, cost=args.cfd_cost,
+                         start_points=[(x0, f"{start_name} at yaw {args.cfd_start_yaw:g} deg "
+                                            "(validation point)")])
+        optimizer.hooks.append(queue)
+        optimizer.max_sync_level = len(args.levels)
+        run.log(f"CFD level: queue {Path(run.root) / 'cfd'}, cost {args.cfd_cost:g}, used from "
+                f"{queue.n_activate} points on")
     optimizer.run_loop()
+    surrogate = optimizer.surrogate                    # rebuilt with one more level by the CFD queue
+    if queue is not None:                              # final CFD check of the best section
+        queue.ingest(optimizer)
+        k = problem.n_scores
+        yaw = float(np.median(optimizer.state_points(optimizer.incumbent,
+                                                     optimizer.incumbent_states)[:, k + 2]))
+        queue.request(np.concatenate([optimizer.incumbent, [0.0, 0.0, yaw]]),
+                      "final best section at the median yaw of its VPP states", run.log)
     run.log(f"loop done: {optimizer.iteration} choices in {optimizer.n_batches} batches, design "
             f"per level {surrogate.sizes}, runs {runner.n_runs}, code time {runner.time}")
 
@@ -387,7 +416,7 @@ def summarize(run, optimizer, runner, validation, conditions, code_labels) -> st
         lines.append("local optima of the regions, final surrogate (results/optima.json): "
                      + ", ".join(f"region {e['region']} {e['final_speed']:.4f} kt"
                                  + (" (best)" if e["best"] else "") for e in optimizer.compared))
-    hf = code_labels[optimizer.surrogate.n_levels - 1]
+    hf = code_labels[(optimizer.max_sync_level or optimizer.surrogate.n_levels) - 1]
     others = [c[len("speed_error_"):-len("_kt")] for c in validation.columns
               if c.startswith("speed_error_") and c != "speed_error_kt"]
     for name, group in validation.groupby("section"):

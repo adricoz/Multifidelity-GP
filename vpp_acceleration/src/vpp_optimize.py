@@ -464,6 +464,10 @@ class VPPSectionOptimizer:
         self.region, self.region_gains, self.optima, self.compared = 0, [], [], []
         self.new_region = True                             # sensitivities due at the next update
         self.sensitivity_memory, self.sensitivity_history = int(sensitivity_memory), []
+        # asynchronous levels (2026-11-11, src/cfd_queue.py): callables hook(optimizer) run before
+        # every batch, and the highest level a batch may choose (None = every level); the levels
+        # above it are filled by the hooks only
+        self.hooks, self.max_sync_level = [], None
 
     # --- VPP pieces ---
     def solve_sections(self, sections, guesses=None, extra_guesses=None) -> list:
@@ -786,6 +790,8 @@ class VPPSectionOptimizer:
         update_s = time.perf_counter() - update_start
         weights = self.point_weights()                     # (N, 6): Cpmin weight 0
         x_cand, missing = self.candidates()
+        if self.max_sync_level is not None:                # the asynchronous levels are not chosen here
+            missing[:, self.max_sync_level:] = False
         choices = []
         for _ in range(self.batch_size):
             choice = choose(self.surrogate, weights, x_cand, missing, self.x_int, np.inf)
@@ -836,6 +842,8 @@ class VPPSectionOptimizer:
 
     def run_loop(self) -> None:
         while self.run.elapsed() < self.time_limit_s:
+            for hook in self.hooks:
+                hook(self)
             records = self.step()
             if not records:
                 break
@@ -870,7 +878,9 @@ def validate(optimizer: VPPSectionOptimizer, sections: dict, extra_levels=None) 
     names = list(sections)
     guesses = [s["unknowns"] for s in optimizer.incumbent_states]
     all_states = optimizer.solve_sections([sections[n] for n in names], guesses)
-    top = optimizer.surrogate.n_levels
+    # with asynchronous levels (src/cfd_queue.py) the runner has the synchronous ones only: "hf" is
+    # then the highest of them (the surrogate mean stays the one of the top level)
+    top = optimizer.max_sync_level or optimizer.surrogate.n_levels
     codes = {"hf": top, "lf": 1, **{f"l{l}": l for l in range(2, top)}, **(extra_levels or {})}
     for name, states in zip(names, all_states):
         scores = sections[name]

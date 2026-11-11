@@ -1,0 +1,37 @@
+[2026-11-10 18:38:35] start: sections ['MC2', 'opt003'], alphas [-1.0, 0.0, -2.0, 1.0, -3.0, 2.0, -4.0, 3.0], 4 cases x 4 ranks, Re 5e+06, deadline 2026-11-11 07:30, OpenFOAM openfoam-v2512-patch0_bd2b6720-20260127
+[2026-11-10 18:38:37] XFOIL MC2 xtr 0.03: ok
+[2026-11-10 18:38:40] XFOIL MC2 xtr 0.05: ok
+[2026-11-10 18:38:55] XFOIL MC2 xtr 0.1: ok
+[2026-11-10 18:38:57] XFOIL opt003 xtr 0.03: ok
+[2026-11-10 18:39:00] XFOIL opt003 xtr 0.05: ok
+[2026-11-10 18:39:02] XFOIL opt003 xtr 0.1: ok
+[2026-11-10 18:50:25] opt003 alpha -1 L1': CL 0.1010 CD 0.00846 converged True (runTimeControl, 6325 it, 682 s)
+[2026-11-10 18:56:11] opt003 alpha 0 L1': CL 0.2135 CD 0.00851 converged True (runTimeControl, 8703 it, 1028 s)
+[2026-11-10 18:57:26] MC2 alpha -1 L1': CL 0.3470 CD 0.00892 converged True (runTimeControl, 8342 it, 1103 s)
+[2026-11-10 19:18:57] MC2 alpha 0 L1': CL 0.4613 CD 0.00907 converged True (runTimeControl, 11714 it, 2395 s)
+[2026-11-10 22:15:01] opt003 alpha -1 L2': CL 0.1009 CD 0.00839 converged True (runTimeControl, 14030 it, 12275 s)
+[2026-11-10 22:37:37] MC2 alpha -2 L1': CL 0.2320 CD 0.00884 converged True (runTimeControl, 7877 it, 1356 s)
+[2026-11-10 22:54:08] opt003 alpha 0 L2': CL 0.2134 CD 0.00845 converged True (runTimeControl, 16580 it, 14276 s)
+[2026-11-10 22:59:39] MC2 alpha -1 L2': CL 0.3468 CD 0.00885 converged True (runTimeControl, 19305 it, 14532 s)
+[2026-11-10 23:06:28] opt003 alpha -2 L1': CL -0.0117 CD 0.00848 converged True (runTimeControl, 5051 it, 740 s)
+[2026-11-10 23:31:29] MC2 alpha 1 L1': CL 0.5751 CD 0.00928 converged True (runTimeControl, 12191 it, 1911 s)
+[2026-11-10 23:49:11] MC2 alpha 0 L2': CL 0.4614 CD 0.00902 converged False (n_iter_max, 20000 it, 16213 s)
+[2026-11-11 00:17:32] opt003 alpha 1 L1': CL 0.3257 CD 0.00861 converged True (runTimeControl, 10917 it, 1700 s)
+[2026-11-11 01:32:01] opt003 alpha -2 L2': CL -0.0117 CD 0.00841 converged True (runTimeControl, 12881 it, 8733 s)
+[2026-11-11 01:50:36] MC2 alpha -3 L1': CL 0.1166 CD 0.00885 converged True (runTimeControl, 6977 it, 1115 s)
+[2026-11-11 01:57:28] MC2 alpha -2 L2': CL 0.2320 CD 0.00878 converged True (runTimeControl, 17465 it, 11991 s)
+[2026-11-11 02:09:02] opt003 alpha -3 L1': CL -0.1242 CD 0.00857 converged True (runTimeControl, 4596 it, 694 s)
+[2026-11-11 04:37:54] opt003 alpha 1 L2': CL 0.3253 CD 0.00856 converged True (runTimeControl, 19388 it, 15623 s)
+[2026-11-11 04:39:06] opt003 alpha -3 L2': CL -0.1241 CD 0.00850 converged True (runTimeControl, 12700 it, 9003 s)
+[2026-11-11 05:05:11] MC2 alpha -3 L2': CL 0.1168 CD 0.00879 converged True (runTimeControl, 16537 it, 11675 s)
+[2026-11-11 05:10:11] opt003 alpha 2 L1': CL 0.4374 CD 0.00879 converged True (runTimeControl, 10088 it, 1865 s)
+[2026-11-11 05:12:00] MC2 alpha 2 L1': CL 0.6879 CD 0.00956 converged True (runTimeControl, 14794 it, 2046 s)
+[2026-11-11 05:16:00] MC2 alpha -4 L1': CL 0.0013 CD 0.00895 converged True (runTimeControl, 4874 it, 649 s)
+[2026-11-11 07:25:19] opt003 alpha 2 L2': CL 0.4381 CD 0.00886 converged False (failed, 8390 it, 8107 s)
+[2026-11-11 07:25:19] opt003 alpha -4 L1': skipped, 5 min left
+[2026-11-11 07:25:19] MC2 alpha 3 L1': skipped, 5 min left
+[2026-11-11 07:25:19] opt003 alpha 3 L1': skipped, 5 min left
+[2026-11-11 07:25:20] MC2 alpha 1 L2': CL 0.5751 CD 0.00924 converged False (failed, 19401 it, 28429 s)
+[2026-11-11 07:25:22] MC2 alpha -4 L2': CL 0.0017 CD 0.00891 converged False (failed, 10943 it, 7760 s)
+[2026-11-11 07:25:22] MC2 alpha 2 L2': CL 0.6928 CD 0.00976 converged False (failed, 3024 it, 8001 s)
+[2026-11-11 07:25:22] all points done

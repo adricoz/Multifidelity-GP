@@ -1,0 +1,7 @@
+{
+ "rho": 1026.1685348779658,
+ "sref": 2.2749744257490288,
+ "q_sref": 84135.75525309892,
+ "speed": 8.49,
+ "note": "2026-11-11: AVL x XFOIL (xtr 5 %) of MC2 at 8.49 m/s, yaw 0/2/4 deg, by src/foil_codes.FoilCodes (level avl) and by bdfoil_v1 Session on Antoine's case cfoil_r9800_fsi.json (the case of the CFD): FoilCodes = F / (q Sref) and M / (q Sref) about the same origin, same frame and signs, within 0.2-0.5 % on every component at every yaw (calib_frames.json, calib_frames.py). The CFD outputs of src/cfd_level.reduce use this q Sref."
+}
