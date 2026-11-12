@@ -59,4 +59,13 @@ def test_no_fallback_for_other_errors_levels_or_transitions(monkeypatch):
         y, info = _evaluate(codes, fail, monkeypatch)
         assert np.isnan(y).all() and info["error"] and info["xtr"] == xtr and "fallback" not in info
     assert _Fallback.calls == 0
-    assert foil_codes.XTR_FALLBACK == [0.05, 0.05]
+    assert foil_codes.XTR_FALLBACK in ([0.05, 0.05], None)
+
+
+def test_fallback_off(monkeypatch):
+    """run_real_vpp --no-xtr-fallback (XTR_FALLBACK None): the XFOIL failure stays a failure."""
+    _Fallback.calls = 0
+    monkeypatch.setattr(foil_codes, "XTR_FALLBACK", None)
+    codes, fail = _codes([0.03, 0.03], "xfoil", "PolarError: XFOIL polar(s) failed")
+    y, info = _evaluate(codes, fail, monkeypatch)
+    assert np.isnan(y).all() and info["error"] and _Fallback.calls == 0

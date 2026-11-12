@@ -64,6 +64,10 @@ if os.environ.get(XTR_ENV):
 # transition used is in info["xtr"] (and in the evaluations of the run). Its polars have their own
 # cache (work_dir/xtr_fallback), the main cache keeps only polars at the transition of the flow.
 XTR_FALLBACK = [0.05, 0.05]
+# off for a run (run_real_vpp --no-xtr-fallback: the comparison run of 2026-11-12, same codes as the CFD run of 11/11)
+XTR_FALLBACK_ENV = "VPP_FOIL_XTR_FALLBACK"
+if os.environ.get(XTR_FALLBACK_ENV, "").lower() == "off":
+    XTR_FALLBACK = None
 # Cpmin of the foil = this percentile of the Cpmin of the strips, every strip counted: the value
 # of the production RS (CFoil_generation.ipynb, CP_MIN_PERC = 20): a few singular strips (root
 # next to the wall, tip) do not decide it (the plain minimum gave -6 against -0.69 for the RS,
@@ -221,7 +225,7 @@ class FoilCodes:
 
     def _needs_fallback(self, backend, error: str) -> bool:
         """XFOIL failure of an XFOIL-polar level at a transition ahead of XTR_FALLBACK."""
-        return (getattr(backend, "polars", "") == "xfoil"
+        return (XTR_FALLBACK is not None and getattr(backend, "polars", "") == "xfoil"
                 and min(self.flow["xtr"]) < min(XTR_FALLBACK)
                 and ("XFOIL" in error or "PolarError" in error))
 

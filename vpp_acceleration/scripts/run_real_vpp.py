@@ -172,7 +172,13 @@ def main():
                         help="timeout of one XFOIL polar [s] (default 120, src/foil_codes.LEVELS); "
                              "with xtr 0.01 XFOIL hangs on some sweeps, the rows done are kept, a "
                              "shorter timeout gives the same polar sooner (test of 2026-11-09)")
+    parser.add_argument("--no-xtr-fallback", action="store_true",
+                        help="no rerun at xtr 5 %% of the XFOIL runs that fail at a forward transition "
+                             "(src/foil_codes.XTR_FALLBACK, on by default since 2026-11-12)")
     args = parser.parse_args()
+    if args.no_xtr_fallback:
+        foil_codes.XTR_FALLBACK = None                   # this process
+        os.environ[foil_codes.XTR_FALLBACK_ENV] = "off"  # the worker processes
     if args.xtr is not None:
         if len(args.xtr) not in (1, 2):
             parser.error("--xtr needs 1 or 2 values")
