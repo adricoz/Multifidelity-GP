@@ -260,6 +260,7 @@ class CodeRunner:
                 **{f"x{i}": float(v) for i, v in enumerate(point)},
                 **dict(zip(OUTPUT_NAMES, (float(v) for v in values))),
                 "time_s": round(info["time_s"], 3), "error": info["error"][:200],
+                "xtr": info.get("xtr", [np.nan])[0],
                 "elapsed_min": round(self.run.elapsed() / 60, 3)})
         return y, [r[1] for r in results]
 

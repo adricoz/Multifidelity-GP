@@ -59,6 +59,11 @@ FLOW = {"re": 5e6, "n_crit": 1.0, "xtr": [0.1, 0.1], "alpha": [-12.0, 12.0, 0.5]
 XTR_ENV = "VPP_FOIL_XTR"
 if os.environ.get(XTR_ENV):
     FLOW["xtr"] = [float(v) for v in os.environ[XTR_ENV].split(",")]
+# rule of Adrian (2026-11-12): an XFOIL-polar run that fails at a forced transition ahead of this one
+# (xtr 3 %: 43 % of the AVL x XFOIL runs failed in run 2026-11-11_1245) is run again at this one; the
+# transition used is in info["xtr"] (and in the evaluations of the run). Its polars have their own
+# cache (work_dir/xtr_fallback), the main cache keeps only polars at the transition of the flow.
+XTR_FALLBACK = [0.05, 0.05]
 # Cpmin of the foil = this percentile of the Cpmin of the strips, every strip counted: the value
 # of the production RS (CFoil_generation.ipynb, CP_MIN_PERC = 20): a few singular strips (root
 # next to the wall, tip) do not decide it (the plain minimum gave -6 against -0.69 for the RS,
@@ -137,6 +142,9 @@ class FoilCodes:
         self.simulator = BdToolboxFoilSimulator(self.problem)
         self.conversion = conversion or CONVERSION
         self.costs = [float(level["cost"]) for level in levels]
+        self.flow = dict(flow)
+        self._init_args = (conversion, levels, planform)
+        self._fallback = None                       # FoilCodes at XTR_FALLBACK, built on first need
 
     # --- geometry ---
     @staticmethod
@@ -202,8 +210,27 @@ class FoilCodes:
         except (SolverFailure, ValueError, FloatingPointError, KeyError,
                 np.linalg.LinAlgError, *self.simulator._core_errors) as error:  # noqa: SLF001
             info["error"] = f"{type(error).__name__}: {error}"[:300]
+        info["xtr"] = list(self.flow["xtr"])
+        if info["error"] and self._needs_fallback(backend, info["error"]):
+            y, retry = self._fallback_codes().evaluate(weights, attitude, level, section=section)
+            retry["error_first"] = info["error"]
+            retry["fallback"] = True
+            info = retry
         info["time_s"] = time.perf_counter() - start
         return y, info
+
+    def _needs_fallback(self, backend, error: str) -> bool:
+        """XFOIL failure of an XFOIL-polar level at a transition ahead of XTR_FALLBACK."""
+        return (getattr(backend, "polars", "") == "xfoil"
+                and min(self.flow["xtr"]) < min(XTR_FALLBACK)
+                and ("XFOIL" in error or "PolarError" in error))
+
+    def _fallback_codes(self) -> "FoilCodes":
+        if self._fallback is None:
+            conversion, levels, planform = self._init_args
+            self._fallback = FoilCodes(self.work_dir / "xtr_fallback", conversion, levels, planform,
+                                       {**self.flow, "xtr": list(XTR_FALLBACK)})
+        return self._fallback
 
     # --- Cpmin ---
     @staticmethod
