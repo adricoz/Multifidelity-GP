@@ -43,3 +43,6 @@ studies/*/results/*_files/
 
 # personal notes and slides of vpp_acceleration (Le Maitre exchanges...): kept local only
 vpp_acceleration/doc/
+# OpenFOAM cases of the CFD level of a run (meshes ~50 MB each, rebuilt by scripts/cfd_level.py prepare); the results
+# stay in cfd/done, cfd/points.csv and cfd/server.log
+vpp_acceleration/runs/**/cfd/cases/

@@ -1,117 +1,12 @@
-<html><head><meta charset='utf-8'><title>Etude xtr</title></head><body style='font-family:sans-serif;max-width:1100px;margin:auto'><h1>Transition forcée : sections optimisées</h1><ul><li><a href="sections.html">sections</a></li><li><a href="cross.html">cross</a></li><li><a href="gains.html">gains</a></li><li><a href="polars.html">polars</a></li><li><a href="cfd.html">cfd</a></li></ul><h2>Géométrie</h2><table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>section</th>
-      <th>t/c max [%]</th>
-      <th>x t max</th>
-      <th>cambrure max [%]</th>
-      <th>x cambrure max</th>
-      <th>r BA extrados [%c]</th>
-      <th>r BA intrados [%c]</th>
-      <th>Ixx / actuelle</th>
-      <th>Ixx/v / actuelle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>actuelle (MC2)</td>
-      <td>12.250</td>
-      <td>0.268</td>
-      <td>4.162</td>
-      <td>0.336</td>
-      <td>3.760</td>
-      <td>0.168</td>
-      <td>1.000</td>
-      <td>1.000</td>
-    </tr>
-    <tr>
-      <td>xtr 5 %</td>
-      <td>11.624</td>
-      <td>0.255</td>
-      <td>1.696</td>
-      <td>0.599</td>
-      <td>1.894</td>
-      <td>2.567</td>
-      <td>0.856</td>
-      <td>0.902</td>
-    </tr>
-    <tr>
-      <td>xtr 3 %</td>
-      <td>11.691</td>
-      <td>0.316</td>
-      <td>1.727</td>
-      <td>0.563</td>
-      <td>1.845</td>
-      <td>1.234</td>
-      <td>0.862</td>
-      <td>0.903</td>
-    </tr>
-    <tr>
-      <td>xtr 10 % (départ xtr005)</td>
-      <td>12.231</td>
-      <td>0.237</td>
-      <td>1.596</td>
-      <td>0.624</td>
-      <td>2.463</td>
-      <td>1.345</td>
-      <td>0.899</td>
-      <td>0.900</td>
-    </tr>
-    <tr>
-      <td>xtr 10 %</td>
-      <td>13.136</td>
-      <td>0.223</td>
-      <td>2.226</td>
-      <td>0.645</td>
-      <td>2.450</td>
-      <td>3.086</td>
-      <td>1.116</td>
-      <td>1.041</td>
-    </tr>
-  </tbody>
-</table><h2>Matrice croisée [kt]</h2><table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>xtr 5 %</th>
-      <th>xtr 3 %</th>
-      <th>xtr 10 % (départ xtr005)</th>
-      <th>xtr 10 %</th>
-      <th>actuelle (MC2)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>xtr 5 %</th>
-      <td>13.2719</td>
-      <td>13.2771</td>
-      <td>13.2669</td>
-      <td>13.2355</td>
-      <td>12.9583</td>
-    </tr>
-    <tr>
-      <th>xtr 3 %</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>xtr 10 % (départ xtr005)</th>
-      <td>13.3051</td>
-      <td>13.3025</td>
-      <td>13.3129</td>
-      <td>13.2795</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>xtr 10 %</th>
-      <td>13.3056</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>13.2803</td>
-      <td>12.9827</td>
-    </tr>
-  </tbody>
-</table><p><a href='cfd_sections.html'><b>CFD des meilleures sections (nuit du 09/11)</b></a></p></body></html>
+<!doctype html><html lang='fr'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Figures du run 2026-11-09_1846_xtr_study</title><style>
+:root { --bg: #ffffff; --fg: #1d1d1f; --muted: #6e6e73; --card: #f5f5f7; --link: #0b5cad; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #161618; --fg: #f2f2f2; --muted: #a1a1a6; --card: #232326; --link: #6cb4ff; } }
+body { background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif;
+       max-width: 980px; margin: 0 auto; padding: 24px 16px; }
+h1 { font-size: 22px; margin: 0 0 4px; } .sub { color: var(--muted); margin: 0 0 20px; }
+a { color: var(--link); } ul { padding-left: 0; list-style: none; }
+li { background: var(--card); border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+li span { color: var(--muted); } pre { background: var(--card); border-radius: 8px;
+       padding: 12px; overflow-x: auto; font-size: 12px; white-space: pre-wrap; }
+</style></head><body><h1>Figures du run 2026-11-09_1846_xtr_study</h1><p class='sub'>vpp_acceleration</p><ul><li><a href='cfd.html'>cfd</a><br><span></span></li><li><a href='cfd_sections.html'>cfd_sections</a><br><span></span></li><li><a href='cross.html'>cross</a><br><span></span></li><li><a href='gains.html'>gains</a><br><span></span></li><li><a href='polars.html'>polars</a><br><span></span></li><li><a href='sections.html'>Sections</a><br><span>la meilleure section contre la section de départ et la meilleure du premier run comparé (les autres dans la légende), et ses scores PCA ; un bouton montre les autres optima locaux (coordonnées dans results/sections/)</span></li></ul></body></html>

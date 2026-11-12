@@ -6,7 +6,7 @@
 # and figures after it, before 09:00). CPU: 16 code workers + 10 VPP workers, 4 cores left to the GPU CFD.
 #
 # Start detached (never wait on it over SSH):
-#   schtasks /Create /TN "Adri optim ixxv095 cfd" /TR "powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File <this file>" /SC ONCE /ST 23:59 /IT /RL LIMITED /F
+#   schtasks /Create /TN "Adri optim ixxv095 cfd" /TR "powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File <this file>" /SC ONCE /SD 01/01/2099 /ST 00:00 /IT /RL LIMITED /F
 #   schtasks /Run /TN "Adri optim ixxv095 cfd"
 Set-Location (Split-Path $PSScriptRoot -Parent)
 Add-Type -Namespace OptimCfd -Name Power -MemberDefinition '[DllImport("kernel32.dll")] public static extern uint SetThreadExecutionState(uint esFlags);'

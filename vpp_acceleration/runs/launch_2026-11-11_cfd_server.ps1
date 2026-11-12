@@ -3,7 +3,7 @@
 # (np 4, PETSc FCG + AmgX), until 12/11 09:00 or a file STOP in <run>/cfd. Each point: launch folder with PARAMETRES.md
 # and y+ map in <run>/cfd/cases/<id>, case in WSL ~/bdcfd/lancement/L3_<run>_<id>, result in <run>/cfd/done/<id>.json.
 #
-#   schtasks /Create /TN "Adri CFD server ixxv095" /TR "powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File <this file>" /SC ONCE /ST 23:59 /IT /RL LIMITED /F
+#   schtasks /Create /TN "Adri CFD server ixxv095" /TR "powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File <this file>" /SC ONCE /SD 01/01/2099 /ST 00:00 /IT /RL LIMITED /F
 #   schtasks /Run /TN "Adri CFD server ixxv095"
 Set-Location (Split-Path $PSScriptRoot -Parent)
 $python = (Resolve-Path '..\.venv-mds\Scripts\python.exe').Path

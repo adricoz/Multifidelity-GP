@@ -4,7 +4,7 @@
 # XFOIL fallback to xtr 5 % (--no-xtr-fallback: same codes as the CFD run of 11/11). The time limit (20 h) is not
 # meant to bind: the CFD run ended by convergence after 14.5 h. Waits for the end of the MC2 yaw +1 CFD point
 # (result.json of its launch folder, at most 4 h) so that XFOIL does not share the CPU with it.
-#   schtasks /Create /TN "Adri optim ixxv095 nocfd" /TR "powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File <this file>" /SC ONCE /ST 23:59 /IT /RL LIMITED /F
+#   schtasks /Create /TN "Adri optim ixxv095 nocfd" /TR "powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File <this file>" /SC ONCE /SD 01/01/2099 /ST 00:00 /IT /RL LIMITED /F
 #   schtasks /Run /TN "Adri optim ixxv095 nocfd"
 Set-Location (Split-Path $PSScriptRoot -Parent)
 $result = 'C:\Users\SIM\Outils - banulsdesign\bdToolbox\tmp\bdfoil_v1\cfd3d\lancement\L3_MC2kulfan_moyen_8p49_yawp1\result.json'

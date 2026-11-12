@@ -1,7 +1,7 @@
 # 2026-11-12, asked by Adrian: MC2 (Kulfan anchor of the PCA ixxv095) in 3D CFD at yaw +1 deg, the yaw of the final best
 # section of run 2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d (CFD point 1112_031300_686f), for a direct CFD
 # comparison. Same settings as the MC2 yaw -1 point: swept medium mesh, 8.49 m/s, GPU np 4, 0.2 % / 1500 it.
-#   schtasks /Create /TN "Adri CFD MC2 yaw+1" /TR "powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File <this file>" /SC ONCE /ST 23:59 /IT /RL LIMITED /F
+#   schtasks /Create /TN "Adri CFD MC2 yaw+1" /TR "powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File <this file>" /SC ONCE /SD 01/01/2099 /ST 00:00 /IT /RL LIMITED /F
 #   schtasks /Run /TN "Adri CFD MC2 yaw+1"
 Set-Location (Split-Path $PSScriptRoot -Parent)
 $python = (Resolve-Path '..\.venv-mds\Scripts\python.exe').Path

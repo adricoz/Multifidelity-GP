@@ -6,7 +6,7 @@
 #   - no other scheduled task "Adri*" running for 15 min in a row (the jobs are done);
 #   - -Until (default: 48 h after the start).
 # Keyboard / mouse input does NOT stop it. Started by the scheduled task "Adri keep-awake":
-#   schtasks /Create /TN "Adri keep-awake" /TR "powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File <this file>" /SC ONCE /ST 23:59 /IT /RL LIMITED /F
+#   schtasks /Create /TN "Adri keep-awake" /TR "powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File <this file>" /SC ONCE /SD 01/01/2099 /ST 00:00 /IT /RL LIMITED /F
 #   schtasks /Run /TN "Adri keep-awake"
 param([datetime]$Until = (Get-Date).AddHours(48))
 Set-Location (Split-Path $PSScriptRoot -Parent)
