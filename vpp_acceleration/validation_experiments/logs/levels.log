@@ -1,0 +1,7 @@
+run 2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d: design per level (1214, 280, 6), 48/49 conditions solved, loaded in 16 s
+[levels]
+  level 1: cos(grad, grad top) 0.494, loss at the top level 0.0257 kt
+  level 2: cos(grad, grad top) 0.431, loss at the top level 0.0236 kt
+  level 3: cos(grad, grad top) 1.000, loss at the top level -0.0000 kt
+  -> results/levels.json
+  789 s

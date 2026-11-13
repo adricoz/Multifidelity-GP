@@ -1,0 +1,36 @@
+run 2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd: design per level (1188, 320), 48/49 conditions solved, loaded in 14 s
+[calibration]
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:285: RuntimeWarning: invalid value encountered in divide
+  "speed": scores_stats(speed_error[ok] / speed_sigma[ok]),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:286: RuntimeWarning: invalid value encountered in divide
+  "speed_z": (speed_error[ok] / speed_sigma[ok]).tolist(),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:285: RuntimeWarning: invalid value encountered in divide
+  "speed": scores_stats(speed_error[ok] / speed_sigma[ok]),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:286: RuntimeWarning: invalid value encountered in divide
+  "speed_z": (speed_error[ok] / speed_sigma[ok]).tolist(),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:285: RuntimeWarning: invalid value encountered in divide
+  "speed": scores_stats(speed_error[ok] / speed_sigma[ok]),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:286: RuntimeWarning: invalid value encountered in divide
+  "speed_z": (speed_error[ok] / speed_sigma[ok]).tolist(),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:285: RuntimeWarning: invalid value encountered in divide
+  "speed": scores_stats(speed_error[ok] / speed_sigma[ok]),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:286: RuntimeWarning: invalid value encountered in divide
+  "speed_z": (speed_error[ok] / speed_sigma[ok]).tolist(),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:285: RuntimeWarning: invalid value encountered in divide
+  "speed": scores_stats(speed_error[ok] / speed_sigma[ok]),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:286: RuntimeWarning: invalid value encountered in divide
+  "speed_z": (speed_error[ok] / speed_sigma[ok]).tolist(),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:285: RuntimeWarning: invalid value encountered in divide
+  "speed": scores_stats(speed_error[ok] / speed_sigma[ok]),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:286: RuntimeWarning: invalid value encountered in divide
+  "speed_z": (speed_error[ok] / speed_sigma[ok]).tolist(),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:285: RuntimeWarning: invalid value encountered in divide
+  "speed": scores_stats(speed_error[ok] / speed_sigma[ok]),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:286: RuntimeWarning: invalid value encountered in divide
+  "speed_z": (speed_error[ok] / speed_sigma[ok]).tolist(),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:285: RuntimeWarning: invalid value encountered in divide
+  "speed": scores_stats(speed_error[ok] / speed_sigma[ok]),
+C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\validation_experiments\experiments.py:286: RuntimeWarning: invalid value encountered in divide
+  "speed_z": (speed_error[ok] / speed_sigma[ok]).tolist(),
+  -> nocfd/calibration.json
+  12 s

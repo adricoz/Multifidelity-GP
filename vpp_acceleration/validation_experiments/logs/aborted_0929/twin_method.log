@@ -1,0 +1,44 @@
+09:29:11 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\twin_experiments\twin_runs\2026-11-13_0929_twin_method
+09:29:11 [  0.0 min] search space: runs/2026-11-11_1054_section_pca_convex_ixxv095, box C_envelope, k = 10 through the current section, Ixx/v >= 1.0419e-03, Ixx >= 0.0000e+00 (0 = no Ixx limit)
+09:29:11 [  0.0 min] PCA: rank 16, k = 10 modes carry 99.89 % of the geometric variance
+09:29:11 [  0.0 min] start of the search: current_section
+09:29:25 [  0.2 min] start design: level 1 256 ok / 256, level 2 64 ok / 64
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+09:29:45 [  0.6 min] batch 0: hyperparameters refitted on 320 points
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)

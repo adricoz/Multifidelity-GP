@@ -1,0 +1,35 @@
+{
+ "steps": {
+  "twin_method": {
+   "state": "killed",
+   "start": "2026-11-12 17:51:39.974911",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\twin_experiments\\run_twin.py --smoke --vpp-workers 3 --name smoke_twin",
+   "reason": "time limit",
+   "end": "2026-11-12 17:54:00.240423"
+  },
+  "twin_reference": {
+   "state": "done",
+   "start": "2026-11-12 17:51:39.974911",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\twin_experiments\\reference.py --smoke --workers 3",
+   "code": 0,
+   "end": "2026-11-12 17:53:30.092887"
+  },
+  "twin_compare": {
+   "state": "skipped",
+   "start": "2026-11-12 17:54:00.242927",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\twin_experiments\\compare.py --workers 3 --n-conditions 4 --reference reference_smoke --out compare_smoke --twin-run C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\twin_experiments\\twin_runs\\2026-11-12_1751_smoke_twin",
+   "reason": "after the time limit"
+  },
+  "twin_report": {
+   "state": "skipped",
+   "start": "2026-11-12 17:54:00.242927",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\twin_experiments\\report.py --smoke",
+   "reason": "after the time limit"
+  }
+ },
+ "notes": [
+  "17:51 night started (stop 12/11 17:54, dry True)",
+  "17:51 run without CFD NOT finished at the start time: reduced number of processes",
+  "17:54 night finished"
+ ]
+}

@@ -1,0 +1,150 @@
+{
+ "steps": {
+  "cv_1111": {
+   "state": "done",
+   "start": "2026-11-13 09:30:31.705397",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\far_experiments.py --run runs/2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d --out results --only buffered_cv",
+   "code": 0,
+   "end": "2026-11-13 09:33:21.849074"
+  },
+  "twin_method": {
+   "state": "done",
+   "start": "2026-11-13 09:30:31.705397",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\twin_experiments\\run_twin.py --vpp-workers 14 --time-limit-min 309",
+   "code": 0,
+   "end": "2026-11-13 13:30:45.355219"
+  },
+  "summary_1111": {
+   "state": "done",
+   "start": "2026-11-13 09:30:31.705397",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\far_experiments.py --run runs/2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d --out results --only summary",
+   "code": 0,
+   "end": "2026-11-13 09:33:11.864119"
+  },
+  "twin_reference": {
+   "state": "done",
+   "start": "2026-11-13 09:30:31.705397",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\twin_experiments\\reference.py --workers 16 --deadline 15:30",
+   "code": 0,
+   "end": "2026-11-13 14:48:58.920271"
+  },
+  "profile_1111": {
+   "state": "done",
+   "start": "2026-11-13 09:30:31.705397",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\far_experiments.py --run runs/2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d --out results --only profile",
+   "code": 0,
+   "end": "2026-11-13 09:30:51.735606"
+  },
+  "certificate_1111_level2": {
+   "state": "done",
+   "start": "2026-11-13 09:33:24.930629",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\far_experiments.py --run runs/2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d --out results --only certificate --level 2",
+   "code": 0,
+   "end": "2026-11-13 11:19:00.023632"
+  },
+  "certificate_1111_top": {
+   "state": "done",
+   "start": "2026-11-13 09:33:24.930629",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\far_experiments.py --run runs/2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d --out results --only certificate",
+   "code": 0,
+   "end": "2026-11-13 11:19:00.023632"
+  },
+  "calibration_nocfd": {
+   "state": "done",
+   "start": "2026-11-13 11:19:07.686752",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\experiments.py --run runs/2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd --out results/nocfd --only calibration",
+   "code": 0,
+   "end": "2026-11-13 11:19:47.728759"
+  },
+  "gradient_nocfd": {
+   "state": "done",
+   "start": "2026-11-13 11:19:07.686752",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\experiments.py --run runs/2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd --out results/nocfd --only gradient",
+   "code": 0,
+   "end": "2026-11-13 11:29:38.305677"
+  },
+  "slices_nocfd": {
+   "state": "done",
+   "start": "2026-11-13 11:19:07.686752",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\experiments.py --run runs/2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd --out results/nocfd --only slices",
+   "code": 0,
+   "end": "2026-11-13 11:35:58.578472"
+  },
+  "regret_nocfd": {
+   "state": "done",
+   "start": "2026-11-13 11:19:07.686752",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\experiments.py --run runs/2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd --out results/nocfd --only regret",
+   "code": 0,
+   "end": "2026-11-13 11:33:08.473889"
+  },
+  "dimension_nocfd": {
+   "state": "done",
+   "start": "2026-11-13 11:19:07.686752",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\experiments.py --run runs/2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd --out results/nocfd --only dimension",
+   "code": 0,
+   "end": "2026-11-13 11:39:08.751002"
+  },
+  "levels_nocfd": {
+   "state": "done",
+   "start": "2026-11-13 11:19:07.686752",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\experiments.py --run runs/2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd --out results/nocfd --only levels",
+   "code": 0,
+   "end": "2026-11-13 11:29:38.304520"
+  },
+  "cv_nocfd": {
+   "state": "done",
+   "start": "2026-11-13 11:39:15.282903",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\far_experiments.py --run runs/2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd --out results/nocfd --only buffered_cv",
+   "code": 0,
+   "end": "2026-11-13 11:43:45.549997"
+  },
+  "summary_nocfd": {
+   "state": "done",
+   "start": "2026-11-13 11:39:15.282903",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\far_experiments.py --run runs/2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd --out results/nocfd --only summary",
+   "code": 0,
+   "end": "2026-11-13 11:42:15.455762"
+  },
+  "profile_nocfd": {
+   "state": "done",
+   "start": "2026-11-13 11:39:15.284909",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\far_experiments.py --run runs/2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd --out results/nocfd --only profile",
+   "code": 0,
+   "end": "2026-11-13 11:39:35.316830"
+  },
+  "certificate_nocfd": {
+   "state": "done",
+   "start": "2026-11-13 11:39:15.284909",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\far_experiments.py --run runs/2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd --out results/nocfd --only certificate",
+   "code": 0,
+   "end": "2026-11-13 12:36:58.109484"
+  },
+  "cross": {
+   "state": "done",
+   "start": "2026-11-13 12:37:04.120095",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\far_experiments.py --run runs/2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d --out results --only cross --other runs/2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd",
+   "code": 0,
+   "end": "2026-11-13 12:37:34.159635"
+  },
+  "twin_compare": {
+   "state": "done",
+   "start": "2026-11-13 14:49:03.302904",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\twin_experiments\\compare.py --workers 30 --sections C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\results\\certificate_sections_level2.json --runs runs/2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd",
+   "code": 0,
+   "end": "2026-11-13 15:11:34.540174"
+  },
+  "twin_report": {
+   "state": "done",
+   "start": "2026-11-13 15:11:38.746787",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\twin_experiments\\report.py",
+   "code": 0,
+   "end": "2026-11-13 15:11:48.759807"
+  }
+ },
+ "notes": [
+  "09:30 night started (stop 13/11 16:45, dry False)",
+  "09:30 run without CFD finished: full use of the machine",
+  "15:11 codes verdict (AVL x XFOIL at far sections) not run: not implemented",
+  "15:11 night finished"
+ ]
+}

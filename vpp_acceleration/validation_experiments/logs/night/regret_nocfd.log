@@ -1,0 +1,7 @@
+run 2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd: design per level (1188, 320), 48/49 conditions solved, loaded in 14 s
+[regret]
+  kappa 1.0: regret 0.0011 kt, P(better by > 0.01 kt) 0.000
+  kappa 2.0: regret 0.0013 kt, P(better by > 0.01 kt) 0.001
+  kappa 3.0: regret 0.0026 kt, P(better by > 0.01 kt) 0.039
+  -> nocfd/regret.json
+  811 s

@@ -1,0 +1,7 @@
+run 2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d: design per level (1214, 280, 6), loaded in 3 s
+[cross]
+  judge 03_k10_cfd3d level 2: best of the other run +0.0130 kt +- 0.0018
+  judge 03_k10_cfd3d level 3: best of the other run +0.0004 kt +- 0.0087
+  judge 03_k10_nocfd level 2: best of the other run -0.0058 kt +- 0.0023
+  -> results/cross.json
+  19 s

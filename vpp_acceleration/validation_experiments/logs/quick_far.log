@@ -1,0 +1,36 @@
+run 2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d: design per level (1214, 280, 6), loaded in 3 s
+[profile]
+  -> results_quick/profile.json
+  0 s
+[buffered_cv]
+  Fx done
+  Fy done
+  Fz done
+  Mx done
+  My done
+  Mz done
+  Cpmin done
+  level 1, radius 0.0: standardised error (6 forces) 0.67
+  level 1, radius 0.5: standardised error (6 forces) 0.85
+  level 1, radius 2.0: standardised error (6 forces) 0.98
+  level 2, radius 0.0: standardised error (6 forces) 0.68
+  level 2, radius 0.5: standardised error (6 forces) 0.61
+  level 2, radius 2.0: standardised error (6 forces) 0.71
+  -> results_quick/buffered_cv.json
+  4 s
+[summary]
+  -> results_quick/summary.json
+  21 s
+[certificate]
+  pool of 20 sections: best gain -0.0136 kt
+  kappa 2.0: bound +0.0209 kt (gain -0.0091, sigma 0.0150) at distance 4.14
+  -> results_quick/certificate_level2.json
+  65 s
+[cross]
+  judge 03_k10_cfd3d level 2: best of the other run +0.0000 kt +- 0.0000
+  judge 03_k10_cfd3d level 3: best of the other run +0.0000 kt +- 0.0000
+  judge 03_k10_cfd3d level 2: best of the other run +0.0000 kt +- 0.0000
+  judge 03_k10_cfd3d level 3: best of the other run +0.0000 kt +- 0.0000
+  -> results_quick/cross.json
+  20 s
+exit=0

@@ -1,0 +1,4 @@
+*.pkl
+work/
+__pycache__/
+aborted/

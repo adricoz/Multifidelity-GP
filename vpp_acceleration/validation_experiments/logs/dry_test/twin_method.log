@@ -1,0 +1,42 @@
+17:51:40 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\twin_experiments\twin_runs\2026-11-12_1751_smoke_twin
+17:51:41 [  0.0 min] search space: runs/2026-11-11_1054_section_pca_convex_ixxv095, box C_envelope, k = 10 through the current section, Ixx/v >= 1.0419e-03, Ixx >= 0.0000e+00 (0 = no Ixx limit)
+17:51:41 [  0.0 min] PCA: rank 16, k = 10 modes carry 99.89 % of the geometric variance
+17:51:41 [  0.0 min] start of the search: current_section
+17:51:44 [  0.1 min] start design: level 1 256 ok / 256, level 2 64 ok / 64
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+17:51:59 [  0.3 min] batch 0: hyperparameters refitted on 320 points
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+17:52:18 [  0.6 min] speed sensitivities dV/dC (rows = conditions): [[ 66.85  -2.07   1.32  -0.06   0.14  -0.24]
+ [121.06  -2.24   6.54   2.19   0.3   -0.43]]
+17:52:22 [  0.7 min] update 0: incumbent speed 14.5032 kt (new, gain 0.0196 kt), candidates [14.484 14.503 14.503 14.489], on 100 % of the probability, radius 1.50, region 0, 23 s
+17:52:26 [  0.8 min] batch 0: 16 choices (levels 1/2: 13/3), design 269/67, selection 36.7 s (update 23 s), 36.7 s
+17:52:31 [  0.8 min] update 1: incumbent speed 14.5157 kt (new, gain 0.0107 kt), candidates [14.505 14.507 14.516 14.5  ], on 100 % of the probability, radius 2.25, region 0, 5 s
+17:52:35 [  0.9 min] batch 1: 16 choices (levels 1/2: 11/5), design 281/72, selection 8.8 s (update 5 s), 8.9 s
+17:52:41 [  1.0 min] update 2: incumbent speed 14.5160 kt (kept, gain 0.0000 kt), candidates [14.516 14.456 14.506 14.505], on 100 % of the probability, radius 1.57, region 0, 6 s
+17:52:45 [  1.1 min] batch 2: 16 choices (levels 1/2: 14/2), design 295/74, selection 9.9 s (update 6 s), 9.9 s
+17:52:53 [  1.2 min] speed sensitivities dV/dC (rows = conditions): [[ 66.3   -2.2    1.31  -0.06   0.14  -0.23]
+ [120.51  -3.07   6.41   2.09   0.3   -0.45]]
+17:52:58 [  1.3 min] update 3: incumbent speed 14.5171 kt (new, gain 0.0009 kt), candidates [14.516 14.517 14.516 14.515], on 100 % of the probability, radius 1.10, region 0, 13 s
+17:53:02 [  1.4 min] batch 3: 16 choices (levels 1/2: 11/5), design 307/79, selection 17.3 s (update 13 s), 17.4 s
+17:53:09 [  1.5 min] update 4: incumbent speed 14.5180 kt (kept, gain 0.0000 kt), candidates [14.518 14.518 14.517 14.508], on 100 % of the probability, radius 0.77, region 0, 7 s
+17:53:15 [  1.6 min] batch 4: 16 choices (levels 1/2: 11/5), design 320/84, selection 12.8 s (update 7 s), 12.9 s
+17:53:31 [  1.8 min] batch 5: hyperparameters refitted on 404 points
+17:53:36 [  1.9 min] update 5: incumbent speed 14.5182 kt (kept, gain 0.0000 kt), candidates [14.518 14.517 14.507 14.517], on 100 % of the probability, radius 0.54, region 0, 5 s
+17:53:41 [  2.0 min] batch 5: 16 choices (levels 1/2: 13/3), design 333/87, selection 26.0 s (update 5 s), 26.1 s
+17:53:49 [  2.1 min] speed sensitivities dV/dC (rows = conditions): [[ 66.07  -2.3    1.3   -0.05   0.14  -0.23]
+ [121.06  -3.29   6.54   2.19   0.3   -0.47]]
+17:53:55 [  2.2 min] update 6: incumbent speed 14.5184 kt (new, gain 0.0002 kt), candidates [14.518 14.518 14.517 14.516], on 100 % of the probability, radius 0.38, region 0, 14 s

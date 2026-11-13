@@ -1,0 +1,9 @@
+[2026-11-12 17:51:39] night started (stop 12/11 17:54, dry True)
+[2026-11-12 17:51:39] run without CFD NOT finished at the start time: reduced number of processes
+[2026-11-12 17:51:39] twin_method: start
+[2026-11-12 17:51:39] twin_reference: start
+[2026-11-12 17:53:30] twin_reference: done (code 0, 2 min)
+[2026-11-12 17:54:00] twin_method: killed at the time limit
+[2026-11-12 17:54:00] twin_compare: skipped (time limit)
+[2026-11-12 17:54:00] twin_report: skipped (time limit)
+[2026-11-12 17:54:00] night finished

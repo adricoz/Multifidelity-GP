@@ -1,0 +1,7 @@
+run 2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d: design per level (1214, 280, 6), 48/49 conditions solved, loaded in 15 s
+[gradient]
+  ascent radius 0.1: gain +0.0012 kt +- 0.0006
+  ascent radius 0.3: gain +0.0020 kt +- 0.0019
+  ascent radius 1.0: gain +0.0042 kt +- 0.0061
+  -> results/gradient.json
+  792 s

@@ -1,0 +1,7 @@
+run 2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d: design per level (1214, 280, 6), 48/49 conditions solved, loaded in 14 s
+[regret]
+  kappa 1.0: regret 0.0072 kt, P(better by > 0.01 kt) 0.266
+  kappa 2.0: regret 0.0165 kt, P(better by > 0.01 kt) 0.681
+  kappa 3.0: regret 0.0290 kt, P(better by > 0.01 kt) 0.869
+  -> results/regret.json
+  973 s

@@ -1,0 +1,302 @@
+[14:49:04] 25 sections, 49 conditions, 30 workers
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\core\sub_system.py:188: MDSubSystemXBoundsWarning: SubSystem Weight is extrapolating < the SubSystem x bounds on variable(s)
+Leeway [°] = -6.00 < -6.00
+  warnings.warn(message, MDSubSystemXBoundsWarning)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+[15:11:26] anchor reference_from_best; verdict {'regret_kt': 0.0019017507853630973, 'tolerance_kt': 0.02, 'passed': True, 'distance_scores': 1.5270745991834698}
+[15:11:26]   reference_from_best                0.0 kt, distance 0.00, 48 solved
+[15:11:26]   reference_from_random              -0.0006 kt, distance 2.29, 48 solved
+[15:11:26]   nocfd_best                         -0.0008 kt, distance 0.51, 48 solved
+[15:11:26]   reference_from_region_3            -0.001 kt, distance 0.43, 48 solved
+[15:11:26]   reference_from_region_0            -0.0017 kt, distance 2.25, 48 solved
+[15:11:26]   method_best                        -0.0019 kt, distance 1.53, 48 solved
+[15:11:26]   reference_from_current_section     -0.002 kt, distance 0.63, 48 solved
+[15:11:26]   reference_from_region_1            -0.0028 kt, distance 0.51, 48 solved
+[15:11:26]   truth_run_region_0                 -0.004 kt, distance 1.97, 48 solved
+[15:11:26]   nocfd_region_3                     -0.0047 kt, distance 1.28, 48 solved
+[15:11:26]   method_region_3                    -0.0049 kt, distance 1.45, 48 solved
+[15:11:26]   truth_run_best                     -0.005 kt, distance 1.43, 48 solved
+[15:11:26]   truth_run_region_1                 -0.0051 kt, distance 1.91, 48 solved
+[15:11:26]   truth_run_region_3                 -0.0051 kt, distance 1.87, 48 solved
+[15:11:26]   method_region_2                    -0.0053 kt, distance 1.57, 48 solved
+[15:11:26]   method_region_0                    -0.0072 kt, distance 2.50, 48 solved
+[15:11:26]   nocfd_region_2                     -0.0078 kt, distance 2.42, 48 solved
+[15:11:26]   nocfd_region_0                     -0.0106 kt, distance 2.60, 48 solved
+[15:11:26]   certificate_k3_2                   -0.0652 kt, distance 5.24, 48 solved
+[15:11:26]   certificate_k2_5                   -0.0744 kt, distance 4.08, 48 solved
+[15:11:26]   certificate_k2_4                   -0.0793 kt, distance 3.46, 48 solved
+[15:11:26]   certificate_k3_3                   -0.0879 kt, distance 5.52, 48 solved
+[15:11:26]   certificate_k3_1                   -0.1116 kt, distance 6.07, 48 solved
+[15:11:26]   method_current_section             -0.3157 kt, distance 3.93, 48 solved
+[15:11:26]   truth_run_current_section          -0.3157 kt, distance 3.93, 48 solved

@@ -1,0 +1,99 @@
+17:43:17 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\twin_experiments\twin_runs\2026-11-12_1743_smoke_twin
+17:43:18 [  0.0 min] search space: runs/2026-11-11_1054_section_pca_convex_ixxv095, box C_envelope, k = 10 through the current section, Ixx/v >= 1.0419e-03, Ixx >= 0.0000e+00 (0 = no Ixx limit)
+17:43:18 [  0.0 min] PCA: rank 16, k = 10 modes carry 99.89 % of the geometric variance
+17:43:18 [  0.0 min] start of the search: current_section
+17:43:21 [  0.1 min] start design: level 1 256 ok / 256, level 2 64 ok / 64
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+17:43:35 [  0.3 min] batch 0: hyperparameters refitted on 320 points
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+17:43:54 [  0.6 min] speed sensitivities dV/dC (rows = conditions): [[ 66.85  -2.07   1.32  -0.06   0.14  -0.24]
+ [112.29   0.73   9.51   3.67   0.32  -0.32]]
+17:43:58 [  0.7 min] update 0: incumbent speed 14.4687 kt (kept, gain 0.0000 kt), candidates [14.469 14.435 14.447 14.391], on 100 % of the probability, radius 0.70, region 0, 24 s
+17:44:04 [  0.8 min] batch 0: 16 choices (levels 1/2: 12/4), design 268/68, selection 38.9 s (update 24 s), 39.0 s
+17:44:09 [  0.9 min] update 1: incumbent speed 14.4747 kt (kept, gain 0.0000 kt), candidates [14.475 14.368 14.37  14.428], on 100 % of the probability, radius 0.49, region 0, 5 s
+17:44:16 [  1.0 min] batch 1: 16 choices (levels 1/2: 13/3), design 281/71, selection 12.3 s (update 5 s), 12.4 s
+17:44:21 [  1.1 min] update 2: incumbent speed 14.4748 kt (kept, gain 0.0000 kt), candidates [14.475 14.44  14.38  14.388], on 100 % of the probability, radius 0.34, region 0, 4 s
+17:44:28 [  1.2 min] batch 2: 16 choices (levels 1/2: 12/4), design 293/75, selection 11.5 s (update 4 s), 11.6 s
+17:44:35 [  1.3 min] speed sensitivities dV/dC (rows = conditions): [[ 66.97  -2.08   1.33  -0.06   0.14  -0.24]
+ [112.41   0.7    9.5    3.67   0.32  -0.32]]
+17:44:40 [  1.4 min] update 3: incumbent speed 14.4748 kt (kept, gain 0.0000 kt), candidates [14.475 14.429 14.421 14.437], on 100 % of the probability, radius 0.24, region 0, 12 s
+17:44:49 [  1.5 min] batch 3: 16 choices (levels 1/2: 12/4), design 305/79, selection 20.7 s (update 12 s), 20.8 s
+17:44:54 [  1.6 min] update 4: incumbent speed 14.4748 kt (kept, gain 0.0000 kt), candidates [14.475 14.375 14.417 14.455], on 100 % of the probability, radius 0.17, region 0, 5 s
+17:45:03 [  1.8 min] batch 4: 16 choices (levels 1/2: 12/4), design 317/83, selection 14.3 s (update 5 s), 14.4 s
+17:45:21 [  2.1 min] batch 5: hyperparameters refitted on 400 points
+17:45:25 [  2.1 min] update 5: incumbent speed 14.4746 kt (kept, gain 0.0000 kt), candidates [14.475 14.372 14.383 14.419], on 100 % of the probability, radius 0.12, region 0, 5 s
+17:45:34 [  2.3 min] batch 5: 16 choices (levels 1/2: 13/3), design 330/86, selection 30.8 s (update 5 s), 30.8 s
+17:45:41 [  2.4 min] speed sensitivities dV/dC (rows = conditions): [[ 67.08  -2.08   1.33  -0.06   0.14  -0.24]
+ [112.45   0.67   9.49   3.66   0.32  -0.32]]
+17:45:46 [  2.5 min] update 6: incumbent speed 14.4745 kt (kept, gain 0.0000 kt), candidates [14.474 14.346 14.465 14.447], on 100 % of the probability, radius 0.10, region 0, 12 s
+17:45:56 [  2.6 min] batch 6: 16 choices (levels 1/2: 12/4), design 342/90, selection 21.8 s (update 12 s), 21.9 s
+17:46:00 [  2.7 min] update 7: incumbent speed 14.4744 kt (kept, gain 0.0000 kt), candidates [14.474 14.411 14.421 14.445], on 100 % of the probability, radius 0.10, region 0, 4 s
+17:46:12 [  2.9 min] batch 7: 16 choices (levels 1/2: 12/4), design 354/94, selection 16.2 s (update 4 s), 16.3 s
+17:46:19 [  3.0 min] update 8: incumbent speed 14.4744 kt (kept, gain 0.0000 kt), candidates [14.474 14.446 14.388 14.44 ], on 100 % of the probability, radius 0.10, region 0, 6 s
+17:46:31 [  3.2 min] batch 8: 16 choices (levels 1/2: 12/4), design 366/98, selection 18.4 s (update 6 s), 18.5 s
+17:46:37 [  3.3 min] speed sensitivities dV/dC (rows = conditions): [[ 67.08  -2.08   1.33  -0.06   0.14  -0.24]
+ [112.45   0.64   9.42   3.64   0.32  -0.32]]
+17:46:43 [  3.4 min] update 9: incumbent speed 14.4744 kt (kept, gain 0.0000 kt), candidates [14.474 14.358 14.409 14.376], on 100 % of the probability, radius 0.10, region 0, 12 s
+17:46:55 [  3.6 min] batch 9: 16 choices (levels 1/2: 12/4), design 378/102, selection 24.4 s (update 12 s), 24.5 s
+17:47:05 [  3.8 min] region 0 converged (update 9, incumbent speed 14.4744 kt): region 1 starts from a section at distance 4.23 of the optima, predicted gain +0.249 +- 0.005 kt
+17:47:15 [  4.0 min] speed sensitivities dV/dC (rows = conditions): [[ 61.91  -2.76   1.18  -0.05   0.12  -0.19]
+ [125.21  -5.11   4.16   1.88   0.19  -0.53]]
+17:47:20 [  4.0 min] update 10: incumbent speed 14.4950 kt (new, gain 0.0838 kt), candidates [14.411 14.495 14.484 14.486], on 100 % of the probability, radius 1.50, region 1, 15 s
+17:47:26 [  4.1 min] batch 10: 16 choices (levels 1/2: 12/4), design 390/106, selection 31.1 s (update 15 s), 31.1 s
+17:48:16 [  5.0 min] local optima with the final surrogate, on 100 % of the probability: region 0 14.4744 kt, region 1 14.5031 kt -> region 1
+17:48:24 [  5.1 min] update 11: incumbent speed 14.5031 kt (kept, gain 0.0000 kt), candidates [14.503 14.442 14.47  14.472], on 100 % of the probability, radius 1.05, region 1, 7 s
+17:48:24 [  5.1 min] loop done: 176 choices in 11 batches, design per level (390, 106), runs {1: 390, 2: 106}, code time {1: 1.5620612062994041, 2: 0.3868786937891855}
+17:48:26 [  5.1 min] validation done
+run 2026-11-12_1743_smoke_twin: 176 steps in 5.1 min
+code runs: level 1 396 (2 s), level 2 112 (0 s); final design per level (390, 106)
+speed of the validated sections (final surrogate corrected against HF, weighted mean over the 2 conditions solved for all, 100 % of the probability): best 14.5027 kt, current_section 14.4886 kt, region_0 14.4886 kt
+speeds of the incumbent: 45/12: 11.533, 45/16: 17.473
+local optima of the regions, final surrogate (results/optima.json): region 0 14.4744 kt, region 1 14.5031 kt (best)
+validation best: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0008 kt, max 0.0011 kt; predicted sigma RMS 0.0023 kt; |z| <= 2 on 100 %
+   against the lf code: speed error mean -0.0103 kt, RMS 0.0118 kt
+   Fx     |surrogate - HF| / |HF| median 0.08 %
+   Fy     |surrogate - HF| / |HF| median 0.11 %
+   Fz     |surrogate - HF| / |HF| median 0.12 %
+   Mx     |surrogate - HF| / |HF| median 0.09 %
+   My     |surrogate - HF| / |HF| median 0.08 %
+   Mz     |surrogate - HF| / |HF| median 0.14 %
+   Cpmin  |surrogate - HF| / |HF| median 5.35 %
+validation current_section: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0006 kt, max 0.0009 kt; predicted sigma RMS 0.0023 kt; |z| <= 2 on 100 %
+   against the lf code: speed error mean -0.0126 kt, RMS 0.0134 kt
+   Fx     |surrogate - HF| / |HF| median 0.14 %
+   Fy     |surrogate - HF| / |HF| median 0.15 %
+   Fz     |surrogate - HF| / |HF| median 0.17 %
+   Mx     |surrogate - HF| / |HF| median 0.12 %
+   My     |surrogate - HF| / |HF| median 0.13 %
+   Mz     |surrogate - HF| / |HF| median 0.19 %
+   Cpmin  |surrogate - HF| / |HF| median 4.91 %
+validation region_0: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0006 kt, max 0.0009 kt; predicted sigma RMS 0.0023 kt; |z| <= 2 on 100 %
+   against the lf code: speed error mean -0.0126 kt, RMS 0.0134 kt
+   Fx     |surrogate - HF| / |HF| median 0.14 %
+   Fy     |surrogate - HF| / |HF| median 0.15 %
+   Fz     |surrogate - HF| / |HF| median 0.17 %
+   Mx     |surrogate - HF| / |HF| median 0.12 %
+   My     |surrogate - HF| / |HF| median 0.13 %
+   Mz     |surrogate - HF| / |HF| median 0.19 %
+   Cpmin  |surrogate - HF| / |HF| median 4.91 %
+figures written to C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\twin_experiments\twin_runs\2026-11-12_1743_smoke_twin\figures
+17:48:30 [  5.2 min] done
+exit=0

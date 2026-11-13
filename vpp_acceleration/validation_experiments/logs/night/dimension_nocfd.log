@@ -1,0 +1,6 @@
+run 2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd: design per level (1188, 320), 48/49 conditions solved, loaded in 14 s
+[dimension]
+  global: cumulative share of the eigenvalues [0.972 0.992 0.995 0.997 0.998]
+  local_1.0: cumulative share of the eigenvalues [0.935 0.997 0.998 0.999 0.999]
+  -> nocfd/dimension.json
+  1175 s

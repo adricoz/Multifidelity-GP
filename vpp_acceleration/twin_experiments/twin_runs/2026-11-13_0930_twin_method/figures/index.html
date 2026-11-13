@@ -1,0 +1,62 @@
+<!doctype html><html lang='fr'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Figures du run 2026-11-13_0930_twin_method</title><style>
+:root { --bg: #ffffff; --fg: #1d1d1f; --muted: #6e6e73; --card: #f5f5f7; --link: #0b5cad; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #161618; --fg: #f2f2f2; --muted: #a1a1a6; --card: #232326; --link: #6cb4ff; } }
+body { background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif;
+       max-width: 980px; margin: 0 auto; padding: 24px 16px; }
+h1 { font-size: 22px; margin: 0 0 4px; } .sub { color: var(--muted); margin: 0 0 20px; }
+a { color: var(--link); } ul { padding-left: 0; list-style: none; }
+li { background: var(--card); border-radius: 8px; padding: 10px 14px; margin: 8px 0; }
+li span { color: var(--muted); } pre { background: var(--card); border-radius: 8px;
+       padding: 12px; overflow-x: auto; font-size: 12px; white-space: pre-wrap; }
+</style></head><body><h1>Figures du run 2026-11-13_0930_twin_method</h1><p class='sub'>vpp_acceleration</p><ul><li><a href='convergence.html'>Convergence</a><br><span>vitesse de la titulaire et des concurrentes à chaque mise à jour, taille du plan BF / HF</span></li><li><a href='points.html'>Points ajoutés</a><br><span>où le raffinement a placé ses calculs (plans d&#x27;attitude), avec les états VPP finaux</span></li><li><a href='sections.html'>Sections</a><br><span>la meilleure section contre la section de départ et la meilleure du premier run comparé (les autres dans la légende), et ses scores PCA ; un bouton montre les autres optima locaux (coordonnées dans results/sections/)</span></li><li><a href='speeds.html'>Vitesses par condition</a><br><span>sections validées, vitesse corrigée au premier ordre de l&#x27;écart aux codes</span></li><li><a href='validation.html'>Validation</a><br><span>surrogate contre les codes (HF, BF, AVL) aux états VPP</span></li></ul><h2>Résumé</h2><pre>run 2026-11-13_0930_twin_method: 1088 steps in 240.0 min
+code runs: level 1 1404 (7 s), level 2 578 (3 s); final design per level (1159, 333)
+speed of the validated sections (final surrogate corrected against HF, weighted mean over the 48 conditions solved for all, 99 % of the probability): best 13.2647 kt, current_section 12.9511 kt, region_0 13.2597 kt, region_2 13.2608 kt, region_3 13.2603 kt
+speeds of the incumbent: 35/7: 7.295, 35/10: 8.527, 35/12: 9.794, 35/15: 11.651, 40/7: 7.775, 40/10: 9.131, 40/12: 10.846, 40/15: 13.966, 45/7: 8.142, 45/10: 9.697, 45/12: 11.993, 45/15: 17.307, 53/7: 8.559, 53/10: 10.408, 53/12: 13.800, 53/15: 19.388, 68/7: 9.044, 68/10: 11.313, 68/12: 16.669, 68/15: 22.343, 77/7: 9.115, 77/10: 11.415, 77/12: 16.973, 77/15: 23.556, 83/7: 9.095, 83/10: 11.319, 83/12: 16.621, 83/15: 24.000, 92/7: 8.987, 92/10: 11.007, 92/12: 15.527, 92/15: 23.051, 64/8: 9.926, 64/14: 20.812, 96/8: 9.734, 96/14: 18.042, 40/5: nan, 60/5: 7.966, 80/5: 8.245, 100/5: 8.056, 40/17: 16.288, 60/17: 21.587, 80/17: 24.000, 100/17: 24.000, 32/8: 7.599, 32/14: 9.856, 110/8: 9.108, 110/14: 13.668, 60/11: 12.619
+local optima of the regions, final surrogate (results/optima.json): region 0 13.2600 kt, region 1 13.2647 kt (best), region 2 13.2624 kt, region 3 13.2625 kt
+validation best: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0001 kt, max 0.0003 kt; predicted sigma RMS 0.0002 kt; |z| &lt;= 2 on 100 %
+   against the lf code: speed error mean -0.0029 kt, RMS 0.0114 kt
+   Fx     |surrogate - HF| / |HF| median 0.00 %
+   Fy     |surrogate - HF| / |HF| median 0.00 %
+   Fz     |surrogate - HF| / |HF| median 0.00 %
+   Mx     |surrogate - HF| / |HF| median 0.00 %
+   My     |surrogate - HF| / |HF| median 0.00 %
+   Mz     |surrogate - HF| / |HF| median 0.00 %
+   Cpmin  |surrogate - HF| / |HF| median 0.28 %
+validation current_section: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0024 kt, max 0.0095 kt; predicted sigma RMS 0.0034 kt; |z| &lt;= 2 on 100 %
+   against the lf code: speed error mean -0.0135 kt, RMS 0.0193 kt
+   Fx     |surrogate - HF| / |HF| median 0.18 %
+   Fy     |surrogate - HF| / |HF| median 0.13 %
+   Fz     |surrogate - HF| / |HF| median 0.17 %
+   Mx     |surrogate - HF| / |HF| median 0.11 %
+   My     |surrogate - HF| / |HF| median 0.15 %
+   Mz     |surrogate - HF| / |HF| median 0.08 %
+   Cpmin  |surrogate - HF| / |HF| median 4.37 %
+validation region_0: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0001 kt, max 0.0002 kt; predicted sigma RMS 0.0002 kt; |z| &lt;= 2 on 100 %
+   against the lf code: speed error mean -0.0045 kt, RMS 0.0122 kt
+   Fx     |surrogate - HF| / |HF| median 0.00 %
+   Fy     |surrogate - HF| / |HF| median 0.00 %
+   Fz     |surrogate - HF| / |HF| median 0.00 %
+   Mx     |surrogate - HF| / |HF| median 0.00 %
+   My     |surrogate - HF| / |HF| median 0.00 %
+   Mz     |surrogate - HF| / |HF| median 0.00 %
+   Cpmin  |surrogate - HF| / |HF| median 0.14 %
+validation region_2: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0001 kt, max 0.0005 kt; predicted sigma RMS 0.0002 kt; |z| &lt;= 2 on 100 %
+   against the lf code: speed error mean -0.0009 kt, RMS 0.0126 kt
+   Fx     |surrogate - HF| / |HF| median 0.01 %
+   Fy     |surrogate - HF| / |HF| median 0.00 %
+   Fz     |surrogate - HF| / |HF| median 0.01 %
+   Mx     |surrogate - HF| / |HF| median 0.01 %
+   My     |surrogate - HF| / |HF| median 0.01 %
+   Mz     |surrogate - HF| / |HF| median 0.00 %
+   Cpmin  |surrogate - HF| / |HF| median 0.56 %
+validation region_3: first-order speed error of the surrogate against AVL x XFOIL RMS 0.0001 kt, max 0.0002 kt; predicted sigma RMS 0.0003 kt; |z| &lt;= 2 on 100 %
+   against the lf code: speed error mean -0.0006 kt, RMS 0.0131 kt
+   Fx     |surrogate - HF| / |HF| median 0.01 %
+   Fy     |surrogate - HF| / |HF| median 0.01 %
+   Fz     |surrogate - HF| / |HF| median 0.01 %
+   Mx     |surrogate - HF| / |HF| median 0.01 %
+   My     |surrogate - HF| / |HF| median 0.01 %
+   Mz     |surrogate - HF| / |HF| median 0.00 %
+   Cpmin  |surrogate - HF| / |HF| median 0.23 %
+</pre></body></html>

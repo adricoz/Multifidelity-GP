@@ -1,0 +1,4 @@
+run 2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d: design per level (1214, 280, 6), loaded in 10 s
+[summary]
+  -> results/summary.json
+  140 s

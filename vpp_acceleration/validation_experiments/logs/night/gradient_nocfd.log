@@ -1,0 +1,7 @@
+run 2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd: design per level (1188, 320), 48/49 conditions solved, loaded in 14 s
+[gradient]
+  ascent radius 0.1: gain +0.0008 kt +- 0.0001
+  ascent radius 0.3: gain +0.0019 kt +- 0.0003
+  ascent radius 1.0: gain +0.0029 kt +- 0.0012
+  -> nocfd/gradient.json
+  603 s

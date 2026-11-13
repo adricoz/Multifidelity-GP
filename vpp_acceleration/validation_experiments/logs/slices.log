@@ -1,0 +1,4 @@
+run 2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d: design per level (1214, 280, 6), 48/49 conditions solved, loaded in 15 s
+[slices]
+  -> results/slices.json
+  1130 s

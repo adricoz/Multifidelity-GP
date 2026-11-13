@@ -1,0 +1,44 @@
+[2026-11-13 09:30:31] night started (stop 13/11 16:45, dry False)
+[2026-11-13 09:30:31] run without CFD finished: full use of the machine
+[2026-11-13 09:30:31] cv_1111: start
+[2026-11-13 09:30:31] twin_method: start
+[2026-11-13 09:30:31] summary_1111: start
+[2026-11-13 09:30:31] twin_reference: start
+[2026-11-13 09:30:31] profile_1111: start
+[2026-11-13 09:30:51] profile_1111: done (code 0, 0 min)
+[2026-11-13 09:33:11] summary_1111: done (code 0, 3 min)
+[2026-11-13 09:33:21] cv_1111: done (code 0, 3 min)
+[2026-11-13 09:33:24] certificate_1111_level2: start
+[2026-11-13 09:33:24] certificate_1111_top: start
+[2026-11-13 11:19:00] certificate_1111_level2: done (code 0, 106 min)
+[2026-11-13 11:19:00] certificate_1111_top: done (code 0, 106 min)
+[2026-11-13 11:19:07] calibration_nocfd: start
+[2026-11-13 11:19:07] gradient_nocfd: start
+[2026-11-13 11:19:07] slices_nocfd: start
+[2026-11-13 11:19:07] regret_nocfd: start
+[2026-11-13 11:19:07] dimension_nocfd: start
+[2026-11-13 11:19:07] levels_nocfd: start
+[2026-11-13 11:19:47] calibration_nocfd: done (code 0, 1 min)
+[2026-11-13 11:29:38] levels_nocfd: done (code 0, 11 min)
+[2026-11-13 11:29:38] gradient_nocfd: done (code 0, 11 min)
+[2026-11-13 11:33:08] regret_nocfd: done (code 0, 14 min)
+[2026-11-13 11:35:58] slices_nocfd: done (code 0, 17 min)
+[2026-11-13 11:39:08] dimension_nocfd: done (code 0, 20 min)
+[2026-11-13 11:39:15] cv_nocfd: start
+[2026-11-13 11:39:15] summary_nocfd: start
+[2026-11-13 11:39:15] profile_nocfd: start
+[2026-11-13 11:39:15] certificate_nocfd: start
+[2026-11-13 11:39:35] profile_nocfd: done (code 0, 0 min)
+[2026-11-13 11:42:15] summary_nocfd: done (code 0, 3 min)
+[2026-11-13 11:43:45] cv_nocfd: done (code 0, 5 min)
+[2026-11-13 12:36:58] certificate_nocfd: done (code 0, 58 min)
+[2026-11-13 12:37:04] cross: start
+[2026-11-13 12:37:34] cross: done (code 0, 1 min)
+[2026-11-13 13:30:45] twin_method: done (code 0, 240 min)
+[2026-11-13 14:48:58] twin_reference: done (code 0, 318 min)
+[2026-11-13 14:49:03] twin_compare: start
+[2026-11-13 15:11:34] twin_compare: done (code 0, 23 min)
+[2026-11-13 15:11:38] twin_report: start
+[2026-11-13 15:11:48] twin_report: done (code 0, 0 min)
+[2026-11-13 15:11:52] codes verdict (AVL x XFOIL at far sections) not run: not implemented
+[2026-11-13 15:11:52] night finished

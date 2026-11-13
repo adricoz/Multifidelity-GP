@@ -1,0 +1,223 @@
+[09:30:33] start best
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\Desktop\Code-Adri\MDS\src\mds\math\rotation.py:267: NumbaPerformanceWarning: [1m[1mnp.dot() is faster on contiguous arrays, called on (array(float64, 1d, A), array(float64, 1d, A))[0m[0m
+  np.around(np.array([np.cos(angle_A / 2) * np.cos(angle_B / 2) - np.sin(angle_A / 2) * np.sin(angle_B / 2) * np.dot(vector_A, vector_B)]), int(14), round_value)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+[09:39:09]   best it 0: r 0.500, step 0.500, gain +0.0083 kt (predicted +0.0155), accepted, on 99 % of the probability
+[09:50:30]   best it 2: r 0.750, step 0.750, gain +0.0010 kt (predicted +0.0031), accepted, on 99 % of the probability
+[09:58:11]   best it 3: r 1.000, step 1.000, gain +0.0062 kt (predicted +0.0032), accepted, on 99 % of the probability
+[10:04:28]   best it 4: r 1.000, step 0.415, gain -0.0090 kt (predicted +0.0009), refused, on 99 % of the probability
+[10:09:52]   best it 5: r 1.000, step 1.000, gain +0.0121 kt (predicted +0.0164), accepted, on 99 % of the probability
+[10:15:03]   best it 6: r 1.000, step 1.000, gain -0.0224 kt (predicted +0.0088), refused, on 99 % of the probability
+[10:22:30]   best it 7: r 1.000, step 0.743, gain -0.0029 kt (predicted +0.0057), refused, on 99 % of the probability
+[10:27:10]   best it 8: r 0.500, step 0.500, gain -0.0000 kt (predicted +0.0052), refused, on 99 % of the probability
+[10:29:58]   best it 9: r 0.250, step 0.250, gain +0.0003 kt (predicted +0.0035), accepted, on 99 % of the probability
+[10:33:19]   best it 10: r 0.375, step 0.375, gain -0.0034 kt (predicted +0.0039), refused, on 99 % of the probability
+[10:38:49]   best it 11: r 0.375, step 0.375, gain -0.0019 kt (predicted +0.0039), refused, on 99 % of the probability
+[10:41:07]   best it 12: r 0.188, step 0.188, gain -0.0002 kt (predicted +0.0024), refused, on 99 % of the probability
+[10:43:15]   best it 13: r 0.094, step 0.094, gain -0.0004 kt (predicted +0.0014), refused, on 99 % of the probability
+[10:45:20]   best it 14: r 0.047, step 0.047, gain -0.0000 kt (predicted +0.0007), refused, on 99 % of the probability
+[10:45:20] start best: radius after 15 iterations, 75 min, moved 1.43 scores, speed 13.2650 kt
+[10:45:20] start current_section
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+[10:51:12]   current_section it 0: r 0.500, step 0.500, gain +0.1129 kt (predicted +0.0963), accepted, on 99 % of the probability
+[10:53:27]   current_section it 1: r 0.750, step 0.750, gain +0.1083 kt (predicted +0.1197), accepted, on 99 % of the probability
+[10:54:58]   current_section it 2: r 1.000, step 1.000, gain +0.0707 kt (predicted +0.1534), accepted, on 99 % of the probability
+[11:00:58]   current_section it 3: r 1.000, step 1.000, gain +0.0187 kt (predicted +0.0169), accepted, on 99 % of the probability
+[11:06:24]   current_section it 4: r 1.000, step 1.000, gain -0.0043 kt (predicted +0.0072), refused, on 99 % of the probability
+[11:14:10]   current_section it 5: r 1.000, step 1.000, gain +0.0029 kt (predicted +0.0044), accepted, on 99 % of the probability
+[11:20:48]   current_section it 6: r 1.000, step 1.000, gain -0.0018 kt (predicted +0.0019), refused, on 99 % of the probability
+[11:30:35]   current_section it 7: r 1.000, step 1.000, gain +0.0000 kt (predicted +0.0019), refused, on 99 % of the probability
+[11:36:37]   current_section it 8: r 0.500, step 0.500, gain +0.0005 kt (predicted +0.0012), accepted, on 99 % of the probability
+[11:42:11]   current_section it 9: r 0.750, step 0.750, gain +0.0004 kt (predicted +0.0009), accepted, on 99 % of the probability
+[11:44:59]   current_section it 10: r 1.000, step 0.573, gain -0.0000 kt (predicted +0.0002), refused, on 99 % of the probability
+[11:51:58]   current_section it 11: r 1.000, step 0.774, gain -0.0155 kt (predicted +0.0040), refused, on 99 % of the probability
+[11:54:57]   current_section it 12: r 0.500, step 0.500, gain -0.0092 kt (predicted +0.0036), refused, on 99 % of the probability
+[11:57:09]   current_section it 13: r 0.250, step 0.250, gain -0.0054 kt (predicted +0.0026), refused, on 99 % of the probability
+[11:59:05]   current_section it 14: r 0.125, step 0.125, gain -0.0039 kt (predicted +0.0015), refused, on 99 % of the probability
+[12:00:41]   current_section it 15: r 0.062, step 0.063, gain -0.0016 kt (predicted +0.0008), refused, on 99 % of the probability
+[12:01:31]   current_section it 16: r 0.031, step 0.031, gain -0.0002 kt (predicted +0.0004), refused, on 99 % of the probability
+[12:01:31] start current_section: radius after 17 iterations, 76 min, moved 3.76 scores, speed 13.2653 kt
+[12:01:31] start region_0
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:438: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  g = append(wrapped_grad(x), 0.0)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:492: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  a_eq = vstack([con['jac'](x, *con['args'])
+[12:11:07]   region_0 it 0: r 0.500, step 0.500, gain +0.0024 kt (predicted +0.0064), accepted, on 99 % of the probability
+[12:16:42]   region_0 it 1: r 0.750, step 0.750, gain -0.0092 kt (predicted +0.0063), refused, on 99 % of the probability
+[12:22:58]   region_0 it 2: r 0.750, step 0.750, gain +0.0082 kt (predicted +0.0019), accepted, on 99 % of the probability
+[12:27:34]   region_0 it 3: r 1.000, step 1.000, gain -0.0032 kt (predicted +0.0017), refused, on 99 % of the probability
+[12:33:31]   region_0 it 4: r 1.000, step 1.000, gain +0.0093 kt (predicted +0.0112), accepted, on 99 % of the probability
+[12:37:09]   region_0 it 5: r 1.000, step 0.963, gain -0.0128 kt (predicted +0.0069), refused, on 99 % of the probability
+[12:44:19]   region_0 it 6: r 1.000, step 0.801, gain -0.0009 kt (predicted +0.0040), refused, on 99 % of the probability
+[12:47:07]   region_0 it 7: r 0.500, step 0.500, gain +0.0002 kt (predicted +0.0036), accepted, on 99 % of the probability
+[12:54:28]   region_0 it 9: r 0.750, step 0.495, gain +0.0004 kt (predicted +0.0003), accepted, on 99 % of the probability
+[12:56:23]   region_0 it 11: r 0.750, step 0.107, gain -0.0009 kt (predicted +0.0001), refused, on 99 % of the probability
+[12:57:53]   region_0 it 12: r 0.375, step 0.107, gain -0.0009 kt (predicted +0.0001), refused, on 99 % of the probability
+[12:58:54]   region_0 it 13: r 0.188, step 0.107, gain -0.0009 kt (predicted +0.0001), refused, on 99 % of the probability
+[13:01:10]   region_0 it 14: r 0.094, step 0.094, gain -0.0021 kt (predicted +0.0001), refused, on 99 % of the probability
+[13:02:18]   region_0 it 15: r 0.047, step 0.047, gain -0.0007 kt (predicted +0.0001), refused, on 99 % of the probability
+[13:02:18] start region_0: radius after 16 iterations, 61 min, moved 2.10 scores, speed 13.2639 kt
+[13:02:18] start region_1
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+[13:07:34]   region_1 it 0: r 0.500, step 0.500, gain +0.0062 kt (predicted +0.0151), accepted, on 99 % of the probability
+[13:10:55]   region_1 it 1: r 0.750, step 0.750, gain -0.0178 kt (predicted +0.0153), refused, on 99 % of the probability
+[13:15:41]   region_1 it 2: r 0.750, step 0.750, gain +0.0025 kt (predicted +0.0023), accepted, on 99 % of the probability
+[13:20:48]   region_1 it 3: r 1.000, step 1.000, gain +0.0024 kt (predicted +0.0025), accepted, on 99 % of the probability
+[13:24:59]   region_1 it 4: r 1.000, step 0.415, gain +0.0005 kt (predicted +0.0004), accepted, on 99 % of the probability
+[13:28:16]   region_1 it 5: r 1.000, step 0.405, gain -0.0027 kt (predicted +0.0022), refused, on 99 % of the probability
+[13:30:19]   region_1 it 6: r 0.500, step 0.405, gain -0.0027 kt (predicted +0.0022), refused, on 99 % of the probability
+[13:31:21]   region_1 it 7: r 0.250, step 0.250, gain -0.0016 kt (predicted +0.0019), refused, on 99 % of the probability
+[13:32:57]   region_1 it 8: r 0.125, step 0.125, gain -0.0008 kt (predicted +0.0013), refused, on 99 % of the probability
+[13:33:43]   region_1 it 9: r 0.062, step 0.063, gain +0.0004 kt (predicted +0.0007), accepted, on 99 % of the probability
+[13:34:40]   region_1 it 10: r 0.094, step 0.094, gain -0.0019 kt (predicted +0.0009), refused, on 99 % of the probability
+[13:36:25]   region_1 it 11: r 0.094, step 0.087, gain -0.0006 kt (predicted +0.0001), refused, on 99 % of the probability
+[13:37:39]   region_1 it 12: r 0.047, step 0.047, gain -0.0002 kt (predicted +0.0001), refused, on 99 % of the probability
+[13:37:39] start region_1: radius after 13 iterations, 35 min, moved 2.09 scores, speed 13.2504 kt
+[13:37:39] start region_3
+[13:42:58]   region_3 it 0: r 0.500, step 0.500, gain +0.0030 kt (predicted +0.0179), accepted, on 99 % of the probability
+[13:44:45]   region_3 it 1: r 0.750, step 0.750, gain -0.0246 kt (predicted +0.0196), refused, on 99 % of the probability
+[13:47:45]   region_3 it 2: r 0.750, step 0.750, gain +0.0011 kt (predicted +0.0076), accepted, on 99 % of the probability
+[13:50:14]   region_3 it 3: r 1.000, step 1.000, gain -0.0065 kt (predicted +0.0046), refused, on 99 % of the probability
+[13:53:19]   region_3 it 4: r 1.000, step 1.000, gain -0.0129 kt (predicted +0.0289), refused, on 99 % of the probability
+[13:54:22]   region_3 it 5: r 0.500, step 0.500, gain +0.0016 kt (predicted +0.0189), accepted, on 99 % of the probability
+[13:56:19]   region_3 it 6: r 0.750, step 0.750, gain -0.0347 kt (predicted +0.0216), refused, on 99 % of the probability
+[13:59:32]   region_3 it 7: r 0.750, step 0.750, gain +0.0109 kt (predicted +0.0039), accepted, on 99 % of the probability
+[14:02:21]   region_3 it 8: r 1.000, step 0.772, gain +0.0005 kt (predicted +0.0016), accepted, on 99 % of the probability
+[14:03:11]   region_3 it 9: r 1.000, step 0.071, gain +0.0005 kt (predicted +0.0000), accepted, on 99 % of the probability
+[14:06:40]   region_3 it 10: r 1.000, step 1.000, gain -0.0061 kt (predicted +0.0062), refused, on 99 % of the probability
+[14:08:28]   region_3 it 11: r 0.500, step 0.500, gain -0.0023 kt (predicted +0.0057), refused, on 99 % of the probability
+[14:10:01]   region_3 it 12: r 0.250, step 0.250, gain -0.0015 kt (predicted +0.0038), refused, on 99 % of the probability
+[14:10:47]   region_3 it 13: r 0.125, step 0.125, gain +0.0008 kt (predicted +0.0021), accepted, on 99 % of the probability
+[14:12:05]   region_3 it 14: r 0.188, step 0.188, gain -0.0015 kt (predicted +0.0028), refused, on 99 % of the probability
+[14:14:10]   region_3 it 15: r 0.188, step 0.188, gain -0.0030 kt (predicted +0.0009), refused, on 99 % of the probability
+[14:15:15]   region_3 it 16: r 0.094, step 0.094, gain -0.0012 kt (predicted +0.0006), refused, on 99 % of the probability
+[14:16:20]   region_3 it 17: r 0.047, step 0.047, gain -0.0001 kt (predicted +0.0003), refused, on 99 % of the probability
+[14:16:20] start region_3: radius after 18 iterations, 39 min, moved 2.14 scores, speed 13.2577 kt
+[14:16:20] start random
+C:\Users\SIM\.conda\envs\bdToolbox\lib\site-packages\scipy\optimize\_slsqp_py.py:434: RuntimeWarning: Values in x were outside bounds during a minimize step, clipping to bounds
+  fx = wrapped_fun(x)
+[14:20:04]   random it 0: r 0.500, step 0.500, gain +0.0391 kt (predicted +0.0466), accepted, on 99 % of the probability
+[14:21:57]   random it 1: r 0.750, step 0.750, gain +0.0241 kt (predicted +0.0495), accepted, on 99 % of the probability
+[14:23:35]   random it 2: r 1.000, step 1.000, gain -0.0058 kt (predicted +0.0433), refused, on 99 % of the probability
+[14:26:34]   random it 3: r 1.000, step 1.000, gain +0.0150 kt (predicted +0.0178), accepted, on 99 % of the probability
+[14:28:44]   random it 4: r 1.000, step 1.000, gain +0.0077 kt (predicted +0.0128), accepted, on 99 % of the probability
+[14:31:33]   random it 5: r 1.000, step 1.000, gain +0.0035 kt (predicted +0.0073), accepted, on 99 % of the probability
+[14:34:23]   random it 6: r 1.000, step 1.000, gain +0.0195 kt (predicted +0.0150), accepted, on 99 % of the probability
+[14:36:58]   random it 7: r 1.000, step 1.000, gain -0.0124 kt (predicted +0.0088), refused, on 99 % of the probability
+[14:39:53]   random it 8: r 1.000, step 0.977, gain -0.0015 kt (predicted +0.0017), refused, on 99 % of the probability
+[14:42:17]   random it 9: r 0.500, step 0.500, gain -0.0007 kt (predicted +0.0014), refused, on 99 % of the probability
+[14:43:34]   random it 10: r 0.250, step 0.250, gain -0.0009 kt (predicted +0.0011), refused, on 99 % of the probability
+[14:44:31]   random it 11: r 0.125, step 0.125, gain +0.0001 kt (predicted +0.0007), refused, on 99 % of the probability
+[14:45:19]   random it 12: r 0.062, step 0.063, gain +0.0001 kt (predicted +0.0004), accepted, on 99 % of the probability
+[14:46:34]   random it 13: r 0.094, step 0.094, gain -0.0001 kt (predicted +0.0005), refused, on 99 % of the probability
+[14:47:54]   random it 14: r 0.094, step 0.094, gain -0.0002 kt (predicted +0.0012), refused, on 99 % of the probability
+[14:48:53]   random it 15: r 0.047, step 0.047, gain -0.0003 kt (predicted +0.0006), refused, on 99 % of the probability
+[14:48:53] start random: radius after 16 iterations, 33 min, moved 3.73 scores, speed 13.2646 kt
+[14:48:54] done

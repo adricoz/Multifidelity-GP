@@ -1,0 +1,35 @@
+{
+ "steps": {
+  "cv_1111": {
+   "state": "running",
+   "start": "2026-11-13 09:29:10.399652",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\far_experiments.py --run runs/2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d --out results --only buffered_cv"
+  },
+  "twin_method": {
+   "state": "running",
+   "start": "2026-11-13 09:29:10.399652",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\twin_experiments\\run_twin.py --vpp-workers 8 --time-limit-min 311"
+  },
+  "summary_1111": {
+   "state": "running",
+   "start": "2026-11-13 09:29:10.399652",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\far_experiments.py --run runs/2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d --out results --only summary"
+  },
+  "twin_reference": {
+   "state": "running",
+   "start": "2026-11-13 09:29:10.399652",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\twin_experiments\\reference.py --workers 10 --deadline 15:30"
+  },
+  "profile_1111": {
+   "state": "done",
+   "start": "2026-11-13 09:29:10.399652",
+   "command": "C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\.venv-mds\\Scripts\\python.exe -u C:\\Users\\SIM\\Desktop\\Code-Adri\\Multifidelity-GP-Clean\\vpp_acceleration\\validation_experiments\\far_experiments.py --run runs/2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d --out results --only profile",
+   "code": 0,
+   "end": "2026-11-13 09:29:30.430476"
+  }
+ },
+ "notes": [
+  "09:29 night started (stop 13/11 16:45, dry False)",
+  "09:29 run without CFD finished: full use of the machine"
+ ]
+}

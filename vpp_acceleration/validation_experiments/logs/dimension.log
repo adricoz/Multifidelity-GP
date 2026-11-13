@@ -1,0 +1,6 @@
+run 2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d: design per level (1214, 280, 6), 48/49 conditions solved, loaded in 16 s
+[dimension]
+  global: cumulative share of the eigenvalues [0.982 0.993 0.995 0.997 0.999]
+  local_1.0: cumulative share of the eigenvalues [0.927 0.995 0.997 0.998 0.999]
+  -> results/dimension.json
+  1263 s

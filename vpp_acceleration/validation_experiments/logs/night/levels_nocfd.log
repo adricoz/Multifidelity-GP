@@ -1,0 +1,6 @@
+run 2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd: design per level (1188, 320), 48/49 conditions solved, loaded in 14 s
+[levels]
+  level 1: cos(grad, grad top) 0.943, loss at the top level 0.0033 kt
+  level 2: cos(grad, grad top) 1.000, loss at the top level 0.0000 kt
+  -> nocfd/levels.json
+  606 s

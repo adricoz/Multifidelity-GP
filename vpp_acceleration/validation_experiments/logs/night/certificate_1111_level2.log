@@ -1,0 +1,20 @@
+run 2026-11-11_1245_ixxv095_rigid_xtr003_k10_cfd3d: design per level (1214, 280, 6), loaded in 6 s
+[certificate]
+  pool of 345 sections: best gain +0.0198 kt
+  kappa 1.0: bound +0.0342 kt (gain +0.0305, sigma 0.0037) at distance 1.95
+  kappa 1.0: bound +0.0346 kt (gain +0.0306, sigma 0.0040) at distance 1.82
+  kappa 1.0: bound +0.0325 kt (gain +0.0279, sigma 0.0046) at distance 2.80
+  kappa 1.0: bound +0.0395 kt (gain +0.0329, sigma 0.0066) at distance 2.58
+  kappa 1.0: bound +0.0348 kt (gain +0.0301, sigma 0.0047) at distance 1.88
+  kappa 2.0: bound +0.0380 kt (gain +0.0284, sigma 0.0048) at distance 2.20
+  kappa 2.0: bound +0.0330 kt (gain +0.0212, sigma 0.0059) at distance 2.79
+  kappa 2.0: bound +0.0551 kt (gain +0.0289, sigma 0.0131) at distance 3.94
+  kappa 2.0: bound +0.0379 kt (gain +0.0284, sigma 0.0047) at distance 1.85
+  kappa 2.0: bound +0.0459 kt (gain +0.0289, sigma 0.0085) at distance 3.78
+  kappa 3.0: bound +0.0764 kt (gain +0.0013, sigma 0.0250) at distance 5.46
+  kappa 3.0: bound +0.0430 kt (gain +0.0266, sigma 0.0055) at distance 2.33
+  kappa 3.0: bound +0.0871 kt (gain -0.0066, sigma 0.0312) at distance 5.55
+  kappa 3.0: bound +0.1003 kt (gain +0.0023, sigma 0.0327) at distance 6.08
+  kappa 3.0: bound +0.0443 kt (gain +0.0214, sigma 0.0076) at distance 3.12
+  -> results/certificate_level2.json
+  6318 s
