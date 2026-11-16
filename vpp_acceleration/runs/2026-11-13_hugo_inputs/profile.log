@@ -1,0 +1,5 @@
+[      0 s] 500 draws, section current_section, 8 workers
+[    263 s] nodes: 48/49 solved
+[   1814 s] VPP: 490/500 converged
+[   2059 s] strips: 490/490 ok
+[   2059 s] done: C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-13_hugo_inputs

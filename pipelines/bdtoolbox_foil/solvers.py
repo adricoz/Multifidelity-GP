@@ -348,6 +348,12 @@ class BdfoilV1Backend:
                              "chord": strips["chord [m]"].tolist(),
                              "Re": strips["Re [-]"].tolist(),
                              "cpmin": strips["Cpmin [-]"].tolist()}
+            # geometric incidence and effective angle of every strip (2026-11-13, alpha along the
+            # span for Hugo: vpp_acceleration/scripts/hugo_inputs.py), when bdfoil_v1 gives them
+            for key, column in (("incidence_deg", "incidence [deg]"),
+                                ("alpha_eff_deg", "alpha eff [deg]"), ("width", "width [m]")):
+                if column in strips.columns:
+                    out["strips"][key] = strips[column].tolist()
             if self.name == "npllt" and result.panels is not None:
                 # effective incidence of every lifting-line panel (e.g. the NeuralFoil Cpmin of
                 # vpp_acceleration/src/foil_codes.py: bdfoil_v1 gives none with NeuralFoil)

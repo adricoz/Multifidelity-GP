@@ -1,0 +1,13 @@
+{
+ "rows": 9556,
+ "rows_per_constraint": {
+  "kulfan_box": 32,
+  "crossing": 1999,
+  "upper_curvature": 1961,
+  "lower_curvature": 1562,
+  "leading_edge": 4002
+ },
+ "check_vs_domain_20000_points": "identical",
+ "min_margin_at_mc2": 0.5323246704936109,
+ "linear_admissible_fraction_of_box": 0.24085
+}

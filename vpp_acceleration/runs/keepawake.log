@@ -1,0 +1,478 @@
+﻿2026-11-10T18:38:08 start (pid 36152)
+2026-11-10T18:38:08 alive cpu 0 % gpu 3 %, 93.68 W
+2026-11-10T18:43:08 alive cpu 0 % gpu 2 %, 22.14 W
+2026-11-10T18:48:08 alive cpu 0 % gpu 0 %, 21.68 W
+2026-11-10T18:53:09 alive cpu 0 % gpu 0 %, 21.67 W
+2026-11-10T18:58:09 alive cpu 0 % gpu 0 %, 21.77 W
+2026-11-10T19:03:09 alive cpu 0 % gpu 0 %, 21.10 W
+2026-11-10T19:08:09 alive cpu 0 % gpu 0 %, 21.94 W
+2026-11-10T19:13:10 alive cpu 0 % gpu 11 %, 22.20 W
+2026-11-10T19:18:10 alive cpu 0 % gpu 0 %, 21.89 W
+2026-11-10T19:23:11 alive cpu 0 % gpu 0 %, 21.76 W
+2026-11-10T19:28:11 alive cpu 0 % gpu 0 %, 22.42 W
+2026-11-10T19:33:11 alive cpu 0 % gpu 0 %, 21.66 W
+2026-11-10T19:38:11 alive cpu 0 % gpu 0 %, 21.61 W
+2026-11-10T19:43:12 alive cpu 0 % gpu 0 %, 21.81 W
+2026-11-10T19:48:12 alive cpu 0 % gpu 8 %, 21.83 W
+2026-11-10T19:53:13 alive cpu 0 % gpu 4 %, 21.31 W
+2026-11-10T19:58:13 alive cpu 0 % gpu 0 %, 21.07 W
+2026-11-10T20:03:13 alive cpu 0 % gpu 8 %, 21.75 W
+2026-11-10T20:08:14 alive cpu 0 % gpu 0 %, 21.19 W
+2026-11-10T20:13:14 alive cpu 0 % gpu 0 %, 21.70 W
+2026-11-10T20:18:14 alive cpu 0 % gpu 0 %, 21.87 W
+2026-11-10T20:23:14 alive cpu 0 % gpu 0 %, 21.64 W
+2026-11-10T20:28:15 alive cpu 0 % gpu 0 %, 21.50 W
+2026-11-10T20:33:15 alive cpu 0 % gpu 0 %, 21.76 W
+2026-11-10T20:38:15 alive cpu 0 % gpu 7 %, 21.47 W
+2026-11-10T20:43:16 alive cpu 0 % gpu 0 %, 21.71 W
+2026-11-10T20:48:16 alive cpu 0 % gpu 9 %, 21.28 W
+2026-11-10T20:53:16 alive cpu 0 % gpu 0 %, 21.43 W
+2026-11-10T20:58:16 alive cpu 0 % gpu 11 %, 21.40 W
+2026-11-10T21:03:17 alive cpu 0 % gpu 0 %, 21.49 W
+2026-11-10T21:08:17 alive cpu 0 % gpu 0 %, 21.36 W
+2026-11-10T21:13:17 alive cpu 0 % gpu 0 %, 21.32 W
+2026-11-10T21:18:17 alive cpu 0 % gpu 0 %, 20.81 W
+2026-11-10T21:23:18 alive cpu 0 % gpu 9 %, 21.46 W
+2026-11-10T21:28:18 alive cpu 0 % gpu 0 %, 20.75 W
+2026-11-10T21:33:18 alive cpu 0 % gpu 3 %, 21.03 W
+2026-11-10T21:38:19 alive cpu 0 % gpu 0 %, 21.46 W
+2026-11-10T21:43:20 alive cpu 0 % gpu 0 %, 21.13 W
+2026-11-10T21:48:21 alive cpu 0 % gpu 0 %, 21.33 W
+2026-11-10T21:53:21 alive cpu 0 % gpu 0 %, 21.19 W
+2026-11-10T21:58:21 alive cpu 0 % gpu 0 %, 21.57 W
+2026-11-10T22:03:21 alive cpu 0 % gpu 0 %, 21.13 W
+2026-11-10T22:08:22 alive cpu 0 % gpu 0 %, 21.41 W
+2026-11-10T22:13:22 alive cpu 0 % gpu 13 %, 21.51 W
+2026-11-10T22:18:22 alive cpu 0 % gpu 6 %, 21.89 W
+2026-11-10T22:23:22 alive cpu 0 % gpu 2 %, 20.77 W
+2026-11-10T22:28:23 alive cpu 0 % gpu 0 %, 21.39 W
+2026-11-10T22:33:23 alive cpu 0 % gpu 0 %, 20.67 W
+2026-11-10T22:38:23 alive cpu 0 % gpu 0 %, 21.73 W
+2026-11-10T22:43:23 alive cpu 0 % gpu 0 %, 21.03 W
+2026-11-10T22:48:24 alive cpu 0 % gpu 0 %, 21.09 W
+2026-11-10T22:53:24 alive cpu 0 % gpu 0 %, 21.87 W
+2026-11-10T22:58:24 alive cpu 0 % gpu 0 %, 21.57 W
+2026-11-10T23:03:24 alive cpu 0 % gpu 0 %, 21.22 W
+2026-11-10T23:08:25 alive cpu 0 % gpu 3 %, 21.47 W
+2026-11-10T23:13:25 alive cpu 0 % gpu 0 %, 20.69 W
+2026-11-10T23:18:25 alive cpu 0 % gpu 0 %, 20.68 W
+2026-11-10T23:23:25 alive cpu 0 % gpu 0 %, 21.40 W
+2026-11-10T23:28:26 alive cpu 0 % gpu 9 %, 21.33 W
+2026-11-10T23:33:26 alive cpu 0 % gpu 0 %, 21.33 W
+2026-11-10T23:38:26 alive cpu 0 % gpu 0 %, 21.75 W
+2026-11-10T23:43:26 alive cpu 0 % gpu 10 %, 21.62 W
+2026-11-10T23:48:27 alive cpu 0 % gpu 0 %, 21.97 W
+2026-11-10T23:53:27 alive cpu 0 % gpu 0 %, 20.62 W
+2026-11-10T23:58:27 alive cpu 0 % gpu 0 %, 21.67 W
+2026-11-11T00:03:28 alive cpu 0 % gpu 1 %, 21.82 W
+2026-11-11T00:08:28 alive cpu 0 % gpu 0 %, 21.43 W
+2026-11-11T00:13:28 alive cpu 0 % gpu 0 %, 21.59 W
+2026-11-11T00:18:28 alive cpu 0 % gpu 0 %, 21.88 W
+2026-11-11T00:23:29 alive cpu 0 % gpu 0 %, 21.69 W
+2026-11-11T00:28:29 alive cpu 0 % gpu 13 %, 22.38 W
+2026-11-11T00:33:29 alive cpu 0 % gpu 0 %, 21.63 W
+2026-11-11T00:38:29 alive cpu 0 % gpu 0 %, 21.14 W
+2026-11-11T00:43:30 alive cpu 0 % gpu 10 %, 21.55 W
+2026-11-11T00:48:30 alive cpu 0 % gpu 9 %, 22.06 W
+2026-11-11T00:53:30 alive cpu 0 % gpu 4 %, 21.38 W
+2026-11-11T00:58:30 alive cpu 0 % gpu 0 %, 21.59 W
+2026-11-11T01:03:31 alive cpu 0 % gpu 0 %, 21.62 W
+2026-11-11T01:08:31 alive cpu 0 % gpu 0 %, 21.88 W
+2026-11-11T01:13:31 alive cpu 0 % gpu 0 %, 21.93 W
+2026-11-11T01:18:32 alive cpu 0 % gpu 0 %, 21.30 W
+2026-11-11T01:23:32 alive cpu 0 % gpu 0 %, 21.42 W
+2026-11-11T01:28:32 alive cpu 0 % gpu 12 %, 22.17 W
+2026-11-11T01:33:32 alive cpu 0 % gpu 0 %, 21.55 W
+2026-11-11T01:38:33 alive cpu 0 % gpu 0 %, 21.03 W
+2026-11-11T01:43:33 alive cpu 0 % gpu 0 %, 21.54 W
+2026-11-11T01:48:33 alive cpu 0 % gpu 0 %, 21.54 W
+2026-11-11T01:53:33 alive cpu 0 % gpu 0 %, 21.87 W
+2026-11-11T01:58:34 alive cpu 0 % gpu 0 %, 21.47 W
+2026-11-11T02:03:34 alive cpu 0 % gpu 0 %, 21.61 W
+2026-11-11T02:08:34 alive cpu 0 % gpu 0 %, 21.84 W
+2026-11-11T02:13:34 alive cpu 0 % gpu 0 %, 21.80 W
+2026-11-11T02:18:35 alive cpu 0 % gpu 0 %, 21.02 W
+2026-11-11T02:23:35 alive cpu 0 % gpu 0 %, 21.52 W
+2026-11-11T02:28:35 alive cpu 0 % gpu 0 %, 20.81 W
+2026-11-11T02:33:35 alive cpu 0 % gpu 13 %, 21.48 W
+2026-11-11T02:38:36 alive cpu 0 % gpu 9 %, 21.39 W
+2026-11-11T02:43:36 alive cpu 0 % gpu 0 %, 21.44 W
+2026-11-11T02:48:36 alive cpu 0 % gpu 0 %, 20.96 W
+2026-11-11T02:53:36 alive cpu 0 % gpu 0 %, 20.74 W
+2026-11-11T02:58:37 alive cpu 0 % gpu 0 %, 20.92 W
+2026-11-11T03:03:37 alive cpu 0 % gpu 0 %, 21.39 W
+2026-11-11T03:08:37 alive cpu 0 % gpu 0 %, 20.45 W
+2026-11-11T03:13:37 alive cpu 0 % gpu 0 %, 21.23 W
+2026-11-11T03:18:38 alive cpu 0 % gpu 0 %, 21.29 W
+2026-11-11T03:23:38 alive cpu 0 % gpu 0 %, 21.05 W
+2026-11-11T03:28:38 alive cpu 0 % gpu 0 %, 21.07 W
+2026-11-11T03:33:38 alive cpu 0 % gpu 0 %, 20.63 W
+2026-11-11T03:38:39 alive cpu 0 % gpu 0 %, 21.45 W
+2026-11-11T03:43:39 alive cpu 0 % gpu 0 %, 21.33 W
+2026-11-11T03:48:39 alive cpu 0 % gpu 0 %, 21.65 W
+2026-11-11T03:53:39 alive cpu 0 % gpu 0 %, 20.93 W
+2026-11-11T03:58:40 alive cpu 0 % gpu 0 %, 21.59 W
+2026-11-11T04:03:40 alive cpu 0 % gpu 0 %, 21.18 W
+2026-11-11T04:08:40 alive cpu 0 % gpu 0 %, 21.10 W
+2026-11-11T04:13:40 alive cpu 0 % gpu 0 %, 20.73 W
+2026-11-11T04:18:41 alive cpu 0 % gpu 6 %, 21.65 W
+2026-11-11T04:23:41 alive cpu 0 % gpu 9 %, 21.37 W
+2026-11-11T04:28:41 alive cpu 0 % gpu 0 %, 21.40 W
+2026-11-11T04:33:41 alive cpu 0 % gpu 0 %, 21.36 W
+2026-11-11T04:38:42 alive cpu 0 % gpu 0 %, 21.88 W
+2026-11-11T04:43:42 alive cpu 0 % gpu 0 %, 21.44 W
+2026-11-11T04:48:42 alive cpu 0 % gpu 0 %, 21.64 W
+2026-11-11T04:53:42 alive cpu 0 % gpu 2 %, 21.92 W
+2026-11-11T04:58:42 alive cpu 0 % gpu 0 %, 21.23 W
+2026-11-11T05:03:43 alive cpu 0 % gpu 0 %, 21.36 W
+2026-11-11T05:08:43 alive cpu 0 % gpu 0 %, 21.75 W
+2026-11-11T05:13:43 alive cpu 0 % gpu 0 %, 21.39 W
+2026-11-11T05:18:43 alive cpu 0 % gpu 0 %, 21.24 W
+2026-11-11T05:23:44 alive cpu 0 % gpu 0 %, 20.80 W
+2026-11-11T05:28:44 alive cpu 0 % gpu 0 %, 21.71 W
+2026-11-11T05:33:44 alive cpu 0 % gpu 7 %, 21.50 W
+2026-11-11T05:38:44 alive cpu 0 % gpu 0 %, 20.62 W
+2026-11-11T05:43:45 alive cpu 0 % gpu 0 %, 20.68 W
+2026-11-11T05:48:45 alive cpu 0 % gpu 10 %, 21.04 W
+2026-11-11T05:53:45 alive cpu 0 % gpu 10 %, 21.19 W
+2026-11-11T05:58:45 alive cpu 0 % gpu 0 %, 21.22 W
+2026-11-11T06:03:46 alive cpu 0 % gpu 13 %, 21.99 W
+2026-11-11T06:08:46 alive cpu 0 % gpu 0 %, 21.57 W
+2026-11-11T06:13:46 alive cpu 0 % gpu 0 %, 20.90 W
+2026-11-11T06:18:46 alive cpu 0 % gpu 0 %, 21.37 W
+2026-11-11T06:23:47 alive cpu 0 % gpu 0 %, 20.70 W
+2026-11-11T06:28:47 alive cpu 0 % gpu 4 %, 20.83 W
+2026-11-11T06:33:47 alive cpu 0 % gpu 0 %, 21.27 W
+2026-11-11T06:38:47 alive cpu 0 % gpu 0 %, 20.71 W
+2026-11-11T06:43:48 alive cpu 0 % gpu 12 %, 22.01 W
+2026-11-11T06:48:49 alive cpu 0 % gpu 8 %, 21.11 W
+2026-11-11T06:53:49 alive cpu 0 % gpu 0 %, 20.89 W
+2026-11-11T06:58:49 alive cpu 0 % gpu 0 %, 21.06 W
+2026-11-11T07:03:50 alive cpu 0 % gpu 0 %, 21.42 W
+2026-11-11T07:08:50 alive cpu 0 % gpu 0 %, 21.51 W
+2026-11-11T07:13:50 alive cpu 0 % gpu 0 %, 20.96 W
+2026-11-11T07:18:50 alive cpu 0 % gpu 0 %, 21.27 W
+2026-11-11T07:23:51 alive cpu 0 % gpu 0 %, 21.25 W
+2026-11-11T07:28:51 alive cpu 0 % gpu 0 %, 20.78 W
+2026-11-11T07:33:51 alive cpu 0 % gpu 0 %, 21.15 W
+2026-11-11T07:38:51 alive cpu 0 % gpu 0 %, 22.00 W
+2026-11-11T07:43:51 alive cpu 0 % gpu 0 %, 22.25 W
+2026-11-11T07:48:51 alive cpu 0 % gpu 4 %, 23.27 W
+2026-11-11T07:53:51 alive cpu 0 % gpu 0 %, 22.53 W
+2026-11-11T07:58:51 alive cpu 0 % gpu 0 %, 22.31 W
+2026-11-11T08:03:52 alive cpu 0 % gpu 0 %, 22.72 W
+2026-11-11T08:08:52 alive cpu 0 % gpu 0 %, 22.67 W
+2026-11-11T08:13:52 alive cpu 0 % gpu 0 %, 22.59 W
+2026-11-11T08:18:52 alive cpu 0 % gpu 0 %, 22.41 W
+2026-11-11T08:23:52 alive cpu 0 % gpu 0 %, 22.97 W
+2026-11-11T08:28:52 alive cpu 0 % gpu 0 %, 22.75 W
+2026-11-11T08:33:52 alive cpu 0 % gpu 0 %, 22.71 W
+2026-11-11T08:38:53 alive cpu 0 % gpu 0 %, 22.93 W
+2026-11-11T08:43:53 alive cpu 0 % gpu 0 %, 23.02 W
+2026-11-11T08:48:53 alive cpu 0 % gpu 0 %, 22.85 W
+2026-11-11T08:53:53 alive cpu 0 % gpu 0 %, 23.38 W
+2026-11-11T08:58:53 alive cpu 0 % gpu 0 %, 23.54 W
+2026-11-11T09:03:53 alive cpu 0 % gpu 0 %, 23.18 W
+2026-11-11T09:08:53 alive cpu 0 % gpu 0 %, 23.09 W
+2026-11-11T09:13:53 alive cpu 0 % gpu 0 %, 23.17 W
+2026-11-11T09:18:54 alive cpu 0 % gpu 0 %, 23.49 W
+2026-11-11T09:23:54 alive cpu 0 % gpu 0 %, 23.43 W
+2026-11-11T09:28:54 alive cpu 0 % gpu 0 %, 23.24 W
+2026-11-11T09:33:54 alive cpu 0 % gpu 0 %, 23.37 W
+2026-11-11T09:38:54 alive cpu 0 % gpu 0 %, 23.78 W
+2026-11-11T09:43:54 alive cpu 0 % gpu 0 %, 23.56 W
+2026-11-11T09:48:54 alive cpu 0 % gpu 0 %, 23.38 W
+2026-11-11T09:53:55 alive cpu 0 % gpu 0 %, 23.49 W
+2026-11-11T09:58:55 alive cpu 0 % gpu 0 %, 23.21 W
+2026-11-11T10:03:55 alive cpu 0 % gpu 0 %, 23.59 W
+2026-11-11T10:08:55 alive cpu 0 % gpu 0 %, 24.35 W
+2026-11-11T10:13:55 alive cpu 0 % gpu 0 %, 23.32 W
+2026-11-11T10:18:55 alive cpu 0 % gpu 0 %, 24.08 W
+2026-11-11T10:23:55 alive cpu 0 % gpu 8 %, 24.29 W
+2026-11-11T10:28:55 alive cpu 0 % gpu 0 %, 24.02 W
+2026-11-11T10:33:56 alive cpu 0 % gpu 0 %, 23.76 W
+2026-11-11T10:38:56 alive cpu 0 % gpu 0 %, 23.88 W
+2026-11-11T10:43:56 alive cpu 0 % gpu 0 %, 24.42 W
+2026-11-11T10:48:56 alive cpu 0 % gpu 0 %, 22.06 W
+2026-11-11T10:53:56 alive cpu 0 % gpu 8 %, 21.27 W
+2026-11-11T10:58:56 alive cpu 0 % gpu 0 %, 21.30 W
+2026-11-11T11:03:56 alive cpu 0 % gpu 0 %, 21.57 W
+2026-11-11T11:08:57 alive cpu 0 % gpu 0 %, 20.80 W
+2026-11-11T11:13:57 alive cpu 0 % gpu 0 %, 20.89 W
+2026-11-11T11:18:57 alive cpu 0 % gpu 0 %, 20.75 W
+2026-11-11T11:23:57 alive cpu 0 % gpu 0 %, 20.48 W
+2026-11-11T11:28:57 alive cpu 0 % gpu 0 %, 21.39 W
+2026-11-11T11:33:58 alive cpu 0 % gpu 0 %, 20.87 W
+2026-11-11T11:35:58 arrêté : activité clavier/souris (Antoine)
+2026-11-12T10:49:14 start (pid 41988, until 2026-11-14T10:49:14)
+2026-11-12T10:49:17 alive, tasks: Adri CFD MC2 yaw+1, Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 40.20 W
+2026-11-12T10:54:21 alive, tasks: Adri CFD MC2 yaw+1, Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 27.98 W
+2026-11-12T10:59:25 alive, tasks: Adri CFD MC2 yaw+1, Adri optim ixxv095 nocfd, cpu 0 %, gpu 92 %, 81.47 W
+2026-11-12T11:04:30 alive, tasks: Adri CFD MC2 yaw+1, Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 143.26 W
+2026-11-12T11:09:35 alive, tasks: Adri CFD MC2 yaw+1, Adri optim ixxv095 nocfd, cpu 0 %, gpu 4 %, 22.90 W
+2026-11-12T11:14:39 alive, tasks: Adri CFD MC2 yaw+1, Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 52.79 W
+2026-11-12T11:19:42 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.16 W
+2026-11-12T11:24:46 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.36 W
+2026-11-12T11:29:49 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 1 %, 20.58 W
+2026-11-12T11:34:52 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 1 %, 20.82 W
+2026-11-12T11:39:54 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 8 %, 21.41 W
+2026-11-12T11:44:57 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.21 W
+2026-11-12T11:49:59 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.00 W
+2026-11-12T11:55:02 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.12 W
+2026-11-12T12:00:04 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.01 W
+2026-11-12T12:05:07 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.46 W
+2026-11-12T12:10:10 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.63 W
+2026-11-12T12:15:12 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.50 W
+2026-11-12T12:20:15 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.12 W
+2026-11-12T12:25:17 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.91 W
+2026-11-12T12:30:20 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.66 W
+2026-11-12T12:35:22 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.12 W
+2026-11-12T12:40:26 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 2 %, 21.60 W
+2026-11-12T12:45:28 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.12 W
+2026-11-12T12:50:42 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 22 %, 22.15 W
+2026-11-12T12:55:46 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.67 W
+2026-11-12T13:00:51 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 1 %, 21.19 W
+2026-11-12T13:05:55 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 1 %, 21.12 W
+2026-11-12T13:10:58 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 3 %, 21.06 W
+2026-11-12T13:16:01 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 3 %, 21.44 W
+2026-11-12T13:21:04 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.82 W
+2026-11-12T13:26:06 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.22 W
+2026-11-12T13:31:09 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.41 W
+2026-11-12T13:36:12 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.94 W
+2026-11-12T13:41:14 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.96 W
+2026-11-12T13:46:17 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.64 W
+2026-11-12T13:51:19 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.18 W
+2026-11-12T13:56:22 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.75 W
+2026-11-12T14:01:25 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.90 W
+2026-11-12T14:06:27 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.03 W
+2026-11-12T14:11:30 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.77 W
+2026-11-12T14:16:33 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 2 %, 21.69 W
+2026-11-12T14:21:35 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.75 W
+2026-11-12T14:26:38 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.82 W
+2026-11-12T14:31:41 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 1 %, 21.43 W
+2026-11-12T14:36:44 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 7 %, 21.04 W
+2026-11-12T14:41:46 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 1 %, 20.90 W
+2026-11-12T14:46:49 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.16 W
+2026-11-12T14:51:52 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.84 W
+2026-11-12T14:56:55 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.76 W
+2026-11-12T15:01:57 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 1 %, 21.21 W
+2026-11-12T15:07:00 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.43 W
+2026-11-12T15:12:03 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.90 W
+2026-11-12T15:17:05 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 7 %, 21.50 W
+2026-11-12T15:22:08 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.12 W
+2026-11-12T15:27:11 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.90 W
+2026-11-12T15:32:14 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 11 %, 20.78 W
+2026-11-12T15:37:17 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.50 W
+2026-11-12T15:42:20 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.67 W
+2026-11-12T15:47:23 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.20 W
+2026-11-12T15:52:26 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.58 W
+2026-11-12T15:57:29 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.58 W
+2026-11-12T16:02:32 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.78 W
+2026-11-12T16:07:34 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 22.06 W
+2026-11-12T16:12:37 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.21 W
+2026-11-12T16:17:39 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 1 %, 21.15 W
+2026-11-12T16:22:42 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.84 W
+2026-11-12T16:27:44 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 3 %, 21.02 W
+2026-11-12T16:32:47 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 3 %, 20.92 W
+2026-11-12T16:37:50 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.74 W
+2026-11-12T16:42:52 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 1 %, 20.59 W
+2026-11-12T16:47:55 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.01 W
+2026-11-12T16:52:58 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.51 W
+2026-11-12T16:58:01 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.39 W
+2026-11-12T17:03:03 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.62 W
+2026-11-12T17:08:06 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.80 W
+2026-11-12T17:13:08 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.89 W
+2026-11-12T17:18:11 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 3 %, 20.97 W
+2026-11-12T17:23:13 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.99 W
+2026-11-12T17:28:16 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 3 %, 21.23 W
+2026-11-12T17:33:19 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.57 W
+2026-11-12T17:38:22 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.01 W
+2026-11-12T17:43:24 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.67 W
+2026-11-12T17:48:29 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.37 W
+2026-11-12T17:53:32 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.04 W
+2026-11-12T17:58:34 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.34 W
+2026-11-12T18:03:37 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.92 W
+2026-11-12T18:08:40 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.13 W
+2026-11-12T18:13:43 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.27 W
+2026-11-12T18:18:45 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.14 W
+2026-11-12T18:23:48 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.40 W
+2026-11-12T18:28:50 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.99 W
+2026-11-12T18:33:53 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.19 W
+2026-11-12T18:38:56 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 21.32 W
+2026-11-12T18:43:58 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.36 W
+2026-11-12T18:49:01 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.98 W
+2026-11-12T18:54:03 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.61 W
+2026-11-12T18:59:06 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.47 W
+2026-11-12T19:04:08 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.57 W
+2026-11-12T19:09:11 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.35 W
+2026-11-12T19:14:15 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.23 W
+2026-11-12T19:19:17 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.33 W
+2026-11-12T19:24:20 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.87 W
+2026-11-12T19:29:23 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.24 W
+2026-11-12T19:34:26 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.72 W
+2026-11-12T19:39:28 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.47 W
+2026-11-12T19:44:31 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.93 W
+2026-11-12T19:49:34 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.11 W
+2026-11-12T19:54:36 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.08 W
+2026-11-12T19:59:40 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.82 W
+2026-11-12T20:04:43 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.78 W
+2026-11-12T20:09:46 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.26 W
+2026-11-12T20:14:49 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.41 W
+2026-11-12T20:19:52 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.00 W
+2026-11-12T20:24:55 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.09 W
+2026-11-12T20:29:57 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.72 W
+2026-11-12T20:35:00 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.17 W
+2026-11-12T20:40:03 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.42 W
+2026-11-12T20:45:06 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.52 W
+2026-11-12T20:50:08 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.52 W
+2026-11-12T20:55:11 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.45 W
+2026-11-12T21:00:14 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.40 W
+2026-11-12T21:05:16 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.63 W
+2026-11-12T21:10:19 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.16 W
+2026-11-12T21:15:22 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.98 W
+2026-11-12T21:20:24 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 6 %, 20.74 W
+2026-11-12T21:25:27 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 2 %, 20.13 W
+2026-11-12T21:30:30 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.23 W
+2026-11-12T21:35:32 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.32 W
+2026-11-12T21:40:35 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.17 W
+2026-11-12T21:45:38 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.01 W
+2026-11-12T21:50:41 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.33 W
+2026-11-12T21:55:43 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.98 W
+2026-11-12T22:00:46 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.18 W
+2026-11-12T22:05:49 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.16 W
+2026-11-12T22:10:51 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.18 W
+2026-11-12T22:15:54 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 2 %, 20.10 W
+2026-11-12T22:20:56 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.11 W
+2026-11-12T22:25:59 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.54 W
+2026-11-12T22:31:01 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.50 W
+2026-11-12T22:36:04 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.32 W
+2026-11-12T22:41:06 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.39 W
+2026-11-12T22:46:09 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.38 W
+2026-11-12T22:51:12 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.56 W
+2026-11-12T22:56:15 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 2 %, 20.56 W
+2026-11-12T23:01:17 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.94 W
+2026-11-12T23:06:20 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.06 W
+2026-11-12T23:11:23 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.14 W
+2026-11-12T23:16:26 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.35 W
+2026-11-12T23:21:28 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.36 W
+2026-11-12T23:26:31 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.61 W
+2026-11-12T23:31:35 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 2 %, 19.87 W
+2026-11-12T23:36:38 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.86 W
+2026-11-12T23:41:42 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.04 W
+2026-11-12T23:46:45 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.18 W
+2026-11-12T23:51:47 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 20.28 W
+2026-11-12T23:56:50 alive, tasks: Adri optim ixxv095 nocfd, cpu 0 %, gpu 0 %, 19.98 W
+2026-11-13T00:01:52 alive, tasks: , cpu 0 %, gpu 0 %, 20.56 W
+2026-11-13T00:06:54 alive, tasks: , cpu 0 %, gpu 0 %, 21.27 W
+2026-11-13T00:11:56 alive, tasks: , cpu 0 %, gpu 0 %, 21.50 W
+2026-11-13T00:12:57 arrêté : plus aucune tâche Adri* en cours depuis 15 min
+2026-11-13T09:29:10 start (pid 16184, until 2026-11-15T09:29:10)
+2026-11-13T09:29:11 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 115.82 W
+2026-11-13T09:34:15 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 19.98 W
+2026-11-13T09:39:19 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.43 W
+2026-11-13T09:44:24 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 19.85 W
+2026-11-13T09:49:30 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.20 W
+2026-11-13T09:54:33 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.06 W
+2026-11-13T09:59:38 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.43 W
+2026-11-13T10:04:42 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.61 W
+2026-11-13T10:09:46 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 19.98 W
+2026-11-13T10:14:49 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.05 W
+2026-11-13T10:19:53 alive, tasks: Adri validation nuit, cpu 0 %, gpu 7 %, 21.06 W
+2026-11-13T10:24:57 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.25 W
+2026-11-13T10:30:01 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.51 W
+2026-11-13T10:35:05 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.30 W
+2026-11-13T10:40:09 alive, tasks: Adri validation nuit, cpu 0 %, gpu 7 %, 20.60 W
+2026-11-13T10:45:13 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 19.72 W
+2026-11-13T10:50:17 alive, tasks: Adri validation nuit, cpu 0 %, gpu 3 %, 20.15 W
+2026-11-13T10:55:20 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.53 W
+2026-11-13T11:00:24 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 19.80 W
+2026-11-13T11:05:28 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.44 W
+2026-11-13T11:10:32 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.18 W
+2026-11-13T11:15:36 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.48 W
+2026-11-13T11:20:40 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.63 W
+2026-11-13T11:25:44 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.50 W
+2026-11-13T11:30:50 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.50 W
+2026-11-13T11:35:55 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.82 W
+2026-11-13T11:40:58 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.37 W
+2026-11-13T11:46:02 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.40 W
+2026-11-13T11:51:06 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.36 W
+2026-11-13T11:56:10 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.50 W
+2026-11-13T12:01:13 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 19.82 W
+2026-11-13T12:06:17 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.38 W
+2026-11-13T12:11:22 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.01 W
+2026-11-13T12:16:25 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.16 W
+2026-11-13T12:21:29 alive, tasks: Adri validation nuit, cpu 0 %, gpu 0 %, 20.06 W
+2026-11-13T12:26:33 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 19.94 W
+2026-11-13T12:31:36 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 19.92 W
+2026-11-13T12:36:39 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.38 W
+2026-11-13T12:41:43 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.71 W
+2026-11-13T12:46:46 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 4 %, 20.88 W
+2026-11-13T12:51:50 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.27 W
+2026-11-13T12:56:54 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.13 W
+2026-11-13T13:01:57 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.33 W
+2026-11-13T13:07:01 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 19.92 W
+2026-11-13T13:12:04 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.42 W
+2026-11-13T13:17:08 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 19.82 W
+2026-11-13T13:22:12 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.11 W
+2026-11-13T13:27:15 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.13 W
+2026-11-13T13:32:18 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.06 W
+2026-11-13T13:37:20 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.22 W
+2026-11-13T13:42:23 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 2 %, 20.35 W
+2026-11-13T13:47:25 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.20 W
+2026-11-13T13:52:28 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 4 %, 20.74 W
+2026-11-13T13:57:30 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.63 W
+2026-11-13T14:02:33 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.59 W
+2026-11-13T14:07:36 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 21.14 W
+2026-11-13T14:12:38 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.50 W
+2026-11-13T14:17:41 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.55 W
+2026-11-13T14:22:43 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.31 W
+2026-11-13T14:27:46 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.66 W
+2026-11-13T14:32:49 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.59 W
+2026-11-13T14:37:51 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.65 W
+2026-11-13T14:42:54 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.56 W
+2026-11-13T14:47:56 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.97 W
+2026-11-13T14:53:00 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 2 %, 20.88 W
+2026-11-13T14:58:04 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 6 %, 20.75 W
+2026-11-13T15:03:08 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 20.64 W
+2026-11-13T15:08:12 alive, tasks: Adri hugo profile, Adri validation nuit, cpu 0 %, gpu 0 %, 21.09 W
+2026-11-13T15:13:15 alive, tasks: Adri hugo profile, cpu 0 %, gpu 0 %, 20.01 W
+2026-11-13T15:18:18 alive, tasks: Adri hugo profile, cpu 0 %, gpu 0 %, 20.89 W
+2026-11-13T15:23:20 alive, tasks: Adri hugo profile, cpu 0 %, gpu 0 %, 20.59 W
+2026-11-13T15:28:23 alive, tasks: Adri hugo profile, cpu 0 %, gpu 0 %, 20.83 W
+2026-11-13T15:33:25 alive, tasks: Adri hugo profile, cpu 0 %, gpu 0 %, 20.31 W
+2026-11-13T15:38:28 alive, tasks: Adri hugo profile, cpu 0 %, gpu 0 %, 20.05 W
+2026-11-13T15:43:30 alive, tasks: Adri hugo profile, cpu 0 %, gpu 0 %, 19.83 W
+2026-11-13T15:48:33 alive, tasks: , cpu 0 %, gpu 0 %, 19.66 W
+2026-11-13T15:53:35 alive, tasks: , cpu 0 %, gpu 0 %, 20.33 W
+2026-11-13T15:58:37 alive, tasks: , cpu 0 %, gpu 0 %, 23.05 W
+2026-11-13T16:02:39 arrêté : plus aucune tâche Adri* en cours depuis 15 min
+2026-11-16T12:31:44 start (pid 21452, until 2026-11-18T12:31:44)
+2026-11-16T12:31:45 alive, tasks: Adri e5 validation, cpu 0 %, gpu 96 %, 349.58 W
+2026-11-16T12:36:48 alive, tasks: Adri e5 validation, cpu 0 %, gpu 93 %, 347.66 W
+2026-11-16T12:41:50 alive, tasks: Adri e5 validation, cpu 0 %, gpu 92 %, 347.55 W
+2026-11-16T12:46:53 alive, tasks: , cpu 0 %, gpu 95 %, 349.51 W
+2026-11-16T12:51:55 alive, tasks: , cpu 0 %, gpu 91 %, 346.92 W
+2026-11-16T12:56:58 alive, tasks: , cpu 0 %, gpu 94 %, 348.09 W
+2026-11-16T13:01:00 arrêté : plus aucune tâche Adri* en cours depuis 15 min
+2026-11-16T13:51:24 start (pid 29596, until 2026-11-18T13:51:24)
+2026-11-16T13:51:25 alive, tasks: Adri s4 shape, cpu 0 %, gpu 0 %, 114.83 W
+2026-11-16T13:56:28 alive, tasks: Adri s4 shape, cpu 0 %, gpu 0 %, 19.69 W
+2026-11-16T14:01:30 alive, tasks: Adri s4 shape, cpu 0 %, gpu 0 %, 19.76 W
+2026-11-16T14:06:32 alive, tasks: Adri s4 shape, cpu 0 %, gpu 0 %, 19.64 W
+2026-11-16T14:11:35 alive, tasks: Adri s4 shape, cpu 0 %, gpu 0 %, 19.83 W
+2026-11-16T14:16:37 alive, tasks: Adri s4 shape, cpu 0 %, gpu 0 %, 19.24 W
+2026-11-16T14:21:39 alive, tasks: Adri s4 shape, cpu 0 %, gpu 0 %, 19.49 W
+2026-11-16T14:26:42 alive, tasks: , cpu 0 %, gpu 0 %, 20.25 W
+2026-11-16T14:31:44 alive, tasks: , cpu 0 %, gpu 0 %, 20.82 W
+2026-11-16T14:36:46 arrêté : plus aucune tâche Adri* en cours depuis 15 min
+2026-11-16T14:49:05 start (pid 29960, until 2026-11-18T14:49:05)
+2026-11-16T14:49:06 alive, tasks: Adri e6 validation, cpu 0 %, gpu 2 %, 118.80 W
+2026-11-16T14:54:09 alive, tasks: Adri e6 validation, Adri v2 shape vpp, cpu 0 %, gpu 0 %, 19.20 W
+2026-11-16T14:59:12 alive, tasks: Adri e6 validation, Adri v2 shape vpp, cpu 0 %, gpu 0 %, 19.87 W
+2026-11-16T15:04:14 alive, tasks: Adri e6 validation, Adri v2 shape vpp, cpu 0 %, gpu 0 %, 71.22 W
+2026-11-16T15:09:17 alive, tasks: Adri e6 validation, Adri v2 shape vpp, cpu 0 %, gpu 0 %, 19.26 W
+2026-11-16T15:14:20 alive, tasks: Adri v2 shape vpp, cpu 0 %, gpu 0 %, 19.14 W
+2026-11-16T15:19:22 alive, tasks: Adri v2 shape vpp, cpu 0 %, gpu 0 %, 19.27 W
+2026-11-16T15:24:25 alive, tasks: Adri v2 shape vpp, cpu 0 %, gpu 0 %, 19.55 W
+2026-11-16T15:29:27 alive, tasks: Adri v2 shape vpp, cpu 0 %, gpu 6 %, 19.32 W
+2026-11-16T15:34:30 alive, tasks: Adri v3 shape avl, cpu 0 %, gpu 0 %, 19.45 W

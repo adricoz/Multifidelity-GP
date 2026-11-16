@@ -1,0 +1,81 @@
+{
+ "sections": {
+  "MC2 fichier CFD (MC2_60_6101_1_re5M.xf)": {
+   "t_max": 0.12683366672312085,
+   "x_tmax": 0.3085,
+   "t_at_0.3": 0.12676489126658502,
+   "ixx": 7.953371630600582e-05,
+   "ixx_v": 0.0012541420328031469,
+   "a": 7.41637479866888e-05,
+   "b": 5.369968319317023e-06,
+   "camber_max": 0.033222553538251806,
+   "x_camber_max": 0.5135
+  },
+  "MC2 ancre PCA (Kulfan, section actuelle de l'optim)": {
+   "t_max": 0.12250167688288359,
+   "x_tmax": 0.2665,
+   "t_at_0.3": 0.12175538322767823,
+   "ixx": 6.71744083444622e-05,
+   "ixx_v": 0.0010967100215074372,
+   "a": 6.203040259110883e-05,
+   "b": 5.1440057533533705e-06,
+   "camber_max": 0.041622716605118085,
+   "x_camber_max": 0.3335
+  },
+  "best 686f (run 1245)": {
+   "t_max": 0.12467399760372273,
+   "x_tmax": 0.3335,
+   "t_at_0.3": 0.12369360345026814,
+   "ixx": 6.520945579031206e-05,
+   "ixx_v": 0.0010460794880032774,
+   "a": 6.305568035737276e-05,
+   "b": 2.1537754329393048e-06,
+   "camber_max": 0.015824525627820017,
+   "x_camber_max": 0.622
+  }
+ },
+ "thresholds": {
+  "(a) seuil absolu de l'optim = 0.95 x Ixx/v(ancre)": 0.0010418745204320652,
+  "(b) 0.95 x Ixx/v(fichier MC2)": 0.0011914349311629895
+ },
+ "equivalents": {
+  "(a) seuil absolu de l'optim = 0.95 x Ixx/v(ancre) | forme MC2 fichier CFD (MC2_60_6101_1_re5M.xf)": {
+   "ixx_v_target": 0.0010418745204320652,
+   "f": 0.904705328713368,
+   "t_max_equivalent": 0.1147470941446628,
+   "x_tmax": 0.3085
+  },
+  "(a) seuil absolu de l'optim = 0.95 x Ixx/v(ancre) | forme MC2 ancre PCA (Kulfan, section actuelle de l'optim)": {
+   "ixx_v_target": 0.0010418745204320652,
+   "f": 0.9725500714564337,
+   "t_max_equivalent": 0.11913901460598139,
+   "x_tmax": 0.2665
+  },
+  "(b) 0.95 x Ixx/v(fichier MC2) | forme MC2 fichier CFD (MC2_60_6101_1_re5M.xf)": {
+   "ixx_v_target": 0.0011914349311629895,
+   "f": 0.9728204634809214,
+   "t_max_equivalent": 0.12338638644657116,
+   "x_tmax": 0.3085
+  },
+  "(b) 0.95 x Ixx/v(fichier MC2) | forme MC2 ancre PCA (Kulfan, section actuelle de l'optim)": {
+   "ixx_v_target": 0.0011914349311629895,
+   "f": 1.0457219797036186,
+   "t_max_equivalent": 0.12810269606698205,
+   "x_tmax": 0.2665
+  }
+ },
+ "status": {
+  "MC2 fichier CFD (MC2_60_6101_1_re5M.xf)": {
+   "(a) seuil absolu de l'optim = 0.95 x Ixx/v(ancre)": true,
+   "(b) 0.95 x Ixx/v(fichier MC2)": true
+  },
+  "MC2 ancre PCA (Kulfan, section actuelle de l'optim)": {
+   "(a) seuil absolu de l'optim = 0.95 x Ixx/v(ancre)": true,
+   "(b) 0.95 x Ixx/v(fichier MC2)": false
+  },
+  "best 686f (run 1245)": {
+   "(a) seuil absolu de l'optim = 0.95 x Ixx/v(ancre)": true,
+   "(b) 0.95 x Ixx/v(fichier MC2)": false
+  }
+ }
+}

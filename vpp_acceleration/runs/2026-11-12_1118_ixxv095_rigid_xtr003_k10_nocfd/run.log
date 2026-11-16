@@ -1,0 +1,2082 @@
+11:18:15 [  0.0 min] run folder C:\Users\SIM\Desktop\Code-Adri\Multifidelity-GP-Clean\vpp_acceleration\runs\2026-11-12_1118_ixxv095_rigid_xtr003_k10_nocfd
+11:18:15 [  0.0 min] search space: runs/2026-11-11_1054_section_pca_convex_ixxv095, box C_envelope, k = 10 through the current section, Ixx/v >= 1.0419e-03, Ixx >= 0.0000e+00 (0 = no Ixx limit)
+11:18:15 [  0.0 min] PCA: rank 16, k = 10 modes carry 99.89 % of the geometric variance
+11:18:15 [  0.0 min] start of the search: current_section
+11:33:37 [ 15.4 min] start design: level 1 256 ok / 256, level 2 56 ok / 64
+11:33:51 [ 15.6 min] batch 0: hyperparameters refitted on 312 points
+11:35:21 [ 17.1 min] speed sensitivities: 6 failed solves, previous values kept
+11:35:21 [ 17.1 min] speed sensitivities dV/dC (rows = conditions): [[ 40.88  -1.37   0.09   0.02   0.05  -0.17]
+ [ 30.15  -1.47   0.14   0.     0.05  -0.15]
+ [ 39.77  -2.18   0.4   -0.02   0.08  -0.2 ]
+ [ 76.07  -3.9    1.72  -0.07   0.19  -0.37]
+ [ 31.32  -0.97   0.09   0.01   0.04  -0.13]
+ [ 32.72  -1.37   0.22  -0.01   0.05  -0.14]
+ [ 54.39  -2.29   0.88  -0.04   0.12  -0.24]
+ [158.22  -4.89   5.85  -0.2    0.26  -0.63]
+ [ 29.56  -0.78   0.1    0.01   0.04  -0.1 ]
+ [ 37.28  -1.22   0.35  -0.02   0.07  -0.13]
+ [ 81.23  -2.34   1.89  -0.07   0.17  -0.28]
+ [176.79   0.43   9.3    3.45   0.29  -0.33]
+ [ 29.85  -0.52   0.13   0.     0.04  -0.07]
+ [ 46.02  -0.84   0.58  -0.03   0.09  -0.09]
+ [142.57  -1.18   4.59  -0.14   0.22  -0.17]
+ [111.44  -0.35   5.62   2.5    0.37  -0.06]
+ [ 31.56   0.16   0.17  -0.     0.05   0.02]
+ [ 59.51   1.06   0.97  -0.05   0.13   0.19]
+ [223.74   7.23   8.8   -0.31   0.34   0.9 ]
+ [109.13   2.6    6.82   3.45   0.43   0.35]
+ [ 31.4    0.49   0.16  -0.     0.05   0.06]
+ [ 57.55   2.4    0.92  -0.06   0.13   0.37]
+ [221.97  10.85   8.7   -0.3    0.38   1.41]
+ [116.79   3.79   7.96   4.09   0.49   0.5 ]
+ [ 30.8    0.68   0.15  -0.     0.05   0.09]
+ [ 52.28   3.23   0.78  -0.05   0.13   0.48]
+ [204.63  12.91   7.72  -0.25   0.39   1.72]
+ [130.68   4.72   9.21   4.8    0.58   0.62]
+ [ 29.77   0.84   0.12  -0.     0.05   0.11]
+ [ 43.42   3.82   0.55  -0.04   0.12   0.55]
+ [160.76  15.38   5.43  -0.19   0.4    2.11]
+ [335.01  25.49  19.95  -0.89   0.33   2.93]
+ [ 38.86   0.12   0.36  -0.02   0.07   0.03]
+ [611.38  26.62  31.27  -4.93   0.06   3.42]
+ [ 31.64   1.86   0.2   -0.02   0.07   0.27]
+ [230.59  21.02   9.56  -0.31   0.47   2.83]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.98  -0.26   0.09   0.01   0.04  -0.07]
+ [ 30.42   0.25   0.08   0.01   0.05  -0.01]
+ [ 31.76   0.51   0.07   0.01   0.05   0.  ]
+ [108.14  -5.89   3.1    1.66   0.28  -0.45]
+ [106.73   1.39   6.16   3.33   0.46   0.19]
+ [214.1  -12.9   -7.43   8.81   0.66   0.85]
+ [345.54  30.1   21.81  -0.83   0.35   3.52]
+ [ 33.41  -1.41   0.08   0.02   0.05  -0.15]
+ [ 41.88  -2.63   0.44  -0.02   0.09  -0.22]
+ [ 27.9    1.57   0.09  -0.     0.06   0.21]
+ [ 51.44   8.8    1.34  -0.07   0.15   1.25]
+ [ 98.15   0.18   2.42  -0.1    0.18   0.05]]
+11:36:04 [ 17.8 min] update 0: incumbent speed 13.2056 kt (new, gain 0.2598 kt), candidates [12.946 13.206 13.192 13.12 ], on 99 % of the probability, radius 1.50, region 0, 133 s
+11:42:27 [ 24.2 min] batch 0: 16 choices (levels 1/2: 12/4), design 268/60, selection 161.7 s (update 133 s), 525.5 s
+11:43:12 [ 24.9 min] update 1: incumbent speed 13.1979 kt (kept, gain 0.0000 kt), candidates [13.198 13.113 13.194 13.187], on 99 % of the probability, radius 1.05, region 0, 45 s
+11:49:33 [ 31.3 min] batch 1: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+11:49:33 [ 31.3 min] batch 1: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+11:49:33 [ 31.3 min] batch 1: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+11:49:33 [ 31.3 min] batch 1: 16 choices (levels 1/2: 11/5), design 281/62, selection 65.3 s (update 45 s), 426.2 s
+11:50:21 [ 32.1 min] update 2: incumbent speed 13.1971 kt (kept, gain 0.0000 kt), candidates [13.197 13.176 13.172 13.185], on 99 % of the probability, radius 0.73, region 0, 48 s
+11:56:43 [ 38.5 min] batch 2: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+11:56:43 [ 38.5 min] batch 2: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+11:56:43 [ 38.5 min] batch 2: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+11:56:43 [ 38.5 min] batch 2: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+11:56:43 [ 38.5 min] batch 2: 16 choices (levels 1/2: 8/8), design 294/66, selection 68.6 s (update 48 s), 429.6 s
+11:57:37 [ 39.4 min] speed sensitivities: 6 failed solves, previous values kept
+11:57:37 [ 39.4 min] speed sensitivities: 93 values more than 30 % from the median of the last 3 evaluations, median kept
+11:57:37 [ 39.4 min] speed sensitivities dV/dC (rows = conditions): [[ 43.47  -1.82   0.08   0.03   0.05  -0.18]
+ [ 30.15  -1.67   0.12   0.     0.04  -0.14]
+ [ 38.89  -2.42   0.37  -0.02   0.07  -0.18]
+ [ 71.15  -4.3    1.54  -0.06   0.16  -0.32]
+ [ 31.75  -1.26   0.08   0.01   0.04  -0.13]
+ [ 32.38  -1.6    0.21  -0.     0.05  -0.13]
+ [ 52.38  -2.6    0.82  -0.04   0.11  -0.21]
+ [142.22  -5.56   5.15  -0.15   0.22  -0.53]
+ [ 29.62  -1.06   0.1    0.01   0.04  -0.11]
+ [ 36.72  -1.48   0.33  -0.01   0.06  -0.13]
+ [ 77.29  -2.75   1.77  -0.06   0.15  -0.25]
+ [200.66  -3.26  10.06   1.47   0.2   -0.51]
+ [ 29.8   -0.81   0.13   0.     0.04  -0.08]
+ [ 45.49  -1.2    0.57  -0.03   0.08  -0.1 ]
+ [137.44  -2.3    4.48  -0.13   0.19  -0.23]
+ [121.77  -2.31   6.64   2.5    0.3   -0.28]
+ [ 32.11  -0.27   0.18  -0.     0.05  -0.02]
+ [ 62.24   0.01   1.06  -0.05   0.12   0.05]
+ [234.07   2.99   9.6   -0.3    0.23   0.34]
+ [128.16   0.44   8.54   3.72   0.22   0.03]
+ [ 32.48  -0.01   0.18  -0.     0.05   0.01]
+ [ 63.16   0.83   1.1   -0.05   0.12   0.15]
+ [242.11   5.57   9.93  -0.31   0.25   0.67]
+ [149.53  -0.24  10.47   4.78   0.35   0.09]
+ [ 32.22   0.14   0.18  -0.     0.05   0.03]
+ [ 59.48   1.36   0.99  -0.05   0.12   0.22]
+ [230.85   6.98   9.13  -0.26   0.25   0.88]
+ [ 65.34   2.36   4.61   2.4    0.29   0.31]
+ [ 31.42   0.28   0.16  -0.     0.05   0.04]
+ [ 51.45   1.8    0.75  -0.04   0.11   0.27]
+ [194.45   8.46   6.99  -0.19   0.26   1.12]
+ [379.98  18.37  23.79  -1.09  -0.15   1.92]
+ [ 39.51  -0.4    0.38  -0.02   0.07  -0.02]
+ [498.2   13.38  26.75  -3.19  -0.03   1.55]
+ [ 35.35   0.85   0.27  -0.01   0.06   0.13]
+ [257.63  12.53  11.06  -0.35   0.28   1.6 ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.9   -0.59   0.09   0.01   0.04  -0.08]
+ [ 30.69  -0.11   0.1    0.01   0.04  -0.03]
+ [ 32.01   0.14   0.08   0.01   0.04  -0.02]
+ [112.51  -5.85   2.77   1.59   0.21  -0.46]
+ [122.63  -0.64   7.61   3.54   0.29  -0.11]
+ [107.05  -6.45  -3.72   4.4    0.33   0.42]
+ [172.77  15.05  10.91  -0.42   0.17   1.76]
+ [ 34.61  -1.67   0.07   0.02   0.04  -0.15]
+ [ 40.82  -2.84   0.41  -0.02   0.08  -0.19]
+ [ 30.87   0.86   0.15  -0.     0.05   0.12]
+ [114.3    6.79   3.37  -0.1    0.18   0.95]
+ [ 98.85  -0.91   2.51  -0.09   0.17  -0.06]]
+11:58:40 [ 40.4 min] update 3: incumbent speed 13.2029 kt (new, gain 0.0071 kt), candidates [13.196 13.181 13.203 13.196], on 99 % of the probability, radius 1.10, region 0, 117 s
+12:05:00 [ 46.7 min] batch 3: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:05:00 [ 46.7 min] batch 3: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:05:00 [ 46.7 min] batch 3: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:05:00 [ 46.7 min] batch 3: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:05:00 [ 46.7 min] batch 3: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:05:00 [ 46.7 min] batch 3: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:05:00 [ 46.7 min] batch 3: 16 choices (levels 1/2: 7/9), design 309/69, selection 135.6 s (update 117 s), 496.8 s
+12:05:53 [ 47.6 min] update 4: incumbent speed 13.2045 kt (kept, gain 0.0000 kt), candidates [13.205 13.187 13.187 13.2  ], on 99 % of the probability, radius 0.77, region 0, 53 s
+12:12:17 [ 54.0 min] batch 4: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:12:17 [ 54.0 min] batch 4: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:12:17 [ 54.0 min] batch 4: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:12:17 [ 54.0 min] batch 4: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:12:17 [ 54.0 min] batch 4: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:12:17 [ 54.0 min] batch 4: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:12:17 [ 54.0 min] batch 4: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:12:17 [ 54.0 min] batch 4: 16 choices (levels 1/2: 6/10), design 322/72, selection 75.5 s (update 53 s), 437.0 s
+12:12:31 [ 54.3 min] batch 5: hyperparameters refitted on 394 points
+12:13:48 [ 55.6 min] update 5: incumbent speed 13.2024 kt (kept, gain 0.0000 kt), candidates [13.202 13.193 13.182 13.179], on 99 % of the probability, radius 0.54, region 0, 77 s
+12:20:20 [ 62.1 min] batch 5: 16 choices (levels 1/2: 9/7), design 334/79, selection 119.2 s (update 77 s), 483.0 s
+12:21:25 [ 63.2 min] speed sensitivities: 6 failed solves, previous values kept
+12:21:25 [ 63.2 min] speed sensitivities: 4 values more than 30 % from the median of the last 3 evaluations, median kept
+12:21:25 [ 63.2 min] speed sensitivities dV/dC (rows = conditions): [[ 45.99  -2.25   0.07   0.03   0.05  -0.18]
+ [ 30.16  -1.87   0.11   0.     0.04  -0.13]
+ [ 38.07  -2.66   0.34  -0.01   0.06  -0.16]
+ [ 66.44  -4.69   1.36  -0.05   0.14  -0.26]
+ [ 32.17  -1.55   0.07   0.02   0.04  -0.13]
+ [ 32.06  -1.82   0.19  -0.     0.04  -0.13]
+ [ 50.46  -2.91   0.76  -0.03   0.09  -0.18]
+ [126.57  -6.24   4.47  -0.11   0.17  -0.43]
+ [ 29.67  -1.33   0.09   0.01   0.04  -0.11]
+ [ 36.19  -1.73   0.31  -0.01   0.06  -0.12]
+ [ 73.51  -3.17   1.66  -0.06   0.13  -0.22]
+ [224.53  -6.88  10.82  -0.5    0.1   -0.69]
+ [ 29.76  -1.1    0.12   0.     0.04  -0.09]
+ [ 45.01  -1.55   0.56  -0.03   0.08  -0.11]
+ [132.6   -3.41   4.39  -0.11   0.16  -0.3 ]
+ [132.04  -4.27   5.87   2.5    0.23  -0.5 ]
+ [ 32.66  -0.69   0.19  -0.     0.05  -0.06]
+ [ 64.97  -1.02   1.16  -0.05   0.11  -0.09]
+ [244.4   -1.21  10.4   -0.29   0.12  -0.22]
+ [143.05  -1.71   6.82   3.8    0.12  -0.25]
+ [ 33.55  -0.51   0.21  -0.     0.05  -0.05]
+ [ 68.77  -0.72   1.27  -0.05   0.12  -0.06]
+ [262.25   0.31  11.15  -0.31   0.11  -0.07]
+ [182.27  -1.85  12.99   5.48   0.21  -0.33]
+ [ 33.63  -0.4    0.21  -0.     0.05  -0.04]
+ [ 66.69  -0.49   1.19  -0.05   0.11  -0.04]
+ [257.07   1.07  10.54  -0.28   0.11   0.03]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 33.08  -0.27   0.19  -0.     0.05  -0.03]
+ [ 59.48  -0.21   0.95  -0.04   0.1   -0.01]
+ [228.13   1.54   8.55  -0.19   0.13   0.12]
+ [424.96  11.25  27.63  -1.29  -0.64   0.9 ]
+ [ 40.16  -0.91   0.4   -0.02   0.07  -0.07]
+ [385.02   0.2   22.23  -1.46  -0.13  -0.31]
+ [ 39.06  -0.15   0.35  -0.01   0.06  -0.01]
+ [284.68   4.04  12.55  -0.39   0.08   0.37]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.81  -0.91   0.09   0.01   0.04  -0.09]
+ [ 30.97  -0.48   0.11   0.01   0.04  -0.05]
+ [ 32.25  -0.23   0.1    0.01   0.04  -0.04]
+ [116.89  -5.81   2.44   1.52   0.15  -0.47]
+ [136.57  -2.68   6.16   3.63   0.2   -0.35]
+ [  0.    -0.    -0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 35.8   -1.91   0.06   0.02   0.04  -0.14]
+ [ 39.84  -3.06   0.38  -0.01   0.07  -0.17]
+ [ 33.84   0.14   0.21  -0.     0.05   0.02]
+ [177.15   4.78   5.41  -0.13   0.2    0.64]
+ [ 99.56  -1.97   2.59  -0.08   0.16  -0.17]]
+12:22:28 [ 64.2 min] update 6: incumbent speed 13.2094 kt (new, gain 0.0061 kt), candidates [13.203 13.162 13.207 13.209], on 99 % of the probability, radius 0.81, region 0, 128 s
+12:28:55 [ 70.7 min] batch 6: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:28:55 [ 70.7 min] batch 6: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:28:55 [ 70.7 min] batch 6: 16 choices (levels 1/2: 10/6), design 345/83, selection 154.4 s (update 128 s), 515.1 s
+12:30:17 [ 72.0 min] update 7: incumbent speed 13.2135 kt (kept, gain 0.0000 kt), candidates [13.214 13.142 12.986 13.2  ], on 99 % of the probability, radius 0.57, region 0, 82 s
+12:36:56 [ 78.7 min] batch 7: 16 choices (levels 1/2: 12/4), design 357/87, selection 116.8 s (update 82 s), 481.1 s
+12:38:16 [ 80.0 min] update 8: incumbent speed 13.2132 kt (kept, gain 0.0000 kt), candidates [13.213 13.178 13.166 13.028], on 99 % of the probability, radius 0.40, region 0, 80 s
+12:45:00 [ 86.7 min] batch 8: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:45:00 [ 86.7 min] batch 8: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+12:45:00 [ 86.7 min] batch 8: 16 choices (levels 1/2: 13/3), design 370/88, selection 123.2 s (update 80 s), 484.2 s
+12:45:54 [ 87.6 min] speed sensitivities: 6 failed solves, previous values kept
+12:45:54 [ 87.6 min] speed sensitivities: 81 values more than 30 % from the median of the last 3 evaluations, median kept
+12:45:54 [ 87.6 min] speed sensitivities dV/dC (rows = conditions): [[ 45.99  -2.25   0.07   0.03   0.05  -0.18]
+ [ 30.18  -1.87   0.11   0.     0.04  -0.13]
+ [ 38.07  -2.66   0.34  -0.01   0.06  -0.16]
+ [ 66.44  -4.69   1.36  -0.05   0.14  -0.26]
+ [ 32.17  -1.55   0.07   0.02   0.04  -0.13]
+ [ 32.06  -1.82   0.19  -0.     0.04  -0.13]
+ [ 50.46  -2.91   0.76  -0.03   0.09  -0.18]
+ [126.57  -6.24   4.47  -0.11   0.17  -0.43]
+ [ 29.67  -1.33   0.09   0.01   0.04  -0.11]
+ [ 36.19  -1.73   0.31  -0.01   0.06  -0.12]
+ [ 73.51  -3.17   1.66  -0.06   0.13  -0.22]
+ [224.53  -6.88  10.82  -0.5    0.1   -0.69]
+ [ 29.76  -1.1    0.12   0.     0.04  -0.09]
+ [ 45.01  -1.55   0.56  -0.03   0.08  -0.11]
+ [132.6   -3.41   4.39  -0.11   0.16  -0.3 ]
+ [132.04  -4.27   7.66   2.51   0.23  -0.5 ]
+ [ 32.66  -0.69   0.19  -0.     0.05  -0.06]
+ [ 65.08  -1.02   1.16  -0.05   0.11  -0.09]
+ [244.59  -1.21  10.4   -0.29   0.12  -0.22]
+ [143.05  -1.71   7.95   3.8    0.12  -0.25]
+ [ 33.55  -0.51   0.21  -0.     0.05  -0.05]
+ [ 68.77  -0.72   1.27  -0.05   0.12  -0.06]
+ [262.25   0.31  11.15  -0.32   0.11  -0.07]
+ [182.27  -1.85  12.99   5.48   0.21  -0.33]
+ [ 33.63  -0.4    0.21  -0.     0.05  -0.04]
+ [ 66.69  -0.49   1.19  -0.05   0.11  -0.04]
+ [257.07   1.07  10.54  -0.28   0.11   0.03]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 33.08  -0.27   0.19  -0.     0.05  -0.03]
+ [ 59.48  -0.21   0.95  -0.04   0.1   -0.01]
+ [228.13   1.54   8.55  -0.19   0.13   0.12]
+ [424.96  11.25  27.63  -1.29  -0.64   0.9 ]
+ [ 40.19  -0.91   0.4   -0.02   0.07  -0.07]
+ [383.98   0.2   22.22  -1.45  -0.13  -0.31]
+ [ 39.06  -0.15   0.35  -0.01   0.06  -0.01]
+ [284.68   4.04  12.55  -0.39   0.08   0.37]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.81  -0.91   0.09   0.01   0.04  -0.09]
+ [ 30.97  -0.48   0.11   0.01   0.04  -0.05]
+ [ 32.25  -0.23   0.1    0.01   0.04  -0.04]
+ [116.89  -5.77   2.26   1.52   0.15  -0.47]
+ [136.57  -2.68   7.95   3.63   0.2   -0.35]
+ [  0.    -0.    -0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 35.8   -1.91   0.06   0.02   0.04  -0.14]
+ [ 39.84  -3.06   0.38  -0.01   0.07  -0.17]
+ [ 33.84   0.14   0.21  -0.     0.05   0.02]
+ [177.15   4.78   5.41  -0.13   0.2    0.64]
+ [ 99.8   -1.97   2.6   -0.08   0.16  -0.17]]
+12:47:14 [ 89.0 min] update 9: incumbent speed 13.2132 kt (kept, gain 0.0000 kt), candidates [13.213 12.971 13.104 13.038], on 99 % of the probability, radius 0.28, region 0, 133 s
+12:54:03 [ 95.8 min] batch 9: 16 choices (levels 1/2: 9/7), design 381/95, selection 226.3 s (update 133 s), 543.3 s
+12:55:42 [ 97.4 min] update 10: incumbent speed 13.2132 kt (kept, gain 0.0000 kt), candidates [13.213 13.093 12.96  13.035], on 99 % of the probability, radius 0.19, region 0, 98 s
+13:03:13 [105.0 min] batch 10: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:03:13 [105.0 min] batch 10: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:03:13 [105.0 min] batch 10: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:03:13 [105.0 min] batch 10: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:03:13 [105.0 min] batch 10: 16 choices (levels 1/2: 11/5), design 392/96, selection 187.3 s (update 98 s), 549.2 s
+13:04:32 [106.3 min] update 11: incumbent speed 13.2132 kt (kept, gain 0.0000 kt), candidates [13.213 13.182 13.016 13.188], on 99 % of the probability, radius 0.14, region 0, 79 s
+13:11:36 [113.4 min] batch 11: 16 choices (levels 1/2: 11/5), design 403/101, selection 140.7 s (update 79 s), 503.9 s
+13:12:10 [113.9 min] batch 12: hyperparameters refitted on 504 points
+13:13:00 [114.7 min] speed sensitivities: 6 failed solves, previous values kept
+13:13:00 [114.7 min] speed sensitivities: 7 values more than 30 % from the median of the last 3 evaluations, median kept
+13:13:00 [114.7 min] speed sensitivities dV/dC (rows = conditions): [[ 42.39  -1.78   0.08   0.02   0.05  -0.18]
+ [ 30.2   -1.68   0.12   0.     0.04  -0.14]
+ [ 39.13  -2.42   0.37  -0.02   0.07  -0.18]
+ [ 71.93  -4.29   1.56  -0.06   0.16  -0.31]
+ [ 31.61  -1.27   0.08   0.01   0.04  -0.13]
+ [ 32.48  -1.6    0.21  -0.01   0.05  -0.14]
+ [ 52.79  -2.57   0.83  -0.04   0.11  -0.21]
+ [143.52  -5.47   5.24  -0.15   0.22  -0.55]
+ [ 29.62  -1.08   0.1    0.01   0.04  -0.11]
+ [ 36.89  -1.48   0.33  -0.01   0.06  -0.14]
+ [ 78.25  -2.7    1.81  -0.06   0.15  -0.26]
+ [121.57  -4.35   6.19   1.85   0.25  -0.5 ]
+ [ 29.93  -0.85   0.13   0.     0.04  -0.09]
+ [ 45.96  -1.24   0.58  -0.03   0.09  -0.13]
+ [142.38  -2.51   4.7   -0.13   0.2   -0.33]
+ [124.65   0.33   7.97   2.56   0.32  -0.36]
+ [ 32.66  -0.38   0.19  -0.     0.05  -0.05]
+ [ 65.19  -0.49   1.15  -0.05   0.12  -0.05]
+ [250.05   1.7   10.3   -0.33   0.22   0.05]
+ [129.34   0.28   7.94   3.74   0.29   0.02]
+ [ 33.3   -0.16   0.2   -0.     0.05  -0.02]
+ [ 67.74   0.02   1.22  -0.05   0.12   0.02]
+ [260.12   4.    10.68  -0.35   0.22   0.35]
+ [145.01   1.03   9.29   4.64   0.41   0.12]
+ [ 33.17  -0.01   0.19  -0.     0.05  -0.  ]
+ [ 64.75   0.43   1.11  -0.05   0.11   0.08]
+ [249.04   5.07   9.86  -0.29   0.22   0.53]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 32.42   0.15   0.17  -0.     0.05   0.01]
+ [ 56.67   0.96   0.85  -0.04   0.1    0.15]
+ [214.24   5.9    7.71  -0.2    0.23   0.71]
+ [420.51  19.85  27.01  -1.26  -0.22   1.88]
+ [ 40.37  -0.58   0.4   -0.02   0.07  -0.06]
+ [126.95   3.75  12.82   5.08   0.24  -0.13]
+ [ 37.56   0.56   0.31  -0.02   0.06   0.09]
+ [270.22   9.78  11.52  -0.39   0.23   1.13]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.89  -0.62   0.09   0.01   0.04  -0.09]
+ [ 30.95  -0.16   0.1    0.01   0.04  -0.04]
+ [ 32.18   0.11   0.09   0.01   0.04  -0.03]
+ [113.96  -4.41   1.75   1.63   0.23  -0.52]
+ [124.11  -1.29   7.95   3.37   0.35  -0.12]
+ [  0.    -0.     0.     0.     0.     0.  ]
+ [422.17  22.83  27.47  -1.34  -0.25   2.26]
+ [ 34.38  -1.68   0.07   0.02   0.04  -0.15]
+ [ 41.12  -2.86   0.41  -0.02   0.08  -0.19]
+ [ 32.19   0.81   0.16  -0.     0.05   0.11]
+ [139.44  13.3    3.83  -0.14   0.33   1.82]
+ [103.12  -1.28   2.67  -0.09   0.17  -0.17]]
+13:14:33 [116.3 min] update 12: incumbent speed 13.2261 kt (new, gain 0.0133 kt), candidates [13.213 13.226 13.218 13.224], on 99 % of the probability, radius 0.20, region 0, 143 s
+13:21:25 [123.2 min] batch 12: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:21:25 [123.2 min] batch 12: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:21:25 [123.2 min] batch 12: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:21:25 [123.2 min] batch 12: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:21:25 [123.2 min] batch 12: 16 choices (levels 1/2: 10/6), design 415/103, selection 227.6 s (update 143 s), 588.7 s
+13:22:34 [124.3 min] update 13: incumbent speed 13.2298 kt (new, gain 0.0058 kt), candidates [13.224 13.211 13.23  13.23 ], on 99 % of the probability, radius 0.31, region 0, 69 s
+13:29:32 [131.3 min] batch 13: 16 choices (levels 1/2: 11/5), design 427/108, selection 121.6 s (update 69 s), 486.4 s
+13:31:05 [132.8 min] update 14: incumbent speed 13.2405 kt (new, gain 0.0110 kt), candidates [13.23  13.241 13.235 13.239], on 99 % of the probability, radius 0.46, region 0, 93 s
+13:37:50 [139.6 min] batch 14: 16 choices (levels 1/2: 10/6), design 439/114, selection 134.3 s (update 93 s), 498.9 s
+13:38:48 [140.5 min] speed sensitivities: 6 failed solves, previous values kept
+13:38:48 [140.5 min] speed sensitivities: 60 values more than 30 % from the median of the last 3 evaluations, median kept
+13:38:48 [140.5 min] speed sensitivities dV/dC (rows = conditions): [[ 42.39  -1.78   0.08   0.02   0.05  -0.18]
+ [ 30.2   -1.68   0.12   0.     0.04  -0.14]
+ [ 39.13  -2.42   0.37  -0.02   0.07  -0.18]
+ [ 71.93  -4.29   1.56  -0.06   0.16  -0.31]
+ [ 31.61  -1.27   0.08   0.01   0.04  -0.13]
+ [ 32.48  -1.6    0.21  -0.01   0.05  -0.14]
+ [ 52.79  -2.57   0.83  -0.04   0.11  -0.21]
+ [143.52  -5.47   5.24  -0.15   0.22  -0.55]
+ [ 29.62  -1.08   0.1    0.01   0.04  -0.11]
+ [ 36.89  -1.48   0.33  -0.01   0.06  -0.14]
+ [ 78.25  -2.7    1.81  -0.06   0.15  -0.26]
+ [121.57  -4.35   5.14   1.85   0.25  -0.5 ]
+ [ 29.93  -0.85   0.13   0.     0.04  -0.09]
+ [ 45.96  -1.24   0.58  -0.03   0.09  -0.13]
+ [142.38  -2.51   4.7   -0.13   0.2   -0.33]
+ [124.65   0.33   8.32   2.56   0.32  -0.36]
+ [ 32.66  -0.38   0.19  -0.     0.05  -0.05]
+ [ 65.19  -0.49   1.15  -0.05   0.12  -0.05]
+ [250.05   1.7   10.3   -0.33   0.22   0.05]
+ [129.34   0.28   7.94   3.74   0.29   0.02]
+ [ 33.3   -0.16   0.2   -0.     0.05  -0.02]
+ [ 67.74   0.02   1.22  -0.05   0.12   0.02]
+ [260.12   4.    10.68  -0.35   0.22   0.35]
+ [145.01   1.03   9.29   4.64   0.41   0.12]
+ [ 33.17  -0.01   0.19  -0.     0.05  -0.  ]
+ [ 64.75   0.43   1.11  -0.05   0.11   0.08]
+ [249.04   5.07   9.86  -0.29   0.22   0.53]
+ [  0.    -0.     0.     0.     0.     0.  ]
+ [ 32.42   0.15   0.17  -0.     0.05   0.01]
+ [ 56.67   0.96   0.85  -0.04   0.1    0.15]
+ [214.24   5.9    7.71  -0.2    0.23   0.71]
+ [420.51  19.85  27.01  -1.26  -0.22   1.88]
+ [ 40.37  -0.58   0.4   -0.02   0.07  -0.06]
+ [126.95   3.75  10.48   5.08   0.24  -0.13]
+ [ 37.56   0.56   0.31  -0.02   0.06   0.09]
+ [270.22   9.78  11.52  -0.39   0.23   1.13]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.89  -0.62   0.09   0.01   0.04  -0.09]
+ [ 30.95  -0.16   0.1    0.01   0.04  -0.04]
+ [ 32.18   0.11   0.09   0.01   0.04  -0.03]
+ [113.96  -4.41   1.75   1.63   0.23  -0.52]
+ [124.11  -1.29   7.95   3.37   0.35  -0.12]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [422.17  22.83  27.47  -1.34  -0.26   2.26]
+ [ 34.38  -1.68   0.07   0.02   0.04  -0.15]
+ [ 41.12  -2.86   0.41  -0.02   0.08  -0.19]
+ [ 32.19   0.81   0.16  -0.     0.05   0.11]
+ [139.44  13.3    3.83  -0.14   0.33   1.82]
+ [103.12  -1.28   2.67  -0.09   0.17  -0.17]]
+13:39:55 [141.7 min] update 15: incumbent speed 13.2433 kt (new, gain 0.0034 kt), candidates [13.24  13.228 13.243 13.243], on 99 % of the probability, radius 0.69, region 0, 124 s
+13:46:34 [148.3 min] batch 15: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:46:34 [148.3 min] batch 15: level 2 failed (SolverFailure: bdfoil_v1 avl: 2 strips or panels outside the monotone branch of )
+13:46:34 [148.3 min] batch 15: 16 choices (levels 1/2: 10/6), design 451/118, selection 159.3 s (update 124 s), 523.2 s
+13:47:23 [149.1 min] update 16: incumbent speed 13.2412 kt (kept, gain 0.0000 kt), candidates [13.241 13.222 13.234 13.235], on 99 % of the probability, radius 0.48, region 0, 49 s
+13:53:57 [155.7 min] batch 16: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:53:57 [155.7 min] batch 16: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:53:57 [155.7 min] batch 16: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:53:57 [155.7 min] batch 16: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:53:57 [155.7 min] batch 16: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:53:57 [155.7 min] batch 16: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+13:53:57 [155.7 min] batch 16: 16 choices (levels 1/2: 8/8), design 464/120, selection 82.5 s (update 49 s), 443.6 s
+13:55:53 [157.6 min] update 17: incumbent speed 13.2417 kt (kept, gain 0.0000 kt), candidates [13.242 13.237 13.226 13.237], on 99 % of the probability, radius 0.34, region 0, 115 s
+14:02:35 [164.3 min] batch 17: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:02:35 [164.3 min] batch 17: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:02:35 [164.3 min] batch 17: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:02:35 [164.3 min] batch 17: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:02:35 [164.3 min] batch 17: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:02:35 [164.3 min] batch 17: level 2 failed (SolverFailure: bdfoil_v1 avl: 2 strips or panels outside the monotone branch of )
+14:02:35 [164.3 min] batch 17: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:02:35 [164.3 min] batch 17: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:02:35 [164.3 min] batch 17: 16 choices (levels 1/2: 6/10), design 477/122, selection 156.3 s (update 115 s), 517.7 s
+14:03:28 [165.2 min] speed sensitivities: 6 failed solves, previous values kept
+14:03:28 [165.2 min] speed sensitivities: 23 values more than 30 % from the median of the last 3 evaluations, median kept
+14:03:28 [165.2 min] speed sensitivities dV/dC (rows = conditions): [[ 44.5   -2.07   0.08   0.03   0.05  -0.18]
+ [ 30.17  -1.79   0.11   0.     0.04  -0.13]
+ [ 38.42  -2.55   0.35  -0.01   0.06  -0.16]
+ [ 68.4   -4.51   1.44  -0.05   0.14  -0.27]
+ [ 31.94  -1.45   0.07   0.01   0.04  -0.13]
+ [ 32.19  -1.73   0.19  -0.     0.05  -0.13]
+ [ 51.27  -2.75   0.79  -0.03   0.1   -0.19]
+ [132.56  -5.87   4.74  -0.12   0.18  -0.46]
+ [ 29.64  -1.24   0.09   0.01   0.04  -0.11]
+ [ 36.42  -1.63   0.32  -0.01   0.06  -0.13]
+ [ 75.19  -2.96   1.71  -0.06   0.14  -0.23]
+ [135.33  -4.3    6.15   1.58   0.2   -0.57]
+ [ 29.82  -1.01   0.13   0.     0.04  -0.1 ]
+ [ 45.34  -1.43   0.57  -0.03   0.08  -0.12]
+ [136.35  -3.07   4.51  -0.11   0.17  -0.32]
+ [129.55  -2.89   8.32   2.54   0.28  -0.46]
+ [ 32.69  -0.6    0.19  -0.     0.05  -0.06]
+ [ 65.21  -0.87   1.16  -0.05   0.12  -0.09]
+ [248.04  -0.3   10.42  -0.3    0.16  -0.16]
+ [138.4   -4.63   6.04   3.8    0.2   -0.16]
+ [ 33.52  -0.41   0.21  -0.     0.05  -0.04]
+ [ 68.73  -0.53   1.26  -0.05   0.12  -0.05]
+ [263.59   1.44  11.06  -0.33   0.16   0.04]
+ [154.55  -1.14  10.29   5.51   0.38  -0.13]
+ [ 33.55  -0.28   0.2   -0.     0.05  -0.03]
+ [ 66.42  -0.27   1.17  -0.05   0.11  -0.02]
+ [256.49   2.27  10.38  -0.29   0.15   0.16]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 32.94  -0.15   0.19  -0.     0.05  -0.02]
+ [ 58.99   0.07   0.93  -0.04   0.1    0.03]
+ [225.65   2.75   8.34  -0.2    0.16   0.27]
+ [428.88  14.18  27.73  -1.31  -0.47   1.21]
+ [ 40.28  -0.81   0.4   -0.02   0.07  -0.07]
+ [134.48  -0.17   8.6    2.88   0.17  -0.28]
+ [ 38.77   0.03   0.34  -0.01   0.06   0.02]
+ [281.96   5.74  12.27  -0.4    0.13   0.58]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.83  -0.82   0.09   0.01   0.04  -0.09]
+ [ 30.98  -0.38   0.11   0.01   0.04  -0.05]
+ [ 32.25  -0.12   0.1    0.01   0.04  -0.04]
+ [115.84  -5.19   1.79   1.57   0.19  -0.49]
+ [132.23  -6.17   4.17   3.62   0.28  -0.28]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 31.56   1.58   1.58  -1.34  -0.25   1.38]
+ [ 35.22  -1.82   0.06   0.02   0.04  -0.14]
+ [ 40.27  -2.97   0.39  -0.02   0.07  -0.17]
+ [ 33.48   0.33   0.19  -0.     0.05   0.05]
+ [169.34   6.84   5.02  -0.14   0.24   0.94]
+ [101.18  -1.74   2.63  -0.08   0.16  -0.18]]
+14:04:50 [166.6 min] update 18: incumbent speed 13.2471 kt (new, gain 0.0053 kt), candidates [13.242 13.246 13.247 13.246], on 99 % of the probability, radius 0.51, region 0, 135 s
+14:11:33 [173.3 min] batch 18: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:11:33 [173.3 min] batch 18: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:11:33 [173.3 min] batch 18: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:11:33 [173.3 min] batch 18: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:11:33 [173.3 min] batch 18: 16 choices (levels 1/2: 10/6), design 489/124, selection 173.7 s (update 135 s), 537.8 s
+14:13:16 [175.0 min] update 19: incumbent speed 13.2478 kt (new, gain 0.0014 kt), candidates [13.246 13.247 13.247 13.248], on 99 % of the probability, radius 0.35, region 0, 103 s
+14:20:01 [181.8 min] batch 19: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:20:01 [181.8 min] batch 19: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:20:01 [181.8 min] batch 19: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:20:01 [181.8 min] batch 19: 16 choices (levels 1/2: 6/10), design 503/131, selection 146.6 s (update 103 s), 507.9 s
+14:20:57 [182.7 min] batch 20: hyperparameters refitted on 634 points
+14:22:35 [184.3 min] update 20: incumbent speed 13.2502 kt (new, gain 0.0022 kt), candidates [13.248 13.249 13.25  13.25 ], on 99 % of the probability, radius 0.53, region 0, 97 s
+14:29:09 [190.9 min] batch 20: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:29:09 [190.9 min] batch 20: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:29:09 [190.9 min] batch 20: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:29:09 [190.9 min] batch 20: 16 choices (levels 1/2: 10/6), design 518/134, selection 187.6 s (update 97 s), 548.7 s
+14:30:05 [191.8 min] speed sensitivities: 6 failed solves, previous values kept
+14:30:05 [191.8 min] speed sensitivities: 19 values more than 30 % from the median of the last 3 evaluations, median kept
+14:30:05 [191.8 min] speed sensitivities dV/dC (rows = conditions): [[ 44.5   -2.07   0.08   0.03   0.05  -0.18]
+ [ 30.17  -1.79   0.11   0.     0.04  -0.13]
+ [ 38.42  -2.55   0.35  -0.01   0.06  -0.16]
+ [ 68.4   -4.51   1.44  -0.05   0.14  -0.27]
+ [ 31.94  -1.45   0.07   0.01   0.04  -0.13]
+ [ 32.19  -1.73   0.19  -0.     0.05  -0.13]
+ [ 51.27  -2.75   0.79  -0.03   0.1   -0.19]
+ [132.56  -5.87   4.74  -0.12   0.18  -0.46]
+ [ 29.65  -1.24   0.09   0.01   0.04  -0.11]
+ [ 36.42  -1.63   0.32  -0.01   0.06  -0.13]
+ [ 75.19  -2.96   1.71  -0.06   0.14  -0.23]
+ [135.33  -4.9    5.84   1.58   0.2   -0.58]
+ [ 29.82  -1.01   0.13   0.     0.04  -0.1 ]
+ [ 45.34  -1.43   0.57  -0.03   0.08  -0.12]
+ [136.35  -3.07   4.51  -0.11   0.17  -0.32]
+ [129.55  -4.44   8.06   2.54   0.26  -0.48]
+ [ 32.7   -0.6    0.19  -0.     0.05  -0.06]
+ [ 65.24  -0.87   1.17  -0.05   0.12  -0.09]
+ [248.04  -0.3   10.44  -0.3    0.16  -0.16]
+ [140.3   -4.63   6.04   3.8    0.17  -0.16]
+ [ 33.54  -0.41   0.21  -0.     0.05  -0.04]
+ [ 68.85  -0.53   1.27  -0.05   0.12  -0.05]
+ [263.75   1.44  11.1   -0.33   0.16   0.04]
+ [156.1   -1.14  13.2    5.56   0.37  -0.13]
+ [ 33.55  -0.28   0.2   -0.     0.05  -0.03]
+ [ 66.51  -0.27   1.18  -0.05   0.11  -0.02]
+ [257.23   2.27  10.39  -0.29   0.15   0.16]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 32.94  -0.15   0.19  -0.     0.05  -0.02]
+ [ 58.99   0.07   0.93  -0.04   0.1    0.03]
+ [225.67   2.75   8.34  -0.2    0.16   0.27]
+ [428.94  14.18  27.78  -1.32  -0.47   1.21]
+ [ 40.28  -0.81   0.4   -0.02   0.07  -0.07]
+ [136.16  -0.87   8.41   2.88   0.14  -0.31]
+ [ 38.77   0.03   0.34  -0.01   0.06   0.02]
+ [282.     5.74  12.27  -0.4    0.13   0.58]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.83  -0.82   0.09   0.01   0.04  -0.09]
+ [ 30.98  -0.38   0.11   0.01   0.04  -0.05]
+ [ 32.25  -0.12   0.1    0.01   0.04  -0.04]
+ [115.98  -5.19   1.79   1.57   0.19  -0.49]
+ [134.04  -6.17   4.17   3.62   0.25  -0.31]
+ [  0.    -0.     0.     0.     0.     0.  ]
+ [  4.17   0.21   0.21  -1.45  -0.3    0.69]
+ [ 35.22  -1.82   0.06   0.02   0.04  -0.14]
+ [ 40.27  -2.97   0.39  -0.02   0.07  -0.17]
+ [ 33.48   0.33   0.19  -0.     0.05   0.05]
+ [169.34   6.84   5.02  -0.14   0.24   0.94]
+ [101.18  -1.74   2.63  -0.08   0.16  -0.18]]
+14:31:32 [193.3 min] update 21: incumbent speed 13.2500 kt (kept, gain 0.0000 kt), candidates [13.25  13.243 13.242 13.242], on 99 % of the probability, radius 0.37, region 0, 142 s
+14:38:11 [199.9 min] batch 21: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:38:11 [199.9 min] batch 21: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:38:11 [199.9 min] batch 21: 16 choices (levels 1/2: 8/8), design 533/140, selection 180.2 s (update 142 s), 541.3 s
+14:40:10 [201.9 min] update 22: incumbent speed 13.2498 kt (kept, gain 0.0000 kt), candidates [13.25  13.205 13.246 13.247], on 99 % of the probability, radius 0.26, region 0, 119 s
+14:46:51 [208.6 min] batch 22: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:46:51 [208.6 min] batch 22: 16 choices (levels 1/2: 10/6), design 545/145, selection 159.3 s (update 119 s), 520.0 s
+14:48:48 [210.5 min] update 23: incumbent speed 13.2499 kt (kept, gain 0.0000 kt), candidates [13.25  13.247 13.245 13.246], on 99 % of the probability, radius 0.18, region 0, 116 s
+14:55:35 [217.3 min] batch 23: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:55:35 [217.3 min] batch 23: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:55:35 [217.3 min] batch 23: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:55:35 [217.3 min] batch 23: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:55:35 [217.3 min] batch 23: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+14:55:35 [217.3 min] batch 23: 16 choices (levels 1/2: 7/9), design 559/149, selection 163.1 s (update 116 s), 524.2 s
+14:56:37 [218.4 min] speed sensitivities: 6 failed solves, previous values kept
+14:56:37 [218.4 min] speed sensitivities: 7 values more than 30 % from the median of the last 3 evaluations, median kept
+14:56:37 [218.4 min] speed sensitivities dV/dC (rows = conditions): [[ 43.92  -2.02   0.08   0.03   0.05  -0.18]
+ [ 30.19  -1.78   0.12   0.     0.04  -0.13]
+ [ 38.62  -2.54   0.36  -0.02   0.07  -0.16]
+ [ 69.27  -4.5    1.47  -0.05   0.15  -0.28]
+ [ 31.87  -1.42   0.07   0.01   0.04  -0.13]
+ [ 32.29  -1.71   0.2   -0.     0.05  -0.13]
+ [ 51.68  -2.74   0.8   -0.04   0.1   -0.19]
+ [135.22  -5.86   4.87  -0.13   0.19  -0.48]
+ [ 29.65  -1.22   0.09   0.01   0.04  -0.11]
+ [ 36.58  -1.61   0.32  -0.01   0.06  -0.13]
+ [ 76.06  -2.94   1.74  -0.06   0.14  -0.24]
+ [128.8   -4.31   6.15   1.7    0.24  -0.59]
+ [ 29.87  -0.99   0.13   0.     0.04  -0.1 ]
+ [ 45.58  -1.4    0.57  -0.03   0.08  -0.12]
+ [138.38  -3.     4.59  -0.12   0.18  -0.32]
+ [121.11  -4.44   6.41   2.74   0.26  -0.54]
+ [ 32.74  -0.56   0.2   -0.     0.05  -0.06]
+ [ 65.52  -0.82   1.17  -0.05   0.12  -0.08]
+ [250.2    0.04  10.5   -0.31   0.17  -0.13]
+ [142.34  -3.21   7.16   4.     0.08  -0.16]
+ [ 33.54  -0.37   0.21  -0.     0.05  -0.04]
+ [ 68.93  -0.45   1.27  -0.05   0.12  -0.04]
+ [264.95   1.87  11.1   -0.34   0.17   0.09]
+ [179.26  -0.3   10.29   5.51   0.26  -0.14]
+ [ 33.55  -0.24   0.2   -0.     0.05  -0.03]
+ [ 66.52  -0.18   1.18  -0.05   0.11  -0.01]
+ [257.23   2.73  10.39  -0.29   0.16   0.22]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 32.92  -0.1    0.19  -0.     0.05  -0.01]
+ [ 58.95   0.18   0.92  -0.04   0.1    0.04]
+ [225.67   3.24   8.32  -0.2    0.17   0.34]
+ [433.04  15.32  27.95  -1.35  -0.43   1.34]
+ [ 40.39  -0.78   0.4   -0.02   0.07  -0.07]
+ [136.65  -1.55   8.41   2.82   0.11  -0.31]
+ [ 38.71   0.11   0.34  -0.01   0.06   0.03]
+ [282.     6.4   12.24  -0.4    0.15   0.67]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.84  -0.79   0.09   0.01   0.04  -0.09]
+ [ 30.99  -0.34   0.11   0.01   0.04  -0.05]
+ [ 32.24  -0.08   0.1    0.01   0.04  -0.03]
+ [115.98  -5.07   1.73   1.58   0.19  -0.5 ]
+ [134.35  -4.4    5.79   3.62   0.18  -0.32]
+ [  0.    -0.     0.     0.     0.     0.  ]
+ [  4.17   0.21   0.21  -1.5   -0.3    0.69]
+ [ 35.04  -1.8    0.06   0.02   0.04  -0.14]
+ [ 40.48  -2.96   0.39  -0.02   0.07  -0.17]
+ [ 33.36   0.41   0.19  -0.     0.05   0.06]
+ [167.     7.84   4.9   -0.14   0.26   1.08]
+ [102.17  -1.67   2.66  -0.08   0.16  -0.18]]
+14:57:52 [219.6 min] update 24: incumbent speed 13.2517 kt (new, gain 0.0016 kt), candidates [13.25  13.249 13.252 13.251], on 99 % of the probability, radius 0.13, region 0, 136 s
+15:04:34 [226.3 min] batch 24: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:04:34 [226.3 min] batch 24: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:04:34 [226.3 min] batch 24: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:04:34 [226.3 min] batch 24: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:04:34 [226.3 min] batch 24: 16 choices (levels 1/2: 5/11), design 575/156, selection 178.1 s (update 136 s), 539.5 s
+15:06:03 [227.8 min] update 25: incumbent speed 13.2525 kt (new, gain 0.0003 kt), candidates [13.252 13.252 13.252 13.251], on 99 % of the probability, radius 0.10, region 0, 89 s
+15:12:45 [234.5 min] batch 25: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:12:45 [234.5 min] batch 25: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:12:45 [234.5 min] batch 25: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:12:45 [234.5 min] batch 25: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:12:45 [234.5 min] batch 25: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:12:45 [234.5 min] batch 25: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:12:45 [234.5 min] batch 25: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:12:45 [234.5 min] batch 25: 16 choices (levels 1/2: 7/9), design 589/158, selection 128.7 s (update 89 s), 490.1 s
+15:14:13 [236.0 min] update 26: incumbent speed 13.2535 kt (new, gain 0.0011 kt), candidates [13.252 13.253 13.252 13.254], on 99 % of the probability, radius 0.10, region 0, 88 s
+15:20:57 [242.7 min] batch 26: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:20:57 [242.7 min] batch 26: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:20:57 [242.7 min] batch 26: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:20:57 [242.7 min] batch 26: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:20:57 [242.7 min] batch 26: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:20:57 [242.7 min] batch 26: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:20:57 [242.7 min] batch 26: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:20:57 [242.7 min] batch 26: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:20:57 [242.7 min] batch 26: 16 choices (levels 1/2: 5/11), design 604/161, selection 131.3 s (update 88 s), 492.9 s
+15:22:22 [244.1 min] speed sensitivities: 6 failed solves, previous values kept
+15:22:22 [244.1 min] speed sensitivities: 17 values more than 30 % from the median of the last 3 evaluations, median kept
+15:22:22 [244.1 min] speed sensitivities dV/dC (rows = conditions): [[ 43.92  -2.02   0.08   0.03   0.05  -0.18]
+ [ 30.19  -1.78   0.12   0.     0.04  -0.13]
+ [ 38.62  -2.54   0.36  -0.02   0.07  -0.16]
+ [ 69.27  -4.5    1.47  -0.05   0.15  -0.28]
+ [ 31.87  -1.42   0.07   0.01   0.04  -0.13]
+ [ 32.29  -1.71   0.2   -0.     0.05  -0.13]
+ [ 51.68  -2.74   0.8   -0.04   0.1   -0.19]
+ [135.22  -5.86   4.87  -0.13   0.19  -0.48]
+ [ 29.65  -1.22   0.09   0.01   0.04  -0.11]
+ [ 36.58  -1.61   0.32  -0.01   0.06  -0.13]
+ [ 76.06  -2.94   1.74  -0.06   0.14  -0.24]
+ [128.77  -5.03   5.84   1.7    0.24  -0.59]
+ [ 29.87  -0.99   0.13   0.     0.04  -0.1 ]
+ [ 45.58  -1.4    0.58  -0.03   0.08  -0.12]
+ [138.38  -3.     4.59  -0.12   0.18  -0.32]
+ [121.11  -4.23   6.41   2.74   0.27  -0.54]
+ [ 32.74  -0.56   0.2   -0.     0.05  -0.06]
+ [ 65.54  -0.82   1.17  -0.05   0.12  -0.08]
+ [250.24   0.04  10.5   -0.31   0.17  -0.13]
+ [142.34  -3.21   7.21   4.     0.08  -0.16]
+ [ 33.54  -0.37   0.21  -0.     0.05  -0.04]
+ [ 68.95  -0.45   1.27  -0.05   0.12  -0.04]
+ [265.03   1.87  11.1   -0.34   0.17   0.09]
+ [179.45  -0.3    9.9    5.56   0.24  -0.14]
+ [ 33.55  -0.24   0.2   -0.     0.05  -0.03]
+ [ 66.52  -0.18   1.18  -0.05   0.11  -0.01]
+ [257.23   2.73  10.39  -0.29   0.16   0.22]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 32.92  -0.1    0.19  -0.     0.05  -0.01]
+ [ 58.95   0.18   0.92  -0.04   0.1    0.04]
+ [225.67   3.24   8.32  -0.2    0.17   0.34]
+ [433.23  15.32  27.97  -1.35  -0.43   1.34]
+ [ 40.4   -0.78   0.4   -0.02   0.07  -0.07]
+ [136.65  -1.55   8.97   2.89   0.11  -0.31]
+ [ 38.71   0.11   0.34  -0.01   0.06   0.03]
+ [282.     6.4   12.24  -0.41   0.15   0.67]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.84  -0.79   0.09   0.01   0.04  -0.09]
+ [ 30.99  -0.34   0.11   0.01   0.04  -0.05]
+ [ 32.24  -0.08   0.1    0.01   0.04  -0.03]
+ [115.98  -5.07   1.73   1.58   0.19  -0.5 ]
+ [134.35  -4.29   5.95   3.63   0.18  -0.32]
+ [  0.    -0.     0.     0.     0.     0.  ]
+ [  4.17   0.21   0.21  -1.5   -0.3    0.69]
+ [ 35.04  -1.8    0.06   0.02   0.04  -0.14]
+ [ 40.48  -2.96   0.39  -0.02   0.07  -0.17]
+ [ 33.36   0.41   0.19  -0.     0.05   0.06]
+ [167.     7.84   4.9   -0.14   0.26   1.08]
+ [102.18  -1.67   2.67  -0.08   0.16  -0.18]]
+15:24:02 [245.8 min] update 27: incumbent speed 13.2540 kt (new, gain 0.0005 kt), candidates [13.254 13.254 13.254 13.254], on 99 % of the probability, radius 0.10, region 0, 184 s
+15:30:47 [252.5 min] batch 27: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:30:47 [252.5 min] batch 27: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:30:47 [252.5 min] batch 27: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:30:47 [252.5 min] batch 27: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:30:47 [252.5 min] batch 27: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:30:47 [252.5 min] batch 27: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:30:47 [252.5 min] batch 27: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:30:47 [252.5 min] batch 27: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:30:47 [252.5 min] batch 27: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:30:47 [252.5 min] batch 27: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:30:47 [252.5 min] batch 27: 16 choices (levels 1/2: 5/11), design 618/162, selection 227.8 s (update 184 s), 589.6 s
+15:32:34 [254.3 min] update 28: incumbent speed 13.2542 kt (new, gain 0.0003 kt), candidates [13.254 13.254 13.254 13.254], on 99 % of the probability, radius 0.10, region 0, 106 s
+15:39:17 [261.0 min] batch 28: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:39:17 [261.0 min] batch 28: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:39:17 [261.0 min] batch 28: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:39:17 [261.0 min] batch 28: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:39:17 [261.0 min] batch 28: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:39:17 [261.0 min] batch 28: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:39:17 [261.0 min] batch 28: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:39:17 [261.0 min] batch 28: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:39:17 [261.0 min] batch 28: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:39:17 [261.0 min] batch 28: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:39:17 [261.0 min] batch 28: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:39:17 [261.0 min] batch 28: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+15:39:17 [261.0 min] batch 28: 16 choices (levels 1/2: 3/13), design 633/163, selection 147.7 s (update 106 s), 509.8 s
+15:40:53 [262.6 min] batch 29: hyperparameters refitted on 796 points
+15:42:43 [264.5 min] region 0 converged (update 28, incumbent speed 13.2542 kt): region 1 starts from a section at distance 2.35 of the optima, predicted gain +0.001 +- 0.002 kt
+15:44:49 [266.6 min] speed sensitivities: 6 failed solves, previous values kept
+15:44:49 [266.6 min] speed sensitivities dV/dC (rows = conditions): [[ 43.81  -2.01   0.08   0.03   0.05  -0.18]
+ [ 30.23  -1.79   0.12   0.     0.04  -0.13]
+ [ 38.69  -2.56   0.36  -0.02   0.06  -0.16]
+ [ 69.43  -4.55   1.47  -0.05   0.15  -0.28]
+ [ 31.86  -1.42   0.08   0.01   0.04  -0.13]
+ [ 32.33  -1.73   0.2   -0.     0.05  -0.13]
+ [ 51.81  -2.76   0.8   -0.04   0.1   -0.19]
+ [135.73  -5.93   4.9   -0.13   0.19  -0.48]
+ [ 29.66  -1.22   0.09   0.01   0.04  -0.11]
+ [ 36.63  -1.62   0.32  -0.01   0.06  -0.13]
+ [ 76.29  -2.96   1.75  -0.06   0.14  -0.24]
+ [274.38  -6.46  13.56  -0.95   0.18  -0.84]
+ [ 29.88  -0.99   0.13   0.     0.04  -0.09]
+ [ 45.65  -1.41   0.58  -0.03   0.08  -0.12]
+ [138.84  -3.     4.62  -0.12   0.18  -0.32]
+ [129.21  -3.97   8.85   2.55   0.29  -0.45]
+ [ 32.75  -0.55   0.2   -0.     0.05  -0.06]
+ [ 65.65  -0.79   1.18  -0.05   0.12  -0.08]
+ [250.54   0.13  10.52  -0.31   0.17  -0.11]
+ [137.22  -6.67   7.47   1.77   0.22  -0.12]
+ [ 33.55  -0.35   0.21  -0.     0.05  -0.04]
+ [ 69.04  -0.42   1.27  -0.05   0.12  -0.04]
+ [265.17   2.02  11.11  -0.34   0.17   0.11]
+ [153.87  -3.13  14.41   2.91   0.42  -0.22]
+ [ 33.55  -0.22   0.21  -0.     0.05  -0.02]
+ [ 66.57  -0.13   1.18  -0.05   0.11  -0.  ]
+ [257.25   2.9   10.39  -0.29   0.17   0.24]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 32.91  -0.08   0.19  -0.     0.05  -0.01]
+ [ 58.95   0.23   0.92  -0.04   0.1    0.05]
+ [225.61   3.43   8.32  -0.2    0.18   0.36]
+ [432.77  15.71  27.92  -1.35  -0.41   1.39]
+ [ 40.43  -0.76   0.4   -0.02   0.07  -0.07]
+ [547.41   5.38  38.03  -2.58  -0.17  -0.02]
+ [ 38.68   0.14   0.34  -0.01   0.06   0.03]
+ [281.6    6.67  12.22  -0.4    0.15   0.7 ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.83  -0.78   0.09   0.01   0.04  -0.09]
+ [ 30.99  -0.33   0.11   0.01   0.04  -0.05]
+ [ 32.22  -0.06   0.1    0.01   0.04  -0.03]
+ [116.33  -5.11   0.97   1.59   0.2   -0.5 ]
+ [131.19  -7.28   5.5    2.06   0.29  -0.25]
+ [  0.     0.    -0.     0.     0.     0.  ]
+ [ 12.5    0.63   0.63  -1.5   -0.29   1.58]
+ [ 35.04  -1.81   0.07   0.02   0.04  -0.14]
+ [ 40.56  -2.99   0.4   -0.02   0.07  -0.18]
+ [ 33.32   0.44   0.19  -0.     0.05   0.06]
+ [166.39   8.14   4.87  -0.14   0.26   1.12]
+ [102.5   -1.66   2.68  -0.08   0.16  -0.18]]
+15:47:04 [268.8 min] update 29: incumbent speed 13.2334 kt (kept, gain 0.0000 kt), candidates [13.233 13.119 13.227 13.229], on 99 % of the probability, radius 0.70, region 1, 261 s
+15:53:07 [274.9 min] batch 29: 16 choices (levels 1/2: 11/5), design 646/168, selection 509.3 s (update 261 s), 830.0 s
+15:54:15 [276.0 min] speed sensitivities: 6 failed solves, previous values kept
+15:54:15 [276.0 min] speed sensitivities: 12 values more than 30 % from the median of the last 3 evaluations, median kept
+15:54:15 [276.0 min] speed sensitivities dV/dC (rows = conditions): [[ 43.87  -2.01   0.08   0.03   0.05  -0.18]
+ [ 30.22  -1.79   0.12   0.     0.04  -0.13]
+ [ 38.67  -2.56   0.36  -0.02   0.06  -0.16]
+ [ 69.38  -4.54   1.47  -0.05   0.15  -0.28]
+ [ 31.87  -1.42   0.08   0.01   0.04  -0.13]
+ [ 32.32  -1.72   0.2   -0.     0.05  -0.13]
+ [ 51.76  -2.76   0.8   -0.04   0.1   -0.19]
+ [135.55  -5.9    4.89  -0.13   0.19  -0.48]
+ [ 29.65  -1.22   0.09   0.01   0.04  -0.11]
+ [ 36.61  -1.62   0.32  -0.01   0.06  -0.13]
+ [ 76.2   -2.95   1.75  -0.06   0.14  -0.24]
+ [273.59  -6.42  13.51  -0.94   0.18  -0.83]
+ [ 29.87  -0.99   0.13   0.     0.04  -0.09]
+ [ 45.62  -1.4    0.58  -0.03   0.08  -0.12]
+ [138.64  -3.     4.61  -0.12   0.18  -0.32]
+ [129.24  -3.04   8.92   2.55   0.28  -0.45]
+ [ 32.75  -0.56   0.2   -0.     0.05  -0.06]
+ [ 65.61  -0.8    1.18  -0.05   0.12  -0.08]
+ [250.46   0.08  10.52  -0.31   0.17  -0.12]
+ [132.25  -5.23   7.51   2.79   0.22  -0.13]
+ [ 33.55  -0.36   0.21  -0.     0.05  -0.04]
+ [ 69.01  -0.43   1.27  -0.05   0.12  -0.04]
+ [265.18   1.94  11.11  -0.34   0.17   0.1 ]
+ [154.03  -3.13  14.43   3.89   0.41  -0.15]
+ [ 33.55  -0.23   0.21  -0.     0.05  -0.02]
+ [ 66.57  -0.15   1.18  -0.05   0.11  -0.  ]
+ [257.32   2.82  10.4   -0.29   0.16   0.23]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 32.92  -0.09   0.19  -0.     0.05  -0.01]
+ [ 58.96   0.21   0.93  -0.04   0.1    0.05]
+ [225.73   3.35   8.33  -0.2    0.17   0.35]
+ [432.84  15.57  27.95  -1.35  -0.42   1.38]
+ [ 40.42  -0.77   0.4   -0.02   0.07  -0.07]
+ [538.36   5.2   36.11  -2.55  -0.17  -0.03]
+ [ 38.7    0.13   0.34  -0.01   0.06   0.03]
+ [281.8    6.57  12.24  -0.4    0.15   0.69]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.83  -0.78   0.09   0.01   0.04  -0.09]
+ [ 30.99  -0.34   0.11   0.01   0.04  -0.05]
+ [ 32.23  -0.07   0.1    0.01   0.04  -0.03]
+ [116.19  -5.09   0.92   1.59   0.19  -0.5 ]
+ [131.63  -6.12   3.53   2.85   0.29  -0.68]
+ [  0.     0.    -0.     0.     0.     0.  ]
+ [  9.53   0.48   0.48  -1.5   -0.3    1.34]
+ [ 35.04  -1.8    0.07   0.02   0.04  -0.14]
+ [ 40.54  -2.98   0.4   -0.02   0.07  -0.18]
+ [ 33.34   0.42   0.19  -0.     0.05   0.06]
+ [166.7    8.05   4.89  -0.14   0.26   1.11]
+ [102.37  -1.66   2.67  -0.08   0.16  -0.18]]
+15:56:20 [278.1 min] update 30: incumbent speed 13.2444 kt (new, gain 0.0141 kt), candidates [13.23  13.244 13.231 13.237], on 99 % of the probability, radius 1.05, region 1, 193 s
+16:02:17 [284.0 min] batch 30: 16 choices (levels 1/2: 12/4), design 659/172, selection 228.0 s (update 193 s), 550.3 s
+16:04:50 [286.6 min] update 31: incumbent speed 13.2512 kt (new, gain 0.0073 kt), candidates [13.244 13.229 13.211 13.251], on 99 % of the probability, radius 1.57, region 1, 152 s
+16:10:53 [292.6 min] batch 31: 16 choices (levels 1/2: 11/5), design 671/177, selection 183.9 s (update 152 s), 515.9 s
+16:12:44 [294.5 min] update 32: incumbent speed 13.2499 kt (kept, gain 0.0000 kt), candidates [13.25  13.202 13.165 13.195], on 99 % of the probability, radius 1.10, region 1, 110 s
+16:18:50 [300.6 min] batch 32: 16 choices (levels 1/2: 11/5), design 683/182, selection 146.1 s (update 110 s), 476.8 s
+16:20:08 [301.9 min] speed sensitivities: 6 failed solves, previous values kept
+16:20:08 [301.9 min] speed sensitivities: 55 values more than 30 % from the median of the last 3 evaluations, median kept
+16:20:08 [301.9 min] speed sensitivities dV/dC (rows = conditions): [[ 43.81  -2.01   0.08   0.03   0.05  -0.18]
+ [ 30.23  -1.78   0.12   0.     0.04  -0.13]
+ [ 38.69  -2.55   0.36  -0.02   0.06  -0.16]
+ [ 69.43  -4.52   1.47  -0.05   0.15  -0.28]
+ [ 31.86  -1.42   0.08   0.01   0.04  -0.13]
+ [ 32.33  -1.72   0.2   -0.     0.05  -0.13]
+ [ 51.81  -2.75   0.8   -0.04   0.1   -0.19]
+ [135.73  -5.88   4.9   -0.13   0.19  -0.48]
+ [ 29.65  -1.21   0.09   0.01   0.04  -0.11]
+ [ 36.63  -1.61   0.32  -0.01   0.06  -0.13]
+ [ 76.29  -2.94   1.75  -0.06   0.14  -0.24]
+ [272.81  -6.39  13.46  -0.94   0.18  -0.83]
+ [ 29.88  -0.99   0.13   0.     0.04  -0.09]
+ [ 45.65  -1.4    0.58  -0.03   0.08  -0.12]
+ [138.84  -2.99   4.62  -0.12   0.18  -0.32]
+ [129.27  -3.97   8.85   2.55   0.28  -0.45]
+ [ 32.75  -0.55   0.2   -0.     0.05  -0.06]
+ [ 65.65  -0.79   1.17  -0.05   0.12  -0.08]
+ [250.54   0.13  10.52  -0.31   0.17  -0.11]
+ [133.05  -3.79   7.47   3.79   0.23  -0.12]
+ [ 33.55  -0.35   0.21  -0.     0.05  -0.04]
+ [ 68.99  -0.42   1.27  -0.05   0.12  -0.04]
+ [265.17   2.02  11.11  -0.34   0.17   0.11]
+ [153.87  -3.13  14.41   4.73   0.42  -0.08]
+ [ 33.55  -0.22   0.21  -0.     0.05  -0.02]
+ [ 66.56  -0.13   1.18  -0.05   0.11  -0.  ]
+ [257.25   2.9   10.39  -0.29   0.17   0.24]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 32.91  -0.08   0.19  -0.     0.05  -0.01]
+ [ 58.95   0.23   0.92  -0.04   0.1    0.05]
+ [225.61   3.43   8.32  -0.2    0.18   0.36]
+ [432.91  15.71  27.97  -1.35  -0.41   1.39]
+ [ 40.43  -0.76   0.4   -0.02   0.07  -0.07]
+ [529.3    5.01  34.19  -2.51  -0.17  -0.04]
+ [ 38.68   0.14   0.34  -0.01   0.06   0.03]
+ [281.6    6.67  12.22  -0.4    0.15   0.7 ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.84  -0.78   0.09   0.01   0.04  -0.09]
+ [ 31.    -0.33   0.11   0.01   0.04  -0.05]
+ [ 32.22  -0.06   0.1    0.01   0.04  -0.03]
+ [116.33  -5.06   0.97   1.59   0.2   -0.5 ]
+ [131.19  -4.97   5.5    2.06   0.3   -1.11]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 12.5    0.63   0.63  -1.5   -0.29   1.58]
+ [ 35.04  -1.8    0.07   0.02   0.04  -0.14]
+ [ 40.56  -2.98   0.4   -0.02   0.07  -0.18]
+ [ 33.32   0.44   0.19  -0.     0.05   0.06]
+ [166.39   8.14   4.87  -0.14   0.26   1.12]
+ [102.5   -1.66   2.68  -0.08   0.16  -0.18]]
+16:22:31 [304.3 min] update 33: incumbent speed 13.2498 kt (kept, gain 0.0000 kt), candidates [13.25  13.192 13.184 13.217], on 99 % of the probability, radius 0.77, region 1, 220 s
+16:28:47 [310.5 min] batch 33: 16 choices (levels 1/2: 11/5), design 694/187, selection 260.2 s (update 220 s), 597.5 s
+16:30:42 [312.4 min] update 34: incumbent speed 13.2496 kt (kept, gain 0.0000 kt), candidates [13.25  13.231 13.22  13.229], on 99 % of the probability, radius 0.54, region 1, 114 s
+16:36:36 [318.3 min] batch 34: 16 choices (levels 1/2: 10/6), design 706/193, selection 159.5 s (update 114 s), 469.0 s
+16:38:42 [320.4 min] update 35: incumbent speed 13.2500 kt (kept, gain 0.0000 kt), candidates [13.25  13.233 13.241 13.243], on 99 % of the probability, radius 0.38, region 1, 125 s
+16:45:26 [327.2 min] batch 35: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+16:45:26 [327.2 min] batch 35: 16 choices (levels 1/2: 11/5), design 720/197, selection 169.5 s (update 125 s), 530.1 s
+16:46:44 [328.5 min] speed sensitivities: 6 failed solves, previous values kept
+16:46:44 [328.5 min] speed sensitivities: 10 values more than 30 % from the median of the last 3 evaluations, median kept
+16:46:44 [328.5 min] speed sensitivities dV/dC (rows = conditions): [[ 42.79  -1.88   0.08   0.02   0.05  -0.18]
+ [ 30.24  -1.73   0.12   0.     0.04  -0.14]
+ [ 39.02  -2.49   0.37  -0.02   0.07  -0.17]
+ [ 71.17  -4.43   1.53  -0.06   0.16  -0.3 ]
+ [ 31.71  -1.34   0.08   0.01   0.04  -0.13]
+ [ 32.47  -1.66   0.2   -0.01   0.05  -0.14]
+ [ 52.53  -2.66   0.82  -0.04   0.1   -0.2 ]
+ [141.17  -5.71   5.14  -0.14   0.21  -0.52]
+ [ 29.65  -1.14   0.1    0.01   0.04  -0.11]
+ [ 36.86  -1.54   0.33  -0.01   0.06  -0.13]
+ [ 77.81  -2.82   1.8   -0.06   0.15  -0.25]
+ [123.38  -4.61   5.81   1.84   0.2   -0.52]
+ [ 29.95  -0.92   0.13   0.     0.04  -0.1 ]
+ [ 45.98  -1.32   0.59  -0.03   0.08  -0.12]
+ [142.18  -2.77   4.72  -0.12   0.19  -0.33]
+ [129.27  -4.11   6.17   2.55   0.28  -0.5 ]
+ [ 32.78  -0.47   0.2   -0.     0.05  -0.05]
+ [ 65.82  -0.66   1.17  -0.05   0.12  -0.07]
+ [252.92   0.97  10.53  -0.33   0.2   -0.03]
+ [133.05  -0.84   4.63   3.79   0.29  -0.02]
+ [ 33.5   -0.26   0.21  -0.     0.05  -0.03]
+ [ 68.83  -0.21   1.26  -0.05   0.12  -0.01]
+ [265.13   3.12  11.01  -0.35   0.2    0.24]
+ [150.32   0.34  10.33   4.73   0.41   0.03]
+ [ 33.43  -0.11   0.2   -0.     0.05  -0.01]
+ [ 66.07   0.14   1.16  -0.05   0.11   0.04]
+ [255.29   4.13  10.22  -0.3    0.2    0.4 ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 32.73   0.04   0.18  -0.     0.05   0.  ]
+ [ 58.13   0.6    0.9   -0.04   0.1    0.1 ]
+ [221.76   4.81   8.08  -0.21   0.21   0.56]
+ [433.85  18.48  27.99  -1.35  -0.3    1.71]
+ [ 40.54  -0.68   0.4   -0.02   0.07  -0.07]
+ [130.39   2.72  12.4    2.02   0.23  -0.18]
+ [ 38.23   0.36   0.32  -0.02   0.06   0.06]
+ [277.66   8.47  11.95  -0.41   0.2    0.95]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.87  -0.7    0.09   0.01   0.04  -0.09]
+ [ 31.    -0.25   0.11   0.01   0.04  -0.05]
+ [ 32.21   0.02   0.09   0.01   0.04  -0.03]
+ [117.93  -5.06   4.49   1.75   0.24  -0.58]
+ [127.85  -2.69   7.17   2.9    0.33  -1.11]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [220.85  11.04  11.04  -1.5   -0.28   2.  ]
+ [ 34.62  -1.73   0.07   0.02   0.04  -0.15]
+ [ 40.97  -2.93   0.4   -0.02   0.07  -0.18]
+ [ 32.79   0.64   0.18  -0.     0.05   0.09]
+ [154.68  11.18   4.38  -0.14   0.31   1.55]
+ [103.77  -1.49   2.71  -0.09   0.17  -0.18]]
+16:48:18 [330.0 min] update 36: incumbent speed 13.2580 kt (new, gain 0.0084 kt), candidates [13.25  13.258 13.257 13.256], on 99 % of the probability, radius 0.57, region 1, 171 s
+16:54:49 [336.6 min] batch 36: 16 choices (levels 1/2: 8/8), design 734/205, selection 212.0 s (update 171 s), 562.6 s
+16:56:28 [338.2 min] update 37: incumbent speed 13.2610 kt (new, gain 0.0030 kt), candidates [13.258 13.261 13.261 13.261], on 99 % of the probability, radius 0.85, region 1, 99 s
+17:03:08 [344.9 min] batch 37: level 2 failed (SolverFailure: bdfoil_v1 avl: 1 strips or panels outside the monotone branch of )
+17:03:08 [344.9 min] batch 37: 16 choices (levels 1/2: 12/4), design 747/208, selection 135.5 s (update 99 s), 499.4 s
+17:05:41 [347.4 min] update 38: incumbent speed 13.2616 kt (kept, gain 0.0000 kt), candidates [13.262 13.254 13.258 13.261], on 99 % of the probability, radius 0.60, region 1, 152 s
+17:12:23 [354.1 min] batch 38: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:12:23 [354.1 min] batch 38: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:12:23 [354.1 min] batch 38: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:12:23 [354.1 min] batch 38: 16 choices (levels 1/2: 11/5), design 758/210, selection 193.7 s (update 152 s), 554.6 s
+17:13:58 [355.7 min] speed sensitivities: 6 failed solves, previous values kept
+17:13:58 [355.7 min] speed sensitivities: 40 values more than 30 % from the median of the last 3 evaluations, median kept
+17:13:58 [355.7 min] speed sensitivities dV/dC (rows = conditions): [[ 42.79  -1.88   0.08   0.02   0.05  -0.18]
+ [ 30.24  -1.73   0.12   0.     0.04  -0.14]
+ [ 39.02  -2.49   0.37  -0.02   0.07  -0.17]
+ [ 71.17  -4.43   1.53  -0.06   0.16  -0.3 ]
+ [ 31.71  -1.34   0.08   0.01   0.04  -0.13]
+ [ 32.47  -1.66   0.2   -0.01   0.05  -0.14]
+ [ 52.53  -2.66   0.82  -0.04   0.1   -0.2 ]
+ [141.17  -5.71   5.14  -0.14   0.21  -0.52]
+ [ 29.65  -1.14   0.1    0.01   0.04  -0.11]
+ [ 36.86  -1.54   0.33  -0.01   0.06  -0.13]
+ [ 77.81  -2.82   1.8   -0.06   0.15  -0.25]
+ [123.38  -4.61   4.66   1.84   0.22  -0.52]
+ [ 29.95  -0.92   0.13   0.     0.04  -0.1 ]
+ [ 45.98  -1.32   0.59  -0.03   0.08  -0.12]
+ [142.18  -2.77   4.72  -0.12   0.19  -0.33]
+ [132.9   -4.48   6.17   2.75   0.28  -0.51]
+ [ 32.78  -0.47   0.2   -0.     0.05  -0.05]
+ [ 65.82  -0.66   1.17  -0.05   0.12  -0.07]
+ [252.92   0.97  10.53  -0.33   0.2   -0.03]
+ [133.59  -0.84   4.63   2.24   0.29  -0.02]
+ [ 33.5   -0.26   0.21  -0.     0.05  -0.03]
+ [ 68.83  -0.21   1.26  -0.05   0.12  -0.01]
+ [265.13   3.12  11.01  -0.35   0.2    0.24]
+ [150.32   0.34  10.33   4.73   0.41   0.03]
+ [ 33.43  -0.11   0.2   -0.     0.05  -0.01]
+ [ 66.07   0.14   1.16  -0.05   0.11   0.04]
+ [255.29   4.13  10.22  -0.3    0.2    0.4 ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 32.73   0.04   0.18  -0.     0.05   0.  ]
+ [ 58.13   0.6    0.9   -0.04   0.1    0.1 ]
+ [221.76   4.81   8.08  -0.21   0.21   0.56]
+ [434.09  18.48  28.    -1.35  -0.3    1.71]
+ [ 40.54  -0.68   0.4   -0.02   0.07  -0.07]
+ [130.39   2.66  10.13   2.34   0.23  -0.28]
+ [ 38.23   0.36   0.32  -0.02   0.06   0.06]
+ [277.66   8.47  11.95  -0.41   0.2    0.95]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.87  -0.7    0.09   0.01   0.04  -0.09]
+ [ 31.    -0.25   0.11   0.01   0.04  -0.05]
+ [ 32.21   0.02   0.09   0.01   0.04  -0.03]
+ [117.93  -5.49   4.49   1.75   0.24  -0.58]
+ [127.85  -2.69   7.17   2.9    0.33  -0.5 ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [220.85  11.04  11.04  -1.5   -0.27   2.  ]
+ [ 34.62  -1.73   0.07   0.02   0.04  -0.15]
+ [ 40.97  -2.93   0.4   -0.02   0.07  -0.18]
+ [ 32.79   0.64   0.18  -0.     0.05   0.09]
+ [154.68  11.18   4.38  -0.14   0.31   1.55]
+ [103.77  -1.49   2.71  -0.09   0.17  -0.18]]
+17:15:56 [357.7 min] update 39: incumbent speed 13.2628 kt (new, gain 0.0012 kt), candidates [13.262 13.259 13.263 13.259], on 99 % of the probability, radius 0.42, region 1, 212 s
+17:22:42 [364.4 min] batch 39: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:22:42 [364.4 min] batch 39: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:22:42 [364.4 min] batch 39: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:22:42 [364.4 min] batch 39: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:22:42 [364.4 min] batch 39: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:22:42 [364.4 min] batch 39: 16 choices (levels 1/2: 9/7), design 773/212, selection 257.7 s (update 212 s), 618.8 s
+17:24:59 [366.7 min] update 40: incumbent speed 13.2633 kt (kept, gain 0.0000 kt), candidates [13.263 13.261 13.26  13.259], on 99 % of the probability, radius 0.29, region 1, 136 s
+17:31:49 [373.6 min] batch 40: 16 choices (levels 1/2: 8/8), design 786/220, selection 183.1 s (update 136 s), 547.3 s
+17:34:16 [376.0 min] batch 41: hyperparameters refitted on 1006 points
+17:36:55 [378.7 min] update 41: incumbent speed 13.2634 kt (new, gain 0.0001 kt), candidates [13.263 13.263 13.263 13.263], on 99 % of the probability, radius 0.20, region 1, 160 s
+17:43:45 [385.5 min] batch 41: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:43:45 [385.5 min] batch 41: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:43:45 [385.5 min] batch 41: 16 choices (levels 1/2: 9/7), design 801/225, selection 354.9 s (update 160 s), 715.7 s
+17:46:04 [387.8 min] speed sensitivities: 6 failed solves, previous values kept
+17:46:04 [387.8 min] speed sensitivities: 20 values more than 30 % from the median of the last 3 evaluations, median kept
+17:46:04 [387.8 min] speed sensitivities dV/dC (rows = conditions): [[ 43.48  -1.98   0.08   0.03   0.05  -0.18]
+ [ 30.23  -1.77   0.12   0.     0.04  -0.13]
+ [ 38.78  -2.54   0.36  -0.02   0.07  -0.17]
+ [ 69.93  -4.5    1.49  -0.05   0.15  -0.29]
+ [ 31.82  -1.41   0.08   0.01   0.04  -0.13]
+ [ 32.37  -1.7    0.2   -0.     0.05  -0.13]
+ [ 52.02  -2.73   0.81  -0.04   0.1   -0.2 ]
+ [137.32  -5.86   4.96  -0.13   0.19  -0.49]
+ [ 29.67  -1.2    0.09   0.01   0.04  -0.11]
+ [ 36.71  -1.6    0.32  -0.01   0.06  -0.13]
+ [ 76.76  -2.92   1.76  -0.06   0.15  -0.24]
+ [124.26  -5.07   4.66   1.82   0.22  -0.54]
+ [ 29.92  -0.98   0.13   0.     0.04  -0.1 ]
+ [ 45.78  -1.39   0.58  -0.03   0.08  -0.12]
+ [140.04  -2.96   4.66  -0.12   0.18  -0.33]
+ [130.17  -4.48   6.9    2.75   0.29  -0.51]
+ [ 32.8   -0.54   0.2   -0.     0.05  -0.06]
+ [ 65.84  -0.79   1.18  -0.05   0.12  -0.08]
+ [252.53   0.22  10.6   -0.32   0.17  -0.11]
+ [138.77  -2.22   4.63   2.24   0.18  -0.14]
+ [ 33.59  -0.34   0.21  -0.     0.05  -0.04]
+ [ 69.24  -0.4    1.27  -0.05   0.12  -0.04]
+ [266.83   2.18  11.17  -0.35   0.18   0.12]
+ [149.94  -0.86  10.33   4.74   0.39  -0.05]
+ [ 33.57  -0.21   0.21  -0.     0.05  -0.02]
+ [ 66.72  -0.1    1.18  -0.05   0.11   0.  ]
+ [258.44   3.11  10.43  -0.3    0.17   0.26]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 32.92  -0.06   0.19  -0.     0.05  -0.01]
+ [ 58.99   0.29   0.92  -0.04   0.1    0.06]
+ [226.22   3.7    8.33  -0.21   0.18   0.4 ]
+ [436.73  16.5   28.26  -1.38  -0.41   1.46]
+ [ 40.52  -0.76   0.4   -0.02   0.07  -0.07]
+ [134.93   0.33  10.13   2.9    0.18  -0.28]
+ [ 38.67   0.18   0.34  -0.01   0.06   0.03]
+ [282.44   7.08  12.26  -0.41   0.16   0.75]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.85  -0.77   0.09   0.01   0.04  -0.09]
+ [ 31.01  -0.32   0.11   0.01   0.04  -0.05]
+ [ 32.23  -0.05   0.1    0.01   0.04  -0.03]
+ [116.72  -5.49   2.18   1.6    0.18  -0.5 ]
+ [130.79  -2.69   7.17   3.63   0.28  -0.3 ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.    -0.47   0.     0.  ]
+ [ 34.91  -1.78   0.07   0.02   0.04  -0.14]
+ [ 40.67  -2.96   0.4   -0.02   0.07  -0.18]
+ [ 33.26   0.48   0.19  -0.     0.05   0.07]
+ [165.3    8.85   4.82  -0.14   0.28   1.22]
+ [103.13  -1.64   2.7   -0.08   0.17  -0.18]]
+17:48:06 [389.8 min] update 42: incumbent speed 13.2646 kt (new, gain 0.0011 kt), candidates [13.263 13.264 13.265 13.264], on 99 % of the probability, radius 0.14, region 1, 261 s
+17:55:14 [397.0 min] batch 42: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:55:14 [397.0 min] batch 42: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:55:14 [397.0 min] batch 42: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:55:14 [397.0 min] batch 42: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:55:14 [397.0 min] batch 42: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+17:55:14 [397.0 min] batch 42: 16 choices (levels 1/2: 8/8), design 815/228, selection 327.4 s (update 261 s), 689.1 s
+17:57:17 [399.0 min] update 43: incumbent speed 13.2650 kt (new, gain 0.0003 kt), candidates [13.265 13.265 13.265 13.265], on 99 % of the probability, radius 0.10, region 1, 123 s
+18:04:11 [405.9 min] batch 43: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:04:11 [405.9 min] batch 43: 16 choices (levels 1/2: 7/9), design 827/236, selection 176.8 s (update 123 s), 537.6 s
+18:05:46 [407.5 min] update 44: incumbent speed 13.2653 kt (new, gain 0.0003 kt), candidates [13.265 13.265 13.265 13.265], on 99 % of the probability, radius 0.10, region 1, 93 s
+18:12:40 [414.4 min] batch 44: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:12:40 [414.4 min] batch 44: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:12:40 [414.4 min] batch 44: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:12:40 [414.4 min] batch 44: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:12:40 [414.4 min] batch 44: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:12:40 [414.4 min] batch 44: 16 choices (levels 1/2: 10/6), design 842/237, selection 147.6 s (update 93 s), 508.7 s
+18:13:54 [415.6 min] speed sensitivities: 6 failed solves, previous values kept
+18:13:54 [415.6 min] speed sensitivities: 9 values more than 30 % from the median of the last 3 evaluations, median kept
+18:13:54 [415.6 min] speed sensitivities dV/dC (rows = conditions): [[ 43.85  -2.03   0.08   0.03   0.05  -0.18]
+ [ 30.23  -1.8    0.12   0.     0.04  -0.13]
+ [ 38.68  -2.57   0.36  -0.02   0.06  -0.16]
+ [ 69.32  -4.56   1.47  -0.05   0.15  -0.28]
+ [ 31.88  -1.44   0.07   0.01   0.04  -0.13]
+ [ 32.33  -1.73   0.2   -0.     0.05  -0.13]
+ [ 51.77  -2.78   0.8   -0.04   0.1   -0.19]
+ [135.41  -5.97   4.88  -0.13   0.19  -0.48]
+ [ 29.67  -1.23   0.09   0.01   0.04  -0.11]
+ [ 36.63  -1.63   0.32  -0.01   0.06  -0.13]
+ [ 76.26  -2.99   1.75  -0.06   0.14  -0.24]
+ [127.25  -5.25   4.75   1.66   0.2   -0.54]
+ [ 29.9   -1.     0.13   0.     0.04  -0.1 ]
+ [ 45.69  -1.43   0.58  -0.03   0.08  -0.12]
+ [138.98  -3.07   4.63  -0.12   0.18  -0.32]
+ [130.17  -2.51   7.91   2.56   0.29  -0.54]
+ [ 32.8   -0.58   0.2   -0.     0.05  -0.06]
+ [ 65.88  -0.84   1.18  -0.05   0.12  -0.08]
+ [251.83  -0.1   10.6   -0.32   0.16  -0.14]
+ [138.77  -3.53   7.38   2.92   0.16  -0.22]
+ [ 33.62  -0.38   0.21  -0.     0.05  -0.04]
+ [ 69.36  -0.48   1.28  -0.05   0.12  -0.04]
+ [266.87   1.75  11.23  -0.34   0.16   0.08]
+ [151.59  -2.53  14.68   4.74   0.39  -0.1 ]
+ [ 33.63  -0.25   0.21  -0.     0.05  -0.03]
+ [ 66.95  -0.2    1.19  -0.05   0.11  -0.01]
+ [259.4    2.63  10.52  -0.3    0.16   0.2 ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 33.    -0.11   0.19  -0.     0.05  -0.01]
+ [ 59.33   0.16   0.94  -0.04   0.1    0.04]
+ [228.12   3.16   8.45  -0.2    0.17   0.32]
+ [437.66  15.34  28.31  -1.38  -0.46   1.33]
+ [ 40.51  -0.79   0.4   -0.02   0.07  -0.07]
+ [134.93  -1.35   9.06   2.9    0.11  -0.29]
+ [ 38.86   0.09   0.34  -0.01   0.06   0.02]
+ [284.53   6.36  12.41  -0.41   0.14   0.66]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.84  -0.8    0.09   0.01   0.04  -0.09]
+ [ 31.01  -0.36   0.11   0.01   0.04  -0.05]
+ [ 32.24  -0.09   0.1    0.01   0.04  -0.03]
+ [116.68  -5.19   2.12   1.59   0.18  -0.5 ]
+ [132.42  -5.42   4.47   3.64   0.27  -0.3 ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 35.07  -1.81   0.06   0.02   0.04  -0.14]
+ [ 40.55  -2.99   0.4   -0.02   0.07  -0.18]
+ [ 33.46   0.4    0.19  -0.     0.05   0.05]
+ [169.93   7.77   5.03  -0.14   0.26   1.07]
+ [102.79  -1.72   2.69  -0.08   0.16  -0.18]]
+18:15:47 [417.5 min] update 45: incumbent speed 13.2657 kt (new, gain 0.0005 kt), candidates [13.265 13.266 13.265 13.266], on 99 % of the probability, radius 0.10, region 1, 186 s
+18:22:36 [424.4 min] batch 45: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:22:36 [424.4 min] batch 45: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:22:36 [424.4 min] batch 45: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:22:36 [424.4 min] batch 45: 16 choices (levels 1/2: 7/9), design 857/243, selection 235.5 s (update 186 s), 596.4 s
+18:24:26 [426.2 min] update 46: incumbent speed 13.2655 kt (kept, gain 0.0000 kt), candidates [13.265 13.264 13.265 13.265], on 99 % of the probability, radius 0.10, region 1, 108 s
+18:31:25 [433.2 min] batch 46: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:31:25 [433.2 min] batch 46: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:31:25 [433.2 min] batch 46: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:31:25 [433.2 min] batch 46: 16 choices (levels 1/2: 8/8), design 870/248, selection 165.4 s (update 108 s), 528.5 s
+18:33:57 [435.7 min] region 1 converged (update 46, incumbent speed 13.2655 kt): region 2 starts from a section at distance 2.27 of the optima, predicted gain -0.005 +- 0.001 kt
+18:36:21 [438.1 min] speed sensitivities: 6 failed solves, previous values kept
+18:36:21 [438.1 min] speed sensitivities dV/dC (rows = conditions): [[ 42.7   -1.86   0.08   0.02   0.05  -0.18]
+ [ 30.25  -1.73   0.12   0.     0.04  -0.14]
+ [ 39.07  -2.48   0.37  -0.02   0.07  -0.18]
+ [ 71.43  -4.4    1.54  -0.06   0.16  -0.3 ]
+ [ 31.7   -1.33   0.08   0.01   0.04  -0.13]
+ [ 32.49  -1.65   0.2   -0.01   0.05  -0.14]
+ [ 52.64  -2.64   0.82  -0.04   0.11  -0.21]
+ [142.08  -5.67   5.17  -0.14   0.21  -0.54]
+ [ 29.66  -1.13   0.1    0.01   0.04  -0.12]
+ [ 36.89  -1.53   0.33  -0.01   0.06  -0.14]
+ [ 78.02  -2.81   1.8   -0.06   0.15  -0.26]
+ [122.85  -4.5    6.18   1.85   0.25  -0.52]
+ [ 29.96  -0.9    0.13   0.     0.04  -0.1 ]
+ [ 46.01  -1.31   0.59  -0.03   0.09  -0.13]
+ [142.52  -2.73   4.72  -0.12   0.19  -0.34]
+ [126.34  -0.23   8.82   2.57   0.3   -0.39]
+ [ 32.76  -0.45   0.2   -0.     0.05  -0.05]
+ [ 65.69  -0.62   1.17  -0.05   0.12  -0.07]
+ [252.57   1.19  10.47  -0.33   0.21  -0.01]
+ [132.06  -0.34   4.81   1.26   0.29  -0.21]
+ [ 33.45  -0.23   0.21  -0.     0.05  -0.03]
+ [ 68.56  -0.14   1.24  -0.05   0.12  -0.  ]
+ [264.01   3.41  10.91  -0.35   0.21   0.28]
+ [ 92.61   3.52  15.41   2.64   0.41  -0.43]
+ [ 33.36  -0.08   0.2   -0.     0.05  -0.01]
+ [ 65.7    0.23   1.14  -0.05   0.12   0.05]
+ [253.7    4.46  10.11  -0.3    0.21   0.44]
+ [  0.     0.    -0.     0.     0.     0.  ]
+ [ 32.63   0.08   0.18  -0.     0.05   0.01]
+ [ 57.69   0.72   0.88  -0.04   0.1    0.12]
+ [219.61   5.2    7.96  -0.21   0.22   0.61]
+ [431.8   19.09  27.82  -1.34  -0.26   1.77]
+ [ 40.52  -0.66   0.4   -0.02   0.07  -0.07]
+ [129.23   1.29  12.62   2.04   0.23  -0.21]
+ [ 38.03   0.43   0.32  -0.02   0.06   0.07]
+ [275.63   8.95  11.81  -0.41   0.22   1.01]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.88  -0.68   0.09   0.01   0.04  -0.09]
+ [ 30.99  -0.22   0.11   0.01   0.04  -0.05]
+ [ 32.19   0.05   0.09   0.01   0.04  -0.03]
+ [115.03  -4.63   1.32   1.62   0.22  -0.56]
+ [126.36  -2.13   2.93   3.59   0.35  -0.17]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [341.86  17.09  17.09  -1.47  -0.26   2.1 ]
+ [ 34.58  -1.73   0.07   0.02   0.04  -0.15]
+ [ 41.03  -2.92   0.4   -0.02   0.08  -0.19]
+ [ 32.59   0.7    0.17  -0.     0.05   0.09]
+ [149.97  11.94   4.19  -0.14   0.32   1.65]
+ [103.73  -1.45   2.7   -0.09   0.17  -0.18]]
+18:38:49 [440.6 min] update 47: incumbent speed 13.2492 kt (new, gain 0.0098 kt), candidates [13.239 13.249 13.247 13.245], on 99 % of the probability, radius 1.50, region 2, 291 s
+18:45:32 [447.3 min] batch 47: 16 choices (levels 1/2: 10/6), design 881/254, selection 483.1 s (update 291 s), 847.1 s
+18:47:21 [449.1 min] speed sensitivities: 6 failed solves, previous values kept
+18:47:21 [449.1 min] speed sensitivities: 30 values more than 30 % from the median of the last 3 evaluations, median kept
+18:47:21 [449.1 min] speed sensitivities dV/dC (rows = conditions): [[ 43.02  -1.9    0.08   0.02   0.05  -0.18]
+ [ 30.24  -1.74   0.12   0.     0.04  -0.14]
+ [ 38.96  -2.5    0.37  -0.02   0.07  -0.17]
+ [ 70.85  -4.44   1.52  -0.06   0.15  -0.3 ]
+ [ 31.75  -1.36   0.08   0.01   0.04  -0.13]
+ [ 32.44  -1.67   0.2   -0.     0.05  -0.14]
+ [ 52.39  -2.68   0.82  -0.04   0.1   -0.2 ]
+ [140.22  -5.74   5.09  -0.14   0.2   -0.52]
+ [ 29.66  -1.16   0.1    0.01   0.04  -0.12]
+ [ 36.82  -1.56   0.33  -0.01   0.06  -0.13]
+ [ 77.51  -2.85   1.79  -0.06   0.15  -0.25]
+ [123.33  -4.77   5.33   1.84   0.23  -0.52]
+ [ 29.94  -0.93   0.13   0.     0.04  -0.1 ]
+ [ 45.91  -1.34   0.58  -0.03   0.08  -0.13]
+ [141.53  -2.82   4.7   -0.12   0.19  -0.34]
+ [127.28  -0.92   8.56   2.57   0.29  -0.48]
+ [ 32.77  -0.48   0.2   -0.     0.05  -0.05]
+ [ 65.74  -0.68   1.17  -0.05   0.12  -0.07]
+ [252.43   0.83  10.51  -0.33   0.2   -0.05]
+ [136.33  -0.26   7.41   2.63   0.2   -0.14]
+ [ 33.5   -0.27   0.21  -0.     0.05  -0.03]
+ [ 68.78  -0.24   1.25  -0.05   0.12  -0.02]
+ [264.91   2.96  11.    -0.35   0.2    0.22]
+ [ 99.01   0.49  12.61   2.65   0.41  -0.22]
+ [ 33.44  -0.13   0.2   -0.     0.05  -0.02]
+ [ 66.06   0.1    1.16  -0.05   0.11   0.03]
+ [255.32   3.95  10.22  -0.3    0.2    0.37]
+ [  0.     0.    -0.     0.     0.     0.  ]
+ [ 32.74   0.03   0.18  -0.     0.05   0.  ]
+ [ 58.17   0.55   0.9   -0.04   0.1    0.1 ]
+ [221.94   4.62   8.09  -0.21   0.21   0.53]
+ [433.9   18.1   28.01  -1.35  -0.32   1.65]
+ [ 40.51  -0.69   0.4   -0.02   0.07  -0.07]
+ [130.62   0.65  11.27   2.09   0.22  -0.21]
+ [ 38.27   0.33   0.32  -0.02   0.06   0.05]
+ [278.04   8.23  11.97  -0.41   0.19   0.91]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.87  -0.71   0.09   0.01   0.04  -0.09]
+ [ 31.    -0.26   0.11   0.01   0.04  -0.05]
+ [ 32.21   0.01   0.09   0.01   0.04  -0.03]
+ [115.43  -4.76   0.88   1.61   0.22  -0.53]
+ [127.93  -3.08   4.57   2.42   0.29  -0.72]
+ [ -0.     0.     0.     0.     0.     0.  ]
+ [206.35  10.32  10.32  -1.5   -0.29   1.94]
+ [ 34.71  -1.75   0.07   0.02   0.04  -0.15]
+ [ 40.9   -2.94   0.4   -0.02   0.07  -0.18]
+ [ 32.85   0.62   0.18  -0.     0.05   0.08]
+ [155.73  10.73   4.43  -0.14   0.3    1.48]
+ [103.45  -1.52   2.69  -0.09   0.17  -0.18]]
+18:49:24 [451.1 min] update 48: incumbent speed 13.2527 kt (new, gain 0.0006 kt), candidates [13.252 13.253 13.252 13.251], on 99 % of the probability, radius 1.05, region 2, 230 s
+18:56:09 [457.9 min] batch 48: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:56:09 [457.9 min] batch 48: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:56:09 [457.9 min] batch 48: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+18:56:09 [457.9 min] batch 48: 16 choices (levels 1/2: 11/5), design 892/256, selection 276.0 s (update 230 s), 637.0 s
+18:58:18 [460.0 min] update 49: incumbent speed 13.2580 kt (new, gain 0.0032 kt), candidates [13.255 13.258 13.257 13.257], on 99 % of the probability, radius 1.57, region 2, 127 s
+19:04:58 [466.7 min] batch 49: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:04:58 [466.7 min] batch 49: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:04:58 [466.7 min] batch 49: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:04:58 [466.7 min] batch 49: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:04:58 [466.7 min] batch 49: 16 choices (levels 1/2: 9/7), design 906/259, selection 167.8 s (update 127 s), 529.0 s
+19:08:06 [469.8 min] update 50: incumbent speed 13.2581 kt (kept, gain 0.0000 kt), candidates [13.258 13.248 13.257 13.252], on 99 % of the probability, radius 1.10, region 2, 186 s
+19:14:50 [476.6 min] batch 50: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:14:50 [476.6 min] batch 50: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:14:50 [476.6 min] batch 50: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:14:50 [476.6 min] batch 50: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:14:50 [476.6 min] batch 50: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:14:50 [476.6 min] batch 50: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:14:50 [476.6 min] batch 50: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:14:50 [476.6 min] batch 50: 16 choices (levels 1/2: 9/7), design 919/259, selection 229.9 s (update 186 s), 591.2 s
+19:16:56 [478.7 min] speed sensitivities: 6 failed solves, previous values kept
+19:16:56 [478.7 min] speed sensitivities: 41 values more than 30 % from the median of the last 3 evaluations, median kept
+19:16:56 [478.7 min] speed sensitivities dV/dC (rows = conditions): [[ 43.34  -1.95   0.08   0.03   0.05  -0.18]
+ [ 30.23  -1.76   0.12   0.     0.04  -0.14]
+ [ 38.85  -2.52   0.36  -0.02   0.07  -0.17]
+ [ 70.28  -4.48   1.5   -0.05   0.15  -0.29]
+ [ 31.8   -1.39   0.08   0.01   0.04  -0.13]
+ [ 32.39  -1.69   0.2   -0.     0.05  -0.13]
+ [ 52.15  -2.71   0.81  -0.04   0.1   -0.2 ]
+ [138.35  -5.8    5.    -0.13   0.2   -0.51]
+ [ 29.66  -1.18   0.09   0.01   0.04  -0.11]
+ [ 36.74  -1.58   0.32  -0.01   0.06  -0.13]
+ [ 77.01  -2.89   1.77  -0.06   0.15  -0.25]
+ [123.82  -5.04   6.11   1.83   0.22  -0.52]
+ [ 29.92  -0.96   0.13   0.     0.04  -0.1 ]
+ [ 45.81  -1.37   0.58  -0.03   0.08  -0.13]
+ [140.53  -2.9    4.67  -0.12   0.18  -0.33]
+ [128.22  -1.6    8.31   2.56   0.29  -0.49]
+ [ 32.78  -0.52   0.2   -0.     0.05  -0.06]
+ [ 65.75  -0.75   1.18  -0.05   0.12  -0.08]
+ [252.29   0.48  10.54  -0.32   0.18  -0.09]
+ [139.07  -0.34   4.81   1.26   0.15  -0.16]
+ [ 33.55  -0.31   0.21  -0.     0.05  -0.04]
+ [ 69.01  -0.34   1.26  -0.05   0.12  -0.03]
+ [265.82   2.5   11.08  -0.35   0.19   0.16]
+ [105.4   -0.62  13.31   2.66   0.41  -0.19]
+ [ 33.51  -0.18   0.2   -0.     0.05  -0.02]
+ [ 66.42  -0.03   1.17  -0.05   0.11   0.01]
+ [256.95   3.44  10.33  -0.3    0.18   0.3 ]
+ [  0.     0.    -0.     0.     0.     0.  ]
+ [ 32.85  -0.03   0.18  -0.     0.05  -0.01]
+ [ 58.64   0.39   0.91  -0.04   0.1    0.07]
+ [224.28   4.05   8.22  -0.21   0.19   0.44]
+ [436.01  17.12  28.19  -1.36  -0.38   1.53]
+ [ 40.5   -0.73   0.4   -0.02   0.07  -0.07]
+ [132.01   0.01   9.92   2.15   0.22  -0.21]
+ [ 38.51   0.24   0.33  -0.02   0.06   0.04]
+ [280.45   7.51  12.13  -0.41   0.17   0.81]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.87  -0.74   0.09   0.01   0.04  -0.09]
+ [ 31.01  -0.29   0.11   0.01   0.04  -0.05]
+ [ 32.23  -0.02   0.1    0.01   0.04  -0.03]
+ [115.84  -4.9    1.32   1.6    0.22  -0.52]
+ [129.51  -4.02   2.93   3.59   0.25  -0.28]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 70.85   3.54   3.54  -1.47  -0.26   1.78]
+ [ 34.84  -1.77   0.07   0.02   0.04  -0.15]
+ [ 40.77  -2.96   0.4   -0.02   0.07  -0.18]
+ [ 33.1    0.53   0.18  -0.     0.05   0.07]
+ [161.5    9.53   4.66  -0.14   0.29   1.32]
+ [103.17  -1.59   2.69  -0.08   0.17  -0.18]]
+19:19:36 [481.3 min] update 51: incumbent speed 13.2582 kt (kept, gain 0.0000 kt), candidates [13.258 13.256 13.256 13.254], on 99 % of the probability, radius 0.77, region 2, 284 s
+19:26:23 [488.1 min] batch 51: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:26:23 [488.1 min] batch 51: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:26:23 [488.1 min] batch 51: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:26:23 [488.1 min] batch 51: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:26:23 [488.1 min] batch 51: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:26:23 [488.1 min] batch 51: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:26:23 [488.1 min] batch 51: 16 choices (levels 1/2: 7/9), design 934/262, selection 330.9 s (update 284 s), 692.6 s
+19:28:48 [490.5 min] update 52: incumbent speed 13.2596 kt (new, gain 0.0015 kt), candidates [13.258 13.259 13.258 13.26 ], on 99 % of the probability, radius 0.54, region 2, 144 s
+19:35:38 [497.4 min] batch 52: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:35:38 [497.4 min] batch 52: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:35:38 [497.4 min] batch 52: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:35:38 [497.4 min] batch 52: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:35:38 [497.4 min] batch 52: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:35:38 [497.4 min] batch 52: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:35:38 [497.4 min] batch 52: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:35:38 [497.4 min] batch 52: 16 choices (levels 1/2: 6/10), design 947/265, selection 193.6 s (update 144 s), 555.1 s
+19:37:51 [499.6 min] update 53: incumbent speed 13.2596 kt (new, gain 0.0002 kt), candidates [13.259 13.258 13.259 13.26 ], on 99 % of the probability, radius 0.38, region 2, 132 s
+19:44:47 [506.5 min] batch 53: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:44:47 [506.5 min] batch 53: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:44:47 [506.5 min] batch 53: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:44:47 [506.5 min] batch 53: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:44:47 [506.5 min] batch 53: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:44:47 [506.5 min] batch 53: 16 choices (levels 1/2: 8/8), design 962/268, selection 187.3 s (update 132 s), 548.7 s
+19:46:56 [508.7 min] speed sensitivities: 6 failed solves, previous values kept
+19:46:56 [508.7 min] speed sensitivities: 12 values more than 30 % from the median of the last 3 evaluations, median kept
+19:46:56 [508.7 min] speed sensitivities dV/dC (rows = conditions): [[ 43.71  -2.     0.08   0.03   0.05  -0.18]
+ [ 30.23  -1.79   0.12   0.     0.04  -0.13]
+ [ 38.74  -2.55   0.36  -0.02   0.07  -0.17]
+ [ 69.65  -4.53   1.48  -0.05   0.15  -0.29]
+ [ 31.86  -1.42   0.08   0.01   0.04  -0.13]
+ [ 32.36  -1.72   0.2   -0.     0.05  -0.13]
+ [ 51.9   -2.75   0.8   -0.04   0.1   -0.2 ]
+ [136.26  -5.89   4.91  -0.13   0.19  -0.49]
+ [ 29.67  -1.21   0.09   0.01   0.04  -0.11]
+ [ 36.67  -1.61   0.32  -0.01   0.06  -0.13]
+ [ 76.48  -2.95   1.75  -0.06   0.14  -0.24]
+ [124.43  -5.25   5.72   1.75   0.22  -0.53]
+ [ 29.9   -0.98   0.13   0.     0.04  -0.1 ]
+ [ 45.72  -1.4    0.58  -0.03   0.08  -0.12]
+ [139.38  -3.01   4.63  -0.12   0.18  -0.33]
+ [130.36  -3.2    7.5    2.56   0.28  -0.54]
+ [ 32.79  -0.55   0.2   -0.     0.05  -0.06]
+ [ 65.78  -0.8    1.18  -0.05   0.12  -0.08]
+ [251.79   0.12  10.58  -0.32   0.17  -0.13]
+ [139.07  -6.78   7.39   3.81   0.15  -0.13]
+ [ 33.59  -0.35   0.21  -0.     0.05  -0.04]
+ [ 69.21  -0.42   1.27  -0.05   0.12  -0.04]
+ [266.48   2.03  11.18  -0.34   0.17   0.1 ]
+ [105.4   -0.62  13.31   2.66   0.42  -0.19]
+ [ 33.58  -0.22   0.21  -0.     0.05  -0.03]
+ [ 66.74  -0.14   1.18  -0.05   0.11  -0.  ]
+ [258.43   2.93  10.45  -0.3    0.16   0.23]
+ [  0.     0.    -0.     0.     0.     0.  ]
+ [ 32.94  -0.08   0.19  -0.     0.05  -0.01]
+ [ 59.08   0.23   0.93  -0.04   0.1    0.05]
+ [226.57   3.46   8.36  -0.2    0.17   0.35]
+ [436.83  15.99  28.32  -1.38  -0.45   1.39]
+ [ 40.49  -0.76   0.4   -0.02   0.07  -0.07]
+ [135.54  -0.08   8.99   2.18   0.21  -0.31]
+ [ 38.74   0.14   0.34  -0.01   0.06   0.03]
+ [282.92   6.74  12.31  -0.41   0.15   0.69]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.85  -0.78   0.09   0.01   0.04  -0.09]
+ [ 31.01  -0.33   0.11   0.01   0.04  -0.05]
+ [ 32.25  -0.07   0.1    0.01   0.04  -0.04]
+ [116.28  -5.05   2.05   1.59   0.22  -0.51]
+ [131.84  -5.09   4.16   3.63   0.25  -0.28]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.     0.    -0.09   0.     0.  ]
+ [ 35.01  -1.8    0.07   0.02   0.04  -0.15]
+ [ 40.63  -2.98   0.4   -0.02   0.07  -0.18]
+ [ 33.35   0.44   0.19  -0.     0.05   0.06]
+ [167.05   8.26   4.9   -0.14   0.26   1.13]
+ [102.84  -1.67   2.69  -0.08   0.16  -0.19]]
+19:49:12 [510.9 min] update 54: incumbent speed 13.2592 kt (kept, gain 0.0000 kt), candidates [13.259 13.257 13.254 13.249], on 99 % of the probability, radius 0.26, region 2, 264 s
+19:56:15 [518.0 min] batch 54: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:56:15 [518.0 min] batch 54: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:56:15 [518.0 min] batch 54: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:56:15 [518.0 min] batch 54: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:56:15 [518.0 min] batch 54: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:56:15 [518.0 min] batch 54: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:56:15 [518.0 min] batch 54: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:56:15 [518.0 min] batch 54: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:56:15 [518.0 min] batch 54: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:56:15 [518.0 min] batch 54: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+19:56:15 [518.0 min] batch 54: 16 choices (levels 1/2: 6/10), design 976/268, selection 326.9 s (update 264 s), 688.7 s
+19:57:58 [519.7 min] update 55: incumbent speed 13.2598 kt (new, gain 0.0007 kt), candidates [13.259 13.257 13.257 13.26 ], on 99 % of the probability, radius 0.19, region 2, 101 s
+20:05:04 [526.8 min] batch 55: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:05:04 [526.8 min] batch 55: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:05:04 [526.8 min] batch 55: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:05:04 [526.8 min] batch 55: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:05:04 [526.8 min] batch 55: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:05:04 [526.8 min] batch 55: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:05:04 [526.8 min] batch 55: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:05:04 [526.8 min] batch 55: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:05:04 [526.8 min] batch 55: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:05:04 [526.8 min] batch 55: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:05:04 [526.8 min] batch 55: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:05:04 [526.8 min] batch 55: 16 choices (levels 1/2: 4/12), design 991/269, selection 166.8 s (update 101 s), 528.6 s
+20:09:14 [531.0 min] batch 56: hyperparameters refitted on 1260 points
+20:11:39 [533.4 min] update 56: incumbent speed 13.2597 kt (kept, gain 0.0000 kt), candidates [13.26  13.258 13.256 13.256], on 99 % of the probability, radius 0.13, region 2, 145 s
+20:18:53 [540.6 min] batch 56: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:18:53 [540.6 min] batch 56: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:18:53 [540.6 min] batch 56: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:18:53 [540.6 min] batch 56: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:18:53 [540.6 min] batch 56: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:18:53 [540.6 min] batch 56: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:18:53 [540.6 min] batch 56: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:18:53 [540.6 min] batch 56: 16 choices (levels 1/2: 4/12), design 1006/274, selection 467.3 s (update 145 s), 829.3 s
+20:20:49 [542.5 min] speed sensitivities: 6 failed solves, previous values kept
+20:20:49 [542.5 min] speed sensitivities: 9 values more than 30 % from the median of the last 3 evaluations, median kept
+20:20:49 [542.5 min] speed sensitivities dV/dC (rows = conditions): [[ 43.71  -2.     0.08   0.03   0.05  -0.18]
+ [ 30.23  -1.79   0.12   0.     0.04  -0.13]
+ [ 38.74  -2.55   0.36  -0.02   0.07  -0.17]
+ [ 69.65  -4.53   1.48  -0.05   0.15  -0.29]
+ [ 31.86  -1.42   0.08   0.01   0.04  -0.13]
+ [ 32.35  -1.72   0.2   -0.     0.05  -0.13]
+ [ 51.9   -2.75   0.8   -0.04   0.1   -0.2 ]
+ [136.26  -5.89   4.91  -0.13   0.19  -0.49]
+ [ 29.67  -1.21   0.09   0.01   0.04  -0.11]
+ [ 36.67  -1.61   0.32  -0.01   0.06  -0.13]
+ [ 76.48  -2.95   1.75  -0.06   0.14  -0.24]
+ [124.43  -5.37   5.72   1.75   0.22  -0.53]
+ [ 29.9   -0.98   0.13   0.     0.04  -0.1 ]
+ [ 45.72  -1.4    0.58  -0.03   0.08  -0.12]
+ [139.38  -3.01   4.63  -0.12   0.18  -0.33]
+ [134.32  -3.2    7.5    2.75   0.26  -0.54]
+ [ 32.79  -0.55   0.2   -0.     0.05  -0.06]
+ [ 65.81  -0.8    1.18  -0.05   0.12  -0.08]
+ [251.79   0.12  10.59  -0.32   0.17  -0.13]
+ [137.4   -6.78   3.57   3.81   0.22  -0.16]
+ [ 33.59  -0.35   0.21  -0.     0.05  -0.04]
+ [ 69.21  -0.42   1.27  -0.05   0.12  -0.04]
+ [266.72   2.03  11.18  -0.34   0.17   0.1 ]
+ [153.88  -0.49  13.31   4.74   0.39  -0.19]
+ [ 33.58  -0.22   0.21  -0.     0.05  -0.03]
+ [ 66.74  -0.14   1.18  -0.05   0.11  -0.  ]
+ [258.51   2.93  10.45  -0.3    0.16   0.23]
+ [  0.     0.    -0.     0.     0.     0.  ]
+ [ 32.94  -0.08   0.19  -0.     0.05  -0.01]
+ [ 59.08   0.23   0.93  -0.04   0.1    0.05]
+ [226.57   3.46   8.36  -0.2    0.17   0.35]
+ [437.09  15.99  28.34  -1.38  -0.45   1.39]
+ [ 40.49  -0.76   0.4   -0.02   0.07  -0.07]
+ [136.53  -2.77   8.83   2.48   0.08  -0.31]
+ [ 38.74   0.14   0.34  -0.01   0.06   0.03]
+ [282.92   6.74  12.31  -0.41   0.15   0.69]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.85  -0.78   0.09   0.01   0.04  -0.09]
+ [ 31.02  -0.33   0.11   0.01   0.04  -0.05]
+ [ 32.25  -0.07   0.1    0.01   0.04  -0.04]
+ [116.37  -5.05   2.05   1.59   0.22  -0.5 ]
+ [131.84  -5.09   4.16   3.63   0.28  -0.25]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.     0.    -0.    -0.09   0.     0.  ]
+ [ 35.01  -1.8    0.07   0.02   0.04  -0.15]
+ [ 40.63  -2.98   0.4   -0.02   0.07  -0.18]
+ [ 33.35   0.44   0.19  -0.     0.05   0.06]
+ [167.05   8.26   4.9   -0.14   0.26   1.13]
+ [102.84  -1.67   2.69  -0.08   0.16  -0.19]]
+20:22:50 [544.6 min] update 57: incumbent speed 13.2600 kt (new, gain 0.0004 kt), candidates [13.26  13.259 13.258 13.26 ], on 99 % of the probability, radius 0.10, region 2, 235 s
+20:30:00 [551.7 min] batch 57: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:30:00 [551.7 min] batch 57: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:30:00 [551.7 min] batch 57: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:30:00 [551.7 min] batch 57: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:30:00 [551.7 min] batch 57: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:30:00 [551.7 min] batch 57: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:30:00 [551.7 min] batch 57: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:30:00 [551.7 min] batch 57: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:30:00 [551.7 min] batch 57: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:30:00 [551.7 min] batch 57: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:30:00 [551.7 min] batch 57: 16 choices (levels 1/2: 6/10), design 1022/274, selection 305.1 s (update 235 s), 666.9 s
+20:32:59 [554.7 min] region 2 converged (update 57, incumbent speed 13.2600 kt): region 3 starts from a section at distance 2.72 of the optima, predicted gain -0.011 +- 0.001 kt
+20:36:01 [557.7 min] speed sensitivities: 6 failed solves, previous values kept
+20:36:01 [557.7 min] speed sensitivities dV/dC (rows = conditions): [[ 43.18  -1.92   0.08   0.02   0.05  -0.18]
+ [ 30.22  -1.75   0.12   0.     0.04  -0.14]
+ [ 38.89  -2.51   0.36  -0.02   0.07  -0.17]
+ [ 70.55  -4.46   1.51  -0.05   0.15  -0.29]
+ [ 31.76  -1.36   0.08   0.01   0.04  -0.13]
+ [ 32.4   -1.67   0.2   -0.     0.05  -0.14]
+ [ 52.23  -2.68   0.81  -0.04   0.1   -0.2 ]
+ [139.    -5.73   5.03  -0.14   0.2   -0.51]
+ [ 29.65  -1.16   0.1    0.01   0.04  -0.11]
+ [ 36.74  -1.56   0.33  -0.01   0.06  -0.13]
+ [ 77.12  -2.84   1.77  -0.06   0.15  -0.25]
+ [605.11  -6.66  29.94  -1.68   0.23  -1.05]
+ [ 29.91  -0.93   0.13   0.     0.04  -0.1 ]
+ [ 45.79  -1.34   0.58  -0.03   0.08  -0.12]
+ [140.51  -2.81   4.66  -0.12   0.19  -0.33]
+ [127.3   -1.08   7.52   2.56   0.29  -0.42]
+ [ 32.75  -0.49   0.2   -0.     0.05  -0.05]
+ [ 65.57  -0.7    1.17  -0.05   0.12  -0.07]
+ [251.36   0.69  10.46  -0.32   0.19  -0.06]
+ [133.8   -5.31   8.39   1.12   0.2   -0.48]
+ [ 33.49  -0.29   0.21  -0.     0.05  -0.03]
+ [ 68.69  -0.28   1.25  -0.05   0.12  -0.02]
+ [264.21   2.74  10.97  -0.34   0.2    0.19]
+ [150.57   0.07   9.46   4.71   0.41   0.01]
+ [ 33.44  -0.15   0.2   -0.     0.05  -0.02]
+ [ 66.04   0.05   1.16  -0.05   0.11   0.02]
+ [254.93   3.71  10.21  -0.29   0.19   0.34]
+ [  0.     0.     0.    -0.76   0.     0.  ]
+ [ 32.76   0.     0.18  -0.     0.05  -0.  ]
+ [ 58.24   0.48   0.9   -0.04   0.1    0.09]
+ [221.87   4.37   8.1   -0.2    0.2    0.49]
+ [432.08  17.6   27.88  -1.33  -0.33   1.6 ]
+ [ 40.45  -0.7    0.4   -0.02   0.07  -0.07]
+ [831.85  33.63  42.47  -3.99  -0.35   0.26]
+ [ 38.32   0.29   0.33  -0.01   0.06   0.05]
+ [277.83   7.92  11.97  -0.4    0.19   0.87]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.87  -0.72   0.09   0.01   0.04  -0.09]
+ [ 31.    -0.27   0.11   0.01   0.04  -0.05]
+ [ 32.23  -0.     0.1    0.01   0.04  -0.03]
+ [115.1   -4.78   0.39   1.61   0.21  -0.51]
+ [128.21  -7.5    6.67   3.6    0.28  -0.19]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [224.02  11.2   11.2   -1.48  -0.3    1.89]
+ [ 34.75  -1.75   0.07   0.02   0.04  -0.15]
+ [ 40.84  -2.95   0.4   -0.02   0.07  -0.18]
+ [ 32.91   0.59   0.18  -0.     0.05   0.08]
+ [156.99  10.37   4.48  -0.14   0.3    1.43]
+ [102.92  -1.53   2.68  -0.08   0.17  -0.18]]
+20:38:21 [560.1 min] update 58: incumbent speed 13.2326 kt (new, gain 0.0055 kt), candidates [13.227 13.233 13.229 13.226], on 99 % of the probability, radius 1.50, region 3, 322 s
+20:45:08 [566.9 min] batch 58: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:45:08 [566.9 min] batch 58: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:45:08 [566.9 min] batch 58: 16 choices (levels 1/2: 12/4), design 1034/276, selection 547.2 s (update 322 s), 908.0 s
+20:48:00 [569.7 min] update 59: incumbent speed 13.2329 kt (new, gain 0.0008 kt), candidates [13.232 13.233 13.225 13.228], on 99 % of the probability, radius 1.05, region 3, 171 s
+20:54:58 [576.7 min] batch 59: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:54:58 [576.7 min] batch 59: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+20:54:58 [576.7 min] batch 59: 16 choices (levels 1/2: 10/6), design 1048/280, selection 225.8 s (update 171 s), 589.7 s
+20:56:32 [578.3 min] speed sensitivities: 6 failed solves, previous values kept
+20:56:32 [578.3 min] speed sensitivities: 19 values more than 30 % from the median of the last 3 evaluations, median kept
+20:56:32 [578.3 min] speed sensitivities dV/dC (rows = conditions): [[ 43.08  -1.91   0.08   0.02   0.05  -0.18]
+ [ 30.22  -1.74   0.12   0.     0.04  -0.14]
+ [ 38.92  -2.5    0.36  -0.02   0.07  -0.17]
+ [ 70.67  -4.44   1.51  -0.05   0.15  -0.3 ]
+ [ 31.74  -1.36   0.08   0.01   0.04  -0.13]
+ [ 32.41  -1.67   0.2   -0.     0.05  -0.14]
+ [ 52.3   -2.67   0.82  -0.04   0.1   -0.2 ]
+ [139.5   -5.72   5.05  -0.14   0.21  -0.51]
+ [ 29.65  -1.16   0.1    0.01   0.04  -0.11]
+ [ 36.77  -1.55   0.33  -0.01   0.06  -0.13]
+ [ 77.28  -2.84   1.78  -0.06   0.15  -0.25]
+ [565.09  -6.84  27.93  -2.21   0.24  -1.11]
+ [ 29.93  -0.93   0.13   0.     0.04  -0.1 ]
+ [ 45.84  -1.34   0.58  -0.03   0.08  -0.12]
+ [140.92  -2.8    4.67  -0.12   0.19  -0.33]
+ [130.16  -3.06   5.96   2.66   0.28  -0.46]
+ [ 32.75  -0.48   0.2   -0.     0.05  -0.05]
+ [ 65.62  -0.69   1.17  -0.05   0.12  -0.07]
+ [251.62   0.78  10.47  -0.32   0.19  -0.05]
+ [133.77  -3.15   7.24   2.45   0.19  -0.24]
+ [ 33.48  -0.27   0.21  -0.     0.05  -0.03]
+ [ 68.68  -0.25   1.25  -0.05   0.12  -0.02]
+ [264.18   2.88  10.97  -0.34   0.2    0.21]
+ [162.53   0.45  11.29   5.11   0.34   0.01]
+ [ 33.42  -0.13   0.2   -0.     0.05  -0.02]
+ [ 65.98   0.09   1.16  -0.05   0.11   0.03]
+ [254.68   3.88  10.2   -0.3    0.19   0.37]
+ [  0.     0.     0.    -0.38   0.    -0.01]
+ [ 32.73   0.02   0.18  -0.     0.05   0.  ]
+ [ 58.13   0.54   0.9   -0.04   0.1    0.1 ]
+ [221.42   4.56   8.08  -0.2    0.2    0.52]
+ [431.66  17.94  27.84  -1.33  -0.32   1.65]
+ [ 40.47  -0.69   0.4   -0.02   0.07  -0.07]
+ [780.82  31.14  39.92  -4.4   -0.45   0.37]
+ [ 38.26   0.33   0.33  -0.01   0.06   0.05]
+ [277.27   8.17  11.94  -0.4    0.19   0.91]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.87  -0.71   0.09   0.01   0.04  -0.09]
+ [ 30.99  -0.26   0.11   0.01   0.04  -0.05]
+ [ 32.21   0.01   0.1    0.01   0.04  -0.03]
+ [115.15  -4.77   0.64   1.61   0.2   -0.51]
+ [127.96  -4.44 -23.16   3.6    0.3   -0.23]
+ [  0.    -0.     0.     0.     0.     0.  ]
+ [253.61  12.68  12.68  -1.47  -0.3    1.94]
+ [ 34.71  -1.75   0.07   0.02   0.04  -0.15]
+ [ 40.86  -2.94   0.4   -0.02   0.07  -0.18]
+ [ 32.84   0.62   0.18  -0.     0.05   0.08]
+ [155.63  10.68   4.42  -0.14   0.3    1.48]
+ [103.11  -1.52   2.68  -0.08   0.17  -0.18]]
+20:59:02 [580.8 min] update 60: incumbent speed 13.2403 kt (new, gain 0.0090 kt), candidates [13.231 13.236 13.236 13.24 ], on 99 % of the probability, radius 1.57, region 3, 243 s
+21:05:54 [587.6 min] batch 60: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:05:54 [587.6 min] batch 60: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:05:54 [587.6 min] batch 60: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:05:54 [587.6 min] batch 60: 16 choices (levels 1/2: 10/6), design 1060/283, selection 294.6 s (update 243 s), 655.7 s
+21:08:40 [590.4 min] update 61: incumbent speed 13.2410 kt (kept, gain 0.0000 kt), candidates [13.241 13.238 13.241 13.233], on 99 % of the probability, radius 1.10, region 3, 165 s
+21:15:28 [597.2 min] batch 61: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:15:28 [597.2 min] batch 61: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:15:28 [597.2 min] batch 61: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:15:28 [597.2 min] batch 61: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:15:28 [597.2 min] batch 61: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:15:28 [597.2 min] batch 61: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:15:28 [597.2 min] batch 61: 16 choices (levels 1/2: 10/6), design 1072/283, selection 213.5 s (update 165 s), 574.7 s
+21:17:51 [599.6 min] update 62: incumbent speed 13.2409 kt (kept, gain 0.0000 kt), candidates [13.241 13.223 13.238 13.237], on 99 % of the probability, radius 0.77, region 3, 141 s
+21:24:48 [606.5 min] batch 62: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:24:48 [606.5 min] batch 62: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:24:48 [606.5 min] batch 62: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:24:48 [606.5 min] batch 62: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:24:48 [606.5 min] batch 62: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:24:48 [606.5 min] batch 62: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:24:48 [606.5 min] batch 62: 16 choices (levels 1/2: 9/7), design 1085/284, selection 198.6 s (update 141 s), 560.0 s
+21:26:44 [608.5 min] speed sensitivities: 6 failed solves, previous values kept
+21:26:44 [608.5 min] speed sensitivities: 10 values more than 30 % from the median of the last 3 evaluations, median kept
+21:26:44 [608.5 min] speed sensitivities dV/dC (rows = conditions): [[ 43.1   -1.92   0.08   0.02   0.05  -0.18]
+ [ 30.22  -1.75   0.12   0.     0.04  -0.14]
+ [ 38.92  -2.51   0.36  -0.02   0.07  -0.17]
+ [ 70.62  -4.46   1.51  -0.05   0.15  -0.29]
+ [ 31.76  -1.36   0.08   0.01   0.04  -0.13]
+ [ 32.42  -1.67   0.2   -0.     0.05  -0.14]
+ [ 52.3   -2.68   0.82  -0.04   0.1   -0.2 ]
+ [139.37  -5.73   5.05  -0.14   0.2   -0.51]
+ [ 29.65  -1.16   0.1    0.01   0.04  -0.11]
+ [ 36.78  -1.56   0.33  -0.01   0.06  -0.13]
+ [ 77.31  -2.84   1.78  -0.06   0.15  -0.25]
+ [605.11  -6.76  29.94  -1.69   0.23  -1.05]
+ [ 29.94  -0.93   0.13   0.     0.04  -0.1 ]
+ [ 45.88  -1.34   0.58  -0.03   0.08  -0.12]
+ [141.09  -2.81   4.69  -0.12   0.19  -0.33]
+ [128.45  -1.13   7.51   2.58   0.29  -0.42]
+ [ 32.75  -0.49   0.2   -0.     0.05  -0.05]
+ [ 65.66  -0.7    1.17  -0.05   0.12  -0.07]
+ [251.89   0.69  10.48  -0.33   0.19  -0.06]
+ [133.8   -1.61   6.51   1.46   0.2   -0.07]
+ [ 33.49  -0.29   0.21  -0.     0.05  -0.03]
+ [ 68.69  -0.28   1.25  -0.05   0.12  -0.02]
+ [264.21   2.74  10.97  -0.35   0.2    0.19]
+ [174.48   0.07  13.12   4.71   0.27   0.01]
+ [ 33.44  -0.15   0.2   -0.     0.05  -0.02]
+ [ 66.04   0.05   1.16  -0.05   0.11   0.02]
+ [254.93   3.71  10.21  -0.3    0.19   0.34]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 32.76   0.     0.18  -0.     0.05  -0.  ]
+ [ 58.24   0.48   0.9   -0.04   0.1    0.09]
+ [221.87   4.37   8.1   -0.2    0.2    0.49]
+ [432.08  17.65  27.88  -1.33  -0.33   1.6 ]
+ [ 40.49  -0.7    0.4   -0.02   0.07  -0.07]
+ [772.49  30.57  39.52  -4.47  -0.49   0.32]
+ [ 38.32   0.29   0.33  -0.02   0.06   0.05]
+ [277.83   7.92  11.97  -0.4    0.19   0.87]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.87  -0.72   0.09   0.01   0.04  -0.09]
+ [ 31.    -0.27   0.11   0.01   0.04  -0.05]
+ [ 32.22  -0.     0.1    0.01   0.04  -0.03]
+ [115.19  -4.78   0.9    1.61   0.21  -0.51]
+ [128.21  -3.5    2.33   3.6    0.31  -0.2 ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [224.02  11.2   11.2   -1.48  -0.3    1.89]
+ [ 34.74  -1.75   0.07   0.02   0.04  -0.15]
+ [ 40.85  -2.94   0.4   -0.02   0.07  -0.18]
+ [ 32.91   0.59   0.18  -0.     0.05   0.08]
+ [156.99  10.37   4.48  -0.14   0.3    1.43]
+ [103.31  -1.53   2.69  -0.09   0.17  -0.18]]
+21:29:54 [611.6 min] update 63: incumbent speed 13.2456 kt (new, gain 0.0048 kt), candidates [13.241 13.242 13.245 13.246], on 99 % of the probability, radius 1.16, region 3, 304 s
+21:36:43 [618.4 min] batch 63: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:36:43 [618.4 min] batch 63: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:36:43 [618.4 min] batch 63: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:36:43 [618.4 min] batch 63: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:36:43 [618.4 min] batch 63: 16 choices (levels 1/2: 8/8), design 1098/288, selection 353.6 s (update 304 s), 714.7 s
+21:39:28 [621.2 min] update 64: incumbent speed 13.2467 kt (kept, gain 0.0000 kt), candidates [13.247 13.24  13.245 13.238], on 99 % of the probability, radius 0.81, region 3, 163 s
+21:46:18 [628.0 min] batch 64: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:46:18 [628.0 min] batch 64: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:46:18 [628.0 min] batch 64: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:46:18 [628.0 min] batch 64: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:46:18 [628.0 min] batch 64: 16 choices (levels 1/2: 7/9), design 1110/293, selection 213.6 s (update 163 s), 574.9 s
+21:48:56 [630.7 min] update 65: incumbent speed 13.2465 kt (kept, gain 0.0000 kt), candidates [13.246 13.242 13.246 13.245], on 99 % of the probability, radius 0.57, region 3, 156 s
+21:55:49 [637.5 min] batch 65: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:55:49 [637.5 min] batch 65: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:55:49 [637.5 min] batch 65: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:55:49 [637.5 min] batch 65: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+21:55:49 [637.5 min] batch 65: 16 choices (levels 1/2: 8/8), design 1124/297, selection 209.9 s (update 156 s), 570.9 s
+21:57:39 [639.4 min] speed sensitivities: 6 failed solves, previous values kept
+21:57:39 [639.4 min] speed sensitivities: 5 values more than 30 % from the median of the last 3 evaluations, median kept
+21:57:39 [639.4 min] speed sensitivities dV/dC (rows = conditions): [[ 42.98  -1.9    0.08   0.02   0.05  -0.18]
+ [ 30.23  -1.74   0.12   0.     0.04  -0.14]
+ [ 38.94  -2.51   0.37  -0.02   0.07  -0.17]
+ [ 70.8   -4.45   1.52  -0.05   0.16  -0.29]
+ [ 31.74  -1.36   0.08   0.01   0.04  -0.13]
+ [ 32.43  -1.67   0.2   -0.     0.05  -0.13]
+ [ 52.37  -2.68   0.82  -0.04   0.1   -0.2 ]
+ [139.99  -5.76   5.08  -0.14   0.2   -0.52]
+ [ 29.66  -1.16   0.1    0.01   0.04  -0.11]
+ [ 36.8   -1.56   0.33  -0.01   0.06  -0.13]
+ [ 77.45  -2.85   1.79  -0.06   0.15  -0.25]
+ [538.36  -7.02  26.6   -2.01   0.23  -1.15]
+ [ 29.94  -0.94   0.13   0.     0.04  -0.1 ]
+ [ 45.89  -1.35   0.58  -0.03   0.08  -0.12]
+ [141.32  -2.83   4.69  -0.12   0.19  -0.33]
+ [128.45  -1.13   7.51   2.58   0.34  -0.39]
+ [ 32.79  -0.49   0.2   -0.     0.05  -0.05]
+ [ 65.81  -0.7    1.18  -0.05   0.12  -0.07]
+ [252.7    0.73  10.55  -0.33   0.19  -0.06]
+ [134.59  -1.35   6.51   1.67   0.26  -0.04]
+ [ 33.53  -0.28   0.21  -0.     0.05  -0.03]
+ [ 68.98  -0.27   1.26  -0.05   0.12  -0.02]
+ [265.86   2.84  11.07  -0.35   0.2    0.21]
+ [176.94  -4.02  13.24   5.52   0.26  -0.03]
+ [ 33.49  -0.14   0.2   -0.     0.05  -0.02]
+ [ 66.33   0.07   1.17  -0.05   0.11   0.03]
+ [256.65   3.83  10.3   -0.3    0.19   0.36]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 32.8    0.02   0.18  -0.     0.05  -0.  ]
+ [ 58.47   0.51   0.91  -0.04   0.1    0.09]
+ [223.58   4.48   8.18  -0.21   0.2    0.51]
+ [436.14  17.96  28.18  -1.37  -0.33   1.64]
+ [ 40.52  -0.7    0.4   -0.02   0.07  -0.07]
+ [729.8   28.65  37.38  -4.81  -0.55   0.48]
+ [ 38.4    0.31   0.33  -0.02   0.06   0.05]
+ [279.62   8.07  12.07  -0.41   0.19   0.89]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.86  -0.72   0.09   0.01   0.04  -0.09]
+ [ 31.    -0.26   0.11   0.01   0.04  -0.05]
+ [ 32.21   0.01   0.1    0.01   0.04  -0.03]
+ [115.65  -4.81   0.9    1.61   0.22  -0.55]
+ [127.71  -3.24   2.33   3.6    0.31  -0.22]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [109.51   5.48   5.48  -1.53  -0.3    1.91]
+ [ 34.68  -1.74   0.07   0.02   0.04  -0.15]
+ [ 40.88  -2.94   0.4   -0.02   0.07  -0.18]
+ [ 32.95   0.6    0.18  -0.     0.05   0.08]
+ [158.55  10.43   4.53  -0.14   0.3    1.44]
+ [103.39  -1.54   2.7   -0.09   0.17  -0.18]]
+21:59:33 [641.3 min] update 66: incumbent speed 13.2467 kt (new, gain 0.0003 kt), candidates [13.246 13.247 13.246 13.246], on 99 % of the probability, radius 0.40, region 3, 223 s
+22:06:33 [648.3 min] batch 66: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+22:06:33 [648.3 min] batch 66: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+22:06:33 [648.3 min] batch 66: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+22:06:33 [648.3 min] batch 66: 16 choices (levels 1/2: 9/7), design 1139/301, selection 283.5 s (update 223 s), 644.3 s
+22:09:27 [651.2 min] update 67: incumbent speed 13.2486 kt (new, gain 0.0015 kt), candidates [13.247 13.249 13.249 13.247], on 99 % of the probability, radius 0.28, region 3, 172 s
+22:16:27 [658.2 min] batch 67: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+22:16:27 [658.2 min] batch 67: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+22:16:27 [658.2 min] batch 67: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+22:16:27 [658.2 min] batch 67: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+22:16:27 [658.2 min] batch 67: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+22:16:27 [658.2 min] batch 67: 16 choices (levels 1/2: 10/6), design 1151/302, selection 232.9 s (update 172 s), 594.1 s
+22:18:39 [660.4 min] update 68: incumbent speed 13.2491 kt (new, gain 0.0006 kt), candidates [13.249 13.246 13.249 13.245], on 99 % of the probability, radius 0.19, region 3, 130 s
+22:25:43 [667.4 min] batch 68: 16 choices (levels 1/2: 8/8), design 1163/310, selection 194.4 s (update 130 s), 556.1 s
+22:28:12 [669.9 min] speed sensitivities: 6 failed solves, previous values kept
+22:28:12 [669.9 min] speed sensitivities: 19 values more than 30 % from the median of the last 3 evaluations, median kept
+22:28:12 [669.9 min] speed sensitivities dV/dC (rows = conditions): [[ 43.1   -1.92   0.08   0.02   0.05  -0.18]
+ [ 30.24  -1.75   0.12   0.     0.04  -0.14]
+ [ 38.92  -2.51   0.36  -0.02   0.07  -0.17]
+ [ 70.62  -4.46   1.51  -0.05   0.15  -0.29]
+ [ 31.76  -1.37   0.08   0.01   0.04  -0.13]
+ [ 32.42  -1.68   0.2   -0.     0.05  -0.13]
+ [ 52.3   -2.69   0.82  -0.04   0.1   -0.2 ]
+ [139.37  -5.77   5.05  -0.14   0.2   -0.51]
+ [ 29.66  -1.17   0.1    0.01   0.04  -0.11]
+ [ 36.78  -1.56   0.33  -0.01   0.06  -0.13]
+ [ 77.31  -2.86   1.78  -0.06   0.15  -0.25]
+ [538.36  -6.76  26.6   -1.69   0.23  -1.05]
+ [ 29.94  -0.94   0.13   0.     0.04  -0.1 ]
+ [ 45.89  -1.35   0.58  -0.03   0.08  -0.12]
+ [141.09  -2.84   4.7   -0.12   0.19  -0.33]
+ [127.76  -1.13   8.8    2.57   0.34  -0.39]
+ [ 32.8   -0.5    0.2   -0.     0.05  -0.05]
+ [ 65.92  -0.72   1.18  -0.05   0.12  -0.07]
+ [253.09   0.61  10.57  -0.33   0.19  -0.07]
+ [134.59  -1.61   8.21   1.67   0.26  -0.07]
+ [ 33.54  -0.29   0.21  -0.     0.05  -0.03]
+ [ 69.05  -0.29   1.26  -0.05   0.12  -0.02]
+ [266.11   2.67  11.08  -0.35   0.19   0.19]
+ [176.94  -4.02  13.25   5.57   0.24  -0.04]
+ [ 33.49  -0.15   0.2   -0.     0.05  -0.02]
+ [ 66.36   0.03   1.17  -0.05   0.11   0.02]
+ [256.73   3.66  10.31  -0.3    0.19   0.34]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 32.8    0.     0.18  -0.     0.05  -0.  ]
+ [ 58.5    0.46   0.91  -0.04   0.1    0.08]
+ [223.62   4.31   8.19  -0.21   0.19   0.48]
+ [436.81  17.65  28.21  -1.37  -0.36   1.6 ]
+ [ 40.55  -0.71   0.41  -0.02   0.07  -0.07]
+ [772.49  30.57  39.52  -4.47  -0.49   0.32]
+ [ 38.42   0.28   0.33  -0.02   0.06   0.05]
+ [279.65   7.87  12.08  -0.41   0.18   0.86]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.86  -0.73   0.09   0.01   0.04  -0.09]
+ [ 31.    -0.27   0.11   0.01   0.04  -0.05]
+ [ 32.22  -0.     0.1    0.01   0.04  -0.03]
+ [115.68  -4.83   2.     1.61   0.22  -0.55]
+ [129.    -3.5    2.93   2.84   0.31  -0.2 ]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [103.79   5.19   5.19  -1.53  -0.29   1.87]
+ [ 34.74  -1.75   0.07   0.02   0.04  -0.15]
+ [ 40.85  -2.94   0.4   -0.02   0.07  -0.18]
+ [ 32.99   0.58   0.18  -0.     0.05   0.08]
+ [159.27  10.13   4.56  -0.14   0.29   1.4 ]
+ [103.52  -1.55   2.71  -0.09   0.17  -0.18]]
+22:31:03 [672.8 min] update 69: incumbent speed 13.2481 kt (kept, gain 0.0000 kt), candidates [13.248 13.246 13.247 13.248], on 99 % of the probability, radius 0.14, region 3, 318 s
+22:36:30 [678.2 min] batch 69: 16 choices (levels 1/2: 9/7), design 1176/317, selection 382.7 s (update 318 s), 646.4 s
+22:39:29 [681.2 min] update 70: incumbent speed 13.2482 kt (kept, gain 0.0000 kt), candidates [13.248 13.248 13.246 13.248], on 99 % of the probability, radius 0.10, region 3, 178 s
+22:46:33 [688.3 min] batch 70: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+22:46:33 [688.3 min] batch 70: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+22:46:33 [688.3 min] batch 70: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+22:46:33 [688.3 min] batch 70: level 2 failed (SolverFailure: bdfoil_v1 avl x xfoil failed: PolarError: XFOIL polar(s) failed:
+)
+22:46:33 [688.3 min] batch 70: 16 choices (levels 1/2: 9/7), design 1188/320, selection 240.6 s (update 178 s), 603.6 s
+22:46:35 [688.3 min] region 3 converged, no restart left: end of the loop
+23:00:15 [702.0 min] local optima with the final surrogate, on 99 % of the probability: region 0 13.2546 kt, region 1 13.2655 kt, region 2 13.2604 kt, region 3 13.2632 kt -> region 1
+23:01:29 [703.2 min] speed sensitivities: 6 failed solves, previous values kept
+23:01:29 [703.2 min] speed sensitivities dV/dC (rows = conditions): [[ 43.7   -2.01   0.08   0.03   0.05  -0.18]
+ [ 30.24  -1.79   0.12   0.     0.04  -0.13]
+ [ 38.73  -2.57   0.36  -0.02   0.07  -0.17]
+ [ 69.56  -4.55   1.48  -0.05   0.15  -0.28]
+ [ 31.86  -1.43   0.08   0.01   0.04  -0.13]
+ [ 32.35  -1.72   0.2   -0.     0.05  -0.13]
+ [ 51.87  -2.76   0.8   -0.04   0.1   -0.19]
+ [136.07  -5.94   4.91  -0.13   0.19  -0.49]
+ [ 29.67  -1.22   0.09   0.01   0.04  -0.11]
+ [ 36.66  -1.62   0.32  -0.01   0.06  -0.13]
+ [ 76.45  -2.97   1.76  -0.06   0.14  -0.24]
+ [125.14  -5.35   5.87   1.71   0.2   -0.53]
+ [ 29.91  -0.99   0.13   0.     0.04  -0.1 ]
+ [ 45.73  -1.41   0.58  -0.03   0.08  -0.12]
+ [139.43  -3.04   4.64  -0.12   0.18  -0.32]
+ [129.71  -2.26   6.94   2.56   0.26  -0.49]
+ [ 32.81  -0.57   0.2   -0.     0.05  -0.06]
+ [ 65.91  -0.82   1.18  -0.05   0.12  -0.08]
+ [252.08   0.02  10.61  -0.32   0.17  -0.13]
+ [137.79  -3.1    7.59   1.22   0.06  -0.12]
+ [ 33.61  -0.37   0.21  -0.     0.05  -0.04]
+ [ 69.36  -0.45   1.28  -0.05   0.12  -0.04]
+ [267.03   1.91  11.21  -0.34   0.17   0.09]
+ [146.06  -0.29   9.6    5.63   0.18  -0.15]
+ [ 33.61  -0.24   0.21  -0.     0.05  -0.03]
+ [ 66.9   -0.17   1.19  -0.05   0.11  -0.01]
+ [259.21   2.8   10.5   -0.3    0.17   0.22]
+ [  0.    -0.    -0.     0.     0.     0.  ]
+ [ 32.97  -0.09   0.19  -0.     0.05  -0.01]
+ [ 59.23   0.21   0.93  -0.04   0.1    0.05]
+ [227.58   3.35   8.41  -0.2    0.17   0.35]
+ [437.99  15.7   28.33  -1.39  -0.44   1.38]
+ [ 40.52  -0.78   0.41  -0.02   0.07  -0.07]
+ [122.9   -1.53   7.47   3.05  -0.01  -0.31]
+ [ 38.8    0.13   0.34  -0.01   0.06   0.03]
+ [283.99   6.58  12.37  -0.41   0.15   0.69]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [ 30.84  -0.79   0.09   0.01   0.04  -0.09]
+ [ 31.01  -0.34   0.11   0.01   0.04  -0.05]
+ [ 32.23  -0.07   0.1    0.01   0.04  -0.03]
+ [116.59  -5.13   0.71   1.59   0.19  -0.53]
+ [131.71  -9.01   1.36   3.64   0.07  -0.25]
+ [  0.     0.     0.     0.     0.     0.  ]
+ [  0.    -0.     0.     0.     0.     0.  ]
+ [ 35.01  -1.8    0.07   0.02   0.04  -0.14]
+ [ 40.61  -2.99   0.4   -0.02   0.07  -0.18]
+ [ 33.4    0.43   0.19  -0.     0.05   0.06]
+ [168.59   8.11   4.97  -0.14   0.26   1.12]
+ [102.96  -1.69   2.7   -0.08   0.16  -0.18]]
+23:04:09 [705.9 min] update 71: incumbent speed 13.2655 kt (kept, gain 0.0000 kt), candidates [13.266 13.264 13.265 13.265], on 99 % of the probability, radius 0.10, region 1, 234 s
+23:04:09 [705.9 min] loop done: 1136 choices in 71 batches, design per level (1188, 320), runs {1: 1188, 2: 577}, code time {1: 568.0126217006473, 2: 153072.4582286997}
+23:49:09 [750.9 min] validation done
+23:58:36 [760.3 min] operating profile profile_v2: results/profile_profile_v2.json
+23:58:37 [760.3 min] done

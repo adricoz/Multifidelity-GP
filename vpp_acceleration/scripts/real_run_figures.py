@@ -13,6 +13,8 @@ Figures of a real run folder (runs/<date>_<name>/): written to its figures/ fold
   6. index.html: one page that links every figure of the run (write_index), with its summary;
      runs/index.html links the index of every run (write_runs_index).
 Run: ..\\.venv-mds\\Scripts\\python scripts\\real_run_figures.py runs\\<folder>
+     ..\\.venv-mds\\Scripts\\python scripts\\real_run_figures.py runs\\<folder> --compare <best_section.json> ...
+         (best sections of other runs drawn in sections.html, in addition to the run's own --compare)
      ..\\.venv-mds\\Scripts\\python scripts\\real_run_figures.py --index-all   (indexes only)
 """
 import html
@@ -55,12 +57,13 @@ def other_optima(root) -> list:
     return [o for o in json.loads(path.read_text(encoding="utf-8")) if not o["best"]]
 
 
-def compared_sections(config: dict) -> list:
+def compared_sections(config: dict, extra=()) -> list:
     """Best sections of the runs given to --compare (config "compare": paths of best_section.json,
-    relative to vpp_acceleration/), each {"name": "run <folder>", "weights": (2n,)}; the missing
-    files are left out."""
+    relative to vpp_acceleration/), then of the runs given to --compare of this script (`extra`,
+    e.g. a run that ended after this one started), each {"name": "run <folder>", "weights": (2n,)};
+    the missing files are left out."""
     out = []
-    for path in config.get("compare", []):
+    for path in list(config.get("compare", [])) + list(extra):
         path = Path(path) if Path(path).is_absolute() else VPP_DIR / path
         if not path.exists():
             continue
@@ -96,7 +99,7 @@ def write_section_files(root, pca, best: dict, optima: list) -> None:
                     f"{Path(root).name} local optimum region {o['region']}")
 
 
-def make_figures(root) -> None:
+def make_figures(root, compare=()) -> None:
     import plotly.graph_objects as go  # noqa: PLC0415
     from figure_style import SERIES, save, style  # noqa: PLC0415
     from plotly.subplots import make_subplots  # noqa: PLC0415
@@ -197,7 +200,7 @@ def make_figures(root) -> None:
             is_optimum.append(not visible)
     # best sections of the runs given to --compare (their own Kulfan weights, not projected): the
     # first one shown, the others in the legend (a click shows them)
-    compared = compared_sections(config)
+    compared = compared_sections(config, compare)
     compared_colors = (6, 7, 2, 0)           # not those of the start, best and optima (1, 0, 3-5)
     for i, entry in enumerate(compared):
         y = section_coordinates(entry["weights"][None], x, pca.te_thickness)[0]
@@ -396,5 +399,7 @@ if __name__ == "__main__":
     if sys.argv[1:] == ["--index-all"]:
         print(write_runs_index())
     else:
-        make_figures(sys.argv[1])
+        args = sys.argv[1:]
+        extra = args[args.index("--compare") + 1:] if "--compare" in args else []
+        make_figures(args[0], compare=extra)
         write_runs_index()
